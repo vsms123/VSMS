@@ -22,42 +22,15 @@
         </script>
         <title>Main Menu</title>
     </head>
-    
-    
+
+
     <body class="background">
-        <div>    
-        <div>
-            <div class="ui segment" style="left:10%;width:80%">
-                <p>
-                <div class="ui attached stackable menu">
-                    <div class="ui container" >
-                        <a class="item">
-                            <i class="home icon"></i> Home
-                        </a>
-                        <a class="item">
-                            <i class="grid layout icon"></i> Browse
-                        </a>
-                        <a class="item">
-                            <i class="mail icon"></i> Messages
-                        </a>
-                        <div class="ui simple dropdown item">
-                            More
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <a class="item"><i class="edit icon"></i> Edit Profile</a>
-                                <a class="item"><i class="globe icon"></i> Contact</a>
-                                <a class="item"><i class="settings icon"></i> Account Settings</a>
-                            </div>
-                        </div><p>
-                        <div class="left item">
-                            <div class="ui input"><input type="text" placeholder="Search..."></div>
-                        </div>
-                        </p>
-                    </div>
-                </div>
-                </p>
-                <p>   
-                <div class="ui breadcrumb">
+
+        <div class="transparency">
+            <div class="ui segment" style="left:5%;width:90%">
+                <%@ include file="Navbar.jsp" %>
+                <p></p>
+                <div class="ui breadcrumb" >
                     <a class="section">Home</a>
                     <i class="right angle icon divider"></i>
                     <a class="section">Manage Menu</a>
@@ -65,15 +38,17 @@
                     <div class="active section">Recipe Buider</div>
                 </div>
                 <div class="ui raised very padded text container">
+                    <p></p>
                     <h2 class="ui header">VSMS Menu</h2>
-                    <p>
+                    <p></p>
+                    
+                    <p></p>
 
-                        <button type="button" class="ui button show">123</button>
+                    <button type="button" class="ui button show">123</button>
 
-                    </p>
+
                     <p></p>
                 </div>
-                </p>
 
 
                 <div class="ui left rail">
@@ -95,31 +70,7 @@
             </div>
 
 
-            <div class="ui modal">
-                <i class="close icon"></i>
-                <div class="header">
-                    Profile Picture
-                </div>
-                <div class="image content">
-                    <div class="ui medium image">
-                        <img src="/images/avatar/large/chris.jpg">
-                    </div>
-                    <div class="description">
-                        <div class="ui header">We've auto-chosen a profile image for you.</div>
-                        <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
-                        <p>Is it okay to use this photo?</p>
-                    </div>
-                </div>
-                <div class="actions">
-                    <div class="ui black deny button">
-                        Nope
-                    </div>
-                    <div class="ui positive right labeled icon button">
-                        Yep, that's me
-                        <i class="checkmark icon"></i>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </body>
 </html>
