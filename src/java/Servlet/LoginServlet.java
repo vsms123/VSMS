@@ -71,13 +71,13 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("errorMsg", "Invalid e-mail or password entered");
             }else if(vendor_id != null && supplier_id == null){
                 //redirect to vendor home
-                url = "";
+                url = "Home.jsp";
                 session.setAttribute("currentVendor", vendor_id);
                 request.setAttribute("errMsg", null);
                 
             }else if(vendor_id == null && supplier_id != null){
                 //redirect to supplier home
-                url = "";
+                url = "Home.jsp";
                 session.setAttribute("currentSupplier", supplier_id);
                 request.setAttribute("errMsg", null);
             }else{
