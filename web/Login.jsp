@@ -15,7 +15,24 @@
     <body>
         <div class="box">
             <h1>Log In</h1>
-            <form>
+            
+                <%
+                    String currentVendor = (String) session.getAttribute("currentVendor");
+                    String currentSupplier = (String) session.getAttribute("currentSupplier");
+                    String errorMsg = (String) request.getParameter("errMsg");
+                    String succMsg = (String) request.getParameter("succMsg");
+                %>
+
+                <%
+                    if (errorMsg == null) {
+                        errorMsg = "";
+                    }
+                    if (succMsg == null) {
+                        succMsg = "";
+                    }
+                %>
+            
+            <form action = "LoginServlet" method="POST">
                 <div class="input-group">
                     <input type="text" id="username" autocomplete="off" onblur="checkInput(this)" />
                     <label for="username">Username</label>
@@ -26,6 +43,8 @@
                 </div>
                 <input type="submit" value="Enter" />
             </form>
+                <p><%=errorMsg%></p>
+                <p><%=succMsg%></p>
         </div>
     </body>
 
