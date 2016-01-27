@@ -24,7 +24,9 @@
     <body>
         <h1>Order History List</h1>
         <ul>
-            
+            <%for (Order order:orderList){%>
+            <li><%=order%></li>  
+                    <%}%>
         </ul>
         
         <!--JAVASCRIPT-->
