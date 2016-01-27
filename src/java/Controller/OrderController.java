@@ -252,5 +252,19 @@ public class OrderController extends HttpServlet {
     public static void deleteOrder(Order order) {
         OrderDAO.deleteOrder(order);
     }
-
+//Make a data table that consists on Vendor --> number of Orders
+    public static String getVendorOrderDataTable (){
+        String stringReturn = "[";
+        ArrayList<Vendor> vendorList = UserDAO.retrieveVendorList();
+        for(Vendor vendor:vendorList){
+          String content = "\""+vendor.getVendor_name()+"\"";
+          int quantityOrder = retrieveOrderList(vendor.getVendor_id()).size();
+          String wrapContent = "["+content+","+quantityOrder+"],";
+          stringReturn +=wrapContent;
+        }
+        stringReturn = stringReturn.substring(0, stringReturn.length()-1);
+        stringReturn=stringReturn+"]";
+        System.out.println(stringReturn);
+        return stringReturn;
+    }
 }

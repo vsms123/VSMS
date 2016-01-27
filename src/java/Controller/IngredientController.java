@@ -196,4 +196,20 @@ public class IngredientController extends HttpServlet {
     public static ArrayList<Integer> getSupplierIdByIngredient(String ingredient_name) {
         return IngredientDAO.getSupplierIdByIngredient(ingredient_name);
     }
+
+    //Make a data table that consists on dish --> number of ingredients
+    public static String getDishDataTable (){
+        String stringReturn = "[";
+        ArrayList<Dish> dishList = getAllDish();
+        for(Dish dish:dishList){
+          String content = "\""+dish.getDish_name()+"\"";
+          int quantityIngredient = dish.getIngredientQuantity().size();
+          String wrapContent = "["+content+","+quantityIngredient+"],";
+          stringReturn +=wrapContent;
+        }
+        stringReturn = stringReturn.substring(0, stringReturn.length()-1);
+        stringReturn=stringReturn+"]";
+        System.out.println(stringReturn);
+        return stringReturn;
+    }
 }
