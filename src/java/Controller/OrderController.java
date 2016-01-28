@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.TreeMap;
 import javamail.EmailController;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -199,10 +200,10 @@ public class OrderController extends HttpServlet {
             Supplier supplier = (Supplier) iter.next();
             ArrayList<Orderline> orderlineList = supplierOrderlineMap.get(supplier);
             //  order has int order_id, int vendor_id, double total_final_price, Date dt_order, ArrayList<Orderline> orderlines) {
-            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList),new Date(), orderlineList);
+            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList), new Date(), orderlineList);
             supplierOrderMap.put(supplier, order);
             //to compensate for subsequent orders, so that there would be no duplication
-            order_id+=1;
+            order_id += 1;
         }
         //for debugging purpose
         System.out.println(supplierOrderMap.toString());
@@ -253,17 +254,75 @@ public class OrderController extends HttpServlet {
         OrderDAO.deleteOrder(order);
     }
 //Make a data table that consists on Vendor --> number of Orders
-    public static String getVendorOrderDataTable (){
+
+    public static String getVendorOrderDataTable() {
         String stringReturn = "[";
         ArrayList<Vendor> vendorList = UserDAO.retrieveVendorList();
-        for(Vendor vendor:vendorList){
-          String content = "\""+vendor.getVendor_name()+"\"";
-          int quantityOrder = retrieveOrderList(vendor.getVendor_id()).size();
-          String wrapContent = "["+content+","+quantityOrder+"],";
-          stringReturn +=wrapContent;
+        for (Vendor vendor : vendorList) {
+            String content = "\"" + vendor.getVendor_name() + "\"";
+            int quantityOrder = retrieveOrderList(vendor.getVendor_id()).size();
+            String wrapContent = "[" + content + "," + quantityOrder + "],";
+            stringReturn += wrapContent;
         }
-        stringReturn = stringReturn.substring(0, stringReturn.length()-1);
-        stringReturn=stringReturn+"]";
+        stringReturn = stringReturn.substring(0, stringReturn.length() - 1);
+        stringReturn = stringReturn + "]";
+        System.out.println(stringReturn);
+        return stringReturn;
+    }
+
+    //Make a data table that consists on Vendor --> order sales total
+    public static String getVendorSalesDataTable() {
+        String stringReturn = "[";
+        ArrayList<Vendor> vendorList = UserDAO.retrieveVendorList();
+        for (Vendor vendor : vendorList) {
+            String content = "\"" + vendor.getVendor_name() + "\"";
+            double salesOrder = 0.0;
+            for (Order order : retrieveOrderList(vendor.getVendor_id())) {
+                salesOrder += order.getTotal_final_price();
+            }
+            //Sales order string needs to be {v: 10000, f: '$10,000'}
+            String salesOrderStr = "{v: " + salesOrder + ", f: '" + String.format("%1$,.2f", salesOrder) + "'}";
+            String wrapContent = "[" + content + "," + salesOrderStr + "],";
+            stringReturn += wrapContent;
+        }
+        stringReturn = stringReturn.substring(0, stringReturn.length() - 1);
+        stringReturn = stringReturn + "]";
+        System.out.println(stringReturn);
+        return stringReturn;
+    }
+
+    //Make a data table that consists on Date --> order count sales total
+    public static String getDateOrderDataTable() {
+        String stringReturn = "[";
+        ArrayList<Vendor> vendorList = UserDAO.retrieveVendorList();
+        TreeMap<Date, Integer> dateCountMap = new TreeMap<Date, Integer>();
+        for (Vendor vendor : vendorList) {
+            String content = "\"" + vendor.getVendor_name() + "\"";
+            double salesOrder = 0.0;
+            for (Order order : retrieveOrderList(vendor.getVendor_id())) {
+                Date date = order.getDtOrder();
+                if (dateCountMap.containsKey(date)) {
+                    dateCountMap.put(date, dateCountMap.get(date) + 1);
+                } else {
+                    dateCountMap.put(date, 1);
+                }
+            }
+
+            //Iterate through the treemap
+            Iterator iter = dateCountMap.keySet().iterator();
+            while (iter.hasNext()) {
+                Date date = (Date)iter.next();
+                int counts = dateCountMap.get(date);
+                //It needs to be like[new Date(2015, 0, 1), 5]
+                String dateOrderStr = "new Date("+date.getYear()+", "+date.getMonth()+","+date.getDate()+")";
+                String wrapContent = "[" + dateOrderStr + "," + counts + "],";
+                stringReturn += wrapContent;
+
+            }
+
+        }
+        stringReturn = stringReturn.substring(0, stringReturn.length() - 1);
+        stringReturn = stringReturn + "]";
         System.out.println(stringReturn);
         return stringReturn;
     }

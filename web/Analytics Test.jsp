@@ -11,10 +11,12 @@
     <head>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-            google.charts.load('current', {packages: ['corechart']});
+            google.charts.load('current', {packages: ['corechart', 'table']});
             google.charts.setOnLoadCallback(drawDishChart);
             google.charts.setOnLoadCallback(drawOrderChart);
             google.charts.setOnLoadCallback(drawBarChart);
+            google.charts.setOnLoadCallback(drawTable);
+            google.charts.setOnLoadCallback(drawTimeChart);
             function drawDishChart() {
                 // Create the data table.
                 var data = new google.visualization.DataTable();
@@ -94,6 +96,59 @@
 
                 chart.draw(data, options);
             }
+            function drawTable() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Vendor');
+                data.addColumn('number', 'Total Order Sales');
+                data.addRows(<%=OrderController.getVendorSalesDataTable()%>);
+
+                var table = new google.visualization.Table(document.getElementById('table_div'));
+                var options = {
+                    title: 'Vendor and Sales',
+                    chartArea: {width: '50%'}
+                };
+                table.draw(data, options);
+            }
+            function drawTimeChart() {
+
+                var data = new google.visualization.DataTable();
+                data.addColumn('date', 'Time of Day');
+                data.addColumn('number', '#Orders Made');
+
+                data.addRows(<%=OrderController.getDateOrderDataTable()%>);
+
+
+                var options = {
+                    title: 'Orders Made',
+                    width: 900,
+                    height: 500,
+                    hAxis: {
+                        format: 'M/d/yy',
+                        gridlines: {count: 15}
+                    },
+                    vAxis: {
+                        gridlines: {color: 'none'},
+                        minValue: 0
+                    }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('order_timeline_div'));
+
+                chart.draw(data, options);
+
+                var button = document.getElementById('change');
+
+                button.onclick = function() {
+
+                    // If the format option matches, change it to the new option,
+                    // if not, reset it to the original format.
+                    options.hAxis.format === 'M/d/yy' ?
+                            options.hAxis.format = 'MMM dd, yyyy' :
+                            options.hAxis.format = 'M/d/yy';
+
+                    chart.draw(data, options);
+                };
+            }
         </script>
     </head>
     <body>
@@ -101,7 +156,12 @@
         <div id="chart_dish_pie_div"></div>
         <!-- Identify where the pie chart should be drawn. -->
         <div id="chart_order_pie_div"></div>
+        <!-- Identify where the table should be drawn. -->
+        <div id="table_div"></div>
+        <!-- Identify where the timeline chart should be drawn. -->
+        <div id="order_timeline_div"></div>
         <!-- Identify where the bar chart should be drawn. -->
         <div id="chart_bar_div"></div>
+
     </body>
 </html>
