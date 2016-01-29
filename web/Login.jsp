@@ -32,13 +32,13 @@
                     }
                 %>
             
-            <form action = "LoginServlet" method="POST">
+            <form action = "LoginServlet" method="get">
                 <div class="input-group">
-                    <input type="text" id="username" autocomplete="off" onblur="checkInput(this)" />
+                    <input type="text" name="username" autocomplete="off" onblur="checkInput(this)" />
                     <label for="username">Username</label>
                 </div>
                 <div class="input-group">
-                    <input type="password" id="password" onblur="checkInput(this)" />
+                    <input type="password" name="password" onblur="checkInput(this)" />
                     <label for="password">Password</label>
                 </div>
                 <input type="submit" value="Enter" />

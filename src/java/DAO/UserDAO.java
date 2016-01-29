@@ -290,10 +290,10 @@ public class UserDAO {
         try {
             //creates connections to database
             conn = ConnectionManager.getConnection();
-            sql = "Select * from vendor where email = ? and password = ?";
+            sql = "Select * from vendor where vendor_id = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, email);
-            stmt.setString(2, password);
+            //stmt.setString(2, password);
             rs = stmt.executeQuery();
 
             //Retrieves the vendor info from database and create a new vendor object to return
