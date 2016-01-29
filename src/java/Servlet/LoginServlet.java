@@ -34,88 +34,83 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try  {
+        try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            
-             //vincentt.2013@sis.smu.edu.sg
-            
+            //vincentt.2013@sis.smu.edu.sg
+
             //retrieves input from user from Login Page
-            String email = request.getParameter("username");
+            String username = request.getParameter("username");
             String password = request.getParameter("password");
-           
+
             //create a new session
             HttpSession session = request.getSession();
-            
-            
+
             //destination
             String url = "Login.jsp";
+
+           
+
+            //attemptLoginSupplier(email, password);
+            Vendor vendor = attemptLoginVendor(username, password);
+            Supplier supplier = attemptLoginSupplier(username,password);
             
-            String supplier_id = null; 
-            
-                    //attemptLoginSupplier(email, password);
-            int vendor_id = attemptLoginVendor(email, password);
-            
-//            if(vendor_id == null && supplier_id == null){
-//                //redirect to login page
-//                request.setAttribute("errorMsg", "Invalid e-mail or password entered");
-//            }else if(vendor_id != null && supplier_id == null){
-//                //redirect to vendor home
+            if (vendor == null && supplier == null) {
+                //redirect to login page
+                request.setAttribute("errorMsg", "Invalid e-mail or password entered");
+            } else if (vendor != null && supplier == null) {
+                //redirect to vendor home
                 url = "Home.jsp";
-                session.setAttribute("currentVendor",""+ vendor_id);
+                session.setAttribute("currentVendor", "" + vendor);
                 request.setAttribute("errMsg", null);
-//                
-//            }else if(vendor_id == null && supplier_id != null){
-//                //redirect to supplier home
-//                url = "Home.jsp";   
-//                session.setAttribute("currentSupplier", supplier_id);
-//                request.setAttribute("errMsg", null);
-//            }else{
-//                request.setAttribute("errMsg", "Invalid email or password entered.");
-//            }
+
+            } else if (vendor == null && supplier != null) {
+                //redirect to supplier home
+                url = "Home.jsp";
+                session.setAttribute("currentSupplier", supplier);
+                request.setAttribute("errMsg", null);
+            } else {
+                request.setAttribute("errMsg", "Invalid email or password entered.");
+            }
             //redirect to respective pages
-            
             
              out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+
             RequestDispatcher view = request.getRequestDispatcher(url);
             view.forward(request, response);
-           
-            
-        }finally{
+
+        } finally {
             out.flush();
             out.close();
         }
     }
-    
-    private int attemptLoginVendor(String email, String password){
-        UserDAO userDAO = new UserDAO();
-        Vendor vendor = userDAO.loginVendor(email, password);
-        int actualEmail = vendor.getVendor_id();
-        return actualEmail;
-        
-    } 
-    
-    private String attemptLoginSupplier(String email, String password){
-        
-        Supplier supplier = userDAO.loginSupplier(email, password);
-        String actualEmail = supplier.getEmail();
-        return actualEmail;
-    } 
-    
+
+    private Vendor attemptLoginVendor(String username, String password) {
+
+        Vendor vendor = UserDAO.loginVendor(username, password);
+//        int actualEmail = vendor.getVendor_id();
+        return vendor;
+
+    }
+
+    private Supplier attemptLoginSupplier(String username, String password) {
+
+        Supplier supplier = UserDAO.loginSupplier(username, password);
+//        String actualEmail = supplier.getEmail();
+        return supplier;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

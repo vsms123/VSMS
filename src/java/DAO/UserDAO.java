@@ -165,7 +165,7 @@ public class UserDAO {
         }
     }
     
-    public static Supplier loginSupplier(String email, String password) {
+    public static Supplier loginSupplier(String username, String password) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -174,10 +174,11 @@ public class UserDAO {
         try {
             //creates connections to database
             conn = ConnectionManager.getConnection();
-            sql = "Select * from supplier where email = ? and password = ?";
+            sql = "Select * from supplier where email like '#1%' and password = '#2'";
+             sql = sql.replace("#1", username);
+            sql = sql.replace("#2", password);
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, email);
-            stmt.setString(2, password);
+           
             rs = stmt.executeQuery();
 
             //Retrieves the supplier info from database and create a new supplier object to return
@@ -189,6 +190,7 @@ public class UserDAO {
                 int area_code = rs.getInt("area_code");
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
+                String email = rs.getString("email");
                 supplier = new Supplier(supplier_id, password, supplier_name, supplier_description, supplier_type, email, area_code, telephone_number, address);
             }
         } catch (SQLException e) {
@@ -281,7 +283,7 @@ public class UserDAO {
 
     }
 
-    public static Vendor loginVendor(String email, String password) {
+    public static Vendor loginVendor(String username, String password) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -290,10 +292,11 @@ public class UserDAO {
         try {
             //creates connections to database
             conn = ConnectionManager.getConnection();
-            sql = "Select * from vendor where vendor_id = ?";
+            sql = "Select * from vendor where email like '#1%' and password = '#2'";
+            sql = sql.replace("#1", username);
+            sql = sql.replace("#2", password);
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, email);
-            //stmt.setString(2, password);
+            
             rs = stmt.executeQuery();
 
             //Retrieves the vendor info from database and create a new vendor object to return
@@ -304,6 +307,7 @@ public class UserDAO {
                 int area_code = rs.getInt("area_code");
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
+                String email = rs.getString("email");
                 vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address);
             }
         } catch (SQLException e) {
