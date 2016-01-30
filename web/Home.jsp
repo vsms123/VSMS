@@ -48,8 +48,6 @@
                     
                     <p></p>
 
-                    <button type="button" class="ui button show">123</button>
-
 
                     <p></p>
                 </div>

@@ -38,6 +38,13 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
+                <div class="ui breadcrumb" >
+                    <a class="section">Home</a>
+                    <i class="right angle icon divider"></i>
+                    <a class="section">Manage Menu</a>
+                    <i class="right angle icon divider"></i>
+                    <div class="active section">Recipe Buider</div>
+                </div>
                 <h1>Order</h1>
 
                 <form class="ui form" id="addOrder" action="orderservlet" method="post"> 

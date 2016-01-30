@@ -16,15 +16,39 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <script>
-            $(document).ready(function () { 
-                 $('.message').click(function () {
+            $(document).ready(function () {
+                $('.message').click(function () {
                     //show modal button
                     $('#modalMessage').modal('show');
                 });
+                $(window).on('load resize', function () {
+                    var width = $(window).width();
+                    var height = $(window).height();
+
+                    if ((width <= 800) && (height <= 600)) {
+                        $("#search1").css("display", "none");
+                    }
+                    else {
+                        $("#search1").css("display", "");
+                    }
+                });
+
 
             });
-        </script>
 
+
+        </script>
+        <script>
+//            function detectmob() {
+//                if (window.innerWidth <= 800 && window.innerHeight <= 600) {
+//                    document.getElementById("search1").innerHTML = "<h1>asdasd</h1>"; 
+//                } else {
+//                    return false;
+//                }
+//            }
+//            detectmob();
+
+        </script>
 
     </head>
     <body>
@@ -32,10 +56,10 @@
             <div class="six wide column">
                 <img class="logo" src="./resource/pictures/logofinal.png">
             </div>
-            <div class="ten wide column" style="position:relative;top: 50px">
-                Find ingredients that you need
+            <div class="ten wide column" id="search1" style="position:relative;top: 50px">
+                <h3>Find ingredients that you need</h3>
 
-                <div class="ui fluid action input" style="margin-right: 10%">
+                <div class="ui fluid action input"  style="margin-right: 10%">
                     <input type="text" placeholder="Search suppliers, ingredients...">
                     <div class="ui button"> <i class="search icon"></i></div>
                 </div>
@@ -44,25 +68,26 @@
         </div>
 
         <div class="ui stackable menu">
-            <a href="Home.jsp" class="item">
-                <h3> <i class="large shop icon"></i> &nbsp Order</h3>
+            <a href="Order.jsp" class="item" style=" font-size: 16px" >
+                <i class="large shop icon" ></i> &nbsp Order
             </a>
-            <a href="Menu.jsp" class="item">
-                <h3> <i class="large food icon"></i>&nbsp Menu</h3>
+            <a href="Menu.jsp" class="item" style=" font-size: 16px">
+                <i class="large food icon"></i>&nbsp Menu
             </a>
-            <a class="item message">
-                <h3> <i class="large  mail icon"></i>&nbsp Messages</h3>
+            <a class="item message" style=" font-size: 16px">
+                <i class="large  mail icon"></i>&nbsp Messages
             </a>
-            <div class="ui simple dropdown item">
-               <h3> <i class="large user icon"></i> &nbsp My Account</h3>
+            <div class="ui simple dropdown item" style=" font-size: 16px">
+                <i class="large user icon"></i>  My Account
 
                 <div class="menu">
-                   <h3> <a class="item"><i class="large edit icon"></i> Edit Profile</a></h3>
-                   <h3> <a class="item"><i class="large settings icon"></i> Account Settings</a></h3>
+                    <a class="item" style=" font-size: 16px"><i class="large edit icon"></i> Edit Profile</a>
+                    <a class="item" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
-        </div>
 
+
+        </div>
 
 
 
@@ -71,14 +96,14 @@
         <div id="modalMessage" class="ui basic modal">
             <i class="close icon"></i>
             <div class="header">
-                <h1>Messages</h1>
+                <h1>Message</h1>
             </div>
             <div class="image content">
                 <div class="ui medium image">
                     <img src="./resource/pictures/underconstruction.PNG">
                 </div>
                 <div class="description">
-                    <p><h2>Users may send mails to friends and receive alerts about new updates.</h2></p>
+                    <p><h2>Users may check notifications and receive alerts about new updates.</h2></p>
                     <div class="ui header" style="color: white">Coming soon..</div>
                     <p>Feature currently being developed. You will be notified about the launch of this feature.</p>
 

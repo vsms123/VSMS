@@ -57,8 +57,15 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
     </head>
-    <body>
-        <h1>Menu.jsp</h1>
+        <body class="background">
+
+
+        <div class="transparency">
+
+
+            <div class="ui segment" style="left:5%;width:90%">
+                <%@ include file="Navbar.jsp" %>
+        <h1>Menu</h1>
         <table>
             <%for (Dish dish : dishList) {%>
             <tr>
@@ -163,6 +170,8 @@
                 </div>
             </div>
         </div>
+                    </div>
+                    </div>
         <%}%>
         <!--JAVASCRIPT-->
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
