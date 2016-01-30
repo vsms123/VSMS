@@ -80,7 +80,7 @@ public class OrderController extends HttpServlet {
         for (Dish dish : dishList) {
             //Create a component inside the table one <tr> at a time
             dishListString += "<tr>";
-            dishListString += "<td>" + dish + "</td>";
+            dishListString += "<td><h2>" + dish.getDish_name() + "</h2></td>";
             dishListString += "<td><input type=\"text\" value=1 name=\"dish" + dish.getDish_id() + "\"/></td>";
             dishListString += "</tr>";
         }
