@@ -9,9 +9,9 @@
 <html>
 
     <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
         <link rel="stylesheet" href="css/main.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -25,10 +25,13 @@
 
 
     <body class="background">
+        
 
         <div class="transparency">
+  
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
+               
                 <p></p>
                 <div class="ui breadcrumb" >
                     <a class="section">Home</a>
@@ -40,6 +43,7 @@
                 <div class="ui raised very padded text container">
                     <p></p>
                     <h2 class="ui header">VSMS Menu</h2>
+                         
                     <p></p>
                     
                     <p></p>

@@ -15,8 +15,8 @@
         <title>Recipe Builder</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
-                $.post("orderservlet", function(responseText) {
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
+                $.post("orderservlet", function (responseText) {
                     $("#orderListTable").append(responseText);
                 });
             });
@@ -30,20 +30,30 @@
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
-    <body>
-        <h1>Order.jsp</h1>
+    <body class="background">
 
-        <form class="ui form" id="addOrder" action="orderservlet" method="post"> 
-            <!--Inputting form elements-->
 
-            <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
-            <table id="orderListTable"></table>
+        <div class="transparency">
 
-            <!--Input hidden attributes-->
-            <input type="hidden" name="vendor_id" value="1"/>
 
-            <input type="submit" value="Add" class="ui teal button" />
-        </form>
+            <div class="ui segment" style="left:5%;width:90%">
+                <%@ include file="Navbar.jsp" %>
+                <h1>Order</h1>
+
+                <form class="ui form" id="addOrder" action="orderservlet" method="post"> 
+                    <!--Inputting form elements-->
+
+                    <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
+                    <table id="orderListTable"></table>
+
+                    <!--Input hidden attributes-->
+                    <input type="hidden" name="vendor_id" value="1"/>
+                    <br/>
+                    <input type="submit" value="Add" class="ui big teal button" />
+                </form>
+
+            </div>
+        </div>
 
         <!--JAVASCRIPT-->
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
