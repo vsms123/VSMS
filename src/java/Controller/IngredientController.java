@@ -46,18 +46,10 @@ public class IngredientController extends HttpServlet {
             response.sendRedirect("Menu.jsp");
 
         }
-        
-        String dishListString = "";        
-        ArrayList<Dish> dishList = getDish("1");
-        
-        for (Dish dish :dishList){
-            dishListString += "<li>"+dish+"</li>";
-            dishListString += "<a href=\"RecipeBuilder.jsp?dish_id="+dish.getDish_id()+"\"> Edit </a>";
-        }
-        
+
         response.setContentType("text/plain");  // Set content type of the response so that AJAX knows what it can expect.
         response.setCharacterEncoding("UTF-8"); 
-        response.getWriter().write(dishListString);       // Write response body.
+        response.getWriter().write("");       // Write response body.
     }
     
     @Override
