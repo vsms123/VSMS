@@ -25,110 +25,129 @@ public class IngredientController extends HttpServlet {
     @Override
     //doPost will be given to Menu.java
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        //This String is to store the action that you did.
+        String action = request.getParameter("action");
+
         //A dish needs: dish_id (controller generated),dish_name, vendor_id, dish_description, ingredientQuantity(to be added);
         String dish_name = request.getParameter("dish_name");
         String dish_description = request.getParameter("dish_description");
         String vendor_idStr = request.getParameter("vendor_id");
-        
+
 //        Open out this code if you would like to test out request parameters
 //        System.out.println("It reaches here: "+dish_name+","+dish_description+","+vendor_idStr);
-        
         //Check null values to add the creation process
-        if(!UtilityController.checkNullStringArray(new String[]{dish_name,dish_description,vendor_idStr})){
-            // Getting the id of dish and vendors
-            //Get the number of dishes and add by one to become dish_id and create blank ingredient dish first. 
-            //This is less efficient, cause need to call dishes at least twice, but it would be faster than iterating or filtering alldish
-            ArrayList<Dish> getAllDish = getAllDish();
-            int dish_id = getAllDish.size()+1;
-            int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
+        if (!UtilityController.checkNullStringArray(new String[]{dish_name, dish_description, vendor_idStr})) {
+            if (action.equals("edit")) {
+                //This is editing
+                String dish_idStr = request.getParameter("dish_id");
+                int dish_id = UtilityController.convertStringtoInt(dish_idStr);
+                int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
+                updateDish(new Dish(dish_id, dish_name, vendor_id, dish_description));
+                response.sendRedirect("Menu.jsp");
+            } else if (action.equals("delete")) {
+                //This is deleting
+                String dish_idStr = request.getParameter("dish_id");
+                int dish_id = UtilityController.convertStringtoInt(dish_idStr);
+                int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
+                deleteDish(IngredientDAO.getDishByID(dish_id));
+                response.sendRedirect("Menu.jsp");
+            } else {
+                //This is adding
+                // Getting the id of dish and vendors
+                //Get the number of dishes and add by one to become dish_id and create blank ingredient dish first. 
+                //This is less efficient, cause need to call dishes at least twice, but it would be faster than iterating or filtering alldish
+                ArrayList<Dish> getAllDish = getAllDish();
+                int dish_id = getLatestDishID() + 1;
+                int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
 
-            addDish(new Dish(dish_id,dish_name,vendor_id,dish_description));
-            response.sendRedirect("Menu.jsp");
-
+                addDish(new Dish(dish_id, dish_name, vendor_id, dish_description));
+                response.sendRedirect("Menu.jsp");
+            }
         }
 
         response.setContentType("text/plain");  // Set content type of the response so that AJAX knows what it can expect.
-        response.setCharacterEncoding("UTF-8"); 
-        response.getWriter().write("");       // Write response body.
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("Success");       // Write response body.
+//        response.getWriter().write("<font color=\"red\">" + action + " successful</font>");       // Write response body.
     }
-    
+
     @Override
     //doGet will be given to RecipeBuilder.java
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //To query Dish to be attached with an <Ingredient,IngredientQuantity> HashMap
         String dish_idStr = request.getParameter("dish_id");
-        
+
         //An ingredient needs:dish_name, supplier_id, subcategory, ingredient_description, offeredprice
         String name = request.getParameter("name");
         String supplier_idStr = request.getParameter("supplier_id");
         String subcategory = request.getParameter("subcategory");
         String description = request.getParameter("description");
         String offeredPrice = request.getParameter("offeredPrice");
-        
+
         //The ingredientQuantity needs quantity, unit, vendorid
         String quantityStr = request.getParameter("quantity");
         String supplyUnit = request.getParameter("supplyUnit");
         String vendor_idStr = request.getParameter("vendor_id");
-        
-        
+
         //Open out this code if you would like to test out request parameters
-        System.out.println("It reaches here: "+dish_idStr+","+supplier_idStr+","+name+","+supplyUnit+","+subcategory+","+description+","+offeredPrice+","+quantityStr+","+supplyUnit+","+vendor_idStr);
-        
+        System.out.println("It reaches here: " + dish_idStr + "," + supplier_idStr + "," + name + "," + supplyUnit + "," + subcategory + "," + description + "," + offeredPrice + "," + quantityStr + "," + supplyUnit + "," + vendor_idStr);
+
         //Check null values to add the creation process
-        if(!UtilityController.checkNullStringArray(new String[]{dish_idStr,supplier_idStr,name,supplyUnit,subcategory,description,offeredPrice,quantityStr,supplyUnit,vendor_idStr})){
-            
-            int supplier_id = UtilityController.convertStringtoInt(supplier_idStr); 
+        if (!UtilityController.checkNullStringArray(new String[]{dish_idStr, supplier_idStr, name, supplyUnit, subcategory, description, offeredPrice, quantityStr, supplyUnit, vendor_idStr})) {
+
+            int supplier_id = UtilityController.convertStringtoInt(supplier_idStr);
             int dish_id = UtilityController.convertStringtoInt(dish_idStr);
-            
+
             //Creating a new ingredient and add ingredient quantity
-            Dish dish = getDishByID(dish_id); 
-            Ingredient ingredient = new Ingredient(supplier_id,name,supplyUnit, subcategory,description,offeredPrice);
+            Dish dish = getDishByID(dish_id);
+            Ingredient ingredient = new Ingredient(supplier_id, name, supplyUnit, subcategory, description, offeredPrice);
             System.out.println(ingredient);
             // ----- This is to populate parent table (Ingredient) -------//
             addIngredient(ingredient);
-            
+
             // ---- Creating ingredientQuantity based on user inputs ----- // 
             ArrayList<String> ingredientQuantity = new ArrayList<String>();
             ingredientQuantity.add(quantityStr);
             ingredientQuantity.add(ingredient.getSupplyUnit());
-            
+
             // ----  adding the ingredientQuantity and put new dish ---- // 
             dish.getIngredientQuantity().put(ingredient, ingredientQuantity);
-           
+
             // --- use this dish to populate IngredientQuantity Table ---- //
             updateDish(dish);
-            
-            response.sendRedirect("RecipeBuilder.jsp?dish_id="+dish_id);
-            
-          }
-        
-        
+
+            response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_id);
+
+        }
+
         //        Reading the ingredients of a dish
         String ingredientListString = "";
-        
-        HashMap<Ingredient,ArrayList<String>> ingredientList =  getIngredientQuantity(dish_idStr);
+
+        HashMap<Ingredient, ArrayList<String>> ingredientList = getIngredientQuantity(dish_idStr);
         System.out.println("The ingredient list is ");
-        if(ingredientList.isEmpty()){
+        if (ingredientList.isEmpty()) {
             System.out.println("it is empty");
-        } else{
+        } else {
             System.out.println("Not empty");
         }
         Iterator iter = ingredientList.keySet().iterator();
-        while (iter.hasNext()){
-            Ingredient ingredient = (Ingredient)iter.next();
+        while (iter.hasNext()) {
+            Ingredient ingredient = (Ingredient) iter.next();
             ArrayList<String> stringArray = ingredientList.get(ingredient);
-            ingredientListString += "<li>"+ingredient+" "+stringArray+"</li>";
+            ingredientListString += "<li>" + ingredient + " " + stringArray + "</li>";
         }
-        
+
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8"); 
+        response.setCharacterEncoding("UTF-8");
         response.getWriter().write(ingredientListString);       // Write response body.
-        
+
     }
 
-    public static Dish getDishByID(int dish_id){
+    public static Dish getDishByID(int dish_id) {
         return IngredientDAO.getDishByID(dish_id);
     }
+
     public static ArrayList<Ingredient> getIngredientBySupplier(int supplier_id) {
         return IngredientDAO.getIngredientBySupplier(supplier_id);
     }
@@ -148,11 +167,11 @@ public class IngredientController extends HttpServlet {
     public static void updateIngredient(Ingredient ingredient) {
         IngredientDAO.updateIngredient(ingredient);
     }
-    
+
     public static ArrayList<Dish> getAllDish() {
         return IngredientDAO.getAllDish();
     }
-    
+
     public static ArrayList<Dish> getDish(String vendor_id) {
         return IngredientDAO.getDish(vendor_id);
     }
@@ -189,18 +208,30 @@ public class IngredientController extends HttpServlet {
         return IngredientDAO.getSupplierIdByIngredient(ingredient_name);
     }
 
+    public static int getLatestDishID() {
+        int latest = 0;
+        ArrayList<Dish> dishList = getAllDish();
+        for (Dish dish : dishList) {
+            int dish_id = dish.getDish_id();
+            if (latest < dish_id) {
+                latest = dish_id;
+            }
+        }
+        return latest;
+    }
+
     //Make a data table that consists on dish --> number of ingredients
-    public static String getDishDataTable (){
+    public static String getDishDataTable() {
         String stringReturn = "[";
         ArrayList<Dish> dishList = getAllDish();
-        for(Dish dish:dishList){
-          String content = "\""+dish.getDish_name()+"\"";
-          int quantityIngredient = dish.getIngredientQuantity().size();
-          String wrapContent = "["+content+","+quantityIngredient+"],";
-          stringReturn +=wrapContent;
+        for (Dish dish : dishList) {
+            String content = "\"" + dish.getDish_name() + "\"";
+            int quantityIngredient = dish.getIngredientQuantity().size();
+            String wrapContent = "[" + content + "," + quantityIngredient + "],";
+            stringReturn += wrapContent;
         }
-        stringReturn = stringReturn.substring(0, stringReturn.length()-1);
-        stringReturn=stringReturn+"]";
+        stringReturn = stringReturn.substring(0, stringReturn.length() - 1);
+        stringReturn = stringReturn + "]";
         System.out.println(stringReturn);
         return stringReturn;
     }
