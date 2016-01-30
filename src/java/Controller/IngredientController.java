@@ -6,9 +6,12 @@
 package Controller;
 
 import DAO.IngredientDAO;
+import static DAO.IngredientDAO.getIngredientBySupplier;
+import DAO.UserDAO;
 import Model.Dish;
 import Model.Ingredient;
 import Model.Order;
+import Model.Supplier;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -211,5 +214,24 @@ public class IngredientController extends HttpServlet {
         stringReturn=stringReturn+"]";
         System.out.println(stringReturn);
         return stringReturn;
+    }
+    
+    public static HashMap<String,Ingredient> autoCompleteIngredient(int vendor_id){
+        ArrayList<Supplier> supplierList = UserDAO.retrieveFavouriteSupplierListByVendor(vendor_id);
+        ArrayList<Ingredient> list=new ArrayList<Ingredient>();
+        ArrayList<Integer> idList=new ArrayList<Integer>();
+        for(Supplier supplier:supplierList){
+            idList.add(supplier.getSupplier_id());
+        }
+        for(int id:idList){
+            list.addAll(getIngredientBySupplier(id));
+        }
+        HashMap<String,Ingredient> map=new HashMap<String, Ingredient>();
+        int count=1;
+        for(Ingredient ingredient:list){
+            map.put(count+"",ingredient);
+            count++;
+        }
+    return map;
     }
 }
