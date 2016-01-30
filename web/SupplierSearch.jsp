@@ -18,7 +18,7 @@
 
         <h1>Supplier Search</h1>
         <p>Enter the name or category of suppliers to search for</p>
-
+        <% session.setAttribute("isSupplier","false");%>
         <form name="autofillform" action="autocomplete"><table border="0" cellpadding="5">
                 
                 <tbody>
