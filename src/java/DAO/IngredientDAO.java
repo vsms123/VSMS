@@ -9,6 +9,7 @@ import Controller.ConnectionManager;
 import Controller.UtilityController;
 import Model.Dish;
 import Model.Ingredient;
+import Model.Supplier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
