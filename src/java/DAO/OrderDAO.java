@@ -9,7 +9,6 @@ package DAO;
  *
  * @author Benjamin
  */
-
 import Controller.ConnectionManager;
 import Controller.UtilityController;
 import Model.*;
@@ -56,9 +55,10 @@ public class OrderDAO {
                 int vendor_id = rs.getInt("vendor_id");
                 double total_final_price = rs.getDouble("total_final_price");
                 Date dt_order = rs.getDate("dt");
+                String status = rs.getString("status");
                 ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
 
-                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList);
+                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, status, orderLineList);
                 orderList.add(order);
             }
         } catch (SQLException e) {
@@ -91,10 +91,11 @@ public class OrderDAO {
                 //int vendor_id = rs.getInt("vendor_id");
                 double total_final_price = rs.getDouble("total_final_price");
                 Date dt_order = rs.getDate("dt");
+                String status = rs.getString("status");
                 ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
 
-                order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList);
-                
+                order = new Order(order_id, vendor_id, total_final_price, dt_order, status, orderLineList);
+
             }
         } catch (SQLException e) {
             handleSQLException(e, sql);
@@ -128,9 +129,10 @@ public class OrderDAO {
                 double total_final_price = rs.getDouble("total_final_price");
                 Date dt_order = rs.getDate("dt");
                 ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
+                String status = rs.getString("status");
 
-                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList);
-                
+                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, status, orderLineList);
+
                 orderList.add(order);
             }
         } catch (SQLException e) {
@@ -189,11 +191,12 @@ public class OrderDAO {
         //insert new order into data base
         try {
             conn = ConnectionManager.getConnection();
-            sql = "insert into `order`( order_id, vendor_id, total_final_price,dt) values (#1,#2,#3,#4)";
+            sql = "insert into `order`( order_id, vendor_id, total_final_price,dt,status) values (#1,#2,#3,#4,#5)";
             sql = sql.replace("#1", "" + order.getOrder_id());
             sql = sql.replace("#2", "" + order.getVendor_id());
             sql = sql.replace("#3", "" + order.getTotal_final_price());
             sql = sql.replace("#4", "" + UtilityController.convertSQLDateTimeString(order.getDtOrder()));
+            sql = sql.replace("#5", "" + "'"+order.getStatus()+"'");
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
 
@@ -203,7 +206,7 @@ public class OrderDAO {
                 sql = sql.replace("#1", "" + orderline.getVendor_id());
                 sql = sql.replace("#2", "" + orderline.getOrder_id());
                 sql = sql.replace("#3", "" + orderline.getSupplier_id());
-                sql = sql.replace("#4", "" + "'"+orderline.getIngredient_name()+"'");
+                sql = sql.replace("#4", "" + "'" + orderline.getIngredient_name() + "'");
                 sql = sql.replace("#5", "" + orderline.getFinalprice());
                 sql = sql.replace("#6", "" + orderline.getQuantity());
                 sql = sql.replace("#7", "" + orderline.getBufferpercentage());
@@ -249,44 +252,44 @@ public class OrderDAO {
         }
     }
 
-    public static void updateOrder(Order order){
+    public static void updateOrder(Order order) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "";
-        try{
+        try {
             conn = ConnectionManager.getConnection();
             sql = "UPDATE orders"
                     + "SET total_final_price = #1"
-                        + "WHERE order_id=#2 && vendor_id=#3";
+                    + "WHERE order_id=#2 && vendor_id=#3";
             sql = sql.replace("#1", "" + order.getTotal_final_price());
             sql = sql.replace("#2", "" + order.getOrder_id());
             sql = sql.replace("#3", "" + order.getVendor_id());
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
-            
+
             ArrayList<Orderline> orderLineList = order.getOrderlines();
             updateOrderlines(orderLineList);
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             handleSQLException(e, sql);
-        }finally{
+        } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
     }
-    
-    public static void updateOrderlines(ArrayList<Orderline> orderlines){
+
+    public static void updateOrderlines(ArrayList<Orderline> orderlines) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "";
-        
-        for(Orderline newOrderline : orderlines){
-            try{
+
+        for (Orderline newOrderline : orderlines) {
+            try {
                 conn = ConnectionManager.getConnection();
                 sql = "UPDATE orderline"
                         + "SET ingredient_name = #1 , price = #2 , quantity = #3 , buffer_percentage = #4"
-                            + "WHERE vendor_id = #5 && order_id = #6";
+                        + "WHERE vendor_id = #5 && order_id = #6";
                 sql = sql.replace("#1", newOrderline.getIngredient_name());
                 sql = sql.replace("#2", "" + newOrderline.getFinalprice());
                 sql = sql.replace("#3", "" + newOrderline.getQuantity());
@@ -295,12 +298,12 @@ public class OrderDAO {
                 sql = sql.replace("#6", "" + newOrderline.getSupplier_id());
                 stmt = conn.prepareStatement(sql);
                 stmt.executeUpdate();
-                
-            }catch(SQLException e){
-            handleSQLException(e, sql);
-            }finally{
-            ConnectionManager.close(conn, stmt, rs);
-        }
+
+            } catch (SQLException e) {
+                handleSQLException(e, sql);
+            } finally {
+                ConnectionManager.close(conn, stmt, rs);
+            }
         }
     }
 }

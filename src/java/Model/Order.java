@@ -14,21 +14,23 @@ public class Order {
     private double total_final_price;
     private Date dt_order;
     private ArrayList<Orderline> orderlines;
+    private String status; //status will have 3 values "Approved","Rejected","Pending" in proper case
 
-    public Order(int order_id, int vendor_id, double total_final_price, Date dt_order, ArrayList<Orderline> orderlines) {
+    public Order(int order_id, int vendor_id, double total_final_price, Date dt_order, String status,ArrayList<Orderline> orderlines) {
         this.order_id = order_id;
         this.vendor_id = vendor_id;
         this.total_final_price = total_final_price;
         this.dt_order = dt_order;
+        this.status = status;
         this.orderlines = orderlines;
     }
 
-    public Order(int order_id, int vendor_id, double total_final_price, Date dt_order) {
+    public Order(int order_id, int vendor_id, double total_final_price, Date dt_order, String status) {
         this.order_id = order_id;
         this.vendor_id = vendor_id;
         this.total_final_price = total_final_price;
         this.orderlines = orderlines;
-
+        this.status = status;
     }
     public void addOrderlines (Orderline orderline){
         this.orderlines.add(orderline);
@@ -73,9 +75,15 @@ public class Order {
     public void setDtOrder(Date dt_order) {
         this.dt_order = dt_order;
     }
+    public String getStatus(){
+        return status;
+    }
+    public void setStatus(String status){
+        this.status = status;
+    }
 
     public String toString() {
-        return "Order_id: " + order_id + "Vendor_id: " + vendor_id + "Total final price: " + total_final_price+" the OrderTime is "+dt_order.toString();
+        return "Order_id: " + order_id + "Vendor_id: " + vendor_id + "Total final price: " + total_final_price+"The status is "+status+" the OrderTime is "+dt_order.toString();
     }
     @Override
     public int hashCode() {

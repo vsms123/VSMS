@@ -199,8 +199,9 @@ public class OrderController extends HttpServlet {
         while (iter.hasNext()) {
             Supplier supplier = (Supplier) iter.next();
             ArrayList<Orderline> orderlineList = supplierOrderlineMap.get(supplier);
+            String status = "pending";
             //  order has int order_id, int vendor_id, double total_final_price, Date dt_order, ArrayList<Orderline> orderlines) {
-            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList), new Date(), orderlineList);
+            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList), new Date(), status,orderlineList);
             supplierOrderMap.put(supplier, order);
             //to compensate for subsequent orders, so that there would be no duplication
             order_id += 1;
