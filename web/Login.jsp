@@ -4,6 +4,8 @@
     Author     : Benjamin
 --%>
 
+<%@page import="Model.Vendor"%>
+<%@page import="Model.Supplier"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,8 +27,8 @@
             <h1>Log In</h1>
 
             <%
-                String currentVendor = (String) session.getAttribute("currentVendor");
-                String currentSupplier = (String) session.getAttribute("currentSupplier");
+                Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                Supplier currentSupplier = (Supplier) session.getAttribute("currentSupplier");
                 String errorMsg = (String) request.getParameter("errMsg");
                 String succMsg = (String) request.getParameter("succMsg");
             %>

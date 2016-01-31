@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+       // response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
             } else if (vendor != null && supplier == null) {
                 //redirect to vendor home
                 url = "Home.jsp";
-                session.setAttribute("currentVendor", "" + vendor);
+                session.setAttribute("currentVendor", vendor);
                 request.setAttribute("errMsg", null);
 
             } else if (vendor == null && supplier != null) {
