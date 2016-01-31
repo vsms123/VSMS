@@ -5,6 +5,7 @@
  */
 package javamail;
 
+import Controller.UserController;
 import DAO.OrderDAO;
 import DAO.UserDAO;
 import Model.Order;
@@ -34,30 +35,97 @@ public class EmailController {
     private static String user = "ognidoof";
     private static String password = "AbC12321CbA";
 
-
     public EmailController(String host, String user, String password) {
         this.host = host;
         this.user = user;
         this.password = password;
     }
-    
-    public static void sendMessageToVendorSupplier(Order order, Vendor vendor) {
 
-        String subject = "Receiving order from <supplier>; Order ID : ...";
-
+//    This method is to send confirmation message after the supplier has approved/ disapproved
+    public static void sendConfirmationMessageToVendorSupplier(Order order, int vendor_id, String action) {
         if (!user.equals("") && !password.equals("")) {
             EmailController emailController = new EmailController("smtp.gmail.com", "ognidoof", "AbC12321CbA");
         } else {
             System.out.println("User email and password are empty. Please correct the problem");
         }
+        //Getting vendor
+        Vendor vendor = UserController.retrieveVendorByID(vendor_id);
+        //Getting hashmap of supplier and text message to send to each supplier / vendor
+        HashMap<Integer, String> suppOrderMap = supplierMessageList(order);
 
+        //Getting confirmation for vendors and suppliers
+        String confirmation = "Your order has been " + action +"ed";
+
+        EmailController.sendMessageToSuppliers(vendor.getVendor_name(), suppOrderMap, confirmation);
+        EmailController.sendMessageToVendor(vendor, suppOrderMap, confirmation);
+    }
+
+//    This method is to send order message after orders have been created
+    public static void sendOrderMessageToVendorSupplier(Order order, int vendor_id) {
+        if (!user.equals("") && !password.equals("")) {
+            EmailController emailController = new EmailController("smtp.gmail.com", "ognidoof", "AbC12321CbA");
+        } else {
+            System.out.println("User email and password are empty. Please correct the problem");
+        }
+        //Getting vendor
+        Vendor vendor = UserController.retrieveVendorByID(vendor_id);
         //Getting hashmap of supplier and text message to send to each supplier / vendor
         HashMap<Integer, String> suppOrderMap = EmailController.supplierMessageList(order);
 
-        EmailController.sendMessageToSuppliers(vendor.getVendor_name(), suppOrderMap);
-        EmailController.sendMessageToVendor(vendor, suppOrderMap);
+        //Getting link for supplier to confirm
+        String link = "localhost:8080/VSMS/OrderConfirmation.jsp?order_id=" + order.getOrder_id();
+
+        EmailController.sendMessageToSuppliers(vendor.getVendor_name(), suppOrderMap, link);
+        EmailController.sendMessageToVendor(vendor, suppOrderMap, "");
     }
 
+    //Convert the orders into message string for each supplier
+    public static HashMap<Integer, String> supplierMessageList(Order order) {
+        HashMap<Integer, String> suppOrderMap = new HashMap<Integer, String>();
+
+        for (Orderline orderline : order.getOrderlines()) {
+            int supplier_id = orderline.getSupplier_id();
+            Supplier supplier = UserDAO.getSupplierById(supplier_id);
+            if (suppOrderMap.containsKey(supplier_id)) {
+                suppOrderMap.put(supplier_id, suppOrderMap.get(supplier_id) + orderline.toString());
+            } else {
+                suppOrderMap.put(supplier_id, orderline.toString());
+            }
+        }
+
+        return suppOrderMap;
+    }
+
+    //convert the orders into message string for vendor
+    public static void sendMessageToVendor(Vendor vendor, HashMap<Integer, String> suppOrderMap, String additional) {
+        Iterator iter = suppOrderMap.keySet().iterator();
+        String messageText = "";
+        while (iter.hasNext()) {
+            int supplier_id = (Integer) iter.next();
+            Supplier supplier = UserDAO.getSupplierById(supplier_id);
+            messageText += supplier.getSupplier_name() + "\n";
+            messageText += supplier.getEmail() + "\n";
+            messageText += supplier.getTelephone_number() + "\n";
+            messageText += suppOrderMap.get(supplier_id);
+            messageText += "\n\n";
+        }
+
+        sendMessage(vendor.getEmail(), "Your orders to suppliers", messageText + additional);
+    }
+
+    //send orderlist to multiple suppliers --> Make sure you have the domain ready
+    public static void sendMessageToSuppliers(String vendorName, HashMap<Integer, String> suppOrderMap, String additional) {
+        Iterator iter = suppOrderMap.keySet().iterator();
+        while (iter.hasNext()) {
+            int supplier_id = (Integer) iter.next();
+            Supplier supplier = UserDAO.getSupplierById(supplier_id);
+            String messageText = suppOrderMap.get(supplier_id);
+
+            sendMessage(supplier.getEmail(), "Order from Vendor " + vendorName, messageText + additional);
+        }
+    }
+
+//    This method is to send a general message to an email with subject and message string
     public static void sendMessage(String toEmail, String subject, String messageString) {
 
         //Sending to Google SMTP Port
@@ -97,51 +165,6 @@ public class EmailController {
         } catch (MessagingException e) {
             System.out.println("Message is not sent");
             e.printStackTrace();
-        }
-    }
-
-    //TODO: Convert the orders into message string for each supplier
-    public static HashMap<Integer, String> supplierMessageList(Order order) {
-        HashMap<Integer, String> suppOrderMap = new HashMap<Integer, String>();
-
-        for (Orderline orderline : order.getOrderlines()) {
-            int supplier_id = orderline.getSupplier_id();
-            Supplier supplier = UserDAO.getSupplierById(supplier_id);
-            if (suppOrderMap.containsKey(supplier_id)) {
-                suppOrderMap.put(supplier_id, suppOrderMap.get(supplier_id) + orderline.toString());
-            } else {
-                suppOrderMap.put(supplier_id, orderline.toString());
-            }
-        }
-        return suppOrderMap;
-    }
-
-    //TODO: convert the orders into message string for vendor
-    public static void sendMessageToVendor(Vendor vendor, HashMap<Integer, String> suppOrderMap) {
-        Iterator iter = suppOrderMap.keySet().iterator();
-        String messageText = "";
-        while (iter.hasNext()) {
-            int supplier_id = (Integer) iter.next();
-            Supplier supplier = UserDAO.getSupplierById(supplier_id);
-            messageText += supplier.getSupplier_name() + "\n";
-            messageText += supplier.getEmail() + "\n";
-            messageText += supplier.getTelephone_number() + "\n";
-            messageText += suppOrderMap.get(supplier_id);
-            messageText += "\n\n";
-        }
-
-        sendMessage(vendor.getEmail(), "Your orders to suppliers", messageText);
-    }
-
-    //TODO: send orderlist to multiple suppliers --> Make sure you have the domain ready
-    public static void sendMessageToSuppliers(String vendorName, HashMap<Integer, String> suppOrderMap) {
-        Iterator iter = suppOrderMap.keySet().iterator();
-        while (iter.hasNext()) {
-            int supplier_id = (Integer) iter.next();
-            Supplier supplier = UserDAO.getSupplierById(supplier_id);
-            String messageText = suppOrderMap.get(supplier_id);
-
-            sendMessage(supplier.getEmail(), "Order from Vendor " + vendorName, messageText);
         }
     }
 }

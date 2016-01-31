@@ -251,59 +251,60 @@ public class OrderDAO {
             ConnectionManager.close(conn, stmt, rs);
         }
     }
-
-    public static void updateOrder(Order order) {
+    
+ public static void updateOrder(Order order){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "";
-        try {
+        try{
             conn = ConnectionManager.getConnection();
-            sql = "UPDATE orders"
-                    + "SET total_final_price = #1"
-                    + "WHERE order_id=#2 && vendor_id=#3";
+            sql = "UPDATE `order`"+ " SET total_final_price = #1 , status = #2"+ " WHERE order_id=#3 && vendor_id=#4";
             sql = sql.replace("#1", "" + order.getTotal_final_price());
-            sql = sql.replace("#2", "" + order.getOrder_id());
-            sql = sql.replace("#3", "" + order.getVendor_id());
+            sql = sql.replace("#2", "" + "'"+order.getStatus()+"'");
+            sql = sql.replace("#3", "" + order.getOrder_id());
+            sql = sql.replace("#4", "" + order.getVendor_id());
+            
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
-
-            ArrayList<Orderline> orderLineList = order.getOrderlines();
-            updateOrderlines(orderLineList);
-
-        } catch (SQLException e) {
+            //When I want to modify the order, I don't want to modify the orderlines. 
+//            ArrayList<Orderline> orderLineList = order.getOrderlines();
+//            updateOrderlines(orderLineList);
+            
+        }catch(SQLException e){
             handleSQLException(e, sql);
-        } finally {
+        }finally{
             ConnectionManager.close(conn, stmt, rs);
         }
     }
+   
 
-    public static void updateOrderlines(ArrayList<Orderline> orderlines) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        String sql = "";
-
-        for (Orderline newOrderline : orderlines) {
-            try {
-                conn = ConnectionManager.getConnection();
-                sql = "UPDATE orderline"
-                        + "SET ingredient_name = #1 , price = #2 , quantity = #3 , buffer_percentage = #4"
-                        + "WHERE vendor_id = #5 && order_id = #6";
-                sql = sql.replace("#1", newOrderline.getIngredient_name());
-                sql = sql.replace("#2", "" + newOrderline.getFinalprice());
-                sql = sql.replace("#3", "" + newOrderline.getQuantity());
-                sql = sql.replace("#4", "" + newOrderline.getBufferpercentage());
-                sql = sql.replace("#5", "" + newOrderline.getVendor_id());
-                sql = sql.replace("#6", "" + newOrderline.getSupplier_id());
-                stmt = conn.prepareStatement(sql);
-                stmt.executeUpdate();
-
-            } catch (SQLException e) {
-                handleSQLException(e, sql);
-            } finally {
-                ConnectionManager.close(conn, stmt, rs);
-            }
-        }
-    }
+//    public static void updateOrderlines(ArrayList<Orderline> orderlines) {
+//        Connection conn = null;
+//        PreparedStatement stmt = null;
+//        ResultSet rs = null;
+//        String sql = "";
+//
+//        for (Orderline newOrderline : orderlines) {
+//            try {
+//                conn = ConnectionManager.getConnection();
+//                sql = "UPDATE orderline"
+//                        + " SET ingredient_name = #1 , price = #2 , quantity = #3 , buffer_percentage = #4"
+//                        + " WHERE vendor_id = #5 && order_id = #6";
+//                sql = sql.replace("#1", "" + "'"+newOrderline.getIngredient_name()+"'");
+//                sql = sql.replace("#2", "" + newOrderline.getFinalprice());
+//                sql = sql.replace("#3", "" + newOrderline.getQuantity());
+//                sql = sql.replace("#4", "" + newOrderline.getBufferpercentage());
+//                sql = sql.replace("#5", "" + newOrderline.getVendor_id());
+//                sql = sql.replace("#6", "" + newOrderline.getSupplier_id());
+//                stmt = conn.prepareStatement(sql);
+//                stmt.executeUpdate();
+//
+//            } catch (SQLException e) {
+//                handleSQLException(e, sql);
+//            } finally {
+//                ConnectionManager.close(conn, stmt, rs);
+//            }
+//        }
+//    }
 }

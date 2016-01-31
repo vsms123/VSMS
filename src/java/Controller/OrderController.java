@@ -69,7 +69,7 @@ public class OrderController extends HttpServlet {
 
                 //MailController Method
 //              Will send the email to all the suppliers and the vendor
-                EmailController.sendMessageToVendorSupplier(order, UserDAO.getVendorByID(vendor_id));
+                EmailController.sendOrderMessageToVendorSupplier(order, vendor_id);
 
             }
             response.sendRedirect("Order.jsp");
@@ -88,6 +88,36 @@ public class OrderController extends HttpServlet {
         response.setContentType("text/plain");  // Set content type of the response so that AJAX knows what it can expect.
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(dishListString);       // Write response body.
+    }
+
+    @Override
+    //doPost will be given to OrderConfirmation.jsp
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Will get order_id and action (approve/reject)
+        String order_idStr = request.getParameter("order_id");
+        String action = request.getParameter("action");
+
+        //check if the form is submitted or not, if the form is submitted then the dish_countStr should not be null
+        if (!UtilityController.checkNullStringArray(new String[]{order_idStr, action})) {
+            int order_id = UtilityController.convertStringtoInt(order_idStr);
+            Order order = retrieveOrderByID(order_id);
+            //Do 3 things: 1. Update this orders inside the database 2. send these update orders to the suppliers and vendors with email 3. Redirect suppliers to a thank you page
+            if (action.equals("approve")) {
+                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), "approved", order.getOrderlines()));
+            } else if (action.equals("reject")) {
+                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), "rejected", order.getOrderlines()));
+            }
+
+            //MailController Method
+            //Will send the email to all the suppliers and the vendor
+            EmailController.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
+            
+            response.sendRedirect("SupplierConfirmationThankYou.jsp");
+        }
+
+        response.setContentType("text/plain");  // Set content type of the response so that AJAX knows what it can expect.
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("Unsuccessful");       // Write response body.
     }
 
 //    Test controller
@@ -201,7 +231,7 @@ public class OrderController extends HttpServlet {
             ArrayList<Orderline> orderlineList = supplierOrderlineMap.get(supplier);
             String status = "pending";
             //  order has int order_id, int vendor_id, double total_final_price, Date dt_order, ArrayList<Orderline> orderlines) {
-            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList), new Date(), status,orderlineList);
+            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList), new Date(), status, orderlineList);
             supplierOrderMap.put(supplier, order);
             //to compensate for subsequent orders, so that there would be no duplication
             order_id += 1;
@@ -249,6 +279,10 @@ public class OrderController extends HttpServlet {
 
     public static void addOrder(Order order) {
         OrderDAO.addOrder(order);
+    }
+
+    public static void updateOrder(Order order) {
+        OrderDAO.updateOrder(order);
     }
 
     public static void deleteOrder(Order order) {
@@ -312,10 +346,10 @@ public class OrderController extends HttpServlet {
             //Iterate through the treemap
             Iterator iter = dateCountMap.keySet().iterator();
             while (iter.hasNext()) {
-                Date date = (Date)iter.next();
+                Date date = (Date) iter.next();
                 int counts = dateCountMap.get(date);
                 //It needs to be like[new Date(2015, 0, 1), 5]
-                String dateOrderStr = "new Date("+date.getYear()+", "+date.getMonth()+","+date.getDate()+")";
+                String dateOrderStr = "new Date(" + date.getYear() + ", " + date.getMonth() + "," + date.getDate() + ")";
                 String wrapContent = "[" + dateOrderStr + "," + counts + "],";
                 stringReturn += wrapContent;
 

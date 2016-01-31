@@ -39,8 +39,8 @@ public class Test {
         //Getting hashmap of supplier and text message to send to each supplier / vendor
         HashMap<Integer,String> suppOrderMap = EmailController.supplierMessageList(order);
         
-        EmailController.sendMessageToSuppliers(vendor.getVendor_name(),suppOrderMap);
-        EmailController.sendMessageToVendor(vendor, suppOrderMap);
+        EmailController.sendMessageToSuppliers(vendor.getVendor_name(),suppOrderMap,"");
+        EmailController.sendMessageToVendor(vendor, suppOrderMap,"");
     }
       
     
