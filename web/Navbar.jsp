@@ -27,34 +27,23 @@
 
                     if ((width <= 800) && (height <= 600)) {
                         $("#search1").css("display", "none");
-                    }
-                    else {
+                    } else {
                         $("#search1").css("display", "");
                     }
                 });
 
 
             });
-
-
-        </script>
-        <script>
-//            function detectmob() {
-//                if (window.innerWidth <= 800 && window.innerHeight <= 600) {
-//                    document.getElementById("search1").innerHTML = "<h1>asdasd</h1>"; 
-//                } else {
-//                    return false;
-//                }
-//            }
-//            detectmob();
-
         </script>
 
     </head>
     <body>
         <div class="ui grid">
             <div class="six wide column">
+                <a href="Home.jsp">
                 <img class="logo" src="./resource/pictures/logofinal.png">
+                </a>
+                
             </div>
             <div class="ten wide column" id="search1" style="position:relative;top: 50px">
                 <h3>Find ingredients that you need</h3>
@@ -68,9 +57,14 @@
         </div>
 
         <div class="ui stackable menu">
-            <a href="Order.jsp" class="item" style=" font-size: 16px" >
-                <i class="large shop icon" ></i> &nbsp Order
-            </a>
+            <div class="ui simple dropdown item" style=" font-size: 16px">
+               <i class="large shop icon" ></i> Order
+
+                <div class="menu">
+                    <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make an Order</a>
+                    <a href="OrderHistory.jsp" class="item" style=" font-size: 16px"><i class="large history icon"></i> Order History</a>
+                </div>
+            </div>
             <a href="Menu.jsp" class="item" style=" font-size: 16px">
                 <i class="large food icon"></i>&nbsp Menu
             </a>
