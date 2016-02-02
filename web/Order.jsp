@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Recipe Builder</title>
+        <title>Order</title>
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
@@ -40,13 +40,13 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
                 <div class="ui breadcrumb" >
-                    <a class="section">Home</a>
+                    <a href="Home.jsp" class="section">Home</a>
                     <i class="right angle icon divider"></i>
-                    <a class="section">Manage Menu</a>
+                    <a href="" class="section">Order</a>
                     <i class="right angle icon divider"></i>
-                    <div class="active section">Recipe Buider</div>
+                    <div class="active section">Make an Order</div>
                 </div>
-                <h1>Order</h1>
+                <h1 style="color: black">Order</h1>
 
                 <form class="ui form" id="addOrder" action="orderservlet" method="post"> 
                     <!--Inputting form elements-->

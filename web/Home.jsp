@@ -40,12 +40,16 @@
                     <i class="right angle icon divider"></i>
                     <div class="active section">Recipe Buider</div>
                 </div>
+                
                 <div class="ui raised very padded text container">
                     <p></p>
-                    <h2 class="ui header">VSMS Menu</h2>
+                    <h1 class="ui header">VSMS Menu</h1>
                          
                     <p></p>
+                    <h1>We will be adding in more contents here, such as some order status and notifications </h1>
                     
+                        
+                       
                     <p></p>
 
 

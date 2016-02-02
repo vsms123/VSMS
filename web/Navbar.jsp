@@ -21,6 +21,11 @@
                     //show modal button
                     $('#modalMessage').modal('show');
                 });
+                $('.profile').click(function () {
+                    //show modal button
+                    $('#modalAccount').modal('show');
+                });
+
                 $(window).on('load resize', function () {
                     var width = $(window).width();
                     var height = $(window).height();
@@ -41,9 +46,9 @@
         <div class="ui grid">
             <div class="six wide column">
                 <a href="Home.jsp">
-                <img class="logo" src="./resource/pictures/logofinal.png">
+                    <img class="logo" src="./resource/pictures/logofinal.png">
                 </a>
-                
+
             </div>
             <div class="ten wide column" id="search1" style="position:relative;top: 50px">
                 <h3>Find ingredients that you need</h3>
@@ -58,7 +63,7 @@
 
         <div class="ui stackable menu">
             <div class="ui simple dropdown item" style=" font-size: 16px">
-               <i class="large shop icon" ></i> Order
+                <i class="large shop icon" ></i> Order
 
                 <div class="menu">
                     <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make an Order</a>
@@ -75,8 +80,8 @@
                 <i class="large user icon"></i>  My Account
 
                 <div class="menu">
-                    <a class="item" style=" font-size: 16px"><i class="large edit icon"></i> Edit Profile</a>
-                    <a class="item" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
+                    <a class="item profile" style=" font-size: 16px"><i class="large edit icon"></i> Edit Profile</a>
+                    <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
 
@@ -107,5 +112,28 @@
                 <button class="ui inverted deny orange button">Take me Back</button>
             </div>
         </div>
+
+        <div id="modalAccount" class="ui basic modal">
+            <i class="close icon"></i>
+            <div class="header">
+                <h1>Account/Profile</h1>
+            </div>
+            <div class="image content">
+                <div class="ui medium image">
+                    <img src="./resource/pictures/underconstruction.PNG">
+                </div>
+                <div class="description">
+                    <p><h2>Users manage their Account and Profile.</h2></p>
+                    <div class="ui header" style="color: white">Coming soon..</div>
+                    <p>Feature currently being developed. You will be notified about the launch of this feature.</p>
+
+                </div>
+            </div>
+            <div class="actions">
+                <button class="ui inverted deny orange button">Take me Back</button>
+            </div>
+        </div>
+
+
     </body>
 </html>
