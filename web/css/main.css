@@ -74,3 +74,11 @@ a {
   justify-content: space-around;
 }
 
+/*For error handling by JQUERY*/
+.my-error-class {
+    color:red;
+}
+.my-valid-class {
+    color:green;
+}
+

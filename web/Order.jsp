@@ -13,15 +13,15 @@
 <html>
     <head>
         <title>Order</title>
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
         <link rel="stylesheet" href="css/main.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <!--Form VALIDATION-->
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+        <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
-                $.post("orderservlet", function (responseText) {
+            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+                $.post("orderservlet", function(responseText) {
                     $("#orderListTable").append(responseText);
                 });
             });
@@ -29,7 +29,7 @@
 
         <!--CSS-->
         <!-- Import CDN for semantic UI -->    
- 
+
     </head>
     <body class="background">
 
@@ -52,8 +52,15 @@
                     <!--Inputting form elements-->
 
                     <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
-                    <table id="orderListTable"></table>
-
+                    <table id="orderListTable">
+                        <% ArrayList<Dish> dishList = IngredientController.getDish("1");
+                            for (Dish dish : dishList) {%>
+                        <tr>
+                            <td><h2><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></label></h2></td>
+                            <td><input type="number" value=1 name="dish<%=dish.getDish_id()%>" id="dish<%=dish.getDish_id()%>"/></td>
+                        </tr>
+                        <%}%>
+                    </table>
                     <!--Input hidden attributes-->
                     <input type="hidden" name="vendor_id" value="1"/>
                     <br/>
@@ -65,7 +72,6 @@
 
         <!--JAVASCRIPT-->
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
-        <script src="js/formvalidation.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>
     </body>
 </html>

@@ -13,8 +13,10 @@
 <html>
     <head>
         <title>Recipe Builder</title>
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <!--Form VALIDATION-->
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+        <script src="js/formvalidation.js"></script>
         <script>
             $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
                 $.post("ingredientservlet", function (responseText) {
@@ -79,15 +81,6 @@
             }
         </style>
 
-
-        <!--CSS-->
-        <!-- Import CDN for semantic UI -->    
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
-        <!--for general CSS please refer to the main css. For others, please just append the link line below-->
-        <link rel="stylesheet" type="text/css" href="css/main.css">
-
     </head>
     <body class="background">
 
@@ -143,10 +136,12 @@
                     </div>
 
                     <div class="content">
-                        <form id="addIngredient" action="ingredientservlet" method="post"> 
+                        <form id="addDish" class="addDish ui form" action="ingredientservlet" method="post"> 
                             <!--Inputting form elements-->
-                            Dish Name: <input type="text" name="dish_name"/>
-                            Dish Description: <textarea name="dish_description">Enter dish description here...</textarea>
+                            <label for="dish_name">Dish Name:</label> 
+                                <input id="dish_name" type="text" name="dish_name">
+                            <label for ="dish_description">Dish Description:</label> 
+                                <textarea id="dish_description" name="dish_description"></textarea>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="vendor_id" value="1">
@@ -172,10 +167,12 @@
                     </div>
 
                     <div class="content">
-                        <form id="addIngredient" action="ingredientservlet" method="post"> 
+                        <form class="ui form" action="ingredientservlet" method="post"> 
                             <!--Inputting form elements, already put for -->
-                            Dish Name: <input type="text" name="dish_name" value="<%=dish.getDish_name()%>">
-                            Dish Description: <textarea name="dish_description"><%=dish.getDish_description()%></textarea>
+                            <label for="dish_name">Dish Name:</label> 
+                                <input id="dish_name" type="text" name="dish_name" value="<%=dish.getDish_name()%>">
+                            <label for ="dish_description">Dish Description:</label> 
+                                <textarea id="dish_description" name="dish_description"><%=dish.getDish_description()%></textarea>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
@@ -205,7 +202,7 @@
                     </div>
 
                     <div class="content">
-                        <form id="addIngredient" action="ingredientservlet" method="post"> 
+                        <form class="ui form" id="deleteDish" action="ingredientservlet" method="post"> 
                             <!--Inserting delete danger message. -->
 
                             Are you sure you would like to delete the dish?
@@ -232,6 +229,7 @@
         </div>
         <%}%>
         <!--JAVASCRIPT-->
+        <script>$("#form").validate();</script>
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
         <script src="js/formvalidation.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>

@@ -77,14 +77,6 @@ public class OrderController extends HttpServlet {
 
         String dishListString = "";
 
-        for (Dish dish : dishList) {
-            //Create a component inside the table one <tr> at a time
-            dishListString += "<tr>";
-            dishListString += "<td><h2>" + dish.getDish_name() + "</h2></td>";
-            dishListString += "<td><input type=\"text\" value=1 name=\"dish" + dish.getDish_id() + "\"/></td>";
-            dishListString += "</tr>";
-        }
-
         response.setContentType("text/plain");  // Set content type of the response so that AJAX knows what it can expect.
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(dishListString);       // Write response body.

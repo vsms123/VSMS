@@ -9,12 +9,15 @@
     <head>
         <title>Recipe Builder</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <!--Form VALIDATION-->
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+        <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
-                $.get("ingredientservlet", {dish_id: "<%=request.getParameter("dish_id")%>"}, function (responseText) {
+            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+                $.get("ingredientservlet", {dish_id: "<%=request.getParameter("dish_id")%>"}, function(responseText) {
                     $("#ingredientListAdded").append(responseText);
                 });
-                $('.create-ingredient-button').click(function () {
+                $('.create-ingredient-button').click(function() {
                     //show modal button
                     $('#modaldiv').modal('show');
                 });
@@ -23,10 +26,6 @@
 
         </script>
         <!--CSS-->
-        <!-- Import CDN for semantic UI -->    
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
@@ -51,14 +50,20 @@
                         Add Ingredients
                     </div>
                     <div class="content">
-                        <form id="addIngredient" action="ingredientservlet" method="get"> 
+                        <form id="addIngredient" class="ui form" action="ingredientservlet" method="get"> 
                             <!--User inputs attributes-->
-                            Ingredient Name : <input type="text" name="name"/>
-                            Sub category: <input type="text" name="subcategory" />
-                            Quantity:<input type="text" name="quantity"/>
-                            Unit (g,kg,etc): <input type="text" name="supplyUnit" />
-                            Description: <input type="text" name="description" />
-                            Price offered: <input type="text" name="offeredPrice" />
+                            <label for="name">Ingredient Name :</label>
+                            <input id="name" type="text" name="name"/>
+                            <label for="subcategory">Sub category: </label>
+                            <input id="subcategory" type="text" name="subcategory" />
+                            <label for="quantity">Quantity:</label>
+                            <input id="quantity" type="number" name="quantity" />
+                            <label for="supplyUnit">Unit (g,kg,etc): </label>
+                            <input id="supplyUnit" type="text" name="supplyUnit" />
+                            <label for="description">Description: </label>
+                            <input id="description" type="text" name="description" />
+                            <label for="offeredPrice">Price offered: </label>
+                            <input id="offeredPrice" type="text" name="offeredPrice" />
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="supplier_id" value="1"/> 
