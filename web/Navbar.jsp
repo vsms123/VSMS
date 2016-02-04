@@ -79,7 +79,8 @@
                 <i class="large user icon"></i>  My Account
 
                 <div class="menu">
-                    <a class="item profile" style=" font-size: 16px"><i class="large edit icon"></i> Edit Profile</a>
+                   <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                    <a class="item profile" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>

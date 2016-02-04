@@ -15,11 +15,6 @@
         <link rel="stylesheet" href="css/main.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <script>
-            $(document).on("click", ".show", function () {
-                $(".ui.modal").modal("show");
-            });
-        </script>
         <title>Main Menu</title>
     </head>
 
@@ -34,11 +29,7 @@
                
                 <p></p>
                 <div class="ui breadcrumb" >
-                    <a class="section">Home</a>
-                    <i class="right angle icon divider"></i>
-                    <a class="section">Manage Menu</a>
-                    <i class="right angle icon divider"></i>
-                    <div class="active section">Recipe Buider</div>
+                    <div class="active section">Home</div>
                 </div>
                 
                 <div class="ui raised very padded text container">
