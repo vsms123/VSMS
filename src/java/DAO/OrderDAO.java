@@ -204,7 +204,7 @@ public class OrderDAO {
             for (Orderline orderline : orderLineList) {
                 sql = "insert into orderline (vendor_id, order_id, supplier_id, ingredient_name, price, quantity, buffer_percentage) values (#1,#2,#3,#4,#5,#6,#7)";
                 sql = sql.replace("#1", "" + orderline.getVendor_id());
-                sql = sql.replace("#2", "" + orderline.getOrder_id());
+                sql = sql.replace("#2", "" + order.getOrder_id());
                 sql = sql.replace("#3", "" + orderline.getSupplier_id());
                 sql = sql.replace("#4", "" + "'" + orderline.getIngredient_name() + "'");
                 sql = sql.replace("#5", "" + orderline.getFinalprice());
