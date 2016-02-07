@@ -20,6 +20,15 @@ public class UtilityController {
         }
         return number;
     }
+    public static double convertStringtoDouble(String numberStr){
+        double number =0.0;
+        try{
+            number = Double.parseDouble(numberStr);
+        } catch(Exception e){
+        
+        }
+        return number;
+    }
     public static String convertIntToString(int number){
         String numberStr="";
         try{

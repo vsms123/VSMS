@@ -85,7 +85,7 @@ public class Orderline {
     }
     
     public String toString(){
-        return ingredient_name+" "+quantity+" "+finalprice +"\n";
+        return "Ingredient name: " +ingredient_name+" "+"quantity: "+quantity+" "+"finalprice: "+finalprice +"\n";
     }
     
 }

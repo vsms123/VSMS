@@ -182,7 +182,7 @@ public class OrderController extends HttpServlet {
             int aggQuantity = ingredientAggQuantityMap.get(ingredient);
 
             //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
-            Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoInt(ingredient.getOfferedPrice()) * aggQuantity, aggQuantity, 0.0);
+            Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * aggQuantity, aggQuantity, 0.0);
             orderlineList.add(orderline);
         }
         //for debugging purpose
