@@ -80,7 +80,7 @@ public class IngredientController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //To query Dish to be attached with an <Ingredient,IngredientQuantity> HashMap
         String dish_idStr = request.getParameter("dish_id");
-
+        
         //An ingredient needs:dish_name, supplier_id, subcategory, ingredient_description, offeredprice
         String name = request.getParameter("name");
         String supplier_idStr = request.getParameter("supplier_id");
@@ -123,27 +123,15 @@ public class IngredientController extends HttpServlet {
             response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_id);
 
         }
-
-        //        Reading the ingredients of a dish
-        String ingredientListString = "";
-
-        HashMap<Ingredient, ArrayList<String>> ingredientList = getIngredientQuantity(dish_idStr);
-        System.out.println("The ingredient list is ");
-        if (ingredientList.isEmpty()) {
-            System.out.println("it is empty");
-        } else {
-            System.out.println("Not empty");
-        }
-        Iterator iter = ingredientList.keySet().iterator();
-        while (iter.hasNext()) {
-            Ingredient ingredient = (Ingredient) iter.next();
-            ArrayList<String> stringArray = ingredientList.get(ingredient);
-            ingredientListString += "<li>" + ingredient + " " + stringArray + "</li>";
+        //if action is delete
+        if (request.getParameter("action").equals("delete")) {
+            deleteIngredientQuantity(dish_idStr, name, vendor_idStr, supplier_idStr);
+            response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_idStr);
         }
 
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(ingredientListString);       // Write response body.
+        response.getWriter().write("");       // Write response body.
 
     }
 
@@ -238,23 +226,23 @@ public class IngredientController extends HttpServlet {
         System.out.println(stringReturn);
         return stringReturn;
     }
-    
-    public static HashMap<String,Ingredient> autoCompleteIngredient(int vendor_id){
+
+    public static HashMap<String, Ingredient> autoCompleteIngredient(int vendor_id) {
         ArrayList<Supplier> supplierList = UserDAO.retrieveFavouriteSupplierListByVendor(vendor_id);
-        ArrayList<Ingredient> list=new ArrayList<Ingredient>();
-        ArrayList<Integer> idList=new ArrayList<Integer>();
-        for(Supplier supplier:supplierList){
+        ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+        ArrayList<Integer> idList = new ArrayList<Integer>();
+        for (Supplier supplier : supplierList) {
             idList.add(supplier.getSupplier_id());
         }
-        for(int id:idList){
+        for (int id : idList) {
             list.addAll(getIngredientBySupplier(id));
         }
-        HashMap<String,Ingredient> map=new HashMap<String, Ingredient>();
-        int count=1;
-        for(Ingredient ingredient:list){
-            map.put(count+"",ingredient);
+        HashMap<String, Ingredient> map = new HashMap<String, Ingredient>();
+        int count = 1;
+        for (Ingredient ingredient : list) {
+            map.put(count + "", ingredient);
             count++;
         }
-    return map;
+        return map;
     }
 }

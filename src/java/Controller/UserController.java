@@ -3,9 +3,43 @@ package Controller;
 import DAO.UserDAO;
 import Model.Supplier;
 import Model.Vendor;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import javamail.EmailController;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public class UserController {
+    @WebServlet("/userservlet/*")
+public class UserController extends HttpServlet {
+
+    @Override
+    //doGet will be given to FavouriteSuppliers.jsp
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Will receive vendor id and supplier id interested
+        String vendor_idStr = request.getParameter("vendor_id");
+        String action = request.getParameter("action");
+        String supplier_idStr = request.getParameter("supplier_id");
+        if (!UtilityController.checkNullStringArray(new String[]{vendor_idStr,supplier_idStr})) {
+            int vendor_id =UtilityController.convertStringtoInt(vendor_idStr);
+            int supplier_id = UtilityController.convertStringtoInt(supplier_idStr);
+            if(action.equals("delete")){
+                deleteFavouriteSupplier(vendor_id,supplier_id);
+            } else{ //create
+                saveAsFavouriteSupplier(vendor_id,supplier_id);
+            }
+            response.sendRedirect("FavouriteSuppliers.jsp");
+        }
+
+
+        response.setContentType("text/plain");  // Set content type of the response so that AJAX knows what it can expect.
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("");       // Write response body.
+    }
 
     public static ArrayList<Supplier> retrieveSupplierList() {
         return UserDAO.retrieveSupplierList();
