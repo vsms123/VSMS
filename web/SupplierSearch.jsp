@@ -4,6 +4,8 @@
     Author     : TC
 --%>
 
+<%@page import="Model.Ingredient"%>
+<%@page import="Model.Supplier"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -32,6 +34,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>
+                            <input type="radio" name="searchType" id ="r1" value="true"> Supplier<br>
+                            <input type="radio" name="searchType" id ="r2" value="false"> Ingredient<br>
+                        </td>
+                    </tr>
+                    <tr>
                         <td id="auto-row" colspan="2">
                             <table id="complete-table" class="popupBox"></table>
                         </td>
@@ -40,5 +48,52 @@
             </table>
 
         </form>
+        <!--Supplier info loaded here-->
+        <%
+            Supplier sup=(Supplier)request.getAttribute("supplier");
+            if(sup!=null){
+        %>
+        <table>
+            <tr>
+                <th colspan="2">Supplier Information</th>
+            </tr>
+            <tr>
+                <td>Supplier Name: </td>
+                <td><%=sup.getSupplier_name()%></td>
+            </tr>
+            <tr>
+                <td>Type: </td>
+                <td><%=sup.getSupplier_type()%></td>
+            </tr>
+            <tr>
+                <td>ID: </td>
+                <td><%=sup.getSupplier_id()%></td>
+            </tr>
+            <tr>
+                <td>Address: </td>
+                <td><%=sup.getAddress()%></td>
+            </tr>      
+        </table>
+        <%};%>
+        <!--End loading of supplier info-->
+        
+        <!--Ingredient info loaded here-->
+        <%
+            Ingredient ing=(Ingredient)request.getAttribute("ingredient");
+            if(ing!=null){
+        %>
+        <table>
+            <tr>
+                <th colspan="2">Ingredient Information</th>
+            </tr>
+            <tr>
+                <td>Ingredient Name: </td>
+                <td><%=ing.getName()%></td>
+            </tr>
+            
+        </table>
+        <%};%>
+        <!--End loading of ingredient info-->
+        
     </body>
 </html>

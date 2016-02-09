@@ -11,16 +11,26 @@ var isIE;
 var completeField;
 var completeTable;
 var autoRow;
+var button1;
+var button2;
 
 function init() {
     completeField = document.getElementById("complete-field");
     completeTable = document.getElementById("complete-table");
     autoRow = document.getElementById("auto-row");
+    button1=document.getElementById("r1");
+    button2=document.getElementById("r2");
     completeTable.style.top = getElementY(autoRow) + "px";
 }
 
 function doCompletion() {
-    var url = "autocomplete?action=complete&id=" + escape(completeField.value);
+    var searchType;
+    if (button1.checked) {
+        searchType = button1.value;
+    }else{
+        searchType = button2.value;
+    }    
+    var url = "autocomplete?action=complete&id=" + escape(completeField.value)+"&searchType="+searchType.value;
     req = initRequest();
     req.open("GET", url, true);
     req.onreadystatechange = callback;
