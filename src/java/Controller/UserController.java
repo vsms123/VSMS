@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-    @WebServlet("/userservlet/*")
+@WebServlet("/userservlet/*")
 public class UserController extends HttpServlet {
 
     @Override
@@ -24,21 +24,77 @@ public class UserController extends HttpServlet {
         String vendor_idStr = request.getParameter("vendor_id");
         String action = request.getParameter("action");
         String supplier_idStr = request.getParameter("supplier_id");
-        if (!UtilityController.checkNullStringArray(new String[]{vendor_idStr,supplier_idStr})) {
-            int vendor_id =UtilityController.convertStringtoInt(vendor_idStr);
+
+        String filteredSearchString = "Hello, get here";
+        if (!UtilityController.checkNullStringArray(new String[]{vendor_idStr, supplier_idStr})) {
+            int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
             int supplier_id = UtilityController.convertStringtoInt(supplier_idStr);
-            if(action.equals("delete")){
-                deleteFavouriteSupplier(vendor_id,supplier_id);
-            } else{ //create
-                saveAsFavouriteSupplier(vendor_id,supplier_id);
+            if (action.equals("delete")) {
+                deleteFavouriteSupplier(vendor_id, supplier_id);
+                response.sendRedirect("FavouriteSuppliers.jsp");
+            } else if (action.equals("search")) {
+                //Give filtered search to be written
+                ArrayList<Supplier> supplierList;
+                //if word is null then give all the list, if word is there then do a filter function
+                String word = request.getParameter("word");
+                if (word == null || word.isEmpty()) {
+                    //get the list of suppliers
+                    supplierList = retrieveSupplierList();
+                } else {
+                    //filter the supplier based on the string word
+                    supplierList = filterSupplierBasedOnWord(word);
+                }
+                //put them into a html table string
+                filteredSearchString = retrieveSupplierHTMLTable(supplierList,retrieveSupplierListByVendor(vendor_id));
+            } else { //create
+                saveAsFavouriteSupplier(vendor_id, supplier_id);
+                response.sendRedirect("FavouriteSuppliers.jsp");
             }
-            response.sendRedirect("FavouriteSuppliers.jsp");
         }
 
+        response.setContentType(
+                "text/plain");  // Set content type of the response so that AJAX knows what it can expect.
+        response.setCharacterEncoding(
+                "UTF-8");
+        response.getWriter()
+                .write(filteredSearchString);       // Write response body.
+    }
 
-        response.setContentType("text/plain");  // Set content type of the response so that AJAX knows what it can expect.
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("");       // Write response body.
+    public String retrieveSupplierHTMLTable(ArrayList<Supplier> supplierList,ArrayList<Supplier> currentFavSupplier) {
+        StringBuffer htmlTable = new StringBuffer("");
+        
+        //Create header
+        htmlTable.append("<tr>");
+        htmlTable.append("<th>Supplier Name</th>");
+        htmlTable.append("<th>Supplier Type</th>");
+        htmlTable.append("<th>Favorite?</th>");
+        htmlTable.append("</tr>");
+        for (Supplier supplier : supplierList) {
+            htmlTable.append("<tr>");
+            htmlTable.append("<td>" + supplier.getSupplier_name() + "</td>");
+            htmlTable.append("<td>" + supplier.getSupplier_type() + "</td>");
+            if(currentFavSupplier.contains(supplier)){
+                htmlTable.append("<td class=\"favorite\">Favorite</td>");
+            } else{
+                htmlTable.append("<td class=\"available\">Available</td>");
+            }
+            htmlTable.append("</tr>");
+        }
+        return htmlTable.toString();
+    }
+
+    public ArrayList<Supplier> filterSupplierBasedOnWord(String word) {
+        ArrayList<Supplier> returnSupplierList = new ArrayList<Supplier>();
+        ArrayList<Supplier> supplierList = retrieveSupplierList();
+        String wordLower = word.toLowerCase();
+        for (Supplier supplier : supplierList) {
+            String nameLower = supplier.getSupplier_name().toLowerCase();
+            String typeLower = supplier.getSupplier_type().toLowerCase();
+            if (nameLower.contains(wordLower) || typeLower.contains(wordLower)) {
+                returnSupplierList.add(supplier);
+            }
+        }
+        return returnSupplierList;
     }
 
     public static ArrayList<Supplier> retrieveSupplierList() {
@@ -52,13 +108,15 @@ public class UserController extends HttpServlet {
     public static void signUpSupplier(Supplier supplier) {
         UserDAO.signUpSupplier(supplier);
     }
-    public static Supplier retrieveSupplierByID(int supplierID){
+
+    public static Supplier retrieveSupplierByID(int supplierID) {
         return UserDAO.getSupplierById(supplierID);
     }
 
-    public static Vendor retrieveVendorByID(int vendorID){
+    public static Vendor retrieveVendorByID(int vendorID) {
         return UserDAO.getVendorByID(vendorID);
     }
+
     public static ArrayList<Vendor> retrieveVendorList() {
         return UserDAO.retrieveVendorList();
     }
