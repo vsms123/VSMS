@@ -372,12 +372,12 @@ public class IngredientDAO {
         try
         {
             conn=ConnectionManager.getConnection();
-            query = "insert into Dish (dish_id, dish_name, vendor_id, dish_description) values (?,?,?,?)";
+            query = "insert into Dish (dish_id, dish_name, vendor_id, dish_description) values (?,?,?)";
             statement = conn.prepareStatement(query);
-            statement.setString(1,dish.getDish_id()+"");
-            statement.setString(2,dish.getDish_name());
-            statement.setString(3,dish.getVendor_id()+"");
-            statement.setString(4,dish.getDish_description());
+            //statement.setString(1,dish.getDish_id()+"");
+            statement.setString(1,dish.getDish_name());
+            statement.setString(2,dish.getVendor_id()+"");
+            statement.setString(3,dish.getDish_description());
             int rows = statement.executeUpdate();
             HashMap<Ingredient, ArrayList<String>> map=dish.getIngredientQuantity();
             Set<Ingredient> iSet=map.keySet();

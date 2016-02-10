@@ -91,6 +91,7 @@
             Ingredient ing=(Ingredient)request.getAttribute("ingredient");
             if(ing!=null){
             dish.addIngredient(ing,"20","kg");
+            IngredientController.addDish(dish);
             
         %>
         <table>

@@ -150,7 +150,7 @@ public class IngredientController extends HttpServlet {
         response.getWriter().write("");       // Write response body.
 
     }
-
+    }
     public static Dish getDishByID(int dish_id) {
         return IngredientDAO.getDishByID(dish_id);
     }
