@@ -4,6 +4,8 @@
     Author     : TC
 --%>
 
+<%@page import="Controller.IngredientController"%>
+<%@page import="Model.Dish"%>
 <%@page import="Model.Ingredient"%>
 <%@page import="Model.Supplier"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -20,7 +22,14 @@
 
         <h1>Supplier Search</h1>
         <p>Enter the name or category of suppliers to search for</p>
-        <% session.setAttribute("isSupplier","false");%>
+        <% session.setAttribute("isSupplier","false");
+        //Create a variable to store dish object from recipe builder
+        //Dish dish=(Dish)request.getAttribute("dish");
+        //create variable to store test dish
+        Dish dish=IngredientController.getDishByID(2);
+        //End creation of variables
+        
+        %>
         <form name="autofillform" action="autocomplete"><table border="0" cellpadding="5">
                 
                 <tbody>
@@ -81,14 +90,18 @@
         <%
             Ingredient ing=(Ingredient)request.getAttribute("ingredient");
             if(ing!=null){
+            dish.addIngredient(ing,"20","kg");
+            
         %>
         <table>
             <tr>
-                <th colspan="2">Ingredient Information</th>
+                <th colspan="2">Dish Information</th>
             </tr>
             <tr>
-                <td>Ingredient Name: </td>
-                <td><%=ing.getName()%></td>
+                <td>Dish Name: </td>
+                <td><%=dish.getDish_name()%></td>
+                <td><%=dish.getDish_description()%></td>
+                <td><%=dish.toString()%></td>
             </tr>
             
         </table>
