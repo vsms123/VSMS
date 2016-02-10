@@ -74,6 +74,13 @@ public class Dish {
     public void setIngredientQuantity(HashMap<Ingredient, ArrayList<String>> ingredientQuantity) {
         this.ingredientQuantity = ingredientQuantity;
     }
+    
+    public void addIngredient(Ingredient ingredient, String quantity, String unit){
+        ArrayList<String> list=new ArrayList<String>();
+        list.add(quantity);
+        list.add(unit);
+        ingredientQuantity.put(ingredient,list);
+    }
 
     @Override
     public String toString() {
