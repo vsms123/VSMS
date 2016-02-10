@@ -8,6 +8,9 @@
 <html>
     <head>
         <title>Recipe Builder</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--Form VALIDATION-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
@@ -42,7 +45,7 @@
                 </ul>
 
                 <!--MODAL DIV-->
-                <button type="submit" name="submit" class="ui teal button create-ingredient-button">Order now</button>
+                <button type="submit" name="submit" class="ui teal button create-ingredient-button">Add Ingredient</button>
 
                 <div id="modaldiv" class="ui small modal">
                     <i class="close icon"></i>
