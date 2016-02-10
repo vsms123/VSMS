@@ -138,7 +138,7 @@ public class IngredientController extends HttpServlet {
         while (iter.hasNext()) {
             Ingredient ingredient = (Ingredient) iter.next();
             ArrayList<String> stringArray = ingredientList.get(ingredient);
-            ingredientListString += "<li>" + ingredient + " " + stringArray + "</li>";
+            ingredientListString += "<li>" + ingredient + "  " + stringArray + " </li>";
         }
 
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
