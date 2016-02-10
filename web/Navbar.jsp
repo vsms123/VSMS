@@ -29,10 +29,12 @@
                     var width = $(window).width();
                     var height = $(window).height();
 
-                    if ((width <= 800) && (height <= 600)) {
-                        $("#search1").css("display", "none");
+                    if ((width <= 800) || (height <= 600)) {
+                        $("#searchPC").css("display", "none");
+                        $("#navbarPC").css("display", "none");
                     } else {
-                        $("#search1").css("display", "");
+                        $("#searchPC").css("display", "");
+                        $("#navbarPC").css("display", "");
                     }
                 });
 
@@ -49,7 +51,7 @@
                 </a>
 
             </div>
-            <div class="ten wide column" id="search1" style="position:relative;top: 50px">
+            <div class="ten wide column" id="searchPC" style="position:relative;top: 50px">
                 <h3>Find ingredients that you need</h3>
 
                 <div class="ui fluid action input"  style="margin-right: 10%">
@@ -60,7 +62,7 @@
 
         </div>
 
-        <div class="ui stackable menu">
+        <div id="navbarPC" class="ui stackable menu">
             <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large shop icon" ></i> Order
 

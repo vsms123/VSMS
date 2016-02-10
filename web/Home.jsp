@@ -15,59 +15,93 @@
         <link rel="stylesheet" href="css/main.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+        <script>
+            $(document).ready(function () {
+                $('.message').click(function () {
+                    //show modal button
+                    $('#modalMessage').modal('show');
+                });
+                $('.profile').click(function () {
+                    //show modal button
+                    $('#modalAccount').modal('show');
+                });
+
+                $(window).on('load resize', function () {
+                    var width = $(window).width();
+                    var height = $(window).height();
+
+                    if ((width <= 800) || (height <= 600)) {
+                        $("#pc").css("display", "none");
+                    } else {
+                        $("#pc").css("display", "");
+                    }
+                });
+
+
+            });
+        </script>
+
         <title>Main Menu</title>
     </head>
 
 
-    <body class="background">
-        
 
-        <div class="transparency">
-  
-            <div class="ui segment" style="left:5%;width:90%">
-                <%@ include file="Navbar.jsp" %>
-               
-                <p></p>
-                <div class="ui breadcrumb" >
-                    <div class="active section">Home</div>
-                </div>
-                
-                <div class="ui raised very padded text container">
-                    <p></p>
-                    <h1 class="ui header">VSMS Menu</h1>
-                         
-                    <p></p>
-                    <h1>We will be adding in more contents here, such as some order status and notifications </h1>
-                    
-                        
-                       
-                    <p></p>
+    <body>
+        <div>
+            
+            
 
+        </div>
+
+
+        <div  id="pc" class="background">
+            <div class="transparency">
+
+                <div  class="ui segment" style="left:5%;width:90%">
+
+                    <%@ include file="Navbar.jsp" %>
 
                     <p></p>
-                </div>
-
-
-                <div class="ui left rail">
-                    <div class="ui">
-                        <%--
-                        content
-                        --%>
+                    <div class="ui breadcrumb" >
+                        <div class="active section">Home</div>
                     </div>
-                </div>
-                <div class="ui right rail">
-                    <div class="ui">
-                        <%--
-                       content
-                        --%>
+
+                    <div class="ui raised very padded text container">
+                        <p></p>
+                        <h1 class="ui header">VSMS Menu</h1>
+
+                        <p></p>
+                        <h1>We will be adding in more contents here, such as some order status and notifications </h1>
+
+
+
+                        <p></p>
+
+
+                        <p></p>
                     </div>
+
+
+                    <div class="ui left rail">
+                        <div class="ui">
+                            <%--
+                            content
+                            --%>
+                        </div>
+                    </div>
+                    <div class="ui right rail">
+                        <div class="ui">
+                            <%--
+                           content
+                            --%>
+                        </div>
+                    </div>
+                    <p></p>
+                    <p></p>
                 </div>
-                <p></p>
-                <p></p>
+
+
             </div>
-
-
-
         </div>
     </body>
 </html>

@@ -125,37 +125,38 @@
                 </div>
                 <br/>
                 <button class="ui green large button create-dish-button"><i class="plus icon"></i>Create New Dish</button>
-                
+
                 <br/>
-                
+
                 <!--Create a modal for adding the menu-->
                 <div id="createmodaldiv" class="ui small modal">
-                    <i class="close icon"></i>
+                    
                     <div class="header">
-                        Add Dish
+                        Add New Dish to Menu
                     </div>
-
                     <div class="content">
                         <form id="addDish" class="addDish ui form" action="ingredientservlet" method="post"> 
                             <!--Inputting form elements-->
                             <label for="dish_name">Dish Name:</label> 
-                                <input id="dish_name" type="text" name="dish_name">
+                            <input id="dish_name" type="text" name="dish_name">
                             <label for ="dish_description">Dish Description:</label> 
-                                <textarea id="dish_description" name="dish_description"></textarea>
+                            <textarea id="dish_description" name="dish_description"></textarea>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="vendor_id" value="1">
                             <input type="hidden" name="action" value="add">
-                            <input type="submit" value="Add" class="ui teal button" /> 
+                            
                         </form>
                     </div>
                     <div class="actions">
-                        <div class="ui positive right labeled icon button">
-                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
-                            <i class="checkmark icon"></i>
-                        </div>
+
+                        <button class="ui inverted deny orange button">Cancel</button>
+                        <input type="submit" value="Add" class="ui teal button" /> 
+
                     </div>
                 </div>
+
+
                 <!--Create many modals for each dish to be sent-->
                 <%
                     for (Dish dish : dishList) {
@@ -170,9 +171,9 @@
                         <form class="ui form" action="ingredientservlet" method="post"> 
                             <!--Inputting form elements, already put for -->
                             <label for="dish_name">Dish Name:</label> 
-                                <input id="dish_name" type="text" name="dish_name" value="<%=dish.getDish_name()%>">
+                            <input id="dish_name" type="text" name="dish_name" value="<%=dish.getDish_name()%>">
                             <label for ="dish_description">Dish Description:</label> 
-                                <textarea id="dish_description" name="dish_description"><%=dish.getDish_description()%></textarea>
+                            <textarea id="dish_description" name="dish_description"><%=dish.getDish_description()%></textarea>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
