@@ -77,9 +77,10 @@ public class AutoCompleteServlet extends HttpServlet {
 
         String action = request.getParameter("action");
         String targetId = request.getParameter("id");
+        String isSupplier = request.getParameter("searchType");
         StringBuffer sb = new StringBuffer();
         HttpSession session = request.getSession();
-        String isSupplier =(String) session.getAttribute("isSupplier");
+        //String isSupplier =(String) session.getAttribute("isSupplier");
 
         if (targetId != null) {
             targetId = targetId.trim().toLowerCase();
@@ -90,7 +91,7 @@ public class AutoCompleteServlet extends HttpServlet {
         boolean namesAdded = false;
         System.out.println(isSupplier==null);
         System.out.println("this is my output");
-        if(isSupplier.equals("true")){
+        if(isSupplier!=null && isSupplier.equals("true")){
             if (action.equals("complete")) {
 
                 // check if user sent empty string
@@ -132,7 +133,7 @@ public class AutoCompleteServlet extends HttpServlet {
                 // put the target supplier in the request scope to display 
                 if ((targetId != null) && suppliers.containsKey(targetId.trim())) {
                     request.setAttribute("supplier", suppliers.get(targetId));
-                    context.getRequestDispatcher("/supplier.jsp").forward(request, response);
+                    context.getRequestDispatcher("/SupplierSearch.jsp").forward(request, response);
                 }
             }
         }else{
@@ -179,8 +180,8 @@ public class AutoCompleteServlet extends HttpServlet {
 
                 // put the target supplier in the request scope to display 
                 if ((targetId != null) && suppliers.containsKey(targetId.trim())) {
-                    request.setAttribute("supplier", suppliers.get(targetId));
-                    context.getRequestDispatcher("/ingredient.jsp").forward(request, response);
+                    request.setAttribute("ingredient", suppliers.get(targetId));
+                    context.getRequestDispatcher("/SupplierSearch.jsp").forward(request, response);
                 }
             }
         }
