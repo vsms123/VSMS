@@ -20,17 +20,17 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
                 //To edit user account and password changes
 
                 //Will go through the edit profile button
-                $(".edit-profile-button").click(function() {
+                $(".edit-profile-button").click(function () {
                     console.log("My name is edit-profile-button");
                     //show modal button
                     $('#editprofilemodal').modal('show');
                 });
                 //Will go through the edit password button
-                $(".edit-password-button").click(function() {
+                $(".edit-password-button").click(function () {
                     console.log("My name is edit-password-button");
                     //show modal button
                     $('#editpasswordmodal').modal('show');
@@ -57,6 +57,13 @@
                         vendor = UserController.retrieveVendorByID(1);
                     }
                 %>
+                <h2 class="ui header">
+                    <i class="user icon"></i>
+                    <div class="content">
+                        View Profile
+                        <div class="sub header">Manage your preferences</div>
+                    </div>
+                </h2>
                 <h1><%=vendor.getVendor_name()%></h1>
                 <table>
                     <tr>
