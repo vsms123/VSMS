@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Recipe Builder</title>
+        <title>Order Confirmation</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
         <!--CSS-->

@@ -41,45 +41,59 @@ public class OrderController extends HttpServlet {
         //An  order int order_id,int vendor_id; double total_final_price;Date dt_order;ArrayList<Orderline> orderlines;
         ArrayList<Dish> dishList = IngredientDAO.getDish("1");
         String vendor_idStr = request.getParameter("vendor_id");
+        String action = request.getParameter("action");
 
+        String htmlConfirmation = "";
         //supplier id and order id is auto generated
         //final price is aggregated, ingredient name is there
         //check if the form is submitted or not, if the form is submitted then the dish_countStr should not be null
         if (!UtilityController.checkNullStringArray(new String[]{vendor_idStr})) {
-            //Create a hashmap with <Dishid, quantity input)
-            HashMap<Integer, Integer> dishQuantityMap = createDishQuantityMap(dishList, request);
-            int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
+            if (action.equals("confirm")) { //This is to display the modal and the state of the orders to be modified
+                //Create a hashmap with <Dishid, quantity input)
+                HashMap<Integer, Integer> dishQuantityMap = createDishQuantityMap(dishList, request);
+                int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
+                //Create an hashmap with <Ingredient, aggregated quantity> (TESTED)
+                HashMap<Ingredient, Integer> ingredientAggQuantityMap = createIngredientAggQuantityMap(dishQuantityMap);
+                //Make an arraylist of all orderline (non aggregated)
+                ArrayList<Orderline> orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1);
+                //Create a hashmap of orderlines based on suppliers
+                HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap = createSupplierOrderlineMap(orderlineList);
+                //Create a hashmap of Order based on suppliers
+                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id);
+                //Change this into an html to be shown at the modal
+                htmlConfirmation = retrieveConfirmationHTML(supplierOrderMap);
+            } else {//create
+                HashMap<Integer, Integer> dishQuantityMap = createDishQuantityMap(dishList, request);
+                int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
+                //Create an hashmap with <Ingredient, aggregated quantity> (TESTED)
+                HashMap<Ingredient, Integer> ingredientAggQuantityMap = createIngredientAggQuantityMap(dishQuantityMap);
+                //Make an arraylist of all orderline (non aggregated)
+                ArrayList<Orderline> orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1);
+                //Create a hashmap of orderlines based on suppliers
+                HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap = createSupplierOrderlineMap(orderlineList);
+                //Create a hashmap of Order based on suppliers
+                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id);
+                //iterate the output
+                Iterator iter = supplierOrderMap.keySet().iterator();
+                while (iter.hasNext()) {
+                    Supplier supplier = (Supplier) iter.next();
+                    Order order = supplierOrderMap.get(supplier);
+                    //Do 2 things: 1. Insert these orders inside the database 2. send these orders to the suppliers and vendors with email
+                    addOrder(order);
 
-            //Create an hashmap with <Ingredient, aggregated quantity> (TESTED)
-            HashMap<Ingredient, Integer> ingredientAggQuantityMap = createIngredientAggQuantityMap(dishQuantityMap);
-            //Make an arraylist of all orderline (non aggregated)
-            ArrayList<Orderline> orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1);
-            //Create a hashmap of orderlines based on suppliers
-            HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap = createSupplierOrderlineMap(orderlineList);
-            //Create a hashmap of Order based on suppliers
-            HashMap<Supplier, Order> SupplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id);
-
-            //iterate the output
-            Iterator iter = SupplierOrderMap.keySet().iterator();
-            while (iter.hasNext()) {
-                Supplier supplier = (Supplier) iter.next();
-                Order order = SupplierOrderMap.get(supplier);
-                //Do 2 things: 1. Insert these orders inside the database 2. send these orders to the suppliers and vendors with email
-                addOrder(order);
-
-                //MailController Method
+                    //MailController Method
 //              Will send the email to all the suppliers and the vendor
-                EmailController.sendOrderMessageToVendorSupplier(order, vendor_id);
-
+                    EmailController.sendOrderMessageToVendorSupplier(order, vendor_id);
+                }
+                response.sendRedirect("Order.jsp");
             }
-            response.sendRedirect("Order.jsp");
+
         }
 
-        String dishListString = "";
 
         response.setContentType("text/plain");  // Set content type of the response so that AJAX knows what it can expect.
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(dishListString);       // Write response body.
+        response.getWriter().write(htmlConfirmation);       // Write response body.
     }
 
     @Override
@@ -103,7 +117,7 @@ public class OrderController extends HttpServlet {
             //MailController Method
             //Will send the email to all the suppliers and the vendor
             EmailController.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
-            
+
             response.sendRedirect("SupplierConfirmationThankYou.jsp");
         }
 
@@ -112,6 +126,33 @@ public class OrderController extends HttpServlet {
         response.getWriter().write("Unsuccessful");       // Write response body.
     }
 
+    public String retrieveConfirmationHTML(HashMap<Supplier, Order> supplierOrderMap) {
+        StringBuffer htmlTable = new StringBuffer("");
+        Iterator iter = supplierOrderMap.keySet().iterator();
+        double totalFinalPrice = 0;
+        while (iter.hasNext()) {
+            Supplier supplier = (Supplier) iter.next();
+            Order order = supplierOrderMap.get(supplier);
+            //Create sub categories sections
+            htmlTable.append("<h3>" + supplier.getSupplier_name() + "</h3>");
+            htmlTable.append("<table>");
+            htmlTable.append("<tr>");
+            htmlTable.append("<th></th>");
+            htmlTable.append("</tr>");
+            for (Orderline orderline : order.getOrderlines()) {
+                htmlTable.append("<tr>");
+                htmlTable.append("<td>" + orderline.getIngredient_name() + "</td>");
+                htmlTable.append("<td>" + orderline.getQuantity() + "</td>");
+                htmlTable.append("<td>$" + orderline.getFinalprice() + "</td>");
+                htmlTable.append("</tr>");
+                totalFinalPrice += orderline.getFinalprice();
+            }
+            htmlTable.append("</table>");
+            htmlTable.append("<h5>Total order: $" + order.getTotal_final_price() + "</h5>");
+        }
+        htmlTable.append("Total final price: $" + totalFinalPrice);
+        return htmlTable.toString();
+    }
 //    Test controller
 //    public static void main(String[] args) {
 //        ArrayList<Order> orderList = OrderDAO.retrieveAllOrderList();
@@ -119,6 +160,7 @@ public class OrderController extends HttpServlet {
 //            System.out.println(order);
 //        }
 //    }
+
     public static HashMap<Integer, Integer> createDishQuantityMap(ArrayList<Dish> dishList, HttpServletRequest request) {
 //            Prepare array to store the map of dish id and the quantity put
         HashMap<Integer, Integer> dishQuantityMap = new HashMap<Integer, Integer>();

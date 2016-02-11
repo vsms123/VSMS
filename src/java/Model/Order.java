@@ -3,10 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- *
- * @author Joel
- */
 public class Order {
 
     private int order_id;

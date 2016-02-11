@@ -20,12 +20,48 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
-                $.post("orderservlet", function(responseText) {
-                    $("#orderListTable").append(responseText);
-                });
+                    $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+
+            <%
+                String vendor_idStr = "1";
+                ArrayList<Dish> dishList = IngredientController.getDish(vendor_idStr);
+                // Key up to send and populate the modal of orderline confirmations                   
+                //Adding the value confirmation into model table and send the orders.
+                String valueStr = "";
+
+                for (Dish dish : dishList) {
+                    valueStr += "," + "dish" + dish.getDish_id() + ":" + "$('#ordervalue" + dish.getDish_id() + "').val()";
+                }
+                for (Dish dish : dishList) {
+            %>
+
+            $("#ordervalue<%=dish.getDish_id()%>").change(function() {
+            console.log("Hey, I am the change dialogue");
+                    //Make the value string
+                    $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm' <%=valueStr%>}, function(responseText) {
+                    $(".content-model-table").html(responseText);
+                    });
             });
-        </script>
+            <%}%>
+            //Open up the model
+            $('.open-order-check').click(function() {
+            //Make the value string
+            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm' <%=valueStr%>}, function(responseText) {
+            $(".content-model-table").html(responseText);
+            });
+                    //show modal button
+                    $('#confirmationdiv').modal('show');
+            });
+                    //Open up the model
+                    $("#confirm-order").click(function() {
+                        console.log("Confirm order here");
+                        //Make ajax load synchronous while loading the order
+                            $.ajaxSetup({async:false});
+                            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'add'<%=valueStr%>}, function(responseText) {});
+                            alert("Order has been made");
+                            $('#confirmationdiv').modal('hide');
+                    });
+            });</script>
 
         <!--CSS-->
         <!-- Import CDN for semantic UI -->    
@@ -48,30 +84,46 @@
                 </div>
                 <h1 style="color: black">Order</h1>
 
-                <form class="ui form" id="addOrder" action="orderservlet" method="post"> 
-                    <!--Inputting form elements-->
+                <!--Inputting form elements-->
 
-                    <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
-                    <table id="orderListTable">
-                        <% ArrayList<Dish> dishList = IngredientController.getDish("1");
-                            for (Dish dish : dishList) {%>
-                        <tr>
-                            <td><h2><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></label></h2></td>
-                            <td><input type="number" value=1 name="dish<%=dish.getDish_id()%>" id="dish<%=dish.getDish_id()%>"/></td>
-                        </tr>
-                        <%}%>
-                    </table>
-                    <!--Input hidden attributes-->
-                    <input type="hidden" name="vendor_id" value="1"/>
-                    <br/>
-                    <input type="submit" value="Add" class="ui big teal button" />
-                </form>
+                <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
+                <table id="orderListTable">
+                    <%
+                        for (Dish dish : dishList) {%>
+                    <tr>
+                        <td><h2><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></label></h2></td>
+                        <td><input type="number" value=1 name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>"/></td>
+                    </tr>
+                    <%}%>
+                </table>
+                <!--Input hidden attributes-->
+                <input type="hidden" name="vendor_id" value="1"/>
+                <br/>
+                <!--Input button to a modal here + the modal-->
+                <!--MODAL DIV-->
+                <div id="confirmationdiv" class="ui small modal">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Check Order
+                    </div>
+                    <div class="content-model-table">                            
+                    </div>
+                    <div class="actions">
+                        <button id="confirm-order" class="ui big teal button">Confirm</button>
+                        <div class="ui positive right labeled icon button">
+                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
+                            <i class="checkmark icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <button class="ui red inverted button open-order-check"> <i class="remove icon"></i>Check Order</button>
+
 
             </div>
         </div>
 
         <!--JAVASCRIPT-->
-        <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
+        <!--for general Javascript please refer to the main js. For others, please just html the script line below-->
         <script src="js/main.js" type="text/javascript"></script>
     </body>
 </html>
