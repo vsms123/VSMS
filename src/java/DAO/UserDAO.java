@@ -142,17 +142,17 @@ public class UserDAO {
             //creates connections to database
             conn = ConnectionManager.getConnection();
             sql = "UPDATE supplier"
-                    +"SET password = #1, supplier_description = #2, supplier_type = #3 , email = #4, area_code = #5 , telephone_number = #6, address = #7"
-                        + "WHERE supplier_id = #8";
+                    +" SET password = #1, supplier_description = #2, supplier_type = #3 , email = #4, area_code = #5 , telephone_number = #6, address = #7"
+                        + " WHERE supplier_id = #8";
             
-            sql = sql.replace("#1", "" + supplier.getPassword());
-            sql = sql.replace("#2", "" + supplier.getSupplier_description());
-            sql = sql.replace("#3", "" + supplier.getSupplier_type());
-            sql = sql.replace("#4", "" + supplier.getEmail());
-            sql = sql.replace("#5", "" + supplier.getArea_code());
-            sql = sql.replace("#6", "" + supplier.getTelephone_number());
-            sql = sql.replace("#7", "" + supplier.getAddress());
-            sql = sql.replace("#8", "" + supplier.getSupplier_id());
+            sql = sql.replace("#1", "'" + supplier.getPassword()+"'");
+            sql = sql.replace("#2", "'" + supplier.getSupplier_description()+"'");
+            sql = sql.replace("#3", "'" + supplier.getSupplier_type()+"'");
+            sql = sql.replace("#4", "'" + supplier.getEmail()+"'");
+            sql = sql.replace("#5", "'" + supplier.getArea_code()+"'");
+            sql = sql.replace("#6", "'" + supplier.getTelephone_number()+"'");
+            sql = sql.replace("#7", "'" + supplier.getAddress()+"'");
+            sql = sql.replace("#8", "'" + supplier.getSupplier_id()+"'");
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
         }catch (SQLException e) {
@@ -372,16 +372,16 @@ public class UserDAO {
             //creates connections to database
             conn = ConnectionManager.getConnection();
             sql = "UPDATE vendor"
-                    +"SET password = #1, vendor_description = #2, email = #3, area_code = #4 , telephone_number = #5, address = #6"
-                        + "WHERE vendor_id = #7";
+                    +" SET password = #1, vendor_description = #2, email = #3, area_code = #4 , telephone_number = #5, address = #6"
+                        + " WHERE vendor_id = #7";
             
-            sql = sql.replace("#1", "" + vendor.getPassword());
-            sql = sql.replace("#2", "" + vendor.getVendor_description());
-            sql = sql.replace("#3", "" + vendor.getEmail());
-            sql = sql.replace("#4", "" + vendor.getArea_code());
-            sql = sql.replace("#5", "" + vendor.getTelephone_number());
-            sql = sql.replace("#6", "" + vendor.getAddress());
-            sql = sql.replace("#7", "" + vendor.getVendor_id());
+            sql = sql.replace("#1", "'" + vendor.getPassword()+"'");
+            sql = sql.replace("#2", "'" + vendor.getVendor_description()+"'");
+            sql = sql.replace("#3", "'" + vendor.getEmail()+"'");
+            sql = sql.replace("#4", "'" + vendor.getArea_code()+"'");
+            sql = sql.replace("#5", "'" + vendor.getTelephone_number()+"'");
+            sql = sql.replace("#6", "'" + vendor.getAddress()+"'");
+            sql = sql.replace("#7", "'" + vendor.getVendor_id()+"'");
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
         }catch (SQLException e) {

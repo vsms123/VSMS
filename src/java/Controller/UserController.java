@@ -45,7 +45,7 @@ public class UserController extends HttpServlet {
                     supplierList = filterSupplierBasedOnWord(word);
                 }
                 //put them into a html table string
-                filteredSearchString = retrieveSupplierHTMLTable(vendor_id,supplierList, retrieveSupplierListByVendor(vendor_id));
+                filteredSearchString = retrieveSupplierHTMLTable(vendor_id, supplierList, retrieveSupplierListByVendor(vendor_id));
                 //put them into scripts for the buttons
             } else { //create
                 saveAsFavouriteSupplier(vendor_id, supplier_id);
@@ -61,7 +61,46 @@ public class UserController extends HttpServlet {
                 .write(filteredSearchString);       // Write response body.
     }
 
-    public String retrieveSupplierHTMLTable(int vendor_id,ArrayList<Supplier> supplierList, ArrayList<Supplier> currentFavSupplier) {
+    @Override
+    //doPost will be given to VendorProfile.jsp
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Will receive vendor id and supplier id interested
+        String vendor_idStr = request.getParameter("vendor_id");
+        String action = request.getParameter("action");
+
+        if (!UtilityController.checkNullStringArray(new String[]{vendor_idStr, action})) {
+            int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
+            Vendor vendor = UserController.retrieveVendorByID(vendor_id);
+            if (action.equals("editprofile")) {
+                String email = request.getParameter("email");
+                String address = request.getParameter("address");
+                String area_code = request.getParameter("area_code");
+                String telephone_number = request.getParameter("telephone_number");
+                String vendor_description = request.getParameter("vendor_description");
+                vendor.setEmail(email);
+                vendor.setAddress(address);
+                vendor.setArea_code(UtilityController.convertStringtoInt(area_code));
+                vendor.setTelephone_number(UtilityController.convertStringtoInt(telephone_number));
+                vendor.setVendor_description(vendor_description);
+                updateVendor(vendor);
+                response.sendRedirect("VendorProfile.jsp");
+            } else if (action.equals("editpassword")) {
+                String new_password = request.getParameter("new_password");
+                vendor.setPassword(new_password);
+                updateVendor(vendor);
+                response.sendRedirect("VendorProfile.jsp");
+            }
+
+            response.setContentType(
+                    "text/plain");  // Set content type of the response so that AJAX knows what it can expect.
+            response.setCharacterEncoding(
+                    "UTF-8");
+            response.getWriter()
+                    .write("");       // Write response body.
+        }
+    }
+
+    public String retrieveSupplierHTMLTable(int vendor_id, ArrayList<Supplier> supplierList, ArrayList<Supplier> currentFavSupplier) {
         StringBuffer htmlTable = new StringBuffer("");
 
         //Create header
@@ -78,13 +117,12 @@ public class UserController extends HttpServlet {
                 htmlTable.append("<td class=\"favorite\">Favorited</td>");
             } else {
 //                htmlTable.append("<td><button class=\"ui inverted red button create-favsupplier-button"+supplier.getSupplier_id()+"\">Favourite this supplier</button></td>");
-                  htmlTable.append("<td><a href=\"userservlet?vendor_id="+vendor_id+"&supplier_id="+supplier.getSupplier_id()+"&action=add\">Make as Favorite</a></td>");
+                htmlTable.append("<td><a href=\"userservlet?vendor_id=" + vendor_id + "&supplier_id=" + supplier.getSupplier_id() + "&action=add\">Make as Favorite</a></td>");
             }
             htmlTable.append("</tr>");
         }
         return htmlTable.toString();
     }
-
 
     public ArrayList<Supplier> filterSupplierBasedOnWord(String word) {
         ArrayList<Supplier> returnSupplierList = new ArrayList<Supplier>();
@@ -112,6 +150,11 @@ public class UserController extends HttpServlet {
         UserDAO.signUpSupplier(supplier);
     }
 
+    //Input the new/edited vendor (set password or any other information) 
+    public static void updateSupplier(Supplier supplier) {
+        UserDAO.updateSupplier(supplier);
+    }
+
     public static Supplier retrieveSupplierByID(int supplierID) {
         return UserDAO.getSupplierById(supplierID);
     }
@@ -122,6 +165,11 @@ public class UserController extends HttpServlet {
 
     public static ArrayList<Vendor> retrieveVendorList() {
         return UserDAO.retrieveVendorList();
+    }
+
+    //Input the new/edited vendor (set password or any other information) 
+    public static void updateVendor(Vendor vendor) {
+        UserDAO.updateVendor(vendor);
     }
 
     public static Vendor loginVendor(String vendor_name, String password) {
@@ -143,4 +191,5 @@ public class UserController extends HttpServlet {
     public static void deleteFavouriteSupplier(int vendor_id, int supplier_id) {
         UserDAO.deleteFavouriteSupplier(vendor_id, supplier_id);
     }
+
 }

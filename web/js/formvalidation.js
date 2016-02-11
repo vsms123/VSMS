@@ -87,8 +87,8 @@ $(function() {
             form.submit();
         }
     });
-    
-       // Setup form validation for logging in
+
+    // Setup form validation for logging in
 //    $("#login").validate({
 ////        Specify the error and valid styling (red color if error, green color if valid)
 //        errorClass: "my-error-class",
@@ -107,4 +107,62 @@ $(function() {
 //            form.submit();
 //        }
 //    });
+
+// Setup form validation for editing profile
+    $("#editProfile").validate({
+//        Specify the error and valid styling (red color if error, green color if valid)
+        errorClass: "my-error-class",
+        validClass: "my-valid-class",
+        // Specify the validation rules
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            address: "required",
+            area_code: {
+                required: true,
+                number: true
+            },
+            telephone_number: {
+                required: true,
+                number: true
+            },
+            vendor_description: "required",
+        },
+        // Specify the validation error messages
+        messages: {
+            email: "Please enter a valid email",
+            address: "Please enter a valid address",
+            area_code: "Please enter a valid area code where number is required",
+            telephone_number: "Please enter valid telephone number where number is required",
+            vendor_description: "Please enter the correct description",
+        },
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+    // Setup form validation for editing profile
+    $("#editPassword").validate({
+//        Specify the error and valid styling (red color if error, green color if valid)
+        errorClass: "my-error-class",
+        validClass: "my-valid-class",
+        // Specify the validation rules
+        rules: {
+            old_password: "required",
+            new_password: "required",
+            new2_password: {
+                equalTo: "#new_password"
+            }
+        },
+        // Specify the validation error messages
+        messages: {
+            old_password: "Please enter your old password properly",
+            new_password: "Please enter your new password",
+            new2_password: "Please enter the same password as your New Password",
+        },
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
 });
