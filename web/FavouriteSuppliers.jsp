@@ -19,6 +19,9 @@
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
+
+            //ID=session.getAttribute(vendor_id);
+            ArrayList<Supplier> supplierList = UserController.retrieveSupplierList();
             //ID=session.getAttribute(vendor_id);
             ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(currentVendor.getVendor_id());
         %>
@@ -37,6 +40,8 @@
                     });
                 });
 
+
+
                 $('.create-favsupplier-button').click(function() {
                     //show modal button
                     $('#modaldiv').modal('show');
@@ -45,6 +50,8 @@
                 for (Supplier supplier : favSupplierList) {
                     int supplier_id = supplier.getSupplier_id();
             %>
+
+                //CREATE DELETE CLICK OF BUTTONS
                 $(".delete-favsupplier-button<%=supplier_id%>").click(function() {
 
                     console.log("My name is delete-favsupplier-button<%=supplier_id%>");
@@ -105,18 +112,18 @@
                         Add Favorite Suppliers
                     </div>
                     <div class="content">
-                            <!--Inserting List of suppliers available. To star and unstar-->
-                            <!--Create FavSupplier Filter with a search engine-->
-                            Supplier name : <input type="text" name="searchsupplier" id="searchsupplier" value=""/>
+                        <!--Inserting List of suppliers available. To star and unstar-->
+                        <!--Create FavSupplier Filter with a search engine-->
+                        Supplier name : <input type="text" name="searchsupplier" id="searchsupplier" value=""/>
 
-                            <table id="supplierlist" name="supplierlist">                                
-                            </table>
-                            <!--Todo: Supplier list favourite star and unstar-->
+                        <table id="supplierlist" name="supplierlist">                                
+                        </table>
+                        <!--Todo: Supplier list favourite star and unstar-->
 
-                            <!--Input hidden attributes-->
-                            <input type="hidden" name="vendor_id" value="1">
-                            <input type="hidden" name="action" value="delete">
-                            
+                        <!--Input hidden attributes-->
+                        <input type="hidden" name="vendor_id" value="1">
+                        <input type="hidden" name="action" value="delete">
+
                     </div>
                     <div class="actions">
                         <div class="ui positive right labeled icon button">

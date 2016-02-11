@@ -45,7 +45,8 @@ public class UserController extends HttpServlet {
                     supplierList = filterSupplierBasedOnWord(word);
                 }
                 //put them into a html table string
-                filteredSearchString = retrieveSupplierHTMLTable(supplierList,retrieveSupplierListByVendor(vendor_id));
+                filteredSearchString = retrieveSupplierHTMLTable(vendor_id,supplierList, retrieveSupplierListByVendor(vendor_id));
+                //put them into scripts for the buttons
             } else { //create
                 saveAsFavouriteSupplier(vendor_id, supplier_id);
                 response.sendRedirect("FavouriteSuppliers.jsp");
@@ -60,9 +61,9 @@ public class UserController extends HttpServlet {
                 .write(filteredSearchString);       // Write response body.
     }
 
-    public String retrieveSupplierHTMLTable(ArrayList<Supplier> supplierList,ArrayList<Supplier> currentFavSupplier) {
+    public String retrieveSupplierHTMLTable(int vendor_id,ArrayList<Supplier> supplierList, ArrayList<Supplier> currentFavSupplier) {
         StringBuffer htmlTable = new StringBuffer("");
-        
+
         //Create header
         htmlTable.append("<tr>");
         htmlTable.append("<th>Supplier Name</th>");
@@ -73,15 +74,17 @@ public class UserController extends HttpServlet {
             htmlTable.append("<tr>");
             htmlTable.append("<td>" + supplier.getSupplier_name() + "</td>");
             htmlTable.append("<td>" + supplier.getSupplier_type() + "</td>");
-            if(currentFavSupplier.contains(supplier)){
-                htmlTable.append("<td class=\"favorite\">Favorite</td>");
-            } else{
-                htmlTable.append("<td class=\"available\">Available</td>");
+            if (currentFavSupplier.contains(supplier)) {
+                htmlTable.append("<td class=\"favorite\">Favorited</td>");
+            } else {
+//                htmlTable.append("<td><button class=\"ui inverted red button create-favsupplier-button"+supplier.getSupplier_id()+"\">Favourite this supplier</button></td>");
+                  htmlTable.append("<td><a href=\"userservlet?vendor_id="+vendor_id+"&supplier_id="+supplier.getSupplier_id()+"&action=add\">Make as Favorite</a></td>");
             }
             htmlTable.append("</tr>");
         }
         return htmlTable.toString();
     }
+
 
     public ArrayList<Supplier> filterSupplierBasedOnWord(String word) {
         ArrayList<Supplier> returnSupplierList = new ArrayList<Supplier>();
