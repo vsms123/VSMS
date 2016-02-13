@@ -50,12 +50,9 @@
 
 
 
-                $('.test.dish')
-                        .popup({
-                            position: 'top left'
-                        })
-
-                        ;
+                $('.test.dish').popup({
+                    position: 'top left'
+                });
             });
 
 
@@ -130,7 +127,7 @@
 
                 <!--Create a modal for adding the menu-->
                 <div id="createmodaldiv" class="ui small modal">
-                    
+
                     <div class="header">
                         Add New Dish to Menu
                     </div>
@@ -145,7 +142,7 @@
                             <!--Input hidden attributes-->
                             <input type="hidden" name="vendor_id" value="1">
                             <input type="hidden" name="action" value="add">
-                            
+
                         </form>
                     </div>
                     <div class="actions">

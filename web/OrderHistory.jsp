@@ -29,8 +29,32 @@
         <script>
             $(document).ready(function () {
                 $('.secondary.menu .item').tab();
+
+                $('.test.dish').popup({
+                    position: 'top left'
+                });
             });
         </script>
+        <style>
+            a:link {
+                color: black;
+            }
+
+            /* visited link */
+            a:visited {
+                color: Black;
+            }
+
+            /* mouse over link */
+            a:hover {
+                color: hotpink;
+            }
+
+            /* selected link */
+            a:active {
+                color: black;
+            }
+        </style>
 
     </head>
     <body class="background">
@@ -67,11 +91,14 @@
                     }
                 %>
 
+                <!--tabs menu-->
                 <div class="ui pointing secondary menu">
                     <a class="item active" data-tab="first">Pending Orders</a>
                     <a class="item" data-tab="second">Completed Orders</a>
                     <a class="item" data-tab="third">Rejected Orders</a>
                 </div>
+
+                <!--Pending orders section-->
                 <div class="ui tab segment active" data-tab="first">
                     <%
                         int pendingList = pendingOrders.size();
@@ -82,52 +109,169 @@
                             }
                         }
 
-                        if (pendingPageNo > 1) {
+                    %>
+
+
+                    <!--printing first 10 pendings orders-->
+                    <div class="ui active tab middle aligned animated selection divided list" data-tab="11">
+
+
+                        <%for (int count = 0; count < 10; count++) {
+                                if (pendingOrders.size() > count) {
+
+                                    Order order = pendingOrders.get(count);
+                        %>
+
+
+
+                        <div class="item test dish" data-content="Click to view order details"  data-variation="inverted">
+
+                            <a href="OrderView.jsp?order_id=<%=order.getOrder_id()%>" >
+                                <div class="content">
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%>
+                                </div>
+                                <div>
+                                    Price: $<%=order.getTotal_final_price()%> &nbsp;
+                                    Supplier: <%=order.getVendor_id()%>
+
+                                </div>
+                            </a>
+                        </div>
+
+                        <%}
+                            }%>
+
+
+                    </div>
+
+
+                    <!--Printing the beyond the 10th pending order-->
+                    <%
+                        for (int j = 2; j <= pendingPageNo; j++) {
+                    %>
+
+                    <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 10%>">
+
+                        <%for (int count = (j - 1) * 10; count < j * 10; count++) {
+                                if (pendingOrders.size() > count) {
+
+                                    Order order = pendingOrders.get(count);
+                        %>
+
+
+
+                        <div class="item test dish" data-content="Click to view order details"  data-variation="inverted">
+
+                            <a href="OrderView.jsp?order_id=<%=order.getOrder_id()%>" >
+                                <div class="content">
+                                    <h2><%=order.getOrder_id()%></h2>
+                                </div>
+                                <div>
+                                    <%=order.getDtOrder()%>
+                                </div>
+                            </a>
+                        </div>
+
+
+
+                        <%}
+                            }%>
+                    </div>
+
+                    <%}%>
+
+
+                    <div>
+                        <%
+                            if (pendingPageNo > 1) {
+                        %>
+                        <div class="ui pagination secondary menu">
+                            <a class="active item" data-tab="11">
+                                1
+                            </a>
+                            <%
+                                for (int j = 1; j < pendingPageNo; j++) {
+                            %>
+                            <a class="item" data-tab="<%=j + 11%>">
+                                <%=j + 1%>
+                            </a>
+                            <%}%>
+                        </div>
+                        <% }
+                        %>
+
+                    </div>
+                </div>
+
+
+
+                <!--Start of section for completed orders-->
+                <div class="ui tab segment" data-tab="second">
+
+                    <%
+                        int completeList = completedOrders.size();
+                        int completePageNo = completeList / 10;
+                        if (completePageNo
+                                > 0) {
+                            if (completeList % 10 != 0) {
+                                completePageNo++;
+                            }
+                        }
+
+                        if (completePageNo
+                                > 1) {
                     %>
                     <div class="ui pagination secondary menu">
-                        <a class="active item" data-tab="1">
+                        <a class="active item" data-tab="21">
                             1
                         </a>
                         <%
-                            for (int j = 1; j < pendingPageNo; j++) {
+                            for (int j = 1; j < completePageNo; j++) {
                         %>
-                        <a class="item" data-tab="<%=j + 1%>">
+                        <a class="item" data-tab="<%=j + 21%>">
                             <%=j + 1%>
                         </a>
                         <%}%>
                     </div>
                     <% }
-                        for (int j = 1; j <= pendingPageNo; j++) {
                     %>
-
-                    <div class="ui tab segment" data-tab="<%=j%>">
+                    <div class="ui tab active segment" data-tab="21">
                         <ul>
-                            <%for (int count = (j-1)*10; count < j*10;count++) {
-                                if(pendingOrders.size()>count){
+                            <%for (int count = 0;
+                                        count < 10; count++) {
+                                    if (completedOrders.size() > count) {
                             %>
-
                             <li>
-                                <%= pendingOrders.get(count)%>
+                                <%= completedOrders.get(count)%>
                             </li>  <%}
                                 }%>
                         </ul>
-
                     </div>
+                    <%
+                        for (int j = 2;
+                                j <= completePageNo;
+                                j++) {
+                    %>
 
+                    <div class="ui tab segment" data-tab="<%=j + 20%>">
+                        <ul>
+                            <%for (int count = (j - 1) * 10; count < j * 10; count++) {
+                                    if (completedOrders.size() > count) {
+                            %>
+
+                            <li>
+                                <%= completedOrders.get(count)%>
+                            </li>  <%}
+                                }%>
+                        </ul>
+                    </div>
                     <%}%>
 
-                </div>
-                <div class="ui tab segment" data-tab="second">
-                    <ul>
-                        <%for (Order order : completedOrders) {%>
-
-                        <li><%=order%></li>  
-                            <%}%>
-                    </ul>
-
-
 
                 </div>
+
+
+
                 <div class="ui tab segment" data-tab="third">
                     <ul>
                         <%for (Order order : rejectedOrders) {%>
