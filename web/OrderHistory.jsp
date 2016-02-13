@@ -26,6 +26,11 @@
                 $('.secondary.menu .item').tab();
             });
         </script>
+        <script>
+            $(document).ready(function () {
+                $('.secondary.menu .item').tab();
+            });
+        </script>
 
     </head>
     <body class="background">
@@ -43,8 +48,24 @@
                     <i class="right angle icon divider"></i>
                     <div class="active section">Order History</div>
                 </div>
+
                 <h1 style="color: black">Order History List</h1>
 
+                <%
+                    ArrayList<Order> pendingOrders = new ArrayList<Order>();
+                    ArrayList<Order> completedOrders = new ArrayList<Order>();
+                    ArrayList<Order> rejectedOrders = new ArrayList<Order>();
+                    for (Order order : orderList) {
+
+                        if (order.getStatus().equals("pending")) {
+                            pendingOrders.add(order);
+                        } else if (order.getStatus().equals("approved")) {
+                            completedOrders.add(order);
+                        } else if (order.getStatus().equals("rejected")) {
+                            rejectedOrders.add(order);
+                        }
+                    }
+                %>
 
                 <div class="ui pointing secondary menu">
                     <a class="item active" data-tab="first">Pending Orders</a>
@@ -52,46 +73,73 @@
                     <a class="item" data-tab="third">Rejected Orders</a>
                 </div>
                 <div class="ui tab segment active" data-tab="first">
-                    <ul>
-                    <%for (Order order : orderList) {%>
-
                     <%
-                        if (order.getStatus().equals("pending")) {
-                    %><li><%=order%></li>  <%
+                        int pendingList = pendingOrders.size();
+                        int pendingPageNo = pendingList / 10;
+                        if (pendingPageNo > 0) {
+                            if (pendingList % 10 != 0) {
+                                pendingPageNo++;
+                            }
                         }
+
+                        if (pendingPageNo > 1) {
+                    %>
+                    <div class="ui pagination secondary menu">
+                        <a class="active item" data-tab="1">
+                            1
+                        </a>
+                        <%
+                            for (int j = 1; j < pendingPageNo; j++) {
                         %>
+                        <a class="item" data-tab="<%=j + 1%>">
+                            <%=j + 1%>
+                        </a>
                         <%}%>
-                </ul>
-                    
+                    </div>
+                    <% }
+                        for (int j = 1; j <= pendingPageNo; j++) {
+                    %>
+
+                    <div class="ui tab segment" data-tab="<%=j%>">
+                        <ul>
+                            <%for (int count = (j-1)*10; count < j*10;count++) {
+                                if(pendingOrders.size()>count){
+                            %>
+
+                            <li>
+                                <%= pendingOrders.get(count)%>
+                            </li>  <%}
+                                }%>
+                        </ul>
+
+                    </div>
+
+                    <%}%>
+
                 </div>
                 <div class="ui tab segment" data-tab="second">
                     <ul>
-                    <%for (Order order : orderList) {%>
+                        <%for (Order order : completedOrders) {%>
 
-                    <%
-                        if (order.getStatus().equals("approved")) {
-                    %><li><%=order%></li>  <%
-                        }
-                        %>
-                        <%}%>
+                        <li><%=order%></li>  
+                            <%}%>
                     </ul>
+
+
+
                 </div>
                 <div class="ui tab segment" data-tab="third">
                     <ul>
-                    <%for (Order order : orderList) {%>
+                        <%for (Order order : rejectedOrders) {%>
 
-                    <%
-                        if (order.getStatus().equals("rejected")) {
-                    %><li><%=order%></li>  <%
-                        }
-                        %>
-                        <%}%>
+                        <li><%=order%></li>
+                            <%}%>
                     </ul>
                 </div>
 
 
 
-                
+
 
                 <!--JAVASCRIPT-->
                 <!--for general Javascript please refer to the main js. For others, please just append the script line below-->

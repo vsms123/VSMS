@@ -32,12 +32,23 @@
 
                     if ((width <= 800) || (height <= 600)) {
                         $("#pc").css("display", "none");
+                        $("#mobile").css("display", "");
                     } else {
+                        
+                        $("#mobile").css("display", "none")
                         $("#pc").css("display", "");
                     }
                 });
 
 
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#testing').click(function () {
+                    $('.vertical.menu').sidebar('toggle');
+                });
             });
         </script>
 
@@ -47,9 +58,39 @@
 
 
     <body>
-        <div>
+        <div id="mobile">
+
+           
+<div class="ui inverted menu">
+  <a id="testing" class="item">
+    <i class="sidebar icon"></i>
+    Menu
+    
+  </a>
+</div>
             
-            
+
+            <div class="ui sidebar inverted vertical menu">
+                <a class="item">
+                    1
+                </a>
+                <a class="item">
+                    2
+                </a>
+                <a class="item">
+                    3
+                </a>
+            </div>
+            <div class="pusher">
+                <!-- Site content !-->
+                <p></p>
+                        <h1 class="ui header">VSMS Menu</h1>
+
+                        <p></p>
+                        <h1>We will be adding in more contents here, such as some order status and notifications </h1>
+            </div>
+
+
 
         </div>
 
