@@ -35,12 +35,22 @@
                         $("#pc").css("display", "none");
                         $("#mobile").css("display", "");
                     } else {
+                        
+                        $("#mobile").css("display", "none")
                         $("#pc").css("display", "");
                         $("#mobile").css("display", "none");
                     }
                 });
 
 
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#testing').click(function () {
+                    $('.vertical.menu').sidebar('toggle');
+                });
             });
         </script>
         <script>

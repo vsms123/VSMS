@@ -76,7 +76,7 @@
                 <i class="large shop icon" ></i> Order
 
                 <div class="menu">
-                    <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make an Order</a>
+                    <a href="OrderMain.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make an Order</a>
                     <a href="OrderHistory.jsp" class="item" style=" font-size: 16px"><i class="large history icon"></i> Order History</a>
                 </div>
             </div>
