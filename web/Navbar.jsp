@@ -32,18 +32,27 @@
                     if ((width <= 800) || (height <= 600)) {
                         $("#searchPC").css("display", "none");
                         $("#navbarPC").css("display", "none");
+                        // $("#navbarMobile").css("display", "");
                     } else {
                         $("#searchPC").css("display", "");
                         $("#navbarPC").css("display", "");
+                        //$("#navbarMobile").css("display", "none");
                     }
                 });
 
 
+
             });
+
+
         </script>
 
     </head>
     <body>
+
+
+
+
         <div class="ui grid">
             <div class="six wide column">
                 <a href="Home.jsp">
@@ -81,8 +90,8 @@
                 <i class="large user icon"></i>  My Account
 
                 <div class="menu">
-                   <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                    <a class="item profile" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
+                    <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                    <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
