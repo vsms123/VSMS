@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.UserDAO;
+import Model.Ingredient;
 import Model.Supplier;
 import Model.Vendor;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class UserController extends HttpServlet {
             if (action.equals("delete")) {
                 deleteFavouriteSupplier(vendor_id, supplier_id);
                 response.sendRedirect("FavouriteSuppliers.jsp");
-            } else if (action.equals("search")) {
+            } else if (action.startsWith("searchsupplier")) {
                 //Give filtered search to be written
                 ArrayList<Supplier> supplierList;
                 //if word is null then give all the list, if word is there then do a filter function
@@ -42,10 +43,29 @@ public class UserController extends HttpServlet {
                     supplierList = retrieveSupplierList();
                 } else {
                     //filter the supplier based on the string word
-                    supplierList = filterSupplierBasedOnWord(word);
+                    if (action.equals("searchsupplierbyname")) {
+                        supplierList = filterSupplierBasedOnName(word);
+                    } else { //searchsupplierbytype
+                        supplierList = filterSupplierBasedOnType(word);
+                    }
                 }
                 //put them into a html table string
                 filteredSearchString = retrieveSupplierHTMLTable(vendor_id, supplierList, retrieveSupplierListByVendor(vendor_id));
+                //put them into scripts for the buttons
+            } else if (action.equals("searchingredient")) {
+                //For Ingredient
+                ArrayList<Ingredient> ingredientList;
+                //if word is null then give all the list, if word is there then do a filter function
+                String word = request.getParameter("word");
+                if (word == null || word.isEmpty()) {
+                    //get the list of suppliers
+                    ingredientList = IngredientController.getIngredientList();
+                } else {
+                    //filter the supplier based on the string word
+                    ingredientList = IngredientController.getIngredientByName(word);
+                }
+                //put them into a html table string
+                filteredSearchString = retrieveIngredientHTMLTable(ingredientList);
                 //put them into scripts for the buttons
             } else { //create
                 saveAsFavouriteSupplier(vendor_id, supplier_id);
@@ -112,7 +132,7 @@ public class UserController extends HttpServlet {
         for (Supplier supplier : supplierList) {
             htmlTable.append("<tr>");
             //Need to send in a list with this supplier_id to SupplierSearchProfile
-            htmlTable.append("<td><a href=SupplierSearchProfile.jsp?supplier_id="+supplier.getSupplier_id()+">" + supplier.getSupplier_name() + "</a></td>");
+            htmlTable.append("<td><a href=SupplierSearchProfile.jsp?supplier_id=" + supplier.getSupplier_id() + ">" + supplier.getSupplier_name() + "</a></td>");
             htmlTable.append("<td>" + supplier.getSupplier_type() + "</td>");
             if (currentFavSupplier.contains(supplier)) {
                 htmlTable.append("<td class=\"favorite\">Favorited</td>");
@@ -124,19 +144,64 @@ public class UserController extends HttpServlet {
         }
         return htmlTable.toString();
     }
+     public String retrieveIngredientHTMLTable(ArrayList<Ingredient> ingredientList) {
+        StringBuffer htmlTable = new StringBuffer("");
 
-    public ArrayList<Supplier> filterSupplierBasedOnWord(String word) {
+        //Create header
+        htmlTable.append("<tr>");
+        htmlTable.append("<th>Name</th>");
+        htmlTable.append("<th>Supply Unit</th>");
+        htmlTable.append("<th>Subcategory</th>");
+        htmlTable.append("<th>OfferedPrice</th>");
+        htmlTable.append("<th>Description</th>");
+        htmlTable.append("<th>Supplier</th>");
+        htmlTable.append("</tr>");
+        for (Ingredient ingredient : ingredientList) {
+            htmlTable.append("<tr>");
+            //Need to send in a list with this supplier_id to SupplierSearchProfile
+            htmlTable.append("<td>" + ingredient.getName() + "</td>");
+            htmlTable.append("<td>" + ingredient.getSupplyUnit() + "</td>");
+            htmlTable.append("<td>" + ingredient.getSubcategory() + "</td>");
+            htmlTable.append("<td>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</td>");
+            htmlTable.append("<td>" + ingredient.getDescription() + "</td>");
+            htmlTable.append("<td><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()+ "</a></td>");
+            htmlTable.append("</tr>");
+        }
+        return htmlTable.toString();
+    }
+
+    public ArrayList<Supplier> filterSupplierBasedOnName(String name) {
         ArrayList<Supplier> returnSupplierList = new ArrayList<Supplier>();
         ArrayList<Supplier> supplierList = retrieveSupplierList();
-        String wordLower = word.toLowerCase();
+        String nameLower = name.toLowerCase();
         for (Supplier supplier : supplierList) {
-            String nameLower = supplier.getSupplier_name().toLowerCase();
-            String typeLower = supplier.getSupplier_type().toLowerCase();
-            if (nameLower.contains(wordLower) || typeLower.contains(wordLower)) {
+            String supplierNameLower = supplier.getSupplier_name().toLowerCase();
+            if (supplierNameLower.contains(nameLower)) {
                 returnSupplierList.add(supplier);
             }
         }
         return returnSupplierList;
+    }
+
+    public ArrayList<Supplier> filterSupplierBasedOnType(String type) {
+        ArrayList<Supplier> returnSupplierList = new ArrayList<Supplier>();
+        ArrayList<Supplier> supplierList = retrieveSupplierList();
+        String typeLower = type.toLowerCase();
+        for (Supplier supplier : supplierList) {
+            String supplierTypeLower = supplier.getSupplier_type().toLowerCase();
+            if (supplierTypeLower.contains(typeLower)) {
+                returnSupplierList.add(supplier);
+            }
+        }
+        return returnSupplierList;
+    }
+
+    public ArrayList<Ingredient> filterIngredientBasedOnIngredientName(String ingredient) {
+        String ingredientLower = ingredient.toLowerCase();
+        //Get arraylist of ingredients based on ingredient name
+        ArrayList<Ingredient> ingredientList = IngredientController.getIngredientByName(ingredientLower);
+
+        return ingredientList;
     }
 
     public static ArrayList<Supplier> retrieveSupplierList() {

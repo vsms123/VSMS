@@ -155,8 +155,15 @@ public class IngredientController extends HttpServlet {
         return IngredientDAO.getDishByID(dish_id);
     }
 
+    public static ArrayList<Ingredient> getIngredientList() {
+        return IngredientDAO.getIngredientList();
+    }
     public static ArrayList<Ingredient> getIngredientBySupplier(int supplier_id) {
         return IngredientDAO.getIngredientBySupplier(supplier_id);
+    }
+    
+    public static ArrayList<Ingredient> getIngredientByName(String ingredient_name) {
+        return IngredientDAO.getIngredientByName(ingredient_name);
     }
 
     public static Ingredient getIngredient(String supplierId, String ingredientName) {

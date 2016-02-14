@@ -8,7 +8,7 @@
 
 <html>
     <head>
-        <title>Favourite Suppliers</title>
+        <title>Supplier Search</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--Form VALIDATION-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
@@ -19,23 +19,47 @@
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
-
             //ID=session.getAttribute(vendor_id);
             ArrayList<Supplier> supplierList = UserController.retrieveSupplierList();
             //ID=session.getAttribute(vendor_id);
             ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(currentVendor.getVendor_id());
+            
+            String ingredientName = request.getParameter("ingredient_name");
+            if(ingredientName==null){
+                ingredientName="";
+            }
         %>
 
         <script>
             $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
                 //SEARCHING AND FILTERING
-                //invoke get method in UserController with blank parameter given and blank response
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "search", word: $('#searchsupplier').val()}, function(responseText) {
-                    $("#supplierlist").html(responseText);
+                //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyname
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function(responseText) {
+                    $("#supplierlistbyname").html(responseText);
                 });
-                $("#searchsupplier").keyup(function() {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "search", word: $('#searchsupplier').val()}, function(responseText) {
-                        $("#supplierlist").html(responseText);
+                $("#searchsupplierbyname").keyup(function() {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function(responseText) {
+                        $("#supplierlistbyname").html(responseText);
+                    });
+                });
+                
+                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbytype
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function(responseText) {
+                    $("#supplierlistbytype").html(responseText);
+                });
+                $("#searchsupplierbytype").keyup(function() {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function(responseText) {
+                        $("#supplierlistbytype").html(responseText);
+                    });
+                });
+                
+                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyingredient
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function(responseText) {
+                    $("#ingredientlist").html(responseText);
+                });
+                $("#searchingredient").keyup(function() {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function(responseText) {
+                        $("#ingredientlist").html(responseText);
                     });
                 });
             });
@@ -52,9 +76,24 @@
                 
                 <h1>Supplier Search</h1>
                 
-                Supplier name : <input type="text" name="searchsupplier" id="searchsupplier" value=""/>
+                <h3>Supplier Name Search</h3>
+                Supplier name : <input type="text" name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
                 
-                <table id="supplierlist">                                
+                <table id="supplierlistbyname">                                
+                </table>
+                
+                <h3>Supplier Type Search</h3>                
+                Supplier type : <input type="text" name="searchsupplierbytype" id="searchsupplierbytype" value=""/>
+                
+                <table id="supplierlistbytype">                                
+                </table>
+                
+                <h3>Ingredient Name Search</h3>                
+                
+                Ingredient Name : <input type="text" name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
+                
+                
+                <table id="ingredientlist">                                
                 </table>
             </div>
         </div>
