@@ -33,6 +33,8 @@
         %>
         <script>
                     $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+            //Hide AJAX Loading Message
+            $("#loading").hide();
             //Generate the order breakdown
             $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm' <%=valueStr%>}, function(responseText) {
             $(".content-model-table").html(responseText);
@@ -44,7 +46,16 @@
             $(".content-model-table").html(responseText);
             });
             });
-            });        </script>
+                    //Confirm the order breakdown
+                    $("#confirm-order-breakdown").click(function() {
+            console.log("Sending order breakdown");
+                    $("#loading").show();
+                    $.ajaxSetup({async:false});
+                    $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'create', bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {                    });
+                    alert("Order has been sent to suppliers");
+                    $("#loading").hide();
+            });
+            });</script>
 
         <!--CSS-->
         <!-- Import CDN for semantic UI -->    
@@ -60,7 +71,7 @@
                 <%@ include file="Navbar.jsp" %>
                 <div class="ui breadcrumb" >
                     <a href="Home.jsp" class="section">Home</a>
-                    <i class="right angle icon divider"></i>
+                    <i class="right angle icon divider"></i>-
                     <a href="" class="section">Order</a>
                     <i class="right angle icon divider"></i>
                     <div class="active section">View Order Breakdown</div>
@@ -75,6 +86,8 @@
                         %
                     </div>
                 </div>
+                <button class="ui red inverted button" id="confirm-order-breakdown"> <i class="remove icon"></i>Confirm Order Breakdown</button>
+                <p id="loading"><font color="red">Your request is loading...</font></p>
                 <hr>
 
                 <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
