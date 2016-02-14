@@ -5,6 +5,8 @@
  */
 package Model;
 
+import Controller.UtilityController;
+
 /**
  *
  * @author Joel
@@ -85,7 +87,7 @@ public class Orderline {
     }
     
     public String toString(){
-        return "Ingredient name: " +ingredient_name+" "+"quantity: "+quantity+" "+"finalprice: "+finalprice +"\n";
+        return "Ingredient name: " +ingredient_name+" "+"quantity: "+quantity+" "+"finalprice: "+UtilityController.convertDoubleToCurrString(finalprice) +"\n";
     }
     
 }

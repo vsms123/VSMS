@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 public class OrderController extends HttpServlet {
 
     @Override
-    //doPost will be given to Order.java
+    //doPost will be given to Order.jsp and OrderBreakdown.jsp
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //An order order_id, vendor_id, total_final_price, dt_order;
 
@@ -42,6 +42,7 @@ public class OrderController extends HttpServlet {
         ArrayList<Dish> dishList = IngredientDAO.getDish("1");
         String vendor_idStr = request.getParameter("vendor_id");
         String action = request.getParameter("action");
+        String bufferqtypercStr = request.getParameter("bufferqtyperc");
 
         String htmlConfirmation = "";
         //supplier id and order id is auto generated
@@ -54,8 +55,15 @@ public class OrderController extends HttpServlet {
                 int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
                 //Create an hashmap with <Ingredient, aggregated quantity> (TESTED)
                 HashMap<Ingredient, Integer> ingredientAggQuantityMap = createIngredientAggQuantityMap(dishQuantityMap);
-                //Make an arraylist of all orderline (non aggregated)
-                ArrayList<Orderline> orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1);
+                ArrayList<Orderline> orderlineList = new ArrayList<Orderline>();
+                if (bufferqtypercStr != null) {//This means it comes from order breakdown
+                    int bufferqtyperc = UtilityController.convertStringtoInt(bufferqtypercStr);
+                    //Make an arraylist of all orderline (non aggregated) with buffer quantity
+                    orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1,bufferqtyperc);
+                } else {
+                    //Make an arraylist of all orderline (non aggregated)
+                    orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1);
+                }
                 //Create a hashmap of orderlines based on suppliers
                 HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap = createSupplierOrderlineMap(orderlineList);
                 //Create a hashmap of Order based on suppliers
@@ -89,7 +97,6 @@ public class OrderController extends HttpServlet {
             }
 
         }
-
 
         response.setContentType("text/plain");  // Set content type of the response so that AJAX knows what it can expect.
         response.setCharacterEncoding("UTF-8");
@@ -143,14 +150,14 @@ public class OrderController extends HttpServlet {
                 htmlTable.append("<tr>");
                 htmlTable.append("<td>" + orderline.getIngredient_name() + "</td>");
                 htmlTable.append("<td>" + orderline.getQuantity() + "</td>");
-                htmlTable.append("<td>$" + orderline.getFinalprice() + "</td>");
+                htmlTable.append("<td>" + UtilityController.convertDoubleToCurrString(orderline.getFinalprice()) + "</td>");
                 htmlTable.append("</tr>");
                 totalFinalPrice += orderline.getFinalprice();
             }
             htmlTable.append("</table>");
-            htmlTable.append("<h5>Total order: $" + order.getTotal_final_price() + "</h5>");
+            htmlTable.append("<h5>Total order: " + UtilityController.convertDoubleToCurrString(order.getTotal_final_price()) + "</h5>");
         }
-        htmlTable.append("Total final price: $" + totalFinalPrice);
+        htmlTable.append("Total final price: " + UtilityController.convertDoubleToCurrString(totalFinalPrice));
         return htmlTable.toString();
     }
 //    Test controller
@@ -225,6 +232,25 @@ public class OrderController extends HttpServlet {
 
             //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
             Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * aggQuantity, aggQuantity, 0.0);
+            orderlineList.add(orderline);
+        }
+        //for debugging purpose
+        System.out.println(orderlineList.toString());
+        return orderlineList;
+    }
+     public ArrayList<Orderline> createOrderlineList(HashMap<Ingredient, Integer> ingredientAggQuantityMap, int vendor_id, int order_id, int bufferqtyperc) {
+        ArrayList<Orderline> orderlineList = new ArrayList<Orderline>();
+
+        //iterate through ingredientAggQuantityMap
+        Iterator iter = ingredientAggQuantityMap.keySet().iterator();
+        while (iter.hasNext()) {
+            Ingredient ingredient = (Ingredient) iter.next();
+            //Adding bufferqty percentage into the aggregate quantity
+            double bufferqtymultiplier = bufferqtyperc/100.0 +1;
+            int aggQuantity = (int) Math.ceil(ingredientAggQuantityMap.get(ingredient) * bufferqtymultiplier);
+
+            //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
+            Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * aggQuantity, aggQuantity, bufferqtyperc);
             orderlineList.add(orderline);
         }
         //for debugging purpose
