@@ -15,17 +15,17 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script>
-            $(document).ready(function () {
-                $('.message').click(function () {
+            $(document).ready(function() {
+                $('.message').click(function() {
                     //show modal button
                     $('#modalMessage').modal('show');
                 });
-                $('.profile').click(function () {
+                $('.profile').click(function() {
                     //show modal button
                     $('#modalAccount').modal('show');
                 });
 
-                $(window).on('load resize', function () {
+                $(window).on('load resize', function() {
                     var width = $(window).width();
                     var height = $(window).height();
 
@@ -39,7 +39,15 @@
                         //$("#navbarMobile").css("display", "none");
                     }
                 });
-
+                $('#ingredient-name-input').keypress(function(e) {
+                    console.log("Keypress  is pressed");
+                    if (e.which == 13) {
+                        document.location.href = "SupplierSearch.jsp?ingredient_name="+$('#ingredient-name-input').val();
+                    }
+                });
+                $('#ingredient-name-input-button').click(function() {
+                    document.location.href = "SupplierSearch.jsp?ingredient_name="+$('#ingredient-name-input').val();
+                });
 
 
             });
@@ -63,9 +71,9 @@
             <div class="ten wide column" id="searchPC" style="position:relative;top: 50px">
                 <h3>Find ingredients that you need</h3>
 
-                <div class="ui fluid action input"  style="margin-right: 10%">
-                    <input type="text" placeholder="Search suppliers, ingredients...">
-                    <div class="ui button"> <i class="search icon"></i></div>
+                <div class="ui fluid action input" style="margin-right: 10%">
+                    <input type="text" id="ingredient-name-input" placeholder="Search Ingredient Name ... ">
+                    <div class="ui button" id="ingredient-name-input-button"> <i class="search icon"></i></div>
                 </div>
             </div>
 
