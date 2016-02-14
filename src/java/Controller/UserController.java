@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController extends HttpServlet {
 
     @Override
-    //doGet will be given to FavouriteSuppliers.jsp
+    //doGet will be given to FavouriteSuppliers.jsp and SupplierSearch.jsp and SupplierSearchProfile.jsp
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Will receive vendor id and supplier id interested
         String vendor_idStr = request.getParameter("vendor_id");
@@ -111,7 +111,8 @@ public class UserController extends HttpServlet {
         htmlTable.append("</tr>");
         for (Supplier supplier : supplierList) {
             htmlTable.append("<tr>");
-            htmlTable.append("<td>" + supplier.getSupplier_name() + "</td>");
+            //Need to send in a list with this supplier_id to SupplierSearchProfile
+            htmlTable.append("<td><a href=SupplierSearchProfile.jsp?supplier_id="+supplier.getSupplier_id()+">" + supplier.getSupplier_name() + "</a></td>");
             htmlTable.append("<td>" + supplier.getSupplier_type() + "</td>");
             if (currentFavSupplier.contains(supplier)) {
                 htmlTable.append("<td class=\"favorite\">Favorited</td>");
