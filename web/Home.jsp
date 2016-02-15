@@ -36,9 +36,8 @@
                         $("#mobile").css("display", "");
                     } else {
                         
-                        $("#mobile").css("display", "none")
-                        $("#pc").css("display", "");
                         $("#mobile").css("display", "none");
+                        $("#pc").css("display", "");
                     }
                 });
 

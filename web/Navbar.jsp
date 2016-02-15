@@ -80,6 +80,9 @@
         </div>
 
         <div id="navbarPC" class="ui stackable menu">
+            <a href="Home.jsp" class="item" style=" font-size: 16px">
+                <i class="large home icon"></i> Home
+            </a>
             <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large shop icon" ></i> Order
 
@@ -89,10 +92,10 @@
                 </div>
             </div>
             <a href="Menu.jsp" class="item" style=" font-size: 16px">
-                <i class="large food icon"></i>&nbsp Menu
+                <i class="large food icon"></i> Menu
             </a>
             <a class="item message" style=" font-size: 16px">
-                <i class="large  mail icon"></i>&nbsp Messages
+                <i class="large  mail icon"></i> Messages
             </a>
             <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
@@ -103,6 +106,9 @@
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
+            <a class="item" style=" font-size: 16px">
+                <i class="large shipping icon"></i> Supplier Search
+            </a>
 
 
         </div>
