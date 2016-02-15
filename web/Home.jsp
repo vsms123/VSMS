@@ -26,20 +26,20 @@
                     $('#modalAccount').modal('show');
                 });
 
-
-                $(window).on('load resize', function () {
-                    var width = $(window).width();
-                    var height = $(window).height();
-
-                    if ((width <= 800) || (height <= 600)) {
-                        $("#pc").css("display", "none");
-                        $("#mobile").css("display", "");
-                    } else {
-                        
-                        $("#mobile").css("display", "none");
-                        $("#pc").css("display", "");
-                    }
-                });
+//              //For mobile view, will implement later
+//                $(window).on('load resize', function () {
+//                    var width = $(window).width();
+//                    var height = $(window).height();
+//
+//                    if ((width <= 800) || (height <= 600)) {
+//                        $("#pc").css("display", "none");
+//                        $("#mobile").css("display", "");
+//                    } else {
+//                        
+//                        $("#mobile").css("display", "none");
+//                        $("#pc").css("display", "");
+//                    }
+//                });
 
 
             });
@@ -123,14 +123,17 @@
             </div>
         </div>
 
-        <div id="mobile" class="pusher">
+                        
+       <!--For mobile view will fix later-->
+                        
+<!--        <div id="mobile" class="pusher">
             Testing
             <button id="testing">Sidebar</button>
         </div>
                         
                         
                         
-        <!--Sidebar comes here-->
+        Sidebar comes here
         <div class="ui sidebar inverted vertical menu">
             <a class="item">
                 1
@@ -141,6 +144,6 @@
             <a class="item">
                 3
             </a>
-        </div>
+        </div>-->
     </body>
 </html>

@@ -15,38 +15,41 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script>
-            $(document).ready(function() {
-                $('.message').click(function() {
+            $(document).ready(function () {
+                $('.message').click(function () {
                     //show modal button
                     $('#modalMessage').modal('show');
                 });
-                $('.profile').click(function() {
+                $('.profile').click(function () {
                     //show modal button
                     $('#modalAccount').modal('show');
                 });
 
-                $(window).on('load resize', function() {
+                $(window).on('load resize', function () {
                     var width = $(window).width();
                     var height = $(window).height();
 
                     if ((width <= 800) || (height <= 600)) {
                         $("#searchPC").css("display", "none");
                         $("#navbarPC").css("display", "none");
-                        // $("#navbarMobile").css("display", "");
+                        $("#PCview").css("display", "none");
+                        
+                        $("#navbarMobile").css("display", "");
                     } else {
                         $("#searchPC").css("display", "");
                         $("#navbarPC").css("display", "");
-                        //$("#navbarMobile").css("display", "none");
+                        $("#PCview").css("display", "");
+                        $("#navbarMobile").css("display", "none");
                     }
                 });
-                $('#ingredient-name-input').keypress(function(e) {
+                $('#ingredient-name-input').keypress(function (e) {
                     console.log("Keypress  is pressed");
                     if (e.which == 13) {
-                        document.location.href = "SupplierSearch.jsp?ingredient_name="+$('#ingredient-name-input').val();
+                        document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                     }
                 });
-                $('#ingredient-name-input-button').click(function() {
-                    document.location.href = "SupplierSearch.jsp?ingredient_name="+$('#ingredient-name-input').val();
+                $('#ingredient-name-input-button').click(function () {
+                    document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                 });
 
 
@@ -61,7 +64,7 @@
 
 
 
-        <div class="ui grid">
+        <div id="PCview" class="ui grid">
             <div class="six wide column">
                 <a href="Home.jsp">
                     <img class="logo" src="./resource/pictures/logofinal.png">
@@ -107,7 +110,7 @@
                 </div>
             </div>
             <a class="item" style=" font-size: 16px">
-                <i class="large shipping icon"></i> Supplier Search
+                <i class="large search icon"></i> Supplier Search
             </a>
 
 
@@ -115,6 +118,22 @@
 
 
 
+        <div id="navbarMobile" class="ui top fixed inverted menu"> 
+            <div class="item" style=" font-size: 16px">
+                VSMS
+            </div>
+            <div class="right menu">
+            <div class="ui simple dropdown item" style=" font-size: 16px">
+                <i class="sidebar icon"></i> 
+
+                <div class="menu">
+                    <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                    <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
+                    <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
+                </div>
+            </div>
+            </div>
+        </div>
 
 
         <div id="modalMessage" class="ui basic modal">
