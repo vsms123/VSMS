@@ -81,12 +81,10 @@
 
                 <h1>Supplier Search</h1>
 
-                
-                <br/><h2
                 <div class="ui top attached tabular menu">
                     <a class="item active" data-tab="first">Supplier Name</a>
                     <a class="item" data-tab="second">Supplier Type</a>
-                    <a class="item" data-tab="third">Ingredients</a>
+                    <a class="item" data-tab="third">Ingredient</a>
                 </div>
 
                 <div class="ui bottom attached tab segment active" data-tab="first">
