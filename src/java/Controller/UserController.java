@@ -123,24 +123,30 @@ public class UserController extends HttpServlet {
     public String retrieveSupplierHTMLTable(int vendor_id, ArrayList<Supplier> supplierList, ArrayList<Supplier> currentFavSupplier) {
         StringBuffer htmlTable = new StringBuffer("");
 
+        
+        
+   
+        
         //Create header
-        htmlTable.append("<tr>");
-        htmlTable.append("<th>Supplier Name</th>");
-        htmlTable.append("<th>Supplier Type</th>");
-        htmlTable.append("<th>Favorite?</th>");
-        htmlTable.append("</tr>");
+//        htmlTable.append("<tr>");
+//        htmlTable.append("<th>Supplier Name</th>");
+//        htmlTable.append("<th>Supplier Type</th>");
+//        htmlTable.append("<th>Favorite?</th>");
+//        htmlTable.append("</tr>");
         for (Supplier supplier : supplierList) {
-            htmlTable.append("<tr>");
+            
+            htmlTable.append("<div class='item test dish'>");
+            htmlTable.append("<a href=SupplierSearchProfile.jsp?supplier_id=" + supplier.getSupplier_id() + " ><div class='content'>");
             //Need to send in a list with this supplier_id to SupplierSearchProfile
-            htmlTable.append("<td><a href=SupplierSearchProfile.jsp?supplier_id=" + supplier.getSupplier_id() + ">" + supplier.getSupplier_name() + "</a></td>");
-            htmlTable.append("<td>" + supplier.getSupplier_type() + "</td>");
+            htmlTable.append("<h2>" + supplier.getSupplier_name() + "</h2></div>");
+            htmlTable.append("<div> Type: " + supplier.getSupplier_type() + "");
             if (currentFavSupplier.contains(supplier)) {
-                htmlTable.append("<td class=\"favorite\">Favorited</td>");
+                htmlTable.append("<div class=\"right floated content\">Favorited</div>");
             } else {
 //                htmlTable.append("<td><button class=\"ui inverted red button create-favsupplier-button"+supplier.getSupplier_id()+"\">Favourite this supplier</button></td>");
-                htmlTable.append("<td><a href=\"userservlet?vendor_id=" + vendor_id + "&supplier_id=" + supplier.getSupplier_id() + "&action=add\">Make as Favorite</a></td>");
+                htmlTable.append("<h2><a href=\"userservlet?vendor_id=" + vendor_id + "&supplier_id=" + supplier.getSupplier_id() + "&action=add\">Add to Favorites</a></h2>");
             }
-            htmlTable.append("</tr>");
+            htmlTable.append("</div></div></a></div>");
         }
         return htmlTable.toString();
     }

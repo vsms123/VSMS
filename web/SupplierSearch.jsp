@@ -10,6 +10,9 @@
     <head>
         <title>Supplier Search</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
         <!--Form VALIDATION-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
@@ -76,6 +79,27 @@
             });
         </script>
         <!--CSS-->
+        
+        <style>
+            a:link {
+                color: black;
+            }
+
+            /* visited link */
+            a:visited {
+                color: Black;
+            }
+
+            /* mouse over link */
+            a:hover {
+                color: hotpink;
+            }
+
+            /* selected link */
+            a:active {
+                color: black;
+            }
+        </style>
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
@@ -98,8 +122,9 @@
                     <h3>Supplier Name Search</h3>
                     Supplier name : <input type="text" name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
 
-                    <table id="supplierlistbyname" class="ui single line table">                                
-                    </table>
+                    
+                    <div id="supplierlistbyname" class="ui middle aligned animated selection divided list">                                
+                    </div>
 
                 </div>
 
