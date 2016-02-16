@@ -47,26 +47,7 @@
             <%}%>
             });
         </script>
-        <style>
-            a:link {
-                color: black;
-            }
-
-            /* visited link */
-            a:visited {
-                color: Black;
-            }
-
-            /* mouse over link */
-            a:hover {
-                color: hotpink;
-            }
-
-            /* selected link */
-            a:active {
-                color: black;
-            }
-        </style>
+        
 
     </head>
     <body class="background">
@@ -193,7 +174,7 @@
 
                         <div  class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
-                            <a style="color:black">
+                            <a>
                                 <div class="content">
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
@@ -230,7 +211,7 @@
 
                         <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
-                            <a style="color:black">
+                            <a>
                                 <div class="content">
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
@@ -326,7 +307,7 @@
 
                         <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
-                            <a style="color:black">
+                            <a>
                                 <div class="content">
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
@@ -365,7 +346,7 @@
 
                         <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
-                            <a style="color:black">
+                            <a>
                                 <div class="content">
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
@@ -483,7 +464,7 @@
 
                         <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
-                            <a style="color:black">
+                            <a>
                                 <div class="content">
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
@@ -522,7 +503,7 @@
 
                         <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
-                            <a style="color:black">
+                            <a>
                                 <div class="content">
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
