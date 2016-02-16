@@ -80,26 +80,7 @@
         </script>
         <!--CSS-->
         
-        <style>
-            a:link {
-                color: black;
-            }
-
-            /* visited link */
-            a:visited {
-                color: Black;
-            }
-
-            /* mouse over link */
-            a:hover {
-                color: hotpink;
-            }
-
-            /* selected link */
-            a:active {
-                color: black;
-            }
-        </style>
+       
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
@@ -133,8 +114,8 @@
                     <h3>Supplier Type Search</h3>                
                     Supplier type : <input type="text" name="searchsupplierbytype" id="searchsupplierbytype" value=""/>
 
-                    <table id="supplierlistbytype" class="ui single line table">                                
-                    </table>
+                    <div id="supplierlistbytype" class="ui middle aligned animated selection divided list">                                
+                    </div>
                 </div>
 
                 <div class="ui bottom attached tab segment" id="ingredient_name_div" data-tab="third">
@@ -143,8 +124,8 @@
                     Ingredient Name : <input type="text" name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
 
 
-                    <table id="ingredientlist" class="ui single line table">                                
-                    </table>
+                    <div id="ingredientlist" class="ui middle aligned animated selection divided list">                                
+                    </div>
 
                 </div>
             </div>
