@@ -76,6 +76,7 @@ a {
     justify-content: space-around;
 }
 
+
 /*For error handling by JQUERY*/
 .my-error-class {
     color:red;
@@ -107,6 +108,3 @@ a{
     color: black;
 }
 
-h1, h2, h3{
-    color: black;
-}
