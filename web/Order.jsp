@@ -60,7 +60,8 @@
                     <!--Input hidden attributes-->
                     <input type="hidden" name="vendor_id" value="1"/>
                     <br/>
-                    <input type="submit" value="Check Order Breakdown" name="submit" id="submit"/>
+                    
+                    <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Check Order Breakdown </button>
                 </form>
             </div>
         </div>
