@@ -42,13 +42,7 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-                <div class="ui breadcrumb" >
-                    <a href="Home.jsp" class="section">Home</a>
-                    <i class="right angle icon divider"></i>
-                    <a href="" class="section">Order</a>
-                    <i class="right angle icon divider"></i>
-                    <div class="active section">Make an Order</div>
-                </div>
+               
                 <h1 style="color: black">Order</h1>
 
                 <!--Inputting form elements-->

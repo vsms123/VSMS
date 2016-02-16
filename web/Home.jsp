@@ -81,9 +81,7 @@
                     <%@ include file="Navbar.jsp" %>
 
                     <p></p>
-                    <div class="ui breadcrumb" >
-                        <div class="active section">Home</div>
-                    </div>
+                   
 
                     <div class="ui raised very padded text container">
                         <p></p>
