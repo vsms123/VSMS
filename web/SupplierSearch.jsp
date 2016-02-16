@@ -23,45 +23,50 @@
             ArrayList<Supplier> supplierList = UserController.retrieveSupplierList();
             //ID=session.getAttribute(vendor_id);
             ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(currentVendor.getVendor_id());
-            
+
             String ingredientName = request.getParameter("ingredient_name");
-            if(ingredientName==null){
-                ingredientName="";
+            if (ingredientName == null) {
+                ingredientName = "";
             }
         %>
 
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
                 //SEARCHING AND FILTERING
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyname
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function(responseText) {
+                $('.menu .item').tab();
+
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function (responseText) {
                     $("#supplierlistbyname").html(responseText);
                 });
-                $("#searchsupplierbyname").keyup(function() {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function(responseText) {
+                $("#searchsupplierbyname").keyup(function () {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function (responseText) {
                         $("#supplierlistbyname").html(responseText);
                     });
                 });
-                
-                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbytype
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function(responseText) {
+
+                //invoke get method in UserController with blank parameter given and blank response with searchsupplierbytype
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function (responseText) {
                     $("#supplierlistbytype").html(responseText);
                 });
-                $("#searchsupplierbytype").keyup(function() {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function(responseText) {
+                $("#searchsupplierbytype").keyup(function () {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function (responseText) {
                         $("#supplierlistbytype").html(responseText);
                     });
                 });
-                
-                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyingredient
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function(responseText) {
+
+                //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyingredient
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function (responseText) {
                     $("#ingredientlist").html(responseText);
                 });
-                $("#searchingredient").keyup(function() {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function(responseText) {
+                $("#searchingredient").keyup(function () {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function (responseText) {
                         $("#ingredientlist").html(responseText);
                     });
                 });
+
+
+
             });
         </script>
         <!--CSS-->
@@ -73,28 +78,46 @@
         <div class="transparency">
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-                
+
                 <h1>Supplier Search</h1>
+
                 
-                <h3>Supplier Name Search</h3>
-                Supplier name : <input type="text" name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
-                
-                <table id="supplierlistbyname">                                
-                </table>
-                
-                <h3>Supplier Type Search</h3>                
-                Supplier type : <input type="text" name="searchsupplierbytype" id="searchsupplierbytype" value=""/>
-                
-                <table id="supplierlistbytype">                                
-                </table>
-                
-                <h3>Ingredient Name Search</h3>                
-                
-                Ingredient Name : <input type="text" name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
-                
-                
-                <table id="ingredientlist">                                
-                </table>
+                <br/><h2
+                <div class="ui top attached tabular menu">
+                    <a class="item active" data-tab="first">Supplier Name</a>
+                    <a class="item" data-tab="second">Supplier Type</a>
+                    <a class="item" data-tab="third">Ingredients</a>
+                </div>
+
+                <div class="ui bottom attached tab segment active" data-tab="first">
+
+                    <h3>Supplier Name Search</h3>
+                    Supplier name : <input type="text" name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
+
+                    <table id="supplierlistbyname">                                
+                    </table>
+
+                </div>
+
+
+                <div class="ui bottom attached tab segment" data-tab="second">
+                    <h3>Supplier Type Search</h3>                
+                    Supplier type : <input type="text" name="searchsupplierbytype" id="searchsupplierbytype" value=""/>
+
+                    <table id="supplierlistbytype">                                
+                    </table>
+                </div>
+
+                <div class="ui bottom attached tab segment" data-tab="third">
+                    <h3>Ingredient Name Search</h3>                
+
+                    Ingredient Name : <input type="text" name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
+
+
+                    <table id="ingredientlist">                                
+                    </table>
+
+                </div>
             </div>
         </div>
     </div>
