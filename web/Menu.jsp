@@ -18,11 +18,11 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
-                $.post("ingredientservlet", function (responseText) {
+            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+                $.post("ingredientservlet", function(responseText) {
                     $("#dishListAdded").append(responseText);
                 });
-                $('.create-dish-button').click(function () {
+                $('.create-dish-button').click(function() {
                     console.log("My name is create-dish-button");
 
                     //show modal button
@@ -33,14 +33,14 @@
                 for (Dish dish : dishList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
-                $(".edit-dish-button<%=dish.getDish_id()%>").click(function () {
+                $(".edit-dish-button<%=dish.getDish_id()%>").click(function() {
 
                     console.log("My name is edit-dish-button<%=dish.getDish_id()%>");
                     //show modal button
                     $('#editmodaldiv<%=dish.getDish_id()%>').modal('show');
                 });
                 //              Will go through delete-dish-button1 or delete-dish-button2 (regarding the dish id)
-                $(".delete-dish-button<%=dish.getDish_id()%>").click(function () {
+                $(".delete-dish-button<%=dish.getDish_id()%>").click(function() {
 
                     console.log("My name is delete-dish-button<%=dish.getDish_id()%>");
                     //show modal button
@@ -142,13 +142,13 @@
                             <!--Input hidden attributes-->
                             <input type="hidden" name="vendor_id" value="1">
                             <input type="hidden" name="action" value="add">
-
+                            <input type="submit" value="Add" class="ui teal button" /> 
                         </form>
                     </div>
                     <div class="actions">
 
                         <button class="ui inverted deny orange button">Cancel</button>
-                        <input type="submit" value="Add" class="ui teal button" /> 
+
 
                     </div>
                 </div>

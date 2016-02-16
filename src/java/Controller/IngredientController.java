@@ -65,7 +65,7 @@ public class IngredientController extends HttpServlet {
                 int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
 
                 addDish(new Dish(dish_id, dish_name, vendor_id, dish_description));
-                response.sendRedirect("Menu.jsp");
+                response.sendRedirect("RecipeBuilder.jsp?dish_id="+dish_id);
             }
         }
 
