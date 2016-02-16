@@ -35,10 +35,10 @@
                     $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
             //Hide AJAX Loading Message
             $("#loading").hide();
-            //Generate the order breakdown
-            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm' <%=valueStr%>}, function(responseText) {
-            $(".content-model-table").html(responseText);
-            });
+                    //Generate the order breakdown
+                    $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm' <%=valueStr%>}, function(responseText) {
+                    $(".content-model-table").html(responseText);
+                    });
                     //Regenerate the order breakdown when bufferQtyTextbox is changed
                     $("#bufferqtyperc").change(function() {
             //Make the value string
@@ -48,13 +48,22 @@
             });
                     //Confirm the order breakdown
                     $("#confirm-order-breakdown").click(function() {
-            console.log("Sending order breakdown");
                     $("#loading").show();
-                    $.ajaxSetup({async:false});
+                    console.log("Sending order breakdown");
+                    //Timeout is used to make sure that the loading text is shown first before the synchronous ajax kicks
+//                    Synchronous ajax is used to make sure that the order processing could be done with a fixed buffer quantity
+                    setTimeout(function() {$.ajaxSetup({async:false});
                     $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'create', bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {                    });
                     alert("Order has been sent to suppliers");
-                    $("#loading").hide();
+                    },1000);
             });
+            });
+            //T
+                    $(document).ajaxStart(function() {
+            $("#loading").show();
+            });
+                    $(document).ajaxStop(function() {
+            $("#loading").hide();
             });</script>
 
         <!--CSS-->

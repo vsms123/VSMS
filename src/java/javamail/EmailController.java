@@ -56,8 +56,13 @@ public class EmailController {
         HashMap<Integer, String> suppOrderMap = supplierMessageList(order);
 
         //Getting confirmation for vendors and suppliers
-        String confirmation = "Your order has been " + action + "ed";
-
+        String confirmation = "<h3>Your order has been ";
+        if(action.equals("approve")){
+            confirmation += "<font color='green'>"+action +"d</font>";
+        } else{
+            confirmation += "<font color='red'>"+action +"ed</font>";
+        }
+        confirmation += "</h3>";
         EmailController.sendMessageToSuppliers(vendor, order, suppOrderMap, confirmation);
         EmailController.sendMessageToVendor(vendor, order, suppOrderMap, confirmation);
     }

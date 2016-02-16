@@ -1,4 +1,5 @@
 
+<%@page import="Controller.UtilityController"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Ingredient"%>
 <%@page import="java.util.HashMap"%>
@@ -70,7 +71,7 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
 
-                <h1>Ingredient List</h1>
+                <h1><%=IngredientController.getDishByID(UtilityController.convertStringtoInt(dish_idStr)).getDish_name()%></h1>
                 <table>
                     <% while (iter.hasNext()) {
                             Ingredient ingredient = (Ingredient) iter.next();
