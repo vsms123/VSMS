@@ -135,7 +135,7 @@ public class UserController extends HttpServlet {
 //        htmlTable.append("</tr>");
         for (Supplier supplier : supplierList) {
             
-            htmlTable.append("<div class='item test dish'>");
+            htmlTable.append("<div class='item test supplier'>");
             htmlTable.append("<a href=SupplierSearchProfile.jsp?supplier_id=" + supplier.getSupplier_id() + " ><div class='content'>");
             //Need to send in a list with this supplier_id to SupplierSearchProfile
             htmlTable.append("<h2>" + supplier.getSupplier_name() + "</h2></div>");
@@ -154,24 +154,28 @@ public class UserController extends HttpServlet {
         StringBuffer htmlTable = new StringBuffer("");
 
         //Create header
-        htmlTable.append("<tr>");
-        htmlTable.append("<th>Name</th>");
-        htmlTable.append("<th>Supply Unit</th>");
-        htmlTable.append("<th>Subcategory</th>");
-        htmlTable.append("<th>OfferedPrice</th>");
-        htmlTable.append("<th>Description</th>");
-        htmlTable.append("<th>Supplier</th>");
-        htmlTable.append("</tr>");
+//        htmlTable.append("<tr>");
+//        htmlTable.append("<th>Name</th>");
+//        htmlTable.append("<th>Supply Unit</th>");
+//        htmlTable.append("<th>Subcategory</th>");
+//        htmlTable.append("<th>OfferedPrice</th>");
+//        htmlTable.append("<th>Description</th>");
+//        htmlTable.append("<th>Supplier</th>");
+//        htmlTable.append("</tr>");
+
+
+            
+            
         for (Ingredient ingredient : ingredientList) {
-            htmlTable.append("<tr>");
+            htmlTable.append("<div class='item test ingredient'><a><div class='content'>");
             //Need to send in a list with this supplier_id to SupplierSearchProfile
-            htmlTable.append("<td>" + ingredient.getName() + "</td>");
-            htmlTable.append("<td>" + ingredient.getSupplyUnit() + "</td>");
-            htmlTable.append("<td>" + ingredient.getSubcategory() + "</td>");
-            htmlTable.append("<td>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</td>");
-            htmlTable.append("<td>" + ingredient.getDescription() + "</td>");
-            htmlTable.append("<td><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()+ "</a></td>");
-            htmlTable.append("</tr>");
+            htmlTable.append("<h3>" + ingredient.getName() + "</h3>");
+            htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
+            htmlTable.append("" + ingredient.getSubcategory() + "</div>");
+            htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
+            htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
+            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()+ "</a></div>");
+            htmlTable.append("</div></div></a></div>");
         }
         return htmlTable.toString();
     }
