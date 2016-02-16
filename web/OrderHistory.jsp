@@ -1,3 +1,4 @@
+<%@page import="Controller.IngredientController"%>
 <%@page import="Model.Orderline"%>
 <%@page import="Controller.UserController"%>
 <%@page import="Controller.OrderController"%>
@@ -133,7 +134,10 @@
 
                                     <td><div class="ui ribbon label"><%=count%> </div>&nbsp;</td>
                                     <td><%=orderLine.getIngredient_name()%> &nbsp;</td>
-                                    <td><%=orderLine.getQuantity()%> units &nbsp;</td>
+                                    
+                                    <!--units to be edited-->
+                                    <%--<%=IngredientController.getIngredient(Integer.toString(orderLine.getSupplier_id()), orderLine.getIngredient_name()).getSupplyUnit()%>--%>
+                                    <td><%=orderLine.getQuantity()%> &nbsp;</td>
                                     <td>$<%=orderLine.getFinalprice()%>&nbsp;</td>
 
                                 </tr>
