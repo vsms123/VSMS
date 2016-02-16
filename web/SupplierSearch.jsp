@@ -31,41 +31,47 @@
         %>
 
         <script>
-            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
                 //SEARCHING AND FILTERING
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyname
                 $('.menu .item').tab();
 
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function (responseText) {
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function(responseText) {
                     $("#supplierlistbyname").html(responseText);
                 });
-                $("#searchsupplierbyname").keyup(function () {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function (responseText) {
+                $("#searchsupplierbyname").keyup(function() {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function(responseText) {
                         $("#supplierlistbyname").html(responseText);
                     });
                 });
 
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbytype
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function (responseText) {
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function(responseText) {
                     $("#supplierlistbytype").html(responseText);
                 });
-                $("#searchsupplierbytype").keyup(function () {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function (responseText) {
+                $("#searchsupplierbytype").keyup(function() {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function(responseText) {
                         $("#supplierlistbytype").html(responseText);
                     });
                 });
 
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyingredient
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function (responseText) {
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function(responseText) {
                     $("#ingredientlist").html(responseText);
                 });
-                $("#searchingredient").keyup(function () {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function (responseText) {
+                $("#searchingredient").keyup(function() {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function(responseText) {
                         $("#ingredientlist").html(responseText);
                     });
                 });
 
-
+//Put in the active class at Ingredient Name Search if ingredient name is not empty
+            <% if (!ingredientName.isEmpty()) {%>
+                $("#supplier_name_div").removeClass("active");
+                $("#supplier_name_tab").removeClass("active");
+                $("#ingredient_name_div").addClass("active");
+                $("#ingredient_name_tab").addClass("active");
+            <%}%>
 
             });
         </script>
@@ -82,12 +88,12 @@
                 <h1>Supplier Search</h1>
 
                 <div class="ui top attached tabular menu">
-                    <a class="item active" data-tab="first">Supplier Name</a>
-                    <a class="item" data-tab="second">Supplier Type</a>
-                    <a class="item" data-tab="third">Ingredient</a>
+                    <a class="item active" data-tab="first" id="supplier_name_tab">Supplier Name</a>
+                    <a class="item" data-tab="second" id="supplier_type_tab">Supplier Type</a>
+                    <a class="item" data-tab="third" id="ingredient_name_tab">Ingredient</a>
                 </div>
 
-                <div class="ui bottom attached tab segment active" data-tab="first">
+                <div class="ui bottom attached tab segment active" id="supplier_name_div" data-tab="first">
 
                     <h3>Supplier Name Search</h3>
                     Supplier name : <input type="text" name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
@@ -98,7 +104,7 @@
                 </div>
 
 
-                <div class="ui bottom attached tab segment" data-tab="second">
+                <div class="ui bottom attached tab segment" id="supplier_type_div" data-tab="second">
                     <h3>Supplier Type Search</h3>                
                     Supplier type : <input type="text" name="searchsupplierbytype" id="searchsupplierbytype" value=""/>
 
@@ -106,7 +112,7 @@
                     </table>
                 </div>
 
-                <div class="ui bottom attached tab segment" data-tab="third">
+                <div class="ui bottom attached tab segment" id="ingredient_name_div" data-tab="third">
                     <h3>Ingredient Name Search</h3>                
 
                     Ingredient Name : <input type="text" name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
