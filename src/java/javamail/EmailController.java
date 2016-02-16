@@ -5,7 +5,9 @@
  */
 package javamail;
 
+import Controller.OrderController;
 import Controller.UserController;
+import Controller.UtilityController;
 import DAO.OrderDAO;
 import DAO.UserDAO;
 import Model.Order;
@@ -54,10 +56,10 @@ public class EmailController {
         HashMap<Integer, String> suppOrderMap = supplierMessageList(order);
 
         //Getting confirmation for vendors and suppliers
-        String confirmation = "Your order has been " + action +"ed";
+        String confirmation = "Your order has been " + action + "ed";
 
-        EmailController.sendMessageToSuppliers(vendor.getVendor_name(), suppOrderMap, confirmation);
-        EmailController.sendMessageToVendor(vendor, suppOrderMap, confirmation);
+        EmailController.sendMessageToSuppliers(vendor, order, suppOrderMap, confirmation);
+        EmailController.sendMessageToVendor(vendor, order, suppOrderMap, confirmation);
     }
 
 //    This method is to send order message after orders have been created
@@ -73,10 +75,10 @@ public class EmailController {
         HashMap<Integer, String> suppOrderMap = EmailController.supplierMessageList(order);
 
         //Getting link for supplier to confirm
-        String link = "localhost:8080/VSMS/OrderConfirmation.jsp?order_id=" + order.getOrder_id();
+        String link = "<h3><a href='http://localhost:8080/VSMS/OrderConfirmation.jsp?order_id=" + order.getOrder_id() + "'>Confirm here!</a></h3>";
 
-        EmailController.sendMessageToSuppliers(vendor.getVendor_name(), suppOrderMap, link);
-        EmailController.sendMessageToVendor(vendor, suppOrderMap, "");
+        EmailController.sendMessageToSuppliers(vendor, order, suppOrderMap, link);
+        EmailController.sendMessageToVendor(vendor, order, suppOrderMap, "");
     }
 
     //Convert the orders into message string for each supplier
@@ -87,9 +89,9 @@ public class EmailController {
             int supplier_id = orderline.getSupplier_id();
             Supplier supplier = UserDAO.getSupplierById(supplier_id);
             if (suppOrderMap.containsKey(supplier_id)) {
-                suppOrderMap.put(supplier_id, suppOrderMap.get(supplier_id) + orderline.toString());
+                suppOrderMap.put(supplier_id, suppOrderMap.get(supplier_id) + orderline.toHTMLString());
             } else {
-                suppOrderMap.put(supplier_id, orderline.toString());
+                suppOrderMap.put(supplier_id, orderline.toHTMLString());
             }
         }
 
@@ -97,36 +99,42 @@ public class EmailController {
     }
 
     //convert the orders into message string for vendor
-    public static void sendMessageToVendor(Vendor vendor, HashMap<Integer, String> suppOrderMap, String additional) {
+    public static void sendMessageToVendor(Vendor vendor, Order order, HashMap<Integer, String> suppOrderMap, String additional) {
         Iterator iter = suppOrderMap.keySet().iterator();
-        String messageText = "";
+        StringBuffer messageText = new StringBuffer("");
         while (iter.hasNext()) {
             int supplier_id = (Integer) iter.next();
             Supplier supplier = UserDAO.getSupplierById(supplier_id);
-            messageText += supplier.getSupplier_name() + "\n";
-            messageText += supplier.getEmail() + "\n";
-            messageText += supplier.getTelephone_number() + "\n";
-            messageText += suppOrderMap.get(supplier_id);
-            messageText += "\n\n";
+            messageText.append("<h1>" + supplier.getSupplier_name() + "</h1>");
+            messageText.append("<h3>email : " + supplier.getEmail() + "|| phone number: " + supplier.getTelephone_number() + "</h3>");
+            messageText.append("<hr>");
+            messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
+            messageText.append("<font color=\"red\">Total price is : " + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
+
         }
 
         sendMessage(vendor.getEmail(), "Your orders to suppliers", messageText + additional);
     }
 
     //send orderlist to multiple suppliers --> Make sure you have the domain ready
-    public static void sendMessageToSuppliers(String vendorName, HashMap<Integer, String> suppOrderMap, String additional) {
+    public static void sendMessageToSuppliers(Vendor vendor, Order order, HashMap<Integer, String> suppOrderMap, String additional) {
         Iterator iter = suppOrderMap.keySet().iterator();
+        StringBuffer messageText = new StringBuffer("");
         while (iter.hasNext()) {
             int supplier_id = (Integer) iter.next();
             Supplier supplier = UserDAO.getSupplierById(supplier_id);
-            String messageText = suppOrderMap.get(supplier_id);
+            messageText.append("<h1>" + vendor.getVendor_name() + "</h1>");
+            messageText.append("<h3>email : " + vendor.getEmail() + "|| phone number: " + vendor.getTelephone_number() + "</h3>");
+            messageText.append("<hr>");
+            messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
+            messageText.append("<font color=\"red\">Total price is : " + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
 
-            sendMessage(supplier.getEmail(), "Order from Vendor " + vendorName, messageText + additional);
+            sendMessage(supplier.getEmail(), "Order from Vendor " + vendor.getVendor_name(), messageText + additional);
         }
     }
 
 //    This method is to send a general message to an email with subject and message string
-    public static void sendMessage(String toEmail, String subject, String messageString) {
+    public static void sendMessage(String toEmail, String subject, String messageHTMLString) {
 
         //Sending to Google SMTP Port
         String SMTP_PORT = "465";
@@ -149,15 +157,11 @@ public class EmailController {
         try {
             MimeMessage message = new MimeMessage(session);
 
-            // creates message part
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(message, "text/html");
-
             message.setFrom(new InternetAddress(user));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 
             message.setSubject(subject);
-            message.setText(messageString);
+            message.setContent(messageHTMLString, "text/html");
             //send the message  
             Transport.send(message);
 

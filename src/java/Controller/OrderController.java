@@ -150,6 +150,7 @@ public class OrderController extends HttpServlet {
                 htmlTable.append("<tr>");
                 htmlTable.append("<td>" + orderline.getIngredient_name() + "</td>");
                 htmlTable.append("<td>" + orderline.getQuantity() + "</td>");
+                htmlTable.append("<td>"+IngredientController.getIngredient(Integer.toString(orderline.getSupplier_id()), orderline.getIngredient_name()).getSupplyUnit()+"</td>");
                 htmlTable.append("<td>" + UtilityController.convertDoubleToCurrString(orderline.getFinalprice()) + "</td>");
                 htmlTable.append("</tr>");
                 totalFinalPrice += orderline.getFinalprice();
