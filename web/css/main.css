@@ -5,26 +5,26 @@
     background-color: tomato;
     
     background: linear-gradient(130deg, #00004d 20%, black 100%) no-repeat center center fixed;
-   */
+    */
 
- 
-   background: url("../resource/pictures/grass.jpg") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  top: 0; 
-  left: 0; 
-  min-width: 100%;
-  min-height: 100%;
-    
-    
+
+    background: url("../resource/pictures/grass.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    top: 0; 
+    left: 0; 
+    min-width: 100%;
+    min-height: 100%;
+
+
 }
 
 
 .logo{
-max-height: 150px;
-max-width: 200px
+    max-height: 150px;
+    max-width: 200px
 }
 
 .transparency{
@@ -62,18 +62,18 @@ a {
 }
 
 .flex-container {
-  /* We first create a flex layout context */
-  display: flex;
-  
-  /* Then we define the flow direction and if we allow the items to wrap 
-   * Remember this is the same as:
-   * flex-direction: row;
-   * flex-wrap: wrap;
-   */
-  flex-flow: row wrap;
-  
-  /* Then we define how is distributed the remaining space */
-  justify-content: space-around;
+    /* We first create a flex layout context */
+    display: flex;
+
+    /* Then we define the flow direction and if we allow the items to wrap 
+     * Remember this is the same as:
+     * flex-direction: row;
+     * flex-wrap: wrap;
+     */
+    flex-flow: row wrap;
+
+    /* Then we define how is distributed the remaining space */
+    justify-content: space-around;
 }
 
 /*For error handling by JQUERY*/
@@ -84,3 +84,29 @@ a {
     color:green;
 }
 
+a:link {
+    color: black;
+}
+
+/* visited link */
+a:visited {
+    color: black;
+}
+
+/* mouse over link */
+a:hover {
+    color: hotpink;
+}
+
+/* selected link */
+a:active {
+    color: black;
+}
+
+a{
+    color: black;
+}
+
+h1, h2, h3{
+    color: black;
+}
