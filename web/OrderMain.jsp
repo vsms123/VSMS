@@ -8,12 +8,30 @@
 <!DOCTYPE html>
 <html>
     <head>
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Order Main</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        
+        
+        <div id="pc" class="background">
+
+
+            <div class="transparency">
+
+
+                <div  class="ui segment" style="left:5%;width:90%">
+
+                    <%@ include file="Navbar.jsp" %>
         <a href="Order.jsp">Create a new order</a>
         <a href="OrderTemplate.jsp">Create order from template</a>
+        
+        </div>
+        </div>
+        </div>
+        
     </body>
 </html>

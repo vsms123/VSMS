@@ -32,19 +32,39 @@
                     if ((width <= 800) || (height <= 600)) {
                         $("#searchPC").css("display", "none");
                         $("#navbarPC").css("display", "none");
+                        $("#PCview").css("display", "none");
+                        
+                        $("#navbarMobile").css("display", "");
                     } else {
                         $("#searchPC").css("display", "");
                         $("#navbarPC").css("display", "");
+                        $("#PCview").css("display", "");
+                        $("#navbarMobile").css("display", "none");
                     }
+                });
+                $('#ingredient-name-input').keypress(function (e) {
+                    console.log("Keypress  is pressed");
+                    if (e.which == 13) {
+                        document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
+                    }
+                });
+                $('#ingredient-name-input-button').click(function () {
+                    document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                 });
 
 
             });
+
+
         </script>
 
     </head>
     <body>
-        <div class="ui grid">
+
+
+
+
+        <div id="PCview" class="ui grid">
             <div class="six wide column">
                 <a href="Home.jsp">
                     <img class="logo" src="./resource/pictures/logofinal.png">
@@ -54,15 +74,18 @@
             <div class="ten wide column" id="searchPC" style="position:relative;top: 50px">
                 <h3>Find ingredients that you need</h3>
 
-                <div class="ui fluid action input"  style="margin-right: 10%">
-                    <input type="text" placeholder="Search suppliers, ingredients...">
-                    <div class="ui button"> <i class="search icon"></i></div>
+                <div class="ui fluid action input" style="margin-right: 10%">
+                    <input type="text" id="ingredient-name-input" placeholder="Search Ingredient Name ... ">
+                    <div class="ui button" id="ingredient-name-input-button"> <i class="search icon"></i></div>
                 </div>
             </div>
 
         </div>
 
         <div id="navbarPC" class="ui stackable menu">
+            <a href="Home.jsp" class="item" style=" font-size: 16px">
+                <i class="large home icon"></i> Home
+            </a>
             <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large shop icon" ></i> Order
 
@@ -72,26 +95,45 @@
                 </div>
             </div>
             <a href="Menu.jsp" class="item" style=" font-size: 16px">
-                <i class="large food icon"></i>&nbsp Menu
+                <i class="large food icon"></i> Menu
             </a>
             <a class="item message" style=" font-size: 16px">
-                <i class="large  mail icon"></i>&nbsp Messages
+                <i class="large  mail icon"></i> Messages
             </a>
             <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
 
                 <div class="menu">
-                   <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                    <a class="item profile" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
+                    <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                    <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
+            <a class="item" style=" font-size: 16px">
+                <i class="large search icon"></i> Supplier Search
+            </a>
 
 
         </div>
 
 
 
+        <div id="navbarMobile" class="ui top fixed inverted menu"> 
+            <div class="item" style=" font-size: 16px">
+                VSMS
+            </div>
+            <div class="right menu">
+            <div class="ui simple dropdown item" style=" font-size: 16px">
+                <i class="sidebar icon"></i> 
+
+                <div class="menu">
+                    <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                    <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
+                    <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
+                </div>
+            </div>
+            </div>
+        </div>
 
 
         <div id="modalMessage" class="ui basic modal">

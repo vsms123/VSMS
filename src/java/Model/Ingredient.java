@@ -5,6 +5,8 @@
  */
 package Model;
 
+import Controller.UtilityController;
+
 /**
  *
  * @author David
@@ -75,7 +77,7 @@ public class Ingredient {
     }
 
     public String toString() {
-        return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + offeredPrice + '}';
+        return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}';
     }
     
     

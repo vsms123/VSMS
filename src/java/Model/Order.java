@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.UtilityController;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -79,7 +80,7 @@ public class Order {
     }
 
     public String toString() {
-        return "Order_id: " + order_id + "Vendor_id: " + vendor_id + "Total final price: " + total_final_price+"The status is "+status+" the OrderTime is "+dt_order.toString();
+        return "Order_id: " + order_id + "Vendor_id: " + vendor_id + "Total final price: " + UtilityController.convertDoubleToCurrString(total_final_price)+"The status is "+status+" the OrderTime is "+dt_order.toString();
     }
     @Override
     public int hashCode() {

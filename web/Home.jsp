@@ -26,20 +26,42 @@
                     $('#modalAccount').modal('show');
                 });
 
-                $(window).on('load resize', function () {
-                    var width = $(window).width();
-                    var height = $(window).height();
-
-                    if ((width <= 800) || (height <= 600)) {
-                        $("#pc").css("display", "none");
-                    } else {
-                        $("#pc").css("display", "");
-                    }
-                });
+//              //For mobile view, will implement later
+//                $(window).on('load resize', function () {
+//                    var width = $(window).width();
+//                    var height = $(window).height();
+//
+//                    if ((width <= 800) || (height <= 600)) {
+//                        $("#pc").css("display", "none");
+//                        $("#mobile").css("display", "");
+//                    } else {
+//                        
+//                        $("#mobile").css("display", "none");
+//                        $("#pc").css("display", "");
+//                    }
+//                });
 
 
             });
         </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#testing').click(function () {
+                    $('.vertical.menu').sidebar('toggle');
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $("#testing").click(function () {
+                    $('.vertical.menu').sidebar('toggle');
+                });
+
+            });
+        </script>
+
+
 
         <title>Main Menu</title>
     </head>
@@ -47,15 +69,12 @@
 
 
     <body>
-        <div>
-            
-            
 
-        </div>
+        <div id="pc" class="background">
 
 
-        <div  id="pc" class="background">
             <div class="transparency">
+
 
                 <div  class="ui segment" style="left:5%;width:90%">
 
@@ -103,5 +122,28 @@
 
             </div>
         </div>
+
+                        
+       <!--For mobile view will fix later-->
+                        
+<!--        <div id="mobile" class="pusher">
+            Testing
+            <button id="testing">Sidebar</button>
+        </div>
+                        
+                        
+                        
+        Sidebar comes here
+        <div class="ui sidebar inverted vertical menu">
+            <a class="item">
+                1
+            </a>
+            <a class="item">
+                2
+            </a>
+            <a class="item">
+                3
+            </a>
+        </div>-->
     </body>
 </html>

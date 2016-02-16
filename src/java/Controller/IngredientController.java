@@ -65,7 +65,7 @@ public class IngredientController extends HttpServlet {
                 int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
 
                 addDish(new Dish(dish_id, dish_name, vendor_id, dish_description));
-                response.sendRedirect("Menu.jsp");
+                response.sendRedirect("RecipeBuilder.jsp?dish_id="+dish_id);
             }
         }
 
@@ -155,8 +155,15 @@ public class IngredientController extends HttpServlet {
         return IngredientDAO.getDishByID(dish_id);
     }
 
+    public static ArrayList<Ingredient> getIngredientList() {
+        return IngredientDAO.getIngredientList();
+    }
     public static ArrayList<Ingredient> getIngredientBySupplier(int supplier_id) {
         return IngredientDAO.getIngredientBySupplier(supplier_id);
+    }
+    
+    public static ArrayList<Ingredient> getIngredientByName(String ingredient_name) {
+        return IngredientDAO.getIngredientByName(ingredient_name);
     }
 
     public static Ingredient getIngredient(String supplierId, String ingredientName) {

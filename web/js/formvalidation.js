@@ -89,24 +89,31 @@ $(function() {
     });
 
     // Setup form validation for logging in
-//    $("#login").validate({
-////        Specify the error and valid styling (red color if error, green color if valid)
-//        errorClass: "my-error-class",
-//        validClass: "my-valid-class",
-//        // Specify the validation rules
-//        rules: {
-//            username: "required",
-//            password: "required",
-//        },
-//        // Specify the validation error messages
-//        messages: {
-//            username: "Please enter a valid username",
-//            password: "Please enter a valid password",
-//        },
-//        submitHandler: function(form) {
-//            form.submit();
-//        }
-//    });
+    $("#login").validate({
+//        Specify the error and valid styling (red color if error, green color if valid)
+        onfocusout: false,
+        onkeyup: false,
+        onclick: false,
+        onsubmit: true,
+        errorPlacement: function(error, element) {
+            alert(error.text());
+        },
+        errorClass: "my-error-class",
+        validClass: "my-valid-class",
+        // Specify the validation rules
+        rules: {
+            username: "required",
+            password: "required",
+        },
+        // Specify the validation error messages
+        messages: {
+            username: "Please enter a valid username",
+            password: "Please enter a valid password",
+        },
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
 
 // Setup form validation for editing profile
     $("#editProfile").validate({
