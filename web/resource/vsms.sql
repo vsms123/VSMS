@@ -16,6 +16,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -99,9 +100,9 @@ INSERT INTO `favourite_supplier` (`vendor_id`, `supplier_id`) VALUES
 --
 CREATE TABLE IF NOT EXISTS `ingredient` (
   `supplier_id` int NOT NULL,
-  `ingredient_name` varchar(30) NOT NULL,
-  `supply_unit` varchar(15) NOT NULL,
-  `category` varchar(15) NOT NULL,
+  `ingredient_name` varchar(100) NOT NULL,
+  `supply_unit` varchar(100) NOT NULL,
+  `category` varchar(100) NOT NULL,
   `ingredient_description` text NOT NULL,
   `offered_price` float NOT NULL,
   PRIMARY KEY (`supplier_id`,`ingredient_name`),
@@ -149,11 +150,11 @@ INSERT INTO `ingredient` (`supplier_id`, `ingredient_name`, `supply_unit`, `cate
 
 CREATE TABLE IF NOT EXISTS `ingredient_quantity` (
   `dish_id` int NOT NULL,
-  `ingredient_name` varchar(30) NOT NULL,
+  `ingredient_name` varchar(100) NOT NULL,
   `quantity` int(15) NOT NULL,
   `vendor_id` int NOT NULL,
   `supplier_id` int NOT NULL,
-  `unit` varchar(15) NOT NULL,
+  `unit` varchar(100) NOT NULL,
   PRIMARY KEY (`dish_id`,`ingredient_name`,`vendor_id`,`supplier_id`),
   KEY `vendor_id` (`vendor_id`),
   KEY `supplier_id` (`supplier_id`),
@@ -183,9 +184,9 @@ INSERT INTO `ingredient_quantity` (`dish_id`, `ingredient_name`, `quantity`, `ve
 CREATE TABLE IF NOT EXISTS `order` (
   `order_id` int NOT NULL,
   `vendor_id` int NOT NULL,
-  `total_final_price` int(15) NOT NULL,
+  `total_final_price` int(100) NOT NULL,
   `dt` datetime NOT NULL,
-  `status` varchar(15) NOT NULL,
+  `status` varchar(100) NOT NULL,
   PRIMARY KEY (`order_id`,`vendor_id`),
   KEY `total_price` (`total_final_price`),
   KEY `vendor_id` (`vendor_id`)
@@ -242,8 +243,8 @@ INSERT INTO `order` (`order_id`, `vendor_id`, `total_final_price`,`dt`,`status`)
 CREATE TABLE IF NOT EXISTS `orderline` (
   `vendor_id` int NOT NULL,
   `order_id` int NOT NULL,
-  `supplier_id` varchar(15) NOT NULL,
-  `ingredient_name` varchar(15) NOT NULL,
+  `supplier_id` varchar(100) NOT NULL,
+  `ingredient_name` varchar(100) NOT NULL,
   `price` float NOT NULL,
   `quantity` int NOT NULL,
   `buffer_percentage` int NOT NULL,
@@ -379,7 +380,7 @@ INSERT INTO `orderline` (`vendor_id`, `order_id`, `supplier_id`, `ingredient_nam
 CREATE TABLE IF NOT EXISTS `order_template` (
   `order_id` int NOT NULL,
   `vendor_id` int NOT NULL,
-  `name` varchar(30) NOT NULL,
+  `name` varchar(100) NOT NULL,
   PRIMARY KEY (`order_id`,`vendor_id`),
   KEY `vendor_id` (`vendor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -392,11 +393,11 @@ CREATE TABLE IF NOT EXISTS `order_template` (
 
 CREATE TABLE IF NOT EXISTS `supplier` (
   `supplier_id` int NOT NULL,
-  `supplier_name` varchar(30) NOT NULL,
+  `supplier_name` varchar(100) NOT NULL,
   `supplier_description` text NOT NULL,
-  `supplier_type` varchar(15) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  `email` varchar(30) NOT NULL,
+  `supplier_type` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `area_code` int NOT NULL,
   `telephone_number` int NOT NULL,
   `address` varchar(100) NOT NULL, 
@@ -412,8 +413,8 @@ CREATE TABLE IF NOT EXISTS `supplier` (
 
 INSERT INTO `supplier` (`supplier_id`, `supplier_name`, `supplier_description`, `supplier_type`, `password`,`email`,`area_code`,`telephone_number`,`address`) VALUES
 (1, 'FreshFruitz', 'Description: Providing the freshest and cheapest fruits since 1987. Offering a wide range, from tropical to imported exotic fruits. Items Sold: Rainbow pinapples, Purple apples, Pink oranges etc.', 'western', '','vincentt.2013@sis.smu.edu.sg',65,87221272,'Punggol Street 10, Industrial Block #B1-10'),
-(2, 'FreshFoodz', 'Description: Providing the freshest and cheapest chicken since 1887. Offering a wide range of fresh chicken parts. Items Sold: Chicken feet, foreign and local chicken.', 'asian','','vincentt.2013@sis.smu.edu.sg',65,87221272,'Lakeside Street 20, Block 401, #11-10'),
-(3, 'FreshSaladz', 'Description: Established in 2014, we provide the best technology in growing organic vegetables. We conduct research in additive free, genetically modified vegetables infused with a variety of vitamins and minerals. Items Sold: Rainbow cabbage, Blue spinach, Organic olives.', 'fusion', '','vincentt.2013@sis.smu.edu.sg',65,87221272,'Jurong Avenue 2, Opposite Jurong Bird Park'),
+(2, 'FreshFoodz', 'Description: Providing the freshest and cheapest chicken since 1887. Offering a wide range of fresh chicken parts. Items Sold: Chicken feet, foreign and local chicken.', 'asian','','benjaminang.2013@sis.smu.edu.sg',65,87221272,'Lakeside Street 20, Block 401, #11-10'),
+(3, 'FreshSaladz', 'Description: Established in 2014, we provide the best technology in growing organic vegetables. We conduct research in additive free, genetically modified vegetables infused with a variety of vitamins and minerals. Items Sold: Rainbow cabbage, Blue spinach, Organic olives.', 'fusion', '','joelgnui.2013@sis.smu.edu.sg',65,87221272,'Jurong Avenue 2, Opposite Jurong Bird Park'),
 (4, 'Animal Farm', 'Animal Farm! Animal Animal Animals! Description: Where the pigs farm. Offering discounts on horse meat and beef. Items Sold: We have poultry ranging from kampong chicken to flying pigs!!', 'western', '','vincentt.2013@sis.smu.edu.sg',65,87221272,'Lakeside Street 10, Block 101, #3-10'),
 (5, 'Only a Matter of Thyme', 'Only a Matter of Thyme! Description: Time waits for no one. Delivery across thyme and space. Items Sold: Time', 'spices', '','vincentt.2013@sis.smu.edu.sg',65,87221272,'Bart Street 3, Block 41, #1-10');
 
@@ -424,9 +425,9 @@ INSERT INTO `supplier` (`supplier_id`, `supplier_name`, `supplier_description`, 
 --
 
 CREATE TABLE IF NOT EXISTS `test` (
-  `value1` varchar(15) NOT NULL,
-  `value2` varchar(15) NOT NULL,
-  `value3` varchar(15) NOT NULL,
+  `value1` varchar(100) NOT NULL,
+  `value2` varchar(100) NOT NULL,
+  `value3` varchar(100) NOT NULL,
   PRIMARY KEY (`value1`),
   KEY `value2` (`value2`,`value3`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -447,10 +448,10 @@ INSERT INTO `test` (`value1`, `value2`, `value3`) VALUES
 --
 CREATE TABLE IF NOT EXISTS `vendor` (
   `vendor_id` int NOT NULL,
-  `vendor_name` varchar(50) NOT NULL,
+  `vendor_name` varchar(100) NOT NULL,
   `vendor_description` varchar(100) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  `email` varchar(30) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `area_code` int NOT NULL,
   `telephone_number` int NOT NULL,
   `address` varchar(100) NOT NULL,
