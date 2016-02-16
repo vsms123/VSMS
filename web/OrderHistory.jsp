@@ -191,7 +191,7 @@
 
 
 
-                        <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                        <div  class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                             <a style="color:black">
                                 <div class="content">
