@@ -38,6 +38,7 @@ public class TestController extends HttpServlet {
         String dish_description = "Made with only the best Vincents";//request.getParameter("dish_description");
         String vendor_idStr = "1";//request.getParameter("vendor_id");
         String filteredSearchString = "Hello, get here";
+        String dish_id= "8";
 //        Open out this code if you would like to test out request parameters
 //        System.out.println("It reaches here: "+dish_name+","+dish_description+","+vendor_idStr);
         //Check null values to add the creation process
@@ -73,6 +74,14 @@ public class TestController extends HttpServlet {
                 filteredSearchString = retrieveSupplierHTMLTable(UtilityController.convertStringtoInt(vendor_idStr), ingredientList);
                 //put them into scripts for the buttons
 //end of series of actions is action.equals search            
+            }else if(action.equals("add")){
+                String ingredientName=request.getParameter("ingredient_name");
+                String supplierId=request.getParameter("supplier_id");
+                Ingredient ingredient=IngredientDAO.getIngredient(supplierId, ingredientName);
+                Dish dish=IngredientDAO.getDishByID(UtilityController.convertStringtoInt(dish_id));
+                dish.addIngredient(ingredient, "1", ingredient.getSupplyUnit());
+                IngredientDAO.updateDish(dish);
+                response.sendRedirect("IngredientSearch.jsp?dish_id=" + dish_id);
             }
             
         }
@@ -97,7 +106,7 @@ public class TestController extends HttpServlet {
             htmlTable.append("<tr>");
             htmlTable.append("<td>" + ingredient.getName()+ "</td>");
             htmlTable.append("<td>" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</td>");
-            htmlTable.append("<td><button>Add Ingredient</button></td>");
+            htmlTable.append("<td><a href=\"testservlet?supplier_id=" + ingredient.getSupplier_id() + "&ingredient_name=" + ingredient.getName() + "&action=add\">Add Ingredient</a></td>");
             htmlTable.append("</tr>");
         }
         return htmlTable.toString();

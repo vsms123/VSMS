@@ -1,3 +1,9 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="Model.Dish"%>
+<%@page import="Controller.IngredientController"%>
+<%@page import="Controller.UtilityController"%>
 <%@page import="Controller.TestController"%>
 <%@page import="Model.Ingredient"%>
 <%@page import="Model.Vendor"%>
@@ -75,12 +81,47 @@
 
                 <!--MODAL DIV-->
                 <button type="submit" name="submit" class="ui teal button create-favsupplier-button">Add Ingredient</button>
+                <%
+                            String dish_id="8";
+                            Dish dish=IngredientController.getDishByID(UtilityController.convertStringtoInt(dish_id));
+                            if(dish!=null){
+                        %>
+                        
+                        
+                        
+                <table>
+                    <tr><td><%=dish.getDish_name()%></td><td><%=dish.getDish_description()%></td></tr>
+                 </table>
+                    <%
+                        HashMap<Ingredient, ArrayList<String>> map=dish.getIngredientQuantity();
+                        Set<Ingredient> set=map.keySet();
+                        Iterator<Ingredient> iter=set.iterator();
+                        %><form action="IngredientSearch.jsp" ><%
+                        int count=0;
+                        while(iter.hasNext()){
+                            Ingredient ingre=iter.next();
+                            ArrayList<String> list=map.get(ingre);
+                            String quantity=list.get(0);
+                            String unit=list.get(1);
+                        %>
+                        
+                        Ingredient: <%=ingre.getName()%><br>
+                        Quantity: <input type="text" name="quantity"<%=%> value=<%=quantity%>><br>
+                        Unit: <%=unit%>
+                        
+                        <%
+                        }
+                    %>
+                    </form>
+               
+                <%}%>
                 <div id="modaldiv" class="ui small modal">
                     <i class="close icon"></i>
                     <div class="header">
                         Add Ingredient
                     </div>
                     <div class="content">
+                        
                         <!--Inserting List of suppliers available. To star and unstar-->
                         <!--Create FavSupplier Filter with a search engine-->
                         Ingredient name : <input type="text" name="searchsupplier" id="searchsupplier" value=""/>
@@ -88,11 +129,16 @@
                         <table id="ingredientlist" name="ingredientlist">                                
                         </table>
                         <!--Todo: Supplier list favourite star and unstar-->
-
+                        
+                        <!--Dish content printed here-->
+                        
+                        <!--End of dish content-->
+                        
+                        
                         <!--Input hidden attributes-->
                         <input type="hidden" name="vendor_id" value="1">
                         <input type="hidden" name="action" value="delete">
-
+                        
                     </div>
                     <div class="actions">
                         <div class="ui positive right labeled icon button">
@@ -105,5 +151,6 @@
               
             </div>
         </div>
+                
     </body>
 </html>

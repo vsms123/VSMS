@@ -98,7 +98,7 @@
                     <h3>Supplier Name Search</h3>
                     Supplier name : <input type="text" name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
 
-                    <table id="supplierlistbyname">                                
+                    <table id="supplierlistbyname" class="ui single line table">                                
                     </table>
 
                 </div>
@@ -108,7 +108,7 @@
                     <h3>Supplier Type Search</h3>                
                     Supplier type : <input type="text" name="searchsupplierbytype" id="searchsupplierbytype" value=""/>
 
-                    <table id="supplierlistbytype">                                
+                    <table id="supplierlistbytype" class="ui single line table">                                
                     </table>
                 </div>
 
@@ -118,7 +118,7 @@
                     Ingredient Name : <input type="text" name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
 
 
-                    <table id="ingredientlist">                                
+                    <table id="ingredientlist" class="ui single line table">                                
                     </table>
 
                 </div>
