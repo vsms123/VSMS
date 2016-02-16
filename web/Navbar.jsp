@@ -109,7 +109,7 @@
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
-            <a class="item" style=" font-size: 16px">
+            <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px">
                 <i class="large search icon"></i> Supplier Search
             </a>
 
