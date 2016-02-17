@@ -50,7 +50,7 @@
                 <br/>
                 <form action="TemplateServlet" method="get">
                     <h2 style="color:black">Name of Template:</h2>
-                    <div class="ui input">
+                    <div style="padding-right:40%" class="ui fluid input">
                         <input type="text" placeholder="Name your template.." name="template"/>&nbsp;
                     </div>
                     <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
