@@ -49,34 +49,32 @@
 
 
 
-                    <div class="ui middle aligned divided list">
-
+                   <table  class="ui padded large striped  table">
+                       <tr>
+                           <th><h2>Dish</h2></th><th><h2>Quantity</h2></th>
+                       </tr>
                         <%
                             for (Dish dish : dishList) {
                         %>
-                        <div style="color:black" id="orderListTable" class="item test dish" data-content="Click to view/edit dish"  data-variation="inverted">
-                            <div class="right floated content">
-
-
-                                <div class="ui large input">
+                        <tr>
+                           
+                            <td><h3><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></h3></td>
+                            <td> <div class="ui input">
                                     <input type="number" value=1 placeholder="quantity.." name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>">&nbsp;
                                 </div>
-                            </div>
-                            <div>
-                                <div class="content">
-                                    &nbsp<h2><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></h2>
-                                </div>
-                            </div>
+                            </td>
+                            
 
-                        </div>
+                        </tr>
                         <%}%>
                         <!--Input hidden attributes-->
+                        </table>
                         <input type="hidden" name="vendor_id" value="1"/>
                         <br/>
 
                         <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Check Order Breakdown </button>
 
-                    </div>
+                 
                 </form>
 
             </div>
