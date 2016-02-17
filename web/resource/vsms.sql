@@ -167,7 +167,7 @@ INSERT INTO `ingredient_quantity` (`dish_id`, `ingredient_name`, `quantity`, `ve
 (1, 'Blue spinach', 100,1,3,'g'),
 (2, 'Organic olives',40,1,3,'g'),
 (2, 'Rainbow cabbage',10,1,3,'whole'),
-(3, 'Ground Beef',50000,1,4,'g'),
+(3, 'Ground Beef',50,1,4,'g'),
 (3, 'Leg of Duck',40,1,4,'whole'),
 (4, 'Rib Eye',50,1,4,'Meat'),
 (5, 'Leg of Duck',30,1,5,'whole'),

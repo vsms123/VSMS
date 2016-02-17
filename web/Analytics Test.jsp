@@ -4,19 +4,84 @@
     Author     : vincentt.2013
 --%>
 
+<%@page import="Controller.UserController"%>
+<%@page import="Model.Vendor"%>
 <%@page import="Controller.OrderController"%>
 <%@page import="Controller.IngredientController"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
+        <%
+            
+            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            //in case current vendor does not exist
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
+            int vendor_id= currentVendor.getVendor_id();
+        %>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             google.charts.load('current', {packages: ['corechart', 'table']});
+//            google.charts.setOnLoadCallback(drawDishOrderChart);
+            google.charts.setOnLoadCallback(drawSupplierSalesAmountChart);
             google.charts.setOnLoadCallback(drawDishChart);
             google.charts.setOnLoadCallback(drawOrderChart);
             google.charts.setOnLoadCallback(drawBarChart);
             google.charts.setOnLoadCallback(drawTable);
             google.charts.setOnLoadCallback(drawTimeChart);
+//            function drawDishOrderChart() {
+//                // Create the data table.
+//                var data = new google.visualization.DataTable();
+//                data.addColumn('string', 'Dishes');
+//                data.addColumn('number', '#of Orders created');
+//                data.addRows();
+//
+//                // Set chart options
+//                var options = {'title': 'Orders by Dishes created',
+//                    'width': 400,
+//                    'height': 300};
+//
+//                // Instantiate and draw our chart, passing in some options.
+//                var chart = new google.visualization.PieChart(document.getElementById('chart_dish_order_pie_div'));
+//
+//                function selectHandler() {
+//                    var selectedItem = chart.getSelection()[0];
+//                    if (selectedItem) {
+//                        var topping = data.getValue(selectedItem.row, 0);
+//                        alert('The user selected ' + topping);
+//                    }
+//                }
+//
+//                google.visualization.events.addListener(chart, 'select', selectHandler);
+//                chart.draw(data, options);
+//            }
+            function drawSupplierSalesAmountChart() {
+                // Create the data table.
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Supplier');
+                data.addColumn('number', 'Sales Amount');
+                data.addRows(<%=OrderController.getSupplierSalesAmountDataTable(vendor_id)%>);
+
+                // Set chart options
+                var options = {'title': 'Supplier and Sales Amount created',
+                    'width': 400,
+                    'height': 300};
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('chart_supplier_sales_amount_pie_div'));
+
+                function selectHandler() {
+                    var selectedItem = chart.getSelection()[0];
+                    if (selectedItem) {
+                        var topping = data.getValue(selectedItem.row, 0);
+                        alert('The user selected ' + topping);
+                    }
+                }
+
+                google.visualization.events.addListener(chart, 'select', selectHandler);
+                chart.draw(data, options);
+            }
             function drawDishChart() {
                 // Create the data table.
                 var data = new google.visualization.DataTable();
@@ -152,6 +217,10 @@
         </script>
     </head>
     <body>
+        <!-- Identify where the pie chart should be drawn. -->
+        <div id="chart_dish_order_pie_div"></div>
+        <!-- Identify where the pie chart should be drawn. -->
+        <div id="chart_supplier_sales_amount_pie_div"></div> 
         <!-- Identify where the pie chart should be drawn. -->
         <div id="chart_dish_pie_div"></div>
         <!-- Identify where the pie chart should be drawn. -->

@@ -100,6 +100,7 @@ public class IngredientController extends HttpServlet {
         System.out.println("It reaches here: " + dish_idStr + "," + supplier_idStr + "," + name + "," + supplyUnit + "," + subcategory + "," + description + "," + offeredPrice + "," + quantityStr + "," + supplyUnit + "," + vendor_idStr);
 
         //Check null values to add the creation process
+        //This is useful only if you are the supplier that wants to add new ingredient (supplier view)
         if (!UtilityController.checkNullStringArray(new String[]{dish_idStr, supplier_idStr, name, supplyUnit, subcategory, description, offeredPrice, quantityStr, supplyUnit, vendor_idStr})) {
 
             int supplier_id = UtilityController.convertStringtoInt(supplier_idStr);
@@ -111,21 +112,11 @@ public class IngredientController extends HttpServlet {
             System.out.println(ingredient);
             // ----- This is to populate parent table (Ingredient) -------//
             addIngredient(ingredient);
-
-            // ---- Creating ingredientQuantity based on user inputs ----- // 
-            ArrayList<String> ingredientQuantity = new ArrayList<String>();
-            ingredientQuantity.add(quantityStr);
-            ingredientQuantity.add(ingredient.getSupplyUnit());
-
-            // ----  adding the ingredientQuantity and put new dish ---- // 
-            dish.getIngredientQuantity().put(ingredient, ingredientQuantity);
-
-            // --- use this dish to populate IngredientQuantity Table ---- //
-            updateDish(dish);
-
-            response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_id);
-
+            //Empty link but to be replaced with the supplier view to create more ingredients
+            response.sendRedirect("#");
         }
+
+        //This portion to be used for RecipeBuilder deletion and Adding Ingredients Process
         //if action is delete
         if (action.equals("delete")) {
             deleteIngredientQuantity(dish_idStr, name, vendor_idStr, supplier_idStr);
@@ -158,25 +149,25 @@ public class IngredientController extends HttpServlet {
             String ingredient_name = request.getParameter("ingredient_name");
             String quantityString = request.getParameter("quantity");
             String quantity_unit = request.getParameter("quantity_unit");
-            
+
             //change dish_idStr and quantityString into integer variable
             int dish_id = UtilityController.convertStringtoInt(dish_idStr);
-            
+
             //Creating a new ingredient and add ingredient quantity
             Dish dish = getDishByID(dish_id);
-            Ingredient ingredient = getIngredient(supplier_id,ingredient_name);
-            
-             // ---- Creating ingredientQuantity based on user inputs ----- // 
+            Ingredient ingredient = getIngredient(supplier_id, ingredient_name);
+
+            // ---- Creating ingredientQuantity based on user inputs ----- // 
             ArrayList<String> ingredientQuantity = new ArrayList<String>();
             ingredientQuantity.add(quantityString);
             ingredientQuantity.add(quantity_unit);
-            
+
             // ----  adding the ingredientQuantity and put new dish ---- // 
             dish.getIngredientQuantity().put(ingredient, ingredientQuantity);
 
             // --- use this dish to populate IngredientQuantity Table ---- //
             updateDish(dish);
-            
+
             response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_id);
 
         }

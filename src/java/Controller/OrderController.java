@@ -59,7 +59,7 @@ public class OrderController extends HttpServlet {
                 if (bufferqtypercStr != null) {//This means it comes from order breakdown
                     int bufferqtyperc = UtilityController.convertStringtoInt(bufferqtypercStr);
                     //Make an arraylist of all orderline (non aggregated) with buffer quantity
-                    orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1,bufferqtyperc);
+                    orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1, bufferqtyperc);
                 } else {
                     //Make an arraylist of all orderline (non aggregated)
                     orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1);
@@ -150,7 +150,7 @@ public class OrderController extends HttpServlet {
                 htmlTable.append("<tr>");
                 htmlTable.append("<td>" + orderline.getIngredient_name() + "</td>");
                 htmlTable.append("<td>" + orderline.getQuantity() + "</td>");
-                htmlTable.append("<td>"+IngredientController.getIngredient(Integer.toString(orderline.getSupplier_id()), orderline.getIngredient_name()).getSupplyUnit()+"</td>");
+                htmlTable.append("<td>" + IngredientController.getIngredient(Integer.toString(orderline.getSupplier_id()), orderline.getIngredient_name()).getSupplyUnit() + "</td>");
                 htmlTable.append("<td>" + UtilityController.convertDoubleToCurrString(orderline.getFinalprice()) + "</td>");
                 htmlTable.append("</tr>");
                 totalFinalPrice += orderline.getFinalprice();
@@ -239,7 +239,8 @@ public class OrderController extends HttpServlet {
         System.out.println(orderlineList.toString());
         return orderlineList;
     }
-     public ArrayList<Orderline> createOrderlineList(HashMap<Ingredient, Integer> ingredientAggQuantityMap, int vendor_id, int order_id, int bufferqtyperc) {
+
+    public ArrayList<Orderline> createOrderlineList(HashMap<Ingredient, Integer> ingredientAggQuantityMap, int vendor_id, int order_id, int bufferqtyperc) {
         ArrayList<Orderline> orderlineList = new ArrayList<Orderline>();
 
         //iterate through ingredientAggQuantityMap
@@ -247,7 +248,7 @@ public class OrderController extends HttpServlet {
         while (iter.hasNext()) {
             Ingredient ingredient = (Ingredient) iter.next();
             //Adding bufferqty percentage into the aggregate quantity
-            double bufferqtymultiplier = bufferqtyperc/100.0 +1;
+            double bufferqtymultiplier = bufferqtyperc / 100.0 + 1;
             int aggQuantity = (int) Math.ceil(ingredientAggQuantityMap.get(ingredient) * bufferqtymultiplier);
 
             //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
@@ -349,6 +350,85 @@ public class OrderController extends HttpServlet {
     public static void deleteOrder(Order order) {
         OrderDAO.deleteOrder(order);
     }
+
+//  --------------------------------------------------------  ANALYTICS --------------------------------------------------------
+//Make a data table that consists on specified vendor --> order sales total
+//    public static String getDishOrderDataTable(int vendor_id) {
+//        String stringReturn = "[";
+//        ArrayList<Order> orderList = OrderController.retrieveOrderList(vendor_id);
+//        
+//       //Need to group the suppliers and amount of sales together
+//       HashMap<Order,Integer> vendorSupplierOrder = new HashMap<Order,Integer>(); 
+//        for (Order order : orderList) {
+//              ArrayList<Orderline> orderlineList = order.getOrderlines();
+//              for(Orderline orderline: orderlineList){
+//                  Supplier supplier = UserController.retrieveSupplierByID(orderline.getSupplier_id());
+//                  double sales = orderline.getFinalprice();
+//                  //Polling and input inside hashmap
+//                  if(!vendorSupplierOrder.containsKey(supplier)){
+//                      vendorSupplierOrder.put(supplier, sales);
+//                  } else{
+//                      vendorSupplierOrder.put(supplier, vendorSupplierOrder.get(supplier)+sales);
+//                  }
+//              }
+//        }
+//        
+//        //Put the hashmap into data table values
+//        Iterator iter = vendorSupplierSales.keySet().iterator();
+//        while(iter.hasNext()){
+//            Supplier supplier = (Supplier)iter.next();
+//            double totalSales = vendorSupplierSales.get(supplier);
+//            
+//            String content = "\"" + supplier.getSupplier_name() + "\"";
+//            String salesOrderStr = "{v: " + totalSales + ", f: '" + String.format("%1$,.2f", totalSales) + "'}";
+//            String wrapContent = "[" + content + "," + salesOrderStr + "],";
+//            stringReturn += wrapContent;
+//        }
+//
+//        stringReturn = stringReturn.substring(0, stringReturn.length() - 1);
+//        stringReturn = stringReturn + "]";
+//        System.out.println(stringReturn);
+//        return stringReturn;
+//    }
+//Make a data table that consists on specified vendor --> order sales total
+    public static String getSupplierSalesAmountDataTable(int vendor_id) {
+        String stringReturn = "[";
+        ArrayList<Order> orderList = OrderController.retrieveOrderList(vendor_id);
+        
+       //Need to group the suppliers and amount of sales together
+       HashMap<Supplier,Double> vendorSupplierSales = new HashMap<Supplier,Double>(); 
+        for (Order order : orderList) {
+              ArrayList<Orderline> orderlineList = order.getOrderlines();
+              for(Orderline orderline: orderlineList){
+                  Supplier supplier = UserController.retrieveSupplierByID(orderline.getSupplier_id());
+                  double sales = orderline.getFinalprice();
+                  //Polling and input inside hashmap
+                  if(!vendorSupplierSales.containsKey(supplier)){
+                      vendorSupplierSales.put(supplier, sales);
+                  } else{
+                      vendorSupplierSales.put(supplier, vendorSupplierSales.get(supplier)+sales);
+                  }
+              }
+        }
+        
+        //Put the hashmap into data table values
+        Iterator iter = vendorSupplierSales.keySet().iterator();
+        while(iter.hasNext()){
+            Supplier supplier = (Supplier)iter.next();
+            double totalSales = vendorSupplierSales.get(supplier);
+            
+            String content = "\"" + supplier.getSupplier_name() + "\"";
+            String salesOrderStr = "{v: " + totalSales + ", f: '" + String.format("%1$,.2f", totalSales) + "'}";
+            String wrapContent = "[" + content + "," + salesOrderStr + "],";
+            stringReturn += wrapContent;
+        }
+
+        stringReturn = stringReturn.substring(0, stringReturn.length() - 1);
+        stringReturn = stringReturn + "]";
+        System.out.println(stringReturn);
+        return stringReturn;
+    }
+    
 //Make a data table that consists on Vendor --> number of Orders
 
     public static String getVendorOrderDataTable() {

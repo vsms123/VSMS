@@ -192,17 +192,17 @@
                 <div id="deletemodaldiv<%=dish.getDish_id()%>" class="ui small modal">
                     <i class="close icon"></i>
                     <div class="header">
-                        Delete Dish
+                        Delete <%=dish.getDish_name()%>
                     </div>
 
                     <div class="content">
                         <form class="ui form" id="deleteDish" action="ingredientservlet" method="post"> 
                             <!--Inserting delete danger message. -->
 
-                            Are you sure you would like to delete the dish?
+                            Are you sure you would like to delete <%=dish.getDish_name()%>?
+                            <br>
 
                             <!--Input hidden attributes-->
-                            dish_name, dish_description,
                             <input type="hidden" name="dish_name" value="<%=dish.getDish_name()%>">
                             <input type="hidden" name="dish_description" value="<%=dish.getDish_description()%>">
                             <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
