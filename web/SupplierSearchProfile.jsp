@@ -45,11 +45,6 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-                <div class="ui breadcrumb" >
-                    <a href="Home.jsp" class="section">Home</a>
-                    <i class="right angle icon divider"></i>
-                    <div class="active section">Vendor Profile</div>
-                </div>
 
                 <%
                     Vendor vendor = (Vendor) session.getAttribute("vendor");
@@ -64,28 +59,33 @@
                 <h2 class="ui header">
                     <i class="settings icon"></i>
                     <div class="content">
-                        <%=supplier.getSupplier_name()%>
+                        Supplier Profile
                         <div class="sub header">View Supplier Profile</div>
                     </div>
                 </h2>
-                <h1><%=supplier.getSupplier_name()%></h1>
-                <table>
+                        
+                        
+              
+                
+                <h1 style="color:black"><%=supplier.getSupplier_name()%></h1>
+                <table class="ui very padded large striped  table">
                     <tr>
-                        <th>Email</th>
-                        <td><%=supplier.getEmail()%></td>
+                        <th><h2>Description</h2></th>
+                        <td><h3><%=supplier.getSupplier_description()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Address</th>
-                        <td><%=supplier.getAddress()%></td>
+                        <th><h2>Email</h2></th>
+                        <td><h3><%=supplier.getEmail()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Telephone Number</th>
-                        <td><%="(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()%></td>
+                        <th><h2>Address</h2></th>
+                        <td><h3><%=supplier.getAddress()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Description</th>
-                        <td><%=supplier.getSupplier_description()%></td>
+                        <th><h2>Telephone Number</h2></th>
+                        <td><h3><%="(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()%></h3></td>
                     </tr>
+                    
                 </table>
                 <%
                     ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(vendor.getVendor_id());
