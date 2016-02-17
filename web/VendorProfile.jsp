@@ -45,7 +45,7 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-               
+
 
                 <%
                     Vendor vendor = (Vendor) session.getAttribute("vendor");
@@ -54,31 +54,36 @@
                     }
                 %>
                 <h2 class="ui header">
-                    <i class="settings icon"></i>
+                    <i class="user icon"></i>
                     <div class="content">
-                        Account Settings
-                        <div class="sub header">Manage your account</div>
+                        View Profile
+                        <div class="sub header">Manage Your Profile</div>
                     </div>
                 </h2>
-                <h1><%=vendor.getVendor_name()%></h1>
-                <table>
-                    <tr>
-                        <th>Email</th>
-                        <td><%=vendor.getEmail()%></td>
+                <h1 style="color:black"><%=vendor.getVendor_name()%></h1>
+
+
+
+                <table class="ui very padded large striped  table">
+                    <tr class="left aligned">
+                        <th><h2>Email</h2></th>
+                    <td><h3><%=vendor.getEmail()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Address</th>
-                        <td><%=vendor.getAddress()%></td>
+                        <th><h2>Address</h2></th>
+                    <td><h3><%=vendor.getAddress()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Telephone Number</th>
-                        <td><%="(" + vendor.getArea_code() + ")" + vendor.getTelephone_number()%></td>
+                        <th><h2>Telephone Number</h2></th>
+                    <td><h3><%="(" + vendor.getArea_code() + ")" + vendor.getTelephone_number()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Description</th>
-                        <td><%=vendor.getVendor_description()%></td>
+                        <th><h2>Description</h2></th>
+                    <td><h3><%=vendor.getVendor_description()%></h3></td>
                     </tr>
                 </table>
+
+
 
                 <button class="ui green large button edit-profile-button">Edit Profile</button>
                 <button class="ui green large button edit-password-button">Edit Password</button>

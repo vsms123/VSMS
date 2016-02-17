@@ -138,10 +138,6 @@ public class UserController extends HttpServlet {
     public String retrieveSupplierHTMLTable(int vendor_id, ArrayList<Supplier> supplierList, ArrayList<Supplier> currentFavSupplier) {
         StringBuffer htmlTable = new StringBuffer("");
 
-        
-        
-   
-        
         //Create header
 //        htmlTable.append("<tr>");
 //        htmlTable.append("<th>Supplier Name</th>");
@@ -149,23 +145,24 @@ public class UserController extends HttpServlet {
 //        htmlTable.append("<th>Favorite?</th>");
 //        htmlTable.append("</tr>");
         for (Supplier supplier : supplierList) {
-            
+
             htmlTable.append("<div class='item test supplier'>");
             htmlTable.append("<a href=SupplierSearchProfile.jsp?supplier_id=" + supplier.getSupplier_id() + " ><div class='content'>");
             //Need to send in a list with this supplier_id to SupplierSearchProfile
             htmlTable.append("<h2>" + supplier.getSupplier_name() + "</h2></div>");
             htmlTable.append("<div> Type: " + supplier.getSupplier_type() + "");
             if (currentFavSupplier.contains(supplier)) {
-                htmlTable.append("<div class=\"right floated content\">Favorited</div>");
+                htmlTable.append("<div class=\"right floated content\"><h3>Favorited</h3></div>");
             } else {
-//                htmlTable.append("<td><button class=\"ui inverted red button create-favsupplier-button"+supplier.getSupplier_id()+"\">Favourite this supplier</button></td>");
-                htmlTable.append("<h2><a href=\"userservlet?vendor_id=" + vendor_id + "&supplier_id=" + supplier.getSupplier_id() + "&action=add\">Add to Favorites</a></h2>");
+               // htmlTable.append("<td><button class=\"ui inverted red button create-favsupplier-button"+supplier.getSupplier_id()+"\">Favourite this supplier</button></td>");
+                htmlTable.append("<div class=\"right floated content\"><button class=\" ui button\"><a href=\"userservlet?vendor_id=" + vendor_id + "&supplier_id=" + supplier.getSupplier_id() + "&action=add\"><i class=\"empty star icon\"></i>Add to Favorites</a></button>");
             }
-            htmlTable.append("</div></div></a></div>");
+            htmlTable.append("</div></div></div></a></div>");
         }
         return htmlTable.toString();
     }
-     public String retrieveIngredientHTMLTable(ArrayList<Ingredient> ingredientList) {
+
+    public String retrieveIngredientHTMLTable(ArrayList<Ingredient> ingredientList) {
         StringBuffer htmlTable = new StringBuffer("");
 
         //Create header
@@ -177,25 +174,23 @@ public class UserController extends HttpServlet {
 //        htmlTable.append("<th>Description</th>");
 //        htmlTable.append("<th>Supplier</th>");
 //        htmlTable.append("</tr>");
-
-
-            
-            
         for (Ingredient ingredient : ingredientList) {
             htmlTable.append("<div class='item test ingredient'><a><div class='content'>");
             //Need to send in a list with this supplier_id to SupplierSearchProfile
-            htmlTable.append("<h3>" + ingredient.getName() + "</h3>");
+            //Replacement of ingredient name is necessary to settle an ingredient name with a space in between
+            htmlTable.append("<h3><a href=IngredientProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + "&ingredient_name=" + ingredient.getName().replaceAll(" ", "%20") + ">" + ingredient.getName() + "</a></h3>");
             htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
             htmlTable.append("" + ingredient.getSubcategory() + "</div>");
             htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
             htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
-            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()+ "</a></div>");
+            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></div>");
             htmlTable.append("</div></div></a></div>");
         }
         return htmlTable.toString();
     }
-     //This will be used by Ingredient Search for RecipeBuilder
-     public String retrieveIngredientHTMLTableToAdd(ArrayList<Ingredient> ingredientList) {
+
+    //This will be used by Ingredient Search for RecipeBuilder
+    public String retrieveIngredientHTMLTableToAdd(ArrayList<Ingredient> ingredientList) {
         StringBuffer htmlTable = new StringBuffer("");
 
         for (Ingredient ingredient : ingredientList) {
@@ -206,12 +201,13 @@ public class UserController extends HttpServlet {
             htmlTable.append("" + ingredient.getSubcategory() + "</div>");
             htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
             htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
-            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()+ "</a></div>");
+            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></div>");
             htmlTable.append("</div></div></a></div>");
-            htmlTable.append("<button id=\"add-ingredient-modal-button"+ingredient.getSupplier_id()+ingredient.getName().replaceAll("\\s+","")+"\">Add This Ingredient</button>");
+            htmlTable.append("<button id=\"add-ingredient-modal-button" + ingredient.getSupplier_id() + ingredient.getName().replaceAll("\\s+", "") + "\">Add This Ingredient</button>");
         }
         return htmlTable.toString();
     }
+
     public ArrayList<Supplier> filterSupplierBasedOnName(String name) {
         ArrayList<Supplier> returnSupplierList = new ArrayList<Supplier>();
         ArrayList<Supplier> supplierList = retrieveSupplierList();

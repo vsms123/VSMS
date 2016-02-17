@@ -35,39 +35,54 @@
 
     </head>
     <body class="background">
-
-
         <div class="transparency">
-
-
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-               
+
                 <h1 style="color: black">Order</h1>
 
                 <!--Inputting form elements-->
+
                 <form action="OrderBreakdown.jsp" method="get">
                     <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
-                    <table id="orderListTable">
-                        <%
-                        for (Dish dish : dishList) {%>
-                        <tr>
-                            <td><h2><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></label></h2></td>
-                            <td><input type="number" value=1 name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>"/></td>
-                        </tr>
-                        <%}%>
-                    </table>
-                    <!--Input hidden attributes-->
-                    <input type="hidden" name="vendor_id" value="1"/>
-                    <br/>
-                    
-                    <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Check Order Breakdown </button>
-                </form>
-            </div>
-        </div>
 
-        <!--JAVASCRIPT-->
-        <!--for general Javascript please refer to the main js. For others, please just html the script line below-->
-        <script src="js/main.js" type="text/javascript"></script>
+
+
+
+                    <div class="ui middle aligned divided list">
+
+                        <%
+                            for (Dish dish : dishList) {
+                        %>
+                        <div style="color:black" id="orderListTable" class="item test dish" data-content="Click to view/edit dish"  data-variation="inverted">
+                            <div class="right floated content">
+
+
+                                <div class="ui large input">
+                                    <input type="number" value=1 placeholder="quantity.." name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>">&nbsp;
+                                </div>
+                            </div>
+                            <div>
+                                <div class="content">
+                                    &nbsp<h2><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></h2>
+                                </div>
+                            </div>
+
+                        </div>
+                        <%}%>
+                        <!--Input hidden attributes-->
+                        <input type="hidden" name="vendor_id" value="1"/>
+                        <br/>
+
+                        <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Check Order Breakdown </button>
+
+                    </div>
+                </form>
+
+            </div>
+
+            <!--JAVASCRIPT-->
+            <!--for general Javascript please refer to the main js. For others, please just html the script line below-->
+            <script src="js/main.js" type="text/javascript"></script>
     </body>
 </html>

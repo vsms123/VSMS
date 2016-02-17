@@ -1,4 +1,3 @@
-
 <%@page import="Model.Vendor"%>
 <%@page import="Controller.UserController"%>
 <%@page import="Model.Supplier"%>
@@ -8,7 +7,7 @@
 
 <html>
     <head>
-        <title>Favourite Suppliers</title>
+        <title>Favorite Suppliers</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--Form VALIDATION-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
@@ -27,20 +26,24 @@
         %>
 
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
             <%
                 for (Supplier supplier : favSupplierList) {
                     int supplier_id = supplier.getSupplier_id();
             %>
 
                 //CREATE DELETE CLICK OF BUTTONS
-                $(".delete-favsupplier-button<%=supplier_id%>").click(function() {
+                $(".delete-favsupplier-button<%=supplier_id%>").click(function () {
 
                     console.log("My name is delete-favsupplier-button<%=supplier_id%>");
                     //show modal button
                     $('#deletemodaldiv<%=supplier_id%>').modal('show');
                 });
             <%}%>
+
+                $('.test.supplier').popup({
+                    position: 'top left'
+                });
             });
         </script>
         <!--CSS-->
@@ -53,29 +56,31 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
 
-                <h1>Favourite Supplier List</h1>
-                <table>
-                    <tr>
-                        <th>Supplier Name</th>
-                        <th>Supplier Email</th>
-                        <th>Supplier Description</th>
-                        <th>Delete?</th>
-                    </tr>
+                <h1 style="color:black">Your Favorite Suppliers</h1>
+                <div class="ui middle aligned animated selection divided list">
                     <%for (Supplier supplier : favSupplierList) {%>
 
-                    <tr>
-                        <td><%=supplier.getSupplier_name()%></td>
-                        <td><%=supplier.getEmail()%></td>
-                        <td><%=supplier.getSupplier_description()%></td>
-                        <td><button class="ui red inverted button delete-favsupplier-button<%=supplier.getSupplier_id()%>"> <i class="remove icon"></i>Delete FavSupplier</button></td>
-                    </tr>
-                    <%
-                        }
-                    %>
-                </table>
+                    <div class="item test supplier" data-content="Click to go to Supplier's page"  data-variation="inverted">
+                        <div class="extra right floated content">
+                            <button class="ui red inverted button delete-favsupplier-button<%=supplier.getSupplier_id()%>"> <i class="remove icon"></i>Remove from Favorites</button>
+                        </div>
+                        <a href="SupplierSearchProfile.jsp?supplier_id=<%=supplier.getSupplier_id()%>" >
+                            <div class="content">
+                                <h2><%=supplier.getSupplier_name()%></h2>
+                            </div>
+                            <div class='description' style='color:black'>
+                                
+                                <%=supplier.getSupplier_description()%> <br/>
+                                Email: <%=supplier.getEmail()%>
+                            </div>
+                        </a>
+                    </div>
+                    <%}%>
+                </div>
+                <br/>
 
                 <!--Create a button to refer to SupplierSearch-->
-                <a href="SupplierSearch.jsp">Search Suppliers</a>
+                <button class='ui large orange button'><a href="SupplierSearch.jsp" style='hover:white; color:white'>Search for Suppliers</a></button>
 
                 <!--Create many modals for each Fav supplier to be deleted-->
                 <% for (Supplier supplier : favSupplierList) {
@@ -84,14 +89,14 @@
                 <div id="deletemodaldiv<%=supplier.getSupplier_id()%>" class="ui small modal">
                     <i class="close icon"></i>
                     <div class="header">
-                        Delete Favourite Supplier
+                        Delete Favorite Supplier
                     </div>
 
                     <div class="content">
                         <form class="ui form" id="deleteFavsupplier" action="userservlet" method="get"> 
                             <!--Inserting delete danger message. -->
 
-                            Are you sure you would like to unfavourite this supplier?
+                            Are you sure you would like to unfavorite this supplier?
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="supplier_id" value="<%=supplier.getSupplier_id()%>">

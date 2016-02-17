@@ -57,27 +57,7 @@
 
 
         </script>
-        <style>
-            a:link {
-                color: black;
-            }
-
-            /* visited link */
-            a:visited {
-                color: Black;
-            }
-
-            /* mouse over link */
-            a:hover {
-                color: hotpink;
-            }
-
-            /* selected link */
-            a:active {
-                color: black;
-            }
-        </style>
-
+       
     </head>
     <body class="background">
 
