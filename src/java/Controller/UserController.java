@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController extends HttpServlet {
 
     @Override
-    //doGet will be given to FavouriteSuppliers.jsp and SupplierSearch.jsp and SupplierSearchProfile.jsp
+    //doGet will be given to FavouriteSuppliers.jsp and SupplierSearch.jsp and SupplierSearchProfile.jsp and Ingredient Search.jsp
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Will receive vendor id and supplier id interested
         String vendor_idStr = request.getParameter("vendor_id");
@@ -66,6 +66,21 @@ public class UserController extends HttpServlet {
                 }
                 //put them into a html table string
                 filteredSearchString = retrieveIngredientHTMLTable(ingredientList);
+                //put them into scripts for the buttons
+            } else if (action.equals("searchingredienttoadd")) {
+                //For Ingredient
+                ArrayList<Ingredient> ingredientList;
+                //if word is null then give all the list, if word is there then do a filter function
+                String word = request.getParameter("word");
+                if (word == null || word.isEmpty()) {
+                    //get the list of suppliers
+                    ingredientList = IngredientController.getIngredientList();
+                } else {
+                    //filter the supplier based on the string word
+                    ingredientList = IngredientController.getIngredientByName(word);
+                }
+                //put them into a html table string
+                filteredSearchString = retrieveIngredientHTMLTableToAdd(ingredientList);
                 //put them into scripts for the buttons
             } else { //create
                 saveAsFavouriteSupplier(vendor_id, supplier_id);
@@ -179,7 +194,24 @@ public class UserController extends HttpServlet {
         }
         return htmlTable.toString();
     }
+     //This will be used by Ingredient Search for RecipeBuilder
+     public String retrieveIngredientHTMLTableToAdd(ArrayList<Ingredient> ingredientList) {
+        StringBuffer htmlTable = new StringBuffer("");
 
+        for (Ingredient ingredient : ingredientList) {
+            htmlTable.append("<div class='item test ingredient'><a><div class='content'>");
+            //Need to send in a list with this supplier_id to SupplierSearchProfile
+            htmlTable.append("<h3>" + ingredient.getName() + "</h3>");
+            htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
+            htmlTable.append("" + ingredient.getSubcategory() + "</div>");
+            htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
+            htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
+            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()+ "</a></div>");
+            htmlTable.append("</div></div></a></div>");
+            htmlTable.append("<button id=\"add-ingredient-modal-button"+ingredient.getSupplier_id()+ingredient.getName().replaceAll("\\s+","")+"\">Add This Ingredient</button>");
+        }
+        return htmlTable.toString();
+    }
     public ArrayList<Supplier> filterSupplierBasedOnName(String name) {
         ArrayList<Supplier> returnSupplierList = new ArrayList<Supplier>();
         ArrayList<Supplier> supplierList = retrieveSupplierList();

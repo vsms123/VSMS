@@ -65,7 +65,7 @@ public class IngredientController extends HttpServlet {
                 int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
 
                 addDish(new Dish(dish_id, dish_name, vendor_id, dish_description));
-                response.sendRedirect("RecipeBuilder.jsp?dish_id="+dish_id);
+                response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_id);
             }
         }
 
@@ -76,11 +76,11 @@ public class IngredientController extends HttpServlet {
     }
 
     @Override
-    //doGet will be given to RecipeBuilder.java
+    //doGet will be given to RecipeBuilder.jsp and IngredientSearch.jsp
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //To query Dish to be attached with an <Ingredient,IngredientQuantity> HashMap
         String dish_idStr = request.getParameter("dish_id");
-        
+
         //An ingredient needs:dish_name, supplier_id, subcategory, ingredient_description, offeredprice
         String name = request.getParameter("name");
         String supplier_idStr = request.getParameter("supplier_id");
@@ -92,6 +92,9 @@ public class IngredientController extends HttpServlet {
         String quantityStr = request.getParameter("quantity");
         String supplyUnit = request.getParameter("supplyUnit");
         String vendor_idStr = request.getParameter("vendor_id");
+
+        //Ingredient Creation Process
+        String action = request.getParameter("action");
 
         //Open out this code if you would like to test out request parameters
         System.out.println("It reaches here: " + dish_idStr + "," + supplier_idStr + "," + name + "," + supplyUnit + "," + subcategory + "," + description + "," + offeredPrice + "," + quantityStr + "," + supplyUnit + "," + vendor_idStr);
@@ -124,33 +127,61 @@ public class IngredientController extends HttpServlet {
 
         }
         //if action is delete
-        if (request.getParameter("action").equals("delete")) {
+        if (action.equals("delete")) {
             deleteIngredientQuantity(dish_idStr, name, vendor_idStr, supplier_idStr);
             response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_idStr);
 
-        //        Reading the ingredients of a dish
-        String ingredientListString = "";
+            //        Reading the ingredients of a dish
+            String ingredientListString = "";
 
-        HashMap<Ingredient, ArrayList<String>> ingredientList = getIngredientQuantity(dish_idStr);
-        System.out.println("The ingredient list is ");
-        if (ingredientList.isEmpty()) {
-            System.out.println("it is empty");
-        } else {
-            System.out.println("Not empty");
+            HashMap<Ingredient, ArrayList<String>> ingredientList = getIngredientQuantity(dish_idStr);
+            System.out.println("The ingredient list is ");
+            if (ingredientList.isEmpty()) {
+                System.out.println("it is empty");
+            } else {
+                System.out.println("Not empty");
+            }
+            Iterator iter = ingredientList.keySet().iterator();
+            while (iter.hasNext()) {
+                Ingredient ingredient = (Ingredient) iter.next();
+                ArrayList<String> stringArray = ingredientList.get(ingredient);
+                ingredientListString += "<li>" + ingredient + "  " + stringArray + " </li>";
+            }
+
+            response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("");       // Write response body.
+
+        } else if (action.equals("addIngredient")) {
+            //Will receive Ingredient supplier id, ingredient name, quantity, quantity unit 
+            String supplier_id = request.getParameter("supplier_id");
+            String ingredient_name = request.getParameter("ingredient_name");
+            String quantityString = request.getParameter("quantity");
+            String quantity_unit = request.getParameter("quantity_unit");
+            
+            //change dish_idStr and quantityString into integer variable
+            int dish_id = UtilityController.convertStringtoInt(dish_idStr);
+            
+            //Creating a new ingredient and add ingredient quantity
+            Dish dish = getDishByID(dish_id);
+            Ingredient ingredient = getIngredient(supplier_id,ingredient_name);
+            
+             // ---- Creating ingredientQuantity based on user inputs ----- // 
+            ArrayList<String> ingredientQuantity = new ArrayList<String>();
+            ingredientQuantity.add(quantityString);
+            ingredientQuantity.add(quantity_unit);
+            
+            // ----  adding the ingredientQuantity and put new dish ---- // 
+            dish.getIngredientQuantity().put(ingredient, ingredientQuantity);
+
+            // --- use this dish to populate IngredientQuantity Table ---- //
+            updateDish(dish);
+            
+            response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_id);
+
         }
-        Iterator iter = ingredientList.keySet().iterator();
-        while (iter.hasNext()) {
-            Ingredient ingredient = (Ingredient) iter.next();
-            ArrayList<String> stringArray = ingredientList.get(ingredient);
-            ingredientListString += "<li>" + ingredient + "  " + stringArray + " </li>";
-        }
-
-        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("");       // Write response body.
-
     }
-    }
+
     public static Dish getDishByID(int dish_id) {
         return IngredientDAO.getDishByID(dish_id);
     }
@@ -158,10 +189,11 @@ public class IngredientController extends HttpServlet {
     public static ArrayList<Ingredient> getIngredientList() {
         return IngredientDAO.getIngredientList();
     }
+
     public static ArrayList<Ingredient> getIngredientBySupplier(int supplier_id) {
         return IngredientDAO.getIngredientBySupplier(supplier_id);
     }
-    
+
     public static ArrayList<Ingredient> getIngredientByName(String ingredient_name) {
         return IngredientDAO.getIngredientByName(ingredient_name);
     }

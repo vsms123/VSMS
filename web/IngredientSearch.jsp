@@ -1,10 +1,5 @@
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.Set"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="Model.Dish"%>
+
 <%@page import="Controller.IngredientController"%>
-<%@page import="Controller.UtilityController"%>
-<%@page import="Controller.TestController"%>
 <%@page import="Model.Ingredient"%>
 <%@page import="Model.Vendor"%>
 <%@page import="Controller.UserController"%>
@@ -15,7 +10,7 @@
 
 <html>
     <head>
-        <title>Favourite Suppliers</title>
+        <title>Ingredient Search</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--Form VALIDATION-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
@@ -26,48 +21,58 @@
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
-
+            //Receive Dish ID from RecipeBuilder.jsp
+            String dish_idStr = request.getParameter("dish_id");
             //ID=session.getAttribute(vendor_id);
-            ArrayList<Ingredient> ingredientList = TestController.getIngredientsSuppliedByFav(1);
+            ArrayList<Supplier> supplierList = UserController.retrieveSupplierList();
             //ID=session.getAttribute(vendor_id);
             ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(currentVendor.getVendor_id());
+
+            String ingredientName = request.getParameter("ingredient_name");
+            if (ingredientName == null) {
+                ingredientName = "";
+            }
         %>
 
         <script>
             $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
-
                 //SEARCHING AND FILTERING
-                //invoke get method in UserController with blank parameter given and blank response
-                $.get("testservlet", {vendor_id: "1", supplier_id: "1", action: "search", word: $('#searchsupplier').val()}, function(responseText) {
+                //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyname
+                $('.menu .item').tab();
+
+                //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyingredient
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
                     $("#ingredientlist").html(responseText);
                 });
-                $("#searchsupplier").keyup(function() {
-                    $.get("testservlet", {vendor_id: "1", supplier_id: "1", action: "search", word: $('#searchsupplier').val()}, function(responseText) {
+                $("#searchingredient").keyup(function() {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
                         $("#ingredientlist").html(responseText);
                     });
                 });
-                
-               
-                $('.create-favsupplier-button').click(function() {
-                    //show modal button
-                    $('#modaldiv').modal('show');
-                });
-            
+                initialise();
             });
+            $(document).ajaxComplete(function() {
+                initialise();
+            });
+            function initialise() {
+                //Prepare modals for each type of ingredients in which you can input the quantity value
+            <%// Get a list of ingredients with their possible
+                ArrayList<Ingredient> ingredientList = IngredientController.getIngredientList();
+                for (Ingredient ingredient : ingredientList) {%>
+                //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
+                $("#add-ingredient-modal-button<%=ingredient.getSupplier_id()%><%=ingredient.getName().replaceAll("\\s+","")%>").click(function() {
+                    console.log("My name is #add-ingredient-modal-button<%=ingredient.getSupplier_id()%><%=ingredient.getName().replaceAll("\\s+","")%>");
+                    //show modal button
+                    $('#add-ingredient-modal-div<%=ingredient.getSupplier_id()%><%=ingredient.getName().replaceAll("\\s+","")%>').modal('show');
+                });
+            <%}
+            %>
+            }
+            ;
+
+
         </script>
         <!--CSS-->
-        <style>
-            .unstar {
-                background:url('http://biscuithead.ie/images/logo.png') center no-repeat;
-
-                position:absolute; 
-                width:5%;
-                height:5%;
-                text-align:center; 
-                vertical-align:middle;
-                z-index: 9999;
-            }
-        </style>
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
@@ -77,68 +82,45 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
 
-                
+                <h1>Ingredient Name Search</h1>
 
-                <!--MODAL DIV-->
-                <button type="submit" name="submit" class="ui teal button create-favsupplier-button">Add Ingredient</button>
+
+                Ingredient Name : <input type="text" name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
+
+                <table id="ingredientlist" class="ui single line table">                                
+                </table>
+
+                <!--Create modal list for all the types of ingredients-->
                 <%
-                            String dish_id="8";
-                            Dish dish=IngredientController.getDishByID(UtilityController.convertStringtoInt(dish_id));
-                            if(dish!=null){
-                        %>
-                        
-                        
-                        
-                <table>
-                    <tr><td><%=dish.getDish_name()%></td><td><%=dish.getDish_description()%></td></tr>
-                 </table>
-                    <%
-                        HashMap<Ingredient, ArrayList<String>> map=dish.getIngredientQuantity();
-                        Set<Ingredient> set=map.keySet();
-                        Iterator<Ingredient> iter=set.iterator();
-                        %><form action="IngredientSearch.jsp" ><%
-                        int count=0;
-                        while(iter.hasNext()){
-                            Ingredient ingre=iter.next();
-                            ArrayList<String> list=map.get(ingre);
-                            String quantity=list.get(0);
-                            String unit=list.get(1);
-                        %>
-                        
-                        Ingredient: <%=ingre.getName()%><br>
-                        Quantity: <input type="text" name="quantity"<%=%> value=<%=quantity%>><br>
-                        Unit: <%=unit%>
-                        
-                        <%
-                        }
-                    %>
-                    </form>
-               
-                <%}%>
-                <div id="modaldiv" class="ui small modal">
+                    for (Ingredient ingredient : ingredientList) {
+                %>
+                <div id="add-ingredient-modal-div<%=ingredient.getSupplier_id()%><%=ingredient.getName().replaceAll("\\s+","")%>" class="ui small modal">
                     <i class="close icon"></i>
                     <div class="header">
-                        Add Ingredient
+                        Please insert the quantity for <%=ingredient.getName().replaceAll("\\s+","")%>
                     </div>
-                    <div class="content">
-                        
-                        <!--Inserting List of suppliers available. To star and unstar-->
-                        <!--Create FavSupplier Filter with a search engine-->
-                        Ingredient name : <input type="text" name="searchsupplier" id="searchsupplier" value=""/>
 
-                        <table id="ingredientlist" name="ingredientlist">                                
-                        </table>
-                        <!--Todo: Supplier list favourite star and unstar-->
-                        
-                        <!--Dish content printed here-->
-                        
-                        <!--End of dish content-->
-                        
-                        
-                        <!--Input hidden attributes-->
-                        <input type="hidden" name="vendor_id" value="1">
-                        <input type="hidden" name="action" value="delete">
-                        
+                    <div class="content">
+                        <form class="ui form" action="ingredientservlet" method="get"> 
+                            <!--Inputting form elements-->
+                            <h2><label for= "quantity"> Quantity</label></h2>
+                            <div class="ui right labeled input">
+                                <input type="number" value=0 name="quantity" id="quantity"/>
+                                <div class="ui basic label">
+                                    <%=ingredient.getSupplyUnit()%>
+                                </div>
+                            </div>
+
+                            <!--Input hidden attributes-->
+                            <input type="hidden" name="ingredient_name" value="<%=ingredient.getName()%>">
+                            <input type="hidden" name="supplier_id" value="<%=ingredient.getSupplier_id()%>">
+                            <input type="hidden" name="quantity_unit" value="<%=ingredient.getSupplyUnit()%>">
+                            <input type="hidden" name="dish_id" value="<%=dish_idStr%>">
+                            <input type="hidden" name="vendor_id" value="1">
+                            <input type="hidden" name="action" value="addIngredient"><br>
+
+                            <input type="submit" value="Add This Ingredient" class="ui teal button" /> 
+                        </form>
                     </div>
                     <div class="actions">
                         <div class="ui positive right labeled icon button">
@@ -147,10 +129,9 @@
                         </div>
                     </div>
                 </div>
-                <!--Create many modals for each Fav supplier to be deleted-->
-              
+                <%}%>
             </div>
         </div>
-                
-    </body>
+    </div>
+</body>
 </html>

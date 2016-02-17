@@ -465,7 +465,7 @@ CREATE TABLE IF NOT EXISTS `vendor` (
 --
 
 INSERT INTO `vendor` (`vendor_id`, `vendor_name`, `vendor_description`, `password`,`email`,`area_code`,`telephone_number`,`address`) VALUES
-(1, 'Bob''s Bakery And Bistro', 'Bob bakery and bistro is a renowned Bistro that was established in 1976', '','vincentt.2013@sis.smu.edu.sg',65,87221272,'1B Braddel Road #05-02');
+(1, 'Bob''s Bakery And Bistro', 'Bob bakery and bistro is a renowned Bistro that was established in 1976', '123','vincentt.2013@sis.smu.edu.sg',65,87221272,'1B Braddel Road #05-02');
 
 
 --

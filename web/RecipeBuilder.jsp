@@ -32,8 +32,8 @@
                     $("#ingredientListAdded").append(responseText);
                 });
                 $('.create-ingredient-button').click(function() {
-                    //show modal button
-                    $('#modaldiv').modal('show');
+                    //Change the url
+                    window.location = "IngredientSearch.jsp?dish_id=<%=dish_idStr%>";
                 });
             <% while (iter.hasNext()) {
                     Ingredient ingredient = (Ingredient) iter.next();
