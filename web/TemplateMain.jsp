@@ -14,24 +14,64 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
+        <title>Order Template Main</title>
+        <script>
+
+            $(document).ready(function () {
+                $('.test.template').popup({
+                    position: 'top left'
+                });
+            });
+        </script>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
-            //in case current vendor does not exist
-            if (currentVendor == null) {
-                currentVendor = UserController.retrieveVendorByID(1);
-            }
+        <div id="pc" class="background">
 
-            ArrayList<OrderTemplate> templates=OrderDAO.retrieveOrderTemplates(currentVendor.getVendor_id());
-            for (OrderTemplate template:templates){
-        %>
-        <a href="OrderTemplate.jsp?orderId=<%=template.getOrder_id()%>"><%=template.getName()%></a><br>
-        <%
-        }
-        %>
-        <a href="CreateTemplate.jsp">Create New Template</a>
+
+            <div class="transparency">
+
+
+                <div  class="ui segment" style="left:5%;width:90%">
+
+                    <%@ include file="Navbar.jsp" %>
+
+                    <p></p>
+
+                    <h1 style="color:black">Order Templates</h1><br/>
+                    <%
+                        Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                        //in case current vendor does not exist
+                        if (currentVendor == null) {
+                            currentVendor = UserController.retrieveVendorByID(1);
+                        }
+
+                        ArrayList<OrderTemplate> templates = OrderDAO.retrieveOrderTemplates(currentVendor.getVendor_id());
+                    %>
+                    <div class="ui middle aligned animated selection divided list">
+                        <%
+                            for (OrderTemplate template : templates) {
+                        %>
+                        <div class="item test template" data-content="Click to view/edit order template"  data-variation="inverted">
+                            <div class="content">
+                                <h2>
+
+                                    <a href="OrderTemplate.jsp?orderId=<%=template.getOrder_id()%>"><%=template.getName()%></a>
+                                </h2>
+                            </div>
+                        </div>
+                        <%
+                            }
+                        %>
+                    </div>
+                    <br/>
+                    <button class="ui large green button"> <a style="color:white" href="CreateTemplate.jsp"><i class="plus icon"></i>Create New Order Template</a> </button>
+
+
+                </div>
+            </div>
+        </div>
     </body>
 </html>

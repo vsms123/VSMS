@@ -65,7 +65,7 @@
 
 
                 <table class="ui very padded large striped  table">
-                    <tr class="left aligned">
+                    <tr>
                         <th><h2>Email</h2></th>
                     <td><h3><%=vendor.getEmail()%></h3></td>
                     </tr>
