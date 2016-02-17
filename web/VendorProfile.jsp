@@ -54,10 +54,10 @@
                     }
                 %>
                 <h2 class="ui header">
-                    <i class="settings icon"></i>
+                    <i class="user icon"></i>
                     <div class="content">
-                        Account Settings
-                        <div class="sub header">Manage your account</div>
+                        View Profile
+                        <div class="sub header">Manage Your Profile</div>
                     </div>
                 </h2>
                 <h1><%=vendor.getVendor_name()%></h1>
