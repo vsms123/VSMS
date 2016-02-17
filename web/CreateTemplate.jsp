@@ -42,26 +42,39 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-               
+
                 <h1 style="color: black">Create Template</h1>
 
+
                 <!--Inputting form elements-->
+                <br/>
                 <form action="TemplateServlet" method="get">
+                    <h2 style="color:black">Name of Template:</h2>
+                    <div class="ui input">
+                        <input type="text" placeholder="Name your template.." name="template"/>&nbsp;
+                    </div>
                     <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
-                    <table id="orderListTable">
-                        <tr><td><h2>Template Name:</h2></td><td><input type="text" value="Template Name" name="template"></td></tr>
+
+                    <table id="orderListTable" class="ui padded large striped  table">
+                        <tr><th><h2>Dish Name</h2></th>
+                            <th><h2>Quantity</h2></th>
+                        </tr>
                         <%
-                        for (Dish dish : dishList) {%>
+                            for (Dish dish : dishList) {%>
                         <tr>
-                            <td><h2><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></label></h2></td>
-                            <td><input type="number" value=1 name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>"/></td>
+                            <td><h3><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></label></h3></td>
+                            <td>
+                                <div class="ui input">
+                        <input type="number" value=1 placeholder="Name your template.." id="ordervalue<%=dish.getDish_id()%>" name="dish<%=dish.getDish_id()%>"/>&nbsp;
+                    </div>
+                                
                         </tr>
                         <%}%>
                     </table>
                     <!--Input hidden attributes-->
                     <input type="hidden" name="vendor_id" value="1"/>
                     <br/>
-                    
+
                     <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Check Order Breakdown </button>
                 </form>
             </div>
