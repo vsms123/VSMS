@@ -71,7 +71,7 @@
                         <div class="extra right floated content">
                             <button class="ui red inverted button delete-favsupplier-button<%=supplier.getSupplier_id()%>"> <i class="remove icon"></i>Remove from Favorites</button>
                         </div>
-                        <a href="RecipeBuilder.jsp?supplier_id=<%=supplier.getSupplier_id()%>" >
+                        <a href="SupplierSearchProfile.jsp?supplier_id=<%=supplier.getSupplier_id()%>" >
                             <div class="content">
                                 <h2><%=supplier.getSupplier_name()%></h2>
                                 
