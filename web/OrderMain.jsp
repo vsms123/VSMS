@@ -27,7 +27,7 @@
 
                     <%@ include file="Navbar.jsp" %>
         <a href="Order.jsp">Create a new order</a>
-        <a href="OrderTemplate.jsp">Create order from template</a>
+        <a href="TemplateMain.jsp">Create order from template</a>
         
         </div>
         </div>
