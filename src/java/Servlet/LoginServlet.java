@@ -75,7 +75,7 @@ public class LoginServlet extends HttpServlet {
 
             } else if (vendor == null && supplier != null) {
                 //redirect to supplier home
-                url = "Home.jsp";
+                url = "SupplierHome.jsp";
                 session.setAttribute("currentSupplier", supplier);
                 request.setAttribute("errMsg", null);
             } else {

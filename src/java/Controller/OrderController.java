@@ -502,4 +502,24 @@ public class OrderController extends HttpServlet {
         System.out.println(stringReturn);
         return stringReturn;
     }
+    
+    public static  ArrayList<Order> getSupplierOrders(int suppID){
+        ArrayList<Integer> suppOrdList = OrderDAO.retrieveSupplierOrders(suppID);
+        ArrayList<Order> ordList = new ArrayList<Order>();
+        for(Integer i: suppOrdList){
+            ordList.add(OrderDAO.retrieveOrderByID(i));
+        }
+//        for (Integer i : suppOrdList) {
+//            Order o = OrderDAO.retrieveOrderByID(i);
+//            if (o.getStatus().toLowerCase().equals("pending")) {
+//                ordList.add(o);
+//            }
+//        }
+        
+        return ordList;
+    }
+    
+    public static void updateOrdStatus(int order_id, String status){
+        OrderDAO.updateOrderStatus(order_id, status);
+    }
 }
