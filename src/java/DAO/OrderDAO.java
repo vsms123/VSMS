@@ -142,7 +142,111 @@ public class OrderDAO {
         }
         return orderList;
     }
+    
+     //methods retrieves all order templates from a particular vendor
+    public static ArrayList<OrderTemplate> retrieveOrderTemplates(int vendor_id) {
+        ConnectionManager connManager = new ConnectionManager();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        ArrayList<OrderTemplate> templateList = new ArrayList<OrderTemplate>();
+        try {
+            //creates connections to database
+            conn = connManager.getConnection();
+            sql = "Select * from `order_template` WHERE vendor_id = ## order by order_id";
+            sql = sql.replace("##", "" + vendor_id);
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
 
+            //Retrieves the orders
+            ArrayList<Integer> checkList=new ArrayList<Integer>();
+            while (rs.next()) {
+                int order_id = rs.getInt("order_id");
+                String name = rs.getString("name");
+                
+                OrderTemplate template=new OrderTemplate(order_id, vendor_id,name);
+                populateOrderTemplates(template);
+                templateList.add(template);
+            }
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            connManager.close(conn, stmt, rs);
+        }
+        return templateList;
+    }
+    
+    //Start population of order quantity
+    public static void populateOrderTemplates(OrderTemplate template) {
+        ConnectionManager connManager = new ConnectionManager();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        try {
+            //creates connections to database
+            conn = connManager.getConnection();
+            sql = "Select * from `template_quantity` WHERE order_id = ## ";
+            sql = sql.replace("##", "" + template.getOrder_id());
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            //Retrieves the orders
+            while (rs.next()) {
+                int dish_id = rs.getInt("dish_id");
+                int dish_quantity = rs.getInt("dish_quantity");
+
+                template.addDish(IngredientDAO.getDishByID(dish_id));
+                template.addInt(dish_quantity);
+            }
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            connManager.close(conn, stmt, rs);
+        }
+       
+    }
+    //End population of order quantity
+    
+    //Method to save template to database
+    public static void saveTemplate(OrderTemplate template){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+
+        //insert new order into data base
+        try {
+            conn = ConnectionManager.getConnection();
+            sql = "insert into order_template( order_id, vendor_id, name) values (#1,#2,#3)";
+            sql = sql.replace("#1", "" + template.getOrder_id());
+            sql = sql.replace("#2", "" + template.getVendor_id());
+            sql = sql.replace("#3", "" + "'"+template.getName()+"'");
+            stmt = conn.prepareStatement(sql);
+            stmt.executeUpdate();
+
+            ArrayList<Dish> dishList = template.getDishList();
+            for (int i=0;i<dishList.size();i++) {
+                Dish dish=dishList.get(i);
+                sql = "insert into template_quantity (order_id, dish_id, dish_quantity) values (#1,#2,#3)";
+                sql = sql.replace("#1", "" + template.getOrder_id());
+                sql = sql.replace("#2", "" + dish.getDish_id());
+                sql = sql.replace("#3", "" + template.getStringList().get(i));
+                stmt = conn.prepareStatement(sql);
+                stmt.executeUpdate();
+
+            }
+
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+
+    }
+    //End method to save template to database
+    
     //method retrieves all orderline items of a particular order
     public static ArrayList<Orderline> retrieveOrderLineList(int vendor_id, int order_id) {
         Connection conn = null;
