@@ -41,8 +41,8 @@ public class UserController extends HttpServlet {
                 if (word == null || word.isEmpty()) {
                     //get the list of suppliers
                     supplierList = retrieveSupplierList();
-                } else {
-                    //filter the supplier based on the string word
+                } else //filter the supplier based on the string word
+                {
                     if (action.equals("searchsupplierbyname")) {
                         supplierList = filterSupplierBasedOnName(word);
                     } else { //searchsupplierbytype
@@ -154,7 +154,7 @@ public class UserController extends HttpServlet {
             if (currentFavSupplier.contains(supplier)) {
                 htmlTable.append("<div class=\"right floated content\"><h3>Favorited</h3></div>");
             } else {
-               // htmlTable.append("<td><button class=\"ui inverted red button create-favsupplier-button"+supplier.getSupplier_id()+"\">Favourite this supplier</button></td>");
+                // htmlTable.append("<td><button class=\"ui inverted red button create-favsupplier-button"+supplier.getSupplier_id()+"\">Favourite this supplier</button></td>");
                 htmlTable.append("<div class=\"right floated content\"><button class=\" ui button\"><a href=\"userservlet?vendor_id=" + vendor_id + "&supplier_id=" + supplier.getSupplier_id() + "&action=add\"><i class=\"empty star icon\"></i>Add to Favorites</a></button>");
             }
             htmlTable.append("</div></div></div></a></div>");
@@ -175,15 +175,19 @@ public class UserController extends HttpServlet {
 //        htmlTable.append("<th>Supplier</th>");
 //        htmlTable.append("</tr>");
         for (Ingredient ingredient : ingredientList) {
+            
+            
+            
             htmlTable.append("<div class='item test ingredient'><a><div class='content'>");
             //Need to send in a list with this supplier_id to SupplierSearchProfile
             //Replacement of ingredient name is necessary to settle an ingredient name with a space in between
-            htmlTable.append("<h3><a href=IngredientProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + "&ingredient_name=" + ingredient.getName().replaceAll(" ", "%20") + ">" + ingredient.getName() + "</a></h3>");
-            htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
-            htmlTable.append("" + ingredient.getSubcategory() + "</div>");
-            htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
-            htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
-            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></div>");
+            htmlTable.append("<h2>" + ingredient.getName() + "</a></h2>");
+//            htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
+//            htmlTable.append("" + ingredient.getSubcategory() + "</div>");
+            htmlTable.append("<div><div style=\"color:black\">Supplier: </div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></h3></div>");
+//            htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
+//            htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
+
             htmlTable.append("</div></div></a></div>");
         }
         return htmlTable.toString();

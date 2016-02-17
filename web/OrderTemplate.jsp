@@ -31,7 +31,7 @@
                     <%@ include file="Navbar.jsp" %>
 
                     <p></p>
-                    <h1>Order Template</h1>
+                    <h1 style="color:black">Order Template</h1>
                     <!--Displays an order template-->
                     <%
                         Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");

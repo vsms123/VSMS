@@ -118,8 +118,8 @@
 
                 <div class="ui bottom attached tab segment" id="supplier_type_div" data-tab="second">
                     <h3 style="color:black">Search by Supplier Type</h3>                
-                    
-                     <div class="ui icon input">
+
+                    <div class="ui icon input">
 
 
                         <input type="text" placeholder="Search..." name="searchsupplierbytype" id="searchsupplierbytype" value=""/>
@@ -132,13 +132,13 @@
                 </div>
 
                 <div class="ui bottom attached tab segment" id="ingredient_name_div" data-tab="third">
-                    <h3 style="color:black">Ingredient Name Search</h3>                
+                    <h3 style="color:black">Search Ingredient by Name</h3>                
                     <div class="ui icon input">
-                    
-                    <input type="text" placeholder="Search..." name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
+
+                        <input type="text" placeholder="Search..." name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
                         <i class="circular search link icon"></i>
-                   
-</div>
+
+                    </div>
 
                     <div id="ingredientlist" class="ui middle aligned animated selection divided list">                                
                     </div>
