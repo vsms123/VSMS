@@ -91,7 +91,7 @@
 
                 <div class="menu">
                     <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make an Order</a>
-                    <a href="OrderTemplate.jsp" class="item" style=" font-size: 16px"><i class="large file text icon"></i> Order Templates</a>
+                    <a href="TemplateMain.jsp" class="item" style=" font-size: 16px"><i class="large file text icon"></i> Order Templates</a>
                     <a href="OrderHistory.jsp" class="item" style=" font-size: 16px"><i class="large history icon"></i> Order History</a>
                 </div>
             </div>

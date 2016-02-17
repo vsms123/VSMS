@@ -243,7 +243,6 @@ public class OrderDAO {
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-
     }
     //End method to save template to database
     
