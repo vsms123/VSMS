@@ -381,7 +381,59 @@ public class OrderDAO {
             ConnectionManager.close(conn, stmt, rs);
         }
     }
-   
+ 
+ public static ArrayList<Integer> retrieveSupplierOrders(int suppID){
+     ConnectionManager connManager = new ConnectionManager();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        ArrayList<Integer> suppOrdList = new ArrayList<Integer>();
+        try {
+            //creates connections to database
+            conn = connManager.getConnection();
+            sql = "Select DISTINCT order_id from `orderline` WHERE supplier_id = ##";
+            sql = sql.replace("##", "" + suppID);
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            //Retrieves the orders
+            while (rs.next()) {
+                int order_id = rs.getInt("order_id");
+
+                suppOrdList.add(order_id);
+            }
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            connManager.close(conn, stmt, rs);
+        }
+        return suppOrdList;
+ }
+ 
+ public static void updateOrderStatus(int order_id, String status){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        try{
+            conn = ConnectionManager.getConnection();
+            sql = "UPDATE `order`"+ " SET status = #1"+ " WHERE order_id=#2";
+            sql = sql.replace("#1", "" + "'"+status+"'");
+            sql = sql.replace("#2", "" + order_id);
+            
+            stmt = conn.prepareStatement(sql);
+            stmt.executeUpdate();
+            //When I want to modify the order, I don't want to modify the orderlines. 
+//            ArrayList<Orderline> orderLineList = order.getOrderlines();
+//            updateOrderlines(orderLineList);
+            
+        }catch(SQLException e){
+            handleSQLException(e, sql);
+        }finally{
+            ConnectionManager.close(conn, stmt, rs);
+        }
+    }
 
 //    public static void updateOrderlines(ArrayList<Orderline> orderlines) {
 //        Connection conn = null;
