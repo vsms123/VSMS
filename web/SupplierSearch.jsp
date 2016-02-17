@@ -101,9 +101,15 @@
                 <div class="ui bottom attached tab segment active" id="supplier_name_div" data-tab="first">
 
                     <h3 style="color: black">Search by Supplier Name</h3>
-                    <input type="text" name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
-
                     
+                    
+                    <div class="ui icon input">
+  
+
+                    <input type="text" placeholder="Search..." name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
+                    <i class="circular search link icon"></i>
+
+                    </div>
                     <div id="supplierlistbyname" class="ui middle aligned animated selection divided list">                                
                     </div>
 
