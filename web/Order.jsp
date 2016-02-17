@@ -53,7 +53,9 @@
                         for (Dish dish : dishList) {%>
                         <tr>
                             <td><h2><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></label></h2></td>
-                            <td><input type="number" value=1 name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>"/></td>
+                            <td> <div class="ui input">
+  <input type="number" value=1 placeholder="Search..." name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>">
+</div></td>
                         </tr>
                         <%}%>
                     </table>
