@@ -48,36 +48,39 @@
                 %>
 
                 <h2 class="ui header">
-                    <i class="settings icon"></i>
+                    <img src="resource/pictures/carrot.png" alt="HTML5 Icon" style="width:45px;height:45px;">
+                    
                     <div class="content">
                         Ingredient Profile
                         <div class="sub header">Check this ingredient</div>
                     </div>
                 </h2>
-                <h1><%=ingredient.getName()%></h1>
-                <table>
+                <h1 style="color:black"><%=ingredient.getName()%></h1>
+                <table class="ui very padded large striped  table">
+                    
                     <tr>
-                        <th>Supplier</th>
-                        <td><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></td>
+                        <th><h2>Description</h2></th>
+                        <td><h3><%=ingredient.getDescription()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Supply Unit</th>
-                        <td><%=ingredient.getSupplyUnit()%></td>
+                        <th><h2>Supplier</h2></th>
+                        <td><h3><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Sub Category</th>
-                        <td><%=ingredient.getSubcategory()%></td>
+                        <th><h2>Supply Unit</h2></th>
+                        <td><h3><%=ingredient.getSupplyUnit()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Offered Price</th>
-                        <td><%=ingredient.getOfferedPrice()%></td>
+                        <th><h2>Sub Category</h2></th>
+                        <td><h3><%=ingredient.getSubcategory()%></h3></td>
                     </tr>
                     <tr>
-                        <th>Description</th>
-                        <td><%=ingredient.getDescription()%></td>
+                        <th><h2>Offered Price</h2></th>
+                        <td><h3><%=ingredient.getOfferedPrice()%></h3></td>
                     </tr>
+                    
                 </table>
-                <button><a href="SupplierSearchProfile.jsp?supplier_id=<%=ingredient.getSupplier_id()%>">Go to your Supplier here</a></button>
+                        <button class="ui large orange button"><a style="color:white" href="SupplierSearchProfile.jsp?supplier_id=<%=ingredient.getSupplier_id()%>" >To <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%>'s Page</a></button>
             </div>
         </div>
         <!--JAVASCRIPT-->
