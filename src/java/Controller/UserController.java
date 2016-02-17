@@ -152,12 +152,12 @@ public class UserController extends HttpServlet {
             htmlTable.append("<h2>" + supplier.getSupplier_name() + "</h2></div>");
             htmlTable.append("<div> Type: " + supplier.getSupplier_type() + "");
             if (currentFavSupplier.contains(supplier)) {
-                htmlTable.append("<div class=\"right floated content\">Favorited</div>");
+                htmlTable.append("<div class=\"right floated content\"><h3>Favorited</h3></div>");
             } else {
-//                htmlTable.append("<td><button class=\"ui inverted red button create-favsupplier-button"+supplier.getSupplier_id()+"\">Favourite this supplier</button></td>");
-                htmlTable.append("<h2><a href=\"userservlet?vendor_id=" + vendor_id + "&supplier_id=" + supplier.getSupplier_id() + "&action=add\">Add to Favorites</a></h2>");
+               // htmlTable.append("<td><button class=\"ui inverted red button create-favsupplier-button"+supplier.getSupplier_id()+"\">Favourite this supplier</button></td>");
+                htmlTable.append("<div class=\"right floated content\"><button class=\" ui button\"><a href=\"userservlet?vendor_id=" + vendor_id + "&supplier_id=" + supplier.getSupplier_id() + "&action=add\"><i class=\"empty star icon\"></i>Add to Favorites</a></button>");
             }
-            htmlTable.append("</div></div></a></div>");
+            htmlTable.append("</div></div></div></a></div>");
         }
         return htmlTable.toString();
     }
