@@ -1,4 +1,3 @@
-
 <%@page import="Model.Vendor"%>
 <%@page import="Controller.UserController"%>
 <%@page import="Model.Supplier"%>
@@ -27,22 +26,22 @@
         %>
 
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
             <%
                 for (Supplier supplier : favSupplierList) {
                     int supplier_id = supplier.getSupplier_id();
             %>
 
                 //CREATE DELETE CLICK OF BUTTONS
-                $(".delete-favsupplier-button<%=supplier_id%>").click(function() {
+                $(".delete-favsupplier-button<%=supplier_id%>").click(function () {
 
                     console.log("My name is delete-favsupplier-button<%=supplier_id%>");
                     //show modal button
                     $('#deletemodaldiv<%=supplier_id%>').modal('show');
                 });
             <%}%>
-            
-            $('.test.supplier').popup({
+
+                $('.test.supplier').popup({
                     position: 'top left'
                 });
             });
@@ -57,13 +56,7 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
 
-                <h1>Your Favorite Suppliers</h1>
-                
-                
-                
-                        
-                    
-                
+                <h1 style="color:black">Your Favorite Suppliers</h1>
                 <div class="ui middle aligned animated selection divided list">
                     <%for (Supplier supplier : favSupplierList) {%>
 
@@ -74,21 +67,15 @@
                         <a href="SupplierSearchProfile.jsp?supplier_id=<%=supplier.getSupplier_id()%>" >
                             <div class="content">
                                 <h2><%=supplier.getSupplier_name()%></h2>
-                                
-                                <td></td>
                             </div>
                             <div class='description' style='color:black'>
+                                
                                 <%=supplier.getSupplier_description()%> <br/>
-                                <%=supplier.getEmail()%>
+                                Email: <%=supplier.getEmail()%>
                             </div>
                         </a>
-                        
-                        
                     </div>
-                            
-                    <%
-                        }
-                    %>
+                    <%}%>
                 </div>
                 <br/>
 
