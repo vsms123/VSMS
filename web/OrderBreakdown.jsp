@@ -4,6 +4,8 @@
     Author     : Benjamin
 --%>
 
+<%@page import="Controller.UserController"%>
+<%@page import="Model.Vendor"%>
 <%@page import="Controller.UtilityController"%>
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Dish"%>
@@ -21,6 +23,10 @@
         <script src="js/formvalidation.js"></script>
         <!--OrderBreakdown.jsp will receive vendor_id:, action: confirm and the list of dishid with their values-->
         <%
+            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
             String vendor_idStr = request.getParameter("vendor_id");
             String action = request.getParameter("action");
             ArrayList<Dish> dishList = IngredientController.getDish(vendor_idStr);

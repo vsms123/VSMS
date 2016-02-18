@@ -1,4 +1,4 @@
-
+<!--NOT USED, for Ingredient searches specialized-->
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Ingredient"%>
 <%@page import="Model.Vendor"%>

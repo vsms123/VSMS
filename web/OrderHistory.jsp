@@ -1,3 +1,4 @@
+<%@page import="Model.Vendor"%>
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Orderline"%>
 <%@page import="Controller.UserController"%>
@@ -9,6 +10,12 @@
 <html>
     <head>
         <meta charset="utf-8" />
+        <%
+            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
+        %>
         <title>Order History</title>
 
         <!--CSS-->
@@ -24,9 +31,9 @@
             ArrayList<Order> orderList = OrderController.retrieveOrderList(1);
         %>
 
-        
+
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('.secondary.menu .item').tab();
 
                 $('.test.order').popup({
@@ -39,7 +46,7 @@
                 for (Order orderModal : orderList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
-                $(".test.order.<%=orderModal.getOrder_id()%>").click(function () {
+                $(".test.order.<%=orderModal.getOrder_id()%>").click(function() {
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>').modal('show');
                 });
@@ -47,7 +54,7 @@
             <%}%>
             });
         </script>
-        
+
 
     </head>
     <body class="background">
@@ -58,7 +65,7 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-               
+
 
                 <h1 style="color: black">Order History List</h1>
 
@@ -94,10 +101,10 @@
                                 <thead>
                                     <tr>
                                         <th><div class="ui ribbon label">No. </div></th>
-                                        <th>Name</th>
-                                        <th>Unit</th>
-                                        <th>Price</th>
-                                    </tr>
+                                <th>Name</th>
+                                <th>Unit</th>
+                                <th>Price</th>
+                                </tr>
                                 </thead>
                                 <%
                                     int count = 0;
@@ -109,7 +116,7 @@
 
                                     <td><div class="ui ribbon label"><%=count%> </div>&nbsp;</td>
                                     <td><%=orderLine.getIngredient_name()%> &nbsp;</td>
-                                    
+
                                     <!--units to be edited-->
                                     <%--<%=IngredientController.getIngredient(Integer.toString(orderLine.getSupplier_id()), orderLine.getIngredient_name()).getSupplyUnit()%>--%>
                                     <td><%=orderLine.getQuantity()%> &nbsp;</td>
@@ -254,26 +261,26 @@
                         %>
 
                     </div>
-                        <!--End of pagination-->
+                    <!--End of pagination-->
                 </div>
 
 
 
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <!--Start of section for completed orders-->
                 <div class="ui tab segment" data-tab="second">
 
@@ -287,13 +294,13 @@
                         }
 
                     %>
-                    
-                    
-                  
-                        
-                        
-                      <!--printing first 10 completed orders-->  
-                    
+
+
+
+
+
+                    <!--printing first 10 completed orders-->  
+
                     <div class="ui active tab middle aligned animated selection divided list" data-tab="201">
 
 
@@ -325,12 +332,12 @@
 
                     </div>
                     <!--end of printing first 10 completed orders-->  
-                    
-                    
-                    
-                    
-                    
-                      <!--Printing the beyond the 10th completed order-->
+
+
+
+
+
+                    <!--Printing the beyond the 10th completed order-->
                     <%
                         for (int j = 2; j <= completedPageNo; j++) {
                     %>
@@ -366,12 +373,12 @@
                     </div>
 
                     <%}%>
-                    
+
                     <!--end of Printing the beyond the 10th completed order-->
-                    
-                    
-                    
-                      
+
+
+
+
                     <!--Start of pagination-->
                     <div>
                         <%
@@ -393,47 +400,47 @@
                         %>
 
                     </div>
-                        
-                      <!--End of pagination-->  
+
+                    <!--End of pagination-->  
 
                 </div>
 
 
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <!--Start of Rejected Orders section-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!--Start of Rejected Orders section-->
 
                 <div class="ui tab segment" data-tab="third">
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
                     <%
                         int rejectedList = rejectedOrders.size();
                         int rejectedPageNo = rejectedList / 10;
@@ -444,13 +451,13 @@
                         }
 
                     %>
-                    
-                    
-                  
-                        
-                        
-                      <!--printing first 10 completed orders-->  
-                    
+
+
+
+
+
+                    <!--printing first 10 completed orders-->  
+
                     <div class="ui active tab middle aligned animated selection divided list" data-tab="301">
 
 
@@ -482,12 +489,12 @@
 
                     </div>
                     <!--end of printing first 10 completed orders-->  
-                    
-                    
-                    
-                    
-                    
-                      <!--Printing the beyond the 10th completed order-->
+
+
+
+
+
+                    <!--Printing the beyond the 10th completed order-->
                     <%
                         for (int j = 2; j <= rejectedPageNo; j++) {
                     %>
@@ -523,12 +530,12 @@
                     </div>
 
                     <%}%>
-                    
+
                     <!--end of Printing the beyond the 10th completed order-->
-                    
-                    
-                    
-                      
+
+
+
+
                     <!--Start of pagination-->
                     <div>
                         <%
@@ -550,8 +557,8 @@
                         %>
 
                     </div>
-                        
-                      <!--End of pagination-->  
+
+                    <!--End of pagination-->  
                 </div>
 
 

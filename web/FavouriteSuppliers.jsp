@@ -100,7 +100,7 @@
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="supplier_id" value="<%=supplier.getSupplier_id()%>">
-                            <input type="hidden" name="vendor_id" value="1">
+                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="delete">
 
                             <input type="submit" value="Delete" class="ui teal button" /> 

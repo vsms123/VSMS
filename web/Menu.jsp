@@ -4,6 +4,8 @@
     Author     : Benjamin
 --%>
 
+<%@page import="Controller.UserController"%>
+<%@page import="Model.Vendor"%>
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Dish"%>
 <%@page import="java.util.ArrayList"%>
@@ -12,6 +14,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+         <%
+                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                    if (currentVendor == null) {
+                        currentVendor = UserController.retrieveVendorByID(1);
+                    }
+        %>
         <title>Menu</title>
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--Form VALIDATION-->
@@ -116,7 +124,7 @@
                             <textarea id="dish_description" name="dish_description"></textarea>
 
                             <!--Input hidden attributes-->
-                            <input type="hidden" name="vendor_id" value="1">
+                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="add">
                             <input type="submit" value="Add" class="ui teal button" /> 
                         </form>
@@ -150,7 +158,7 @@
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
-                            <input type="hidden" name="vendor_id" value="1">
+                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="edit">
 
                             <input type="submit" value="Edit" class="ui teal button" /> 
@@ -186,7 +194,7 @@
                             <input type="hidden" name="dish_name" value="<%=dish.getDish_name()%>">
                             <input type="hidden" name="dish_description" value="<%=dish.getDish_description()%>">
                             <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
-                            <input type="hidden" name="vendor_id" value="1">
+                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="delete">
 
                             <input type="submit" value="Delete" class="ui teal button" /> 

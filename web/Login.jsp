@@ -19,7 +19,7 @@
         <script src="js/formvalidation.js"></script>
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/login.css">
-        <title>JSP Page</title>
+        <title>Login</title>
     </head>
     <body class="background">
 

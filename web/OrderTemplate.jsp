@@ -15,6 +15,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Order Template</title>
     </head>
@@ -33,14 +39,6 @@
                     <p></p>
                     <h1 style="color:black">Order Template</h1>
                     <!--Displays an order template-->
-                    <%
-                        Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
-                        //in case current vendor does not exist
-                        if (currentVendor == null) {
-                            currentVendor = UserController.retrieveVendorByID(1);
-                        }
-
-                    %>
                     <form action="OrderBreakdown.jsp" method="get">
                         <table  class="ui padded large striped  table">
                             <tr><th><h2>Dish Name</h2></th><th><h2>Dish Quantity</h2></th></tr>
@@ -68,7 +66,7 @@
                                 }
                             %>
                         </table>
-                        <input type="hidden" name="vendor_id" value="1"/>
+                        <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"/>
                         <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Place Order</button>
                     </form>  
                     <%

@@ -14,6 +14,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <title>Vendor Profile</title>
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--Form VALIDATION-->
@@ -48,9 +49,9 @@
 
 
                 <%
-                    Vendor vendor = (Vendor) session.getAttribute("vendor");
-                    if (vendor == null) {
-                        vendor = UserController.retrieveVendorByID(1);
+                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                    if (currentVendor == null) {
+                        currentVendor = UserController.retrieveVendorByID(1);
                     }
                 %>
                 <h2 class="ui header">
@@ -60,26 +61,26 @@
                         <div class="sub header">Manage Your Profile</div>
                     </div>
                 </h2>
-                <h1 style="color:black"><%=vendor.getVendor_name()%></h1>
+                <h1 style="color:black"><%=currentVendor.getVendor_name()%></h1>
 
 
 
                 <table class="ui very padded large striped  table">
                     <tr>
                         <th><h2>Email</h2></th>
-                    <td><h3><%=vendor.getEmail()%></h3></td>
+                    <td><h3><%=currentVendor.getEmail()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Address</h2></th>
-                    <td><h3><%=vendor.getAddress()%></h3></td>
+                    <td><h3><%=currentVendor.getAddress()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Telephone Number</h2></th>
-                    <td><h3><%="(" + vendor.getArea_code() + ")" + vendor.getTelephone_number()%></h3></td>
+                    <td><h3><%="(" + currentVendor.getArea_code() + ")" + currentVendor.getTelephone_number()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Description</h2></th>
-                    <td><h3><%=vendor.getVendor_description()%></h3></td>
+                    <td><h3><%=currentVendor.getVendor_description()%></h3></td>
                     </tr>
                 </table>
 
@@ -99,20 +100,20 @@
                         <form id="editProfile" class="editProfile ui form" action="userservlet" method="post"> 
                             <!--Inputting form elements-->
                             <label for="email">Email:</label> 
-                            <input id="email" value="<%=vendor.getEmail()%>" type="text" name="email">
+                            <input id="email" value="<%=currentVendor.getEmail()%>" type="text" name="email">
 
                             <label for="area_code">Area Code / Telephone Number:</label> 
-                            <input id="area_code" value="<%=vendor.getArea_code()%>" type="text" name="area_code">
-                            <input id="telephone_number" value="<%=vendor.getTelephone_number()%>" type="text" name="telephone_number">
+                            <input id="area_code" value="<%=currentVendor.getArea_code()%>" type="text" name="area_code">
+                            <input id="telephone_number" value="<%=currentVendor.getTelephone_number()%>" type="text" name="telephone_number">
 
                             <label for ="address">Address:</label> 
-                            <textarea id="address" name="address"><%=vendor.getAddress()%></textarea>
+                            <textarea id="address" name="address"><%=currentVendor.getAddress()%></textarea>
 
                             <label for ="vendor_description">Vendor Description:</label> 
-                            <textarea id="vendor_description" name="vendor_description"><%=vendor.getVendor_description()%></textarea>
+                            <textarea id="vendor_description" name="vendor_description"><%=currentVendor.getVendor_description()%></textarea>
 
                             <!--Input hidden attributes-->
-                            <input type="hidden" name="vendor_id" value="1">
+                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="editprofile">
 
                             <input type="submit" value="Edit Profile" class="ui teal button" />
@@ -144,7 +145,7 @@
                             <input id="new2_password" type="text" name="new2_password">
 
                             <!--Input hidden attributes-->
-                            <input type="hidden" name="vendor_id" value="1">
+                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="editpassword">
 
                             <input type="submit" value="Edit password" class="ui teal button" /> 

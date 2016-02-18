@@ -13,6 +13,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            //in case current vendor does not exist
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -20,7 +27,7 @@
         <title>Order Template Main</title>
         <script>
 
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('.test.template').popup({
                     position: 'top left'
                 });
@@ -42,7 +49,6 @@
 
                     <h1 style="color:black">Order Templates</h1><br/>
                     <%
-                        Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
                         //in case current vendor does not exist
                         if (currentVendor == null) {
                             currentVendor = UserController.retrieveVendorByID(1);

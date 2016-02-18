@@ -8,6 +8,7 @@
 
 <html>
     <head>
+        
         <title>Supplier Search</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
@@ -39,31 +40,31 @@
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyname
                 $('.menu .item').tab();
 
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function (responseText) {
+                $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function (responseText) {
                     $("#supplierlistbyname").html(responseText);
                 });
                 $("#searchsupplierbyname").keyup(function () {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function (responseText) {
+                    $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchsupplierbyname", word: $('#searchsupplierbyname').val()}, function (responseText) {
                         $("#supplierlistbyname").html(responseText);
                     });
                 });
 
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbytype
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function (responseText) {
+                $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function (responseText) {
                     $("#supplierlistbytype").html(responseText);
                 });
                 $("#searchsupplierbytype").keyup(function () {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function (responseText) {
+                    $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchsupplierbytype", word: $('#searchsupplierbytype').val()}, function (responseText) {
                         $("#supplierlistbytype").html(responseText);
                     });
                 });
 
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyingredient
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function (responseText) {
+                $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function (responseText) {
                     $("#ingredientlist").html(responseText);
                 });
                 $("#searchingredient").keyup(function () {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function (responseText) {
+                    $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchingredient", word: $('#searchingredient').val()}, function (responseText) {
                         $("#ingredientlist").html(responseText);
                     });
                 });

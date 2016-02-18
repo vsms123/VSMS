@@ -1,4 +1,6 @@
 
+<%@page import="Controller.UserController"%>
+<%@page import="Model.Vendor"%>
 <%@page import="Controller.UtilityController"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Ingredient"%>
@@ -11,6 +13,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
+        %>
         <title>Recipe Builder</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -29,11 +37,11 @@
         <script>
             $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyingredient
-                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
+                $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
                     $("#ingredientlist").html(responseText);
                 });
                 $("#searchingredient").keyup(function() {
-                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
+                    $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
                         $("#ingredientlist").html(responseText);
                     });
                 });
@@ -145,7 +153,7 @@
 
                 <!--Input hidden attributes (need to input dish_id,vendor_id,supplier_id)-->
 
-                <input type="hidden" name="vendor_id" value="1">
+                <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                 <input type="hidden" name="dish_id" value="<%=request.getParameter("dish_id")%>">
 
                 <!--To open Search ingredient modal-->
@@ -203,7 +211,7 @@
                             <input type="hidden" name="name" value="<%=ingredient.getName()%>">
                             <input type="hidden" name="supplier_id" value="<%=ingredient.getSupplier_id()%>">
                             <input type="hidden" name="dish_id" value="<%=dish_idStr%>">
-                            <input type="hidden" name="vendor_id" value="1">
+                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="delete">
 
                             <input type="submit" value="Delete" class="ui teal button" /> 

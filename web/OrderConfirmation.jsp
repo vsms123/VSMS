@@ -1,3 +1,6 @@
+<!-- ****************************************************************** -->
+<!--THIS IS ACCESSED BY THE SUPPLIER/ NO SESSION IS NECESSARY-->
+<!-- ****************************************************************** -->
 <%@page import="Model.Order"%>
 <%@page import="Controller.OrderController"%>
 <%@page import="Controller.UtilityController"%>

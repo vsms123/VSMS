@@ -4,6 +4,9 @@
     Author     : Benjamin
 --%>
 
+<%@page import="Controller.UtilityController"%>
+<%@page import="Controller.UserController"%>
+<%@page import="Model.Vendor"%>
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Dish"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,12 +24,15 @@
         <script src="js/formvalidation.js"></script>
 
         <%
-            String vendor_idStr = "1";
-            ArrayList<Dish> dishList = IngredientController.getDish(vendor_idStr);
+            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
+            ArrayList<Dish> dishList = IngredientController.getDish(UtilityController.convertIntToString(currentVendor.getVendor_id()));
         %>
         <script>
             $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
-
+            
             }
         </script>
 
@@ -49,32 +55,32 @@
 
 
 
-                   <table  class="ui padded large striped  table">
-                       <tr>
-                           <th><h2>Dish</h2></th><th><h2>Quantity</h2></th>
-                       </tr>
-                        <%
+                    <table  class="ui padded large striped  table">
+                        <tr>
+                            <th><h2>Dish</h2></th><th><h2>Quantity</h2></th>
+                        </tr>
+                        <%                    
                             for (Dish dish : dishList) {
                         %>
                         <tr>
-                           
+
                             <td><h3><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></h3></td>
                             <td> <div class="ui input">
                                     <input type="number" value=1 placeholder="quantity.." name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>">&nbsp;
                                 </div>
                             </td>
-                            
+
 
                         </tr>
                         <%}%>
                         <!--Input hidden attributes-->
-                        </table>
-                        <input type="hidden" name="vendor_id" value="1"/>
-                        <br/>
+                    </table>
+                    <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"/>
+                    <br/>
 
-                        <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Check Order Breakdown </button>
+                    <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Check Order Breakdown </button>
 
-                 
+
                 </form>
 
             </div>

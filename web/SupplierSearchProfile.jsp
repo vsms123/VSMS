@@ -4,6 +4,7 @@
     Author     : Benjamin
 --%>
 
+<%@page import="Model.Ingredient"%>
 <%@page import="Controller.UtilityController"%>
 <%@page import="Model.Supplier"%>
 <%@page import="Controller.UserController"%>
@@ -47,7 +48,7 @@
                 <%@ include file="Navbar.jsp" %>
 
                 <%
-                    Vendor vendor = (Vendor) session.getAttribute("vendor");
+                    Vendor vendor = (Vendor) session.getAttribute("currentVendor");
                     if (vendor == null) {
                         vendor = UserController.retrieveVendorByID(1);
                     }
@@ -63,29 +64,29 @@
                         <div class="sub header">View Supplier Profile</div>
                     </div>
                 </h2>
-                        
-                        
-              
-                
+
+
+
+
                 <h1 style="color:black"><%=supplier.getSupplier_name()%></h1>
                 <table class="ui very padded large striped  table">
                     <tr>
                         <th><h2>Description</h2></th>
-                        <td><h3><%=supplier.getSupplier_description()%></h3></td>
+                    <td><h3><%=supplier.getSupplier_description()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Email</h2></th>
-                        <td><h3><%=supplier.getEmail()%></h3></td>
+                    <td><h3><%=supplier.getEmail()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Address</h2></th>
-                        <td><h3><%=supplier.getAddress()%></h3></td>
+                    <td><h3><%=supplier.getAddress()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Telephone Number</h2></th>
-                        <td><h3><%="(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()%></h3></td>
+                    <td><h3><%="(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()%></h3></td>
                     </tr>
-                    
+
                 </table>
                 <%
                     ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(vendor.getVendor_id());
@@ -99,8 +100,20 @@
                     }
                 %>
 
-
-
+                <!--Table to show the ingredient list-->
+                <table>
+                    <tr>
+                        <th>Ingredient Name</th>
+                    </tr>
+                    <%
+                        ArrayList<Ingredient> ingredientList = IngredientController.getIngredientBySupplier(supplier_id);
+                        for (Ingredient ingredient : ingredientList) {
+                    %>
+                    <tr>
+                        <td><a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>"><%=ingredient.getName()%></a></td>
+                    </tr>
+                    <%}%>
+                </table>
                 <!--Create a modal for favorite the supplier-->
                 <div id="favoritesupppliermodal" class="ui small modal">
                     <i class="close icon"></i>

@@ -4,6 +4,9 @@
     Author     : Benjamin
 --%>
 
+<%@page import="Controller.UtilityController"%>
+<%@page import="Controller.UserController"%>
+<%@page import="Model.Vendor"%>
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Dish"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,8 +24,13 @@
         <script src="js/formvalidation.js"></script>
 
         <%
-            String vendor_idStr = "1";
-            ArrayList<Dish> dishList = IngredientController.getDish(vendor_idStr);
+            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            //in case current vendor does not exist
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
+            
+            ArrayList<Dish> dishList = IngredientController.getDish(UtilityController.convertIntToString(currentVendor.getVendor_id()));
         %>
         <script>
             $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
@@ -72,7 +80,7 @@
                         <%}%>
                     </table>
                     <!--Input hidden attributes-->
-                    <input type="hidden" name="vendor_id" value="1"/>
+                    <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"/>
                     <br/>
 
                     <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Check Order Breakdown </button>

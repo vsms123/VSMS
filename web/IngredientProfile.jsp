@@ -37,9 +37,9 @@
 
 
                 <%
-                    Vendor vendor = (Vendor) session.getAttribute("vendor");
-                    if (vendor == null) {
-                        vendor = UserController.retrieveVendorByID(1);
+                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                    if (currentVendor == null) {
+                        currentVendor = UserController.retrieveVendorByID(1);
                     }
                     //this will get the ingredient name and supplier as the unique identifier of Ingredient
                     String supplierIdStr = request.getParameter("supplier_id");
