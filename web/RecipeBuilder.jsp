@@ -24,25 +24,38 @@
             String dish_idStr = request.getParameter("dish_id");
             HashMap<Ingredient, ArrayList<String>> ingredientList = IngredientController.getIngredientQuantity(dish_idStr);
             Iterator iter = ingredientList.keySet().iterator();
-
+            String valueSent = "";
         %>
         <script>
             $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
-                $.get("ingredientservlet", {dish_id: "<%=request.getParameter("dish_id")%>"}, function(responseText) {
-                    $("#ingredientListAdded").append(responseText);
+                //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyingredient
+                $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
+                    $("#ingredientlist").html(responseText);
                 });
-                $('.create-ingredient-button').click(function() {
-                    //Change the url
-                    window.location = "IngredientSearch.jsp?dish_id=<%=dish_idStr%>";
+                $("#searchingredient").keyup(function() {
+                    $.get("userservlet", {vendor_id: "1", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
+                        $("#ingredientlist").html(responseText);
+                    });
                 });
+                //To show up the modal with the list of ingredients
+                $("#create-ingredient-button").click(function() {
+                    console.log("My name is create ingredient button");
+                    //show modal button
+                    $("#create-ingredient-modal").modal('show');
+                });
+
+
+
+
             <% while (iter.hasNext()) {
                     Ingredient ingredient = (Ingredient) iter.next();
                     int supplier_id = ingredient.getSupplier_id();
                     String name = ingredient.getName();
-                    String identification = supplier_id + "-" + name;
+                    String identification = supplier_id + name;
                     identification = identification.replace(" ", "_");
                     ArrayList<String> stringArray = ingredientList.get(ingredient);
-
+                    //Value sent gets all the naming and values from the inputs of the dishes quantity
+                    valueSent += ",quantity" + identification + ":$('#quantity" + identification + "').val()";
             %>
                 $(".delete-ingredient-button<%=identification%>").click(function() {
 
@@ -51,12 +64,35 @@
                     $('#deletemodaldiv<%=identification%>').modal('show');
                 });
             <%}
-                //Refreshing iterator for later use
-                iter = ingredientList.keySet().iterator();
             %>
+                //To confirm the creation of ingredients
+                $("#confirm-dish").click(function() {
+                    $.ajaxSetup({async: false});
+                    $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", action: "confirmIngredientQuantity"<%=valueSent%>}, function(responseText) {});
+                });
             });
 
+            $(document).ajaxComplete(function() {
+            <%  ArrayList<Ingredient> allIngredientList = IngredientController.getIngredientList();
+                for (Ingredient ingredient : allIngredientList) {
+                    int supplier_id = ingredient.getSupplier_id();
+                    String name = ingredient.getName();
+                    String identification = supplier_id + name;
+                    identification = identification.replace(" ", "_");
+            %>
+                $("#add-ingredient-modal-button<%=identification%>").click(function() {
+                    $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", ingredient_name: "<%=name%>", supplier_id: "<%=supplier_id%>", action: "addIngredient", quantity: 1}, function(responseText) {
+                    });
+                    //Reload the browser and exit modal
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                });
+            <%}
+                iter = ingredientList.keySet().iterator();
+            %>
 
+            });
         </script>
         <!--CSS-->
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
@@ -72,72 +108,67 @@
                 <%@ include file="Navbar.jsp" %>
 
                 <h1><%=IngredientController.getDishByID(UtilityController.convertStringtoInt(dish_idStr)).getDish_name()%></h1>
+
                 <table>
                     <% while (iter.hasNext()) {
                             Ingredient ingredient = (Ingredient) iter.next();
                             int supplier_id = ingredient.getSupplier_id();
                             String name = ingredient.getName();
-                            String identification = supplier_id + "-" + name;
+                            String identification = supplier_id + name;
                             identification = identification.replace(" ", "_");
                             ArrayList<String> stringArray = ingredientList.get(ingredient);
 
                     %>
                     <tr>
                         <td><%=ingredient%></td>
-                        <td><%=stringArray%></td>
+                        <!--User inputs attributes-->
+                        <td><input type="number" name="quantity<%=identification%>" id="quantity<%=identification%>" value="<%=stringArray.get(0)%>"></td>
+                        <td><%=stringArray.get(1)%></td>
                         <td><button class="ui red inverted button delete-ingredient-button<%=identification%>"> <i class="remove icon"></i>Delete Ingredient</button></td>
                     </tr>
                     <% }//Refreshing iter for later use               
                         iter = ingredientList.keySet().iterator();
                     %>
                 </table>
-                <button type="submit" name="submit" class="ui teal button create-ingredient-button">Add Ingredient</button>
-                <!--                MODAL DIV // THIS WILL BE ONLY USEFUL IF INGREDIENTS ARE CREATED FROM THE START. Good for Supplier View for Development
-                               
-                                <div id="modaldiv" class="ui small modal">
-                                    <i class="close icon"></i>
-                                    <div class="header">
-                                        Add Ingredients
-                                    </div>
-                                    <div class="content">
-                                        <form id="addIngredient" class="ui form" action="ingredientservlet" method="get"> 
-                                            User inputs attributes
-                                            <label for="name">Ingredient Name :</label>
-                                            <input id="name" type="text" name="name"/>
-                                            <label for="subcategory">Sub category: </label>
-                                            <input id="subcategory" type="text" name="subcategory" />
-                                            <label for="quantity">Quantity:</label>
-                                            <input id="quantity" type="number" name="quantity" />
-                                            <label for="supplyUnit">Unit (g,kg,etc): </label>
-                                            <input id="supplyUnit" type="text" name="supplyUnit" />
-                                            <label for="description">Description: </label>
-                                            <input id="description" type="text" name="description" />
-                                            <label for="offeredPrice">Price offered: </label>
-                                            <input id="offeredPrice" type="text" name="offeredPrice" />
-                
-                                            Input hidden attributes
-                                            <input type="hidden" name="supplier_id" value="1"/> 
-                                            <input type="hidden" name="vendor_id" value="1">
-                                            <input type="hidden" name="dish_id" value="<%=request.getParameter("dish_id")%>">
-                
-                                            <input type="submit" value="Add" class="ui teal button" /> 
-                                        </form>
-                                    </div>
-                                    <div class="actions">
-                                        <div class="ui positive right labeled icon button">
-                                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
-                                            <i class="checkmark icon"></i>
-                                        </div>
-                                    </div>
-                                </div
-                -->
+
+                <!--Input hidden attributes (need to input dish_id,vendor_id,supplier_id)-->
+
+                <input type="hidden" name="vendor_id" value="1">
+                <input type="hidden" name="dish_id" value="<%=request.getParameter("dish_id")%>">
+
+                <!--To open Search ingredient modal-->
+                <button name="submit" class="ui teal button" id="create-ingredient-button">Add Ingredient</button>
+                <!--To settle the quantities of all lines-->
+                <button type="submit" name="submit" class="ui teal button" id="confirm-dish">Confirm Dish</button>
+
+
+                <!--MODAL DIV //This will be used to put the filtering process -->
+
+                <div id="create-ingredient-modal" class="ui small modal">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Add Ingredients
+                    </div>
+                    <div class="content">
+                        Ingredient Name : <input type="text" name="searchingredient" id="searchingredient" value=""/>
+                        <table id="ingredientlist" class="ui single line table">                                
+                        </table>
+                    </div>
+                    <div class="actions">
+                        <div class="ui positive right labeled icon button">
+                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
+                            <i class="checkmark icon"></i>
+                        </div>
+                    </div>
+                </div
+
 
                 <!--Create many modals for each ingredient to be deleted-->
                 <% while (iter.hasNext()) {
                         Ingredient ingredient = (Ingredient) iter.next();
                         int supplier_id = ingredient.getSupplier_id();
                         String name = ingredient.getName();
-                        String identification = supplier_id + "-" + name;
+                        String identification = supplier_id + name;
                         identification = identification.replace(" ", "_");
                         ArrayList<String> stringArray = ingredientList.get(ingredient);
 

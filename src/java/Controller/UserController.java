@@ -207,7 +207,7 @@ public class UserController extends HttpServlet {
             htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
             htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></div>");
             htmlTable.append("</div></div></a></div>");
-            htmlTable.append("<button id=\"add-ingredient-modal-button" + ingredient.getSupplier_id() + ingredient.getName().replaceAll("\\s+", "") + "\">Add This Ingredient</button>");
+            htmlTable.append("<button id=\"add-ingredient-modal-button" + ingredient.getSupplier_id() +ingredient.getName().replaceAll("\\s+", "_") + "\">Add This Ingredient</button>");
         }
         return htmlTable.toString();
     }

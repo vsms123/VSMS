@@ -95,6 +95,9 @@ public class IngredientController extends HttpServlet {
 
         //Ingredient Creation Process
         String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
 
         //Open out this code if you would like to test out request parameters
         System.out.println("It reaches here: " + dish_idStr + "," + supplier_idStr + "," + name + "," + supplyUnit + "," + subcategory + "," + description + "," + offeredPrice + "," + quantityStr + "," + supplyUnit + "," + vendor_idStr);
@@ -148,7 +151,6 @@ public class IngredientController extends HttpServlet {
             String supplier_id = request.getParameter("supplier_id");
             String ingredient_name = request.getParameter("ingredient_name");
             String quantityString = request.getParameter("quantity");
-            String quantity_unit = request.getParameter("quantity_unit");
 
             //change dish_idStr and quantityString into integer variable
             int dish_id = UtilityController.convertStringtoInt(dish_idStr);
@@ -160,7 +162,7 @@ public class IngredientController extends HttpServlet {
             // ---- Creating ingredientQuantity based on user inputs ----- // 
             ArrayList<String> ingredientQuantity = new ArrayList<String>();
             ingredientQuantity.add(quantityString);
-            ingredientQuantity.add(quantity_unit);
+            ingredientQuantity.add(ingredient.getSupplyUnit());
 
             // ----  adding the ingredientQuantity and put new dish ---- // 
             dish.getIngredientQuantity().put(ingredient, ingredientQuantity);
@@ -169,7 +171,33 @@ public class IngredientController extends HttpServlet {
             updateDish(dish);
 
             response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_id);
+        } else if (action.equals("confirmIngredientQuantity")) {
 
+            //Will receive Ingredient supplier id, ingredient name, quantity, quantity unit 
+
+            //change dish_idStr and quantityString into integer variable
+            int dish_id = UtilityController.convertStringtoInt(dish_idStr);
+            Dish dish = IngredientController.getDishByID(dish_id);
+            HashMap<Ingredient, ArrayList<String>> ingredientMap = dish.getIngredientQuantity();
+
+            //Iterate through the map
+            Iterator iter = ingredientMap.keySet().iterator();
+            while (iter.hasNext()) {
+                Ingredient ingredient = (Ingredient) iter.next();
+                // ---- Creating ingredientQuantity based on user inputs ----- // 
+                ArrayList<String> ingredientQuantity = new ArrayList<String>();
+                String requestStr= "quantity"+ingredient.getSupplier_id()+ingredient.getName().replace(" ", "_");
+                ingredientQuantity.add(request.getParameter(requestStr));
+                ingredientQuantity.add(ingredient.getSupplyUnit());
+
+                // ----  adding the ingredientQuantity and put new dish ---- // 
+                dish.getIngredientQuantity().put(ingredient, ingredientQuantity);
+            }
+
+            // --- use this dish to populate IngredientQuantity Table ---- //
+            updateDish(dish);
+
+            response.sendRedirect("RecipeBuilder.jsp?dish_id=" + dish_id);
         }
     }
 
