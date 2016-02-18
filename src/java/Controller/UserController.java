@@ -80,7 +80,7 @@ public class UserController extends HttpServlet {
                     ingredientList = IngredientController.getIngredientByName(word);
                 }
                 //put them into a html table string
-                filteredSearchString = retrieveIngredientHTMLTableToAdd(ingredientList);
+                filteredSearchString = retrieveIngredientHTMLTableToAdd(ingredientList, IngredientController.getIngredientListByVendor(vendor_id));
                 //put them into scripts for the buttons
             } else { //create
                 saveAsFavouriteSupplier(vendor_id, supplier_id);
@@ -135,6 +135,7 @@ public class UserController extends HttpServlet {
         }
     }
 
+
     public String retrieveSupplierHTMLTable(int vendor_id, ArrayList<Supplier> supplierList, ArrayList<Supplier> currentFavSupplier) {
         StringBuffer htmlTable = new StringBuffer("");
 
@@ -175,9 +176,7 @@ public class UserController extends HttpServlet {
 //        htmlTable.append("<th>Supplier</th>");
 //        htmlTable.append("</tr>");
         for (Ingredient ingredient : ingredientList) {
-            
-            
-            
+
             htmlTable.append("<div class='item test ingredient'><a><div class='content'>");
             //Need to send in a list with this supplier_id to SupplierSearchProfile
             //Replacement of ingredient name is necessary to settle an ingredient name with a space in between
@@ -194,7 +193,7 @@ public class UserController extends HttpServlet {
     }
 
     //This will be used by Ingredient Search for RecipeBuilder
-    public String retrieveIngredientHTMLTableToAdd(ArrayList<Ingredient> ingredientList) {
+    public String retrieveIngredientHTMLTableToAdd(ArrayList<Ingredient> ingredientList, ArrayList<Ingredient> ingredientVendorList) {
         StringBuffer htmlTable = new StringBuffer("");
 
         for (Ingredient ingredient : ingredientList) {
@@ -207,7 +206,11 @@ public class UserController extends HttpServlet {
             htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
             htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></div>");
             htmlTable.append("</div></div></a></div>");
-            htmlTable.append("<button id=\"add-ingredient-modal-button" + ingredient.getSupplier_id() +ingredient.getName().replaceAll("\\s+", "_") + "\">Add This Ingredient</button>");
+            if (!ingredientVendorList.contains(ingredient)) {
+                htmlTable.append("<button id=\"add-ingredient-modal-button" + ingredient.getSupplier_id() + ingredient.getName().replaceAll("\\s+", "_") + "\">Add This Ingredient</button>");
+            } else {
+                htmlTable.append("<font color =\"red\">Already added</font>");
+            }
         }
         return htmlTable.toString();
     }

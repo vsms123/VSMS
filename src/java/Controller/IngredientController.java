@@ -217,6 +217,23 @@ public class IngredientController extends HttpServlet {
         return IngredientDAO.getIngredientByName(ingredient_name);
     }
 
+    
+    public static ArrayList<Ingredient> getIngredientListByVendor(int vendor_id) {
+        ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+        ArrayList<Dish> dishList = IngredientController.getDish(UtilityController.convertIntToString(vendor_id));
+        for(Dish dish : dishList){
+            HashMap<Ingredient,ArrayList<String>> ingredientMap = dish.getIngredientQuantity();
+            Iterator iter = ingredientMap.keySet().iterator();
+            while(iter.hasNext()){
+                Ingredient ingredient = (Ingredient)iter.next();
+                if(!ingredientList.contains(ingredient)){
+                    ingredientList.add(ingredient);
+                }
+            }
+        }
+        return ingredientList;
+    }
+    
     public static Ingredient getIngredient(String supplierId, String ingredientName) {
         return IngredientDAO.getIngredient(supplierId, ingredientName);
     }

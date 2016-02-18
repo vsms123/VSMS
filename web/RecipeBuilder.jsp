@@ -68,7 +68,13 @@
                 //To confirm the creation of ingredients
                 $("#confirm-dish").click(function() {
                     $.ajaxSetup({async: false});
-                    $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", action: "confirmIngredientQuantity"<%=valueSent%>}, function(responseText) {});
+                    $("#loading").show();
+
+                    setTimeout(function() {
+                        $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", action: "confirmIngredientQuantity"<%=valueSent%>}, function(responseText) {
+                            alert("the confirmation is successful")
+                        });
+                    }, 1000);
                 });
             });
 
@@ -92,6 +98,12 @@
                 iter = ingredientList.keySet().iterator();
             %>
 
+            });
+            $(document).ajaxStart(function() {
+                $("#loading").show();
+            });
+            $(document).ajaxStop(function() {
+                $("#loading").hide();
             });
         </script>
         <!--CSS-->
@@ -140,6 +152,8 @@
                 <button name="submit" class="ui teal button" id="create-ingredient-button">Add Ingredient</button>
                 <!--To settle the quantities of all lines-->
                 <button type="submit" name="submit" class="ui teal button" id="confirm-dish">Confirm Dish</button>
+                <!--Shown while ajax is loading-->
+                <p id="loading"><font color="red">Your request is loading...</font></p>
 
 
                 <!--MODAL DIV //This will be used to put the filtering process -->
