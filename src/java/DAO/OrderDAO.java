@@ -246,6 +246,92 @@ public class OrderDAO {
     }
     //End method to save template to database
     
+    //Method to save changes to an order template to database
+    public static void updateTemplate(OrderTemplate template){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+
+        //insert new order into data base
+        try {
+            conn = ConnectionManager.getConnection();
+            sql = "UPDATE `order_template`"+ " SET name = #1"+ " WHERE order_id=#2 && vendor_id=#3";
+            sql = sql.replace("#1", "" + "'"+template.getName()+"'");
+            sql = sql.replace("#2", "" + template.getOrder_id());
+            sql = sql.replace("#3", "" + template.getVendor_id());
+            stmt = conn.prepareStatement(sql);
+            stmt.executeUpdate();
+
+            ArrayList<Dish> dishList = template.getDishList();
+            for (int i=0;i<dishList.size();i++) {
+                Dish dish=dishList.get(i);
+                int quantity=template.getStringList().get(i);
+                if(quantity>0){    
+                    sql = "UPDATE `template_quantity`"+ " SET dish_quantity = #1"+ " WHERE order_id=#2 && dish_id=#3";
+                    sql = sql.replace("#1", "" + quantity);
+                    sql = sql.replace("#2", "" + template.getOrder_id());
+                    sql = sql.replace("#3", "" + dish.getDish_id());
+                    stmt = conn.prepareStatement(sql);
+                    stmt.executeUpdate();
+                }else{
+                    deleteTemplateQuantity(template.getOrder_id(),dish.getDish_id());
+                }
+            }
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+    }
+    //End method to save changes to an order template to database
+    
+    //Start method to delete order templates
+    public static void deleteTemplate(OrderTemplate template){    
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        try {
+            conn = ConnectionManager.getConnection();
+            sql = "Delete from template_quantity where order_id=#1";
+            sql = sql.replace("#1", "" + template.getOrder_id());
+            stmt = conn.prepareStatement(sql);
+            stmt.executeUpdate();
+            sql = "Delete from order_template where order_id=#1 AND vendor_id=#2";
+            sql = sql.replace("#1", "" + template.getOrder_id());
+            sql = sql.replace("#2", "" + template.getVendor_id());
+            stmt = conn.prepareStatement(sql);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+    }
+    //end method to delete order templates
+    
+    //Method to delete a row in template_quantity
+    public static void deleteTemplateQuantity(int order_id, int dish_id){    
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        try {
+            conn = ConnectionManager.getConnection();
+            sql = "Delete from template_quantity where order_id=#1 AND dish_id=#2";
+            sql = sql.replace("#1", "" + order_id);
+            sql = sql.replace("#2", "" + dish_id);
+            stmt = conn.prepareStatement(sql);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+    }
+    //End method to delete row in template_quantity
+    
     //method retrieves all orderline items of a particular order
     public static ArrayList<Orderline> retrieveOrderLineList(int vendor_id, int order_id) {
         Connection conn = null;
