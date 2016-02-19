@@ -161,7 +161,7 @@
 
                 <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                 <input type="hidden" name="dish_id" value="<%=request.getParameter("dish_id")%>">
-<br/>
+                <br/>
                 <!--To open Search ingredient modal-->
                 <button name="submit" class="ui large green button" id="create-ingredient-button"><i class="plus icon"></i>Add Ingredient</button>
                 <!--To settle the quantities of all lines-->
@@ -173,21 +173,19 @@
                 <!--MODAL DIV //This will be used to put the filtering process -->
 
                 <div id="create-ingredient-modal" class="ui small modal">
-                    <i class="close icon"></i>
+
                     <div class="header">
-                        Add Ingredients
+                        <h2>Add Ingredients</h2> 
                     </div>
                     <div class="content">
-                        Ingredient Name : <input type="text" name="searchingredient" id="searchingredient" value=""/>
+                        <h3 style="color:black">Find Ingredient : </h3> <div class="ui input"><input type="text" name="searchingredient" id="searchingredient" value=""/></div>
                         <table id="ingredientlist" class="ui single line table">                                
                         </table>
                     </div>
-                    <div class="actions">
-                        <div class="ui positive right labeled icon button">
-                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
-                            <i class="checkmark icon"></i>
+                    
+                        <div class="actions">
+                            <button class="ui inverted deny orange button">Cancel</button>
                         </div>
-                    </div>
                 </div
 
 
@@ -202,32 +200,34 @@
 
                 %>
                 <div id="deletemodaldiv<%=identification%>" class="ui small modal">
-                    <i class="close icon"></i>
+              
                     <div class="header">
-                        Delete Dish
+                        <h2>Delete Dish</h2>
                     </div>
 
                     <div class="content">
                         <form class="ui form" id="deleteIngredient" action="ingredientservlet" method="get"> 
                             <!--Inserting delete danger message. -->
 
-                            Are you sure you would like to delete the ingredient?
+                            <h3>Are you sure you want to remove this ingredient?</h3>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="name" value="<%=ingredient.getName()%>">
                             <input type="hidden" name="supplier_id" value="<%=ingredient.getSupplier_id()%>">
                             <input type="hidden" name="dish_id" value="<%=dish_idStr%>">
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
-                            <input type="hidden" name="action" value="delete">
+                            
+                        <input type="hidden" name="action" value="delete">
 
-                            <input type="submit" value="Delete" class="ui red button" /> 
-                        </form>
+                            
+                        
                     </div>
                     <div class="actions">
-                        <div class="ui positive right labeled icon button">
-                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
-                            <i class="checkmark icon"></i>
-                        </div>
+                        <input type="submit" value="Delete" class="ui inverted red button" /> 
+                        </form>    
+                            <button class="ui inverted deny orange button">Cancel</button>
+                        
+                           
                     </div>
                 </div>
                 <%}%>
