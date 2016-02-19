@@ -75,6 +75,12 @@
                                 <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
                                 <input type="submit" value="Edit">
                                 </form>
+                                
+                                <form action="DeleteTemplateServlet">
+                                <input type="hidden" value="1" name="vendor_id"> 
+                                <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
+                                <input type="submit" value="Delete">
+                                </form>
                         <%
                             }
                         %>
