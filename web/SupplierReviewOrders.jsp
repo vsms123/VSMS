@@ -28,10 +28,9 @@
 
         <!-- JSP Controller/ Variables Initiation -->
 
-        <%
-            //ArrayList<Order> orderList = OrderController.retrieveOrderList(1);
-            Supplier s = (Supplier)session.getAttribute("currentSupplier");
-            if(s==null){
+        <%            //ArrayList<Order> orderList = OrderController.retrieveOrderList(1);
+            Supplier s = (Supplier) session.getAttribute("currentSupplier");
+            if (s == null) {
                 s = UserController.retrieveSupplierByID(1);
             }
             ArrayList<Order> orderList = OrderController.getSupplierOrders(s.getSupplier_id());
@@ -202,13 +201,39 @@
                                 </div>
                                 <div>
                                     Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
-                                    Price: $<%=order.getTotal_final_price()%> 
+                                    <br>
+                                    Price: $<%=order.getTotal_final_price()%> &nbsp;
+                                    <br>
+                                    &nbsp;
 
 
                                 </div>
+                                <div>
+                                    <% int counter = 1;
+                                        for (Orderline o : order.getOrderlines()) {
+                                            if (counter <= 3) {
+                                    %>
+                                    <div><%=counter%>. <%=o.getIngredient_name()%> x <%=o.getQuantity()%></div>
+                                    <%
+                                                counter++;
+                                            }
+
+                                        }
+                                        if (counter > 3) {
+                                            %>
+                                            <br>
+                                            Tap to view <%=counter-2%> more item(s)
+                                            <%
+                                        }
+                                    %>    
+                                </div>
                             </a>
                         </div>
-
+                        <form action="SupplierProcessOrder.jsp" method="POST">
+                            <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                            <button class="ui deny inverted green button" name="action" type="submit" value="accept">Accept</button>
+                            <button class="ui deny inverted red button" name="action" type="submit" value="reject">Reject</button>
+                        </form>
 
                         <%}
                             }%>
@@ -219,7 +244,9 @@
 
                     <!--Printing the beyond the 10th pending order-->
                     <%
-                        for (int j = 2; j <= pendingPageNo; j++) {
+                        for (int j = 2;
+                                j <= pendingPageNo;
+                                j++) {
                     %>
 
                     <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 100%>">
@@ -258,7 +285,8 @@
                     <!--Start of pagination-->
                     <div>
                         <%
-                            if (pendingPageNo > 1) {
+                            if (pendingPageNo
+                                    > 1) {
                         %>
                         <div class="ui pagination secondary menu">
                             <a class="active item" data-tab="101">
@@ -302,7 +330,8 @@
                     <%
                         int completedList = completedOrders.size();
                         int completedPageNo = completedList / 10;
-                        if (completedPageNo > 0) {
+                        if (completedPageNo
+                                > 0) {
                             if (completedList % 10 != 0) {
                                 completedPageNo++;
                             }
@@ -319,7 +348,8 @@
                     <div class="ui active tab middle aligned animated selection divided list" data-tab="201">
 
 
-                        <%for (int count = 0; count < 10; count++) {
+                        <%for (int count = 0;
+                                    count < 10; count++) {
                                 if (completedOrders.size() > count) {
 
                                     Order order = completedOrders.get(count);
@@ -354,7 +384,9 @@
 
                     <!--Printing the beyond the 10th completed order-->
                     <%
-                        for (int j = 2; j <= completedPageNo; j++) {
+                        for (int j = 2;
+                                j <= completedPageNo;
+                                j++) {
                     %>
 
                     <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 200%>">
@@ -397,7 +429,8 @@
                     <!--Start of pagination-->
                     <div>
                         <%
-                            if (completedPageNo > 1) {
+                            if (completedPageNo
+                                    > 1) {
                         %>
                         <div class="ui pagination secondary menu">
                             <a class="active item" data-tab="201">
@@ -459,7 +492,8 @@
                     <%
                         int rejectedList = rejectedOrders.size();
                         int rejectedPageNo = rejectedList / 10;
-                        if (rejectedPageNo > 0) {
+                        if (rejectedPageNo
+                                > 0) {
                             if (rejectedList % 10 != 0) {
                                 rejectedPageNo++;
                             }
@@ -476,7 +510,8 @@
                     <div class="ui active tab middle aligned animated selection divided list" data-tab="301">
 
 
-                        <%for (int count = 0; count < 10; count++) {
+                        <%for (int count = 0;
+                                    count < 10; count++) {
                                 if (rejectedOrders.size() > count) {
 
                                     Order order = rejectedOrders.get(count);
@@ -511,7 +546,9 @@
 
                     <!--Printing the beyond the 10th completed order-->
                     <%
-                        for (int j = 2; j <= rejectedPageNo; j++) {
+                        for (int j = 2;
+                                j <= rejectedPageNo;
+                                j++) {
                     %>
 
                     <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 300%>">
@@ -554,7 +591,8 @@
                     <!--Start of pagination-->
                     <div>
                         <%
-                            if (rejectedPageNo > 1) {
+                            if (rejectedPageNo
+                                    > 1) {
                         %>
                         <div class="ui pagination secondary menu">
                             <a class="active item" data-tab="301">

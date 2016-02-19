@@ -52,9 +52,10 @@
                 <%
                     Supplier supp = (Supplier) session.getAttribute("currentSupplier");
                     Supplier currentSupplier = UserController.retrieveSupplierByID(supp.getSupplier_id());
-                    if (currentSupplier == null) {
-                        currentSupplier = UserController.retrieveSupplierByID(currentSupplier.getSupplier_id());
-                    }
+                    session.setAttribute("currentSupplier", currentSupplier);
+                    //if (currentSupplier == null) {
+                    //    currentSupplier = UserController.retrieveSupplierByID(currentSupplier.getSupplier_id());
+                    //}
                 %>
                 <h2 class="ui header">
                     <i class="user icon"></i>
