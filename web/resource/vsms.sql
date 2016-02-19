@@ -25,6 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `dish`
 --
+Use vsms;
 
 CREATE TABLE IF NOT EXISTS `dish` (
   `dish_id` int(11) NOT NULL,

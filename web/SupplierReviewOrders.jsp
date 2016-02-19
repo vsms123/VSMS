@@ -29,6 +29,9 @@
         <%
             //ArrayList<Order> orderList = OrderController.retrieveOrderList(1);
             Supplier s = (Supplier)session.getAttribute("currentSupplier");
+            if(s==null){
+                s = UserController.retrieveSupplierByID(1);
+            }
             ArrayList<Order> orderList = OrderController.getSupplierOrders(s.getSupplier_id());
         %>
 
