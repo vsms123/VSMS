@@ -89,7 +89,7 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="SuppNavbar.jsp" %>
 
-                <div id="mobile" class="pusher">
+                <div id="pc" class="pusher">
                     <h1 style="color: black">Order History List</h1>
 
                     <%
