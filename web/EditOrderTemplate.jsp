@@ -38,9 +38,9 @@
                     <%@ include file="Navbar.jsp" %>
 
                     <p></p>
-                    <h1 style="color:black">Order Template</h1>
+                    <h1 style="color:black">Edit Order Template</h1>
                     <!--Displays an order template-->
-                    <form action="OrderBreakdown.jsp" method="get">
+                    <form action="EditTemplateServlet" method="get">
                         <table  class="ui padded large striped  table">
                             <tr><th><h2>Dish Name</h2></th><th><h2>Dish Quantity</h2></th></tr>
                             <%                ArrayList<OrderTemplate> templates = OrderDAO.retrieveOrderTemplates(currentVendor.getVendor_id());
@@ -68,7 +68,8 @@
                             %>
                         </table>
                         <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"/>
-                        <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Place Order</button>
+                        <input type="hidden" name="order_id" value="<%=UtilityController.convertStringtoInt(orderId)%>"/>
+                        <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Edit</button>
                     </form>  
                     <%
                     %>    

@@ -8,6 +8,7 @@
 
 <html>
     <head>
+        <%@ include file="protect.jsp" %>
         <title>Favourite Suppliers</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--Form VALIDATION-->

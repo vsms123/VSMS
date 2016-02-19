@@ -9,6 +9,7 @@
 
 <html>
     <head>
+        <%@ include file="protect.jsp" %>
         <meta charset="utf-8" />
         <%
             Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");

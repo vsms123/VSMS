@@ -14,6 +14,8 @@
 <html>
 
     <head>
+        <%@ include file="protect_supplier.jsp" %>
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
@@ -110,10 +112,11 @@
 
                     <div class="ui raised very padded text container">
                         <p></p>
-                        <h1 class="ui header">VSMS Menu</h1>
+                        <h1 class="ui header">VSMS Supplier Menu</h1>
 
                         <p></p>
-                        <h1>This is the SUPPLIER homepage </h1>
+                        <!--<h1>This is the SUPPLIER homepage </h1>-->
+                        <h1>Welcome, <% if (s != null) {%> <%=s.getSupplier_name()%> <%}%></h1>
                         <h2>You have <a href="SupplierReviewOrders.jsp"><%=pending_count%></a> pending orders.</h2>
 
                     </div>

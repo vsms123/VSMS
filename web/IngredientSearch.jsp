@@ -10,6 +10,7 @@
 
 <html>
     <head>
+        <%@ include file="protect.jsp" %>
         <title>Ingredient Search</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--Form VALIDATION-->

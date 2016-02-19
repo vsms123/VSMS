@@ -8,7 +8,7 @@
 
 <html>
     <head>
-        
+        <%@ include file="protect.jsp" %>
         <title>Supplier Search</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>

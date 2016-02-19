@@ -12,6 +12,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="protect.jsp" %>
         <title>Order Confirmation</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 

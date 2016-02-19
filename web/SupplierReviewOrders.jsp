@@ -14,6 +14,7 @@
 
 <html>
     <head>
+        <%@ include file="protect_supplier.jsp" %>
         <meta charset="utf-8" />
         <title>Order History</title>
 

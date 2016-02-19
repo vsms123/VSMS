@@ -10,6 +10,7 @@
 
 <html>
     <head>
+        <%@ include file="protect_supplier.jsp" %>
         <meta charset="utf-8" />
         <title>Order History</title>
 
@@ -45,7 +46,16 @@
 
 
                 <h1 style="color: black">Order History List</h1>
-                <h2>You selected <%=action%> for <%=ord_id%></h2>
+                <%
+                    if (action.equals("accept")) {
+                        %> <h2>You have <font color="green">ACCEPTED</font> Order #<%=ord_id%></h2>
+                        <%
+                    } else if (action.equals("reject")) {
+                        %> <h2>You have <font color="red">REJECTED</font> Order #<%=ord_id%></h2>
+                        <%
+                    }
+                %>
+                
                 <div class="actions">
                     <form action="SupplierReviewOrders.jsp">
                         <button class="ui deny inverted orange button" type="submit">Take me Back</button>

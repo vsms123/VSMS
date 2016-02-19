@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="protect.jsp" %>
         <title>Ingredient Information</title>
 
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
