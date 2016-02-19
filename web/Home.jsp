@@ -3,7 +3,7 @@
     Created on : Jan 18, 2016, 1:03:48 PM
     Author     : Benjamin
 --%>
-ote
+
 <%@page import="Controller.IngredientController"%>
 <%@page import="Controller.OrderController"%>
 <%@page import="Controller.UserController"%>
