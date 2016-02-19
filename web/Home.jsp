@@ -3,7 +3,7 @@
     Created on : Jan 18, 2016, 1:03:48 PM
     Author     : Benjamin
 --%>
-
+ote
 <%@page import="Controller.IngredientController"%>
 <%@page import="Controller.OrderController"%>
 <%@page import="Controller.UserController"%>
@@ -13,6 +13,7 @@
 <html>
 
     <head>
+        <%@ include file="protect.jsp" %>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>

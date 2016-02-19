@@ -15,6 +15,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="protect.jsp" %>
         <%
             Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             if (currentVendor == null) {

@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="protect_supplier.jsp" %>
         <title>Thank You</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--CSS-->

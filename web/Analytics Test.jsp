@@ -11,6 +11,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
+        <%@ include file="protect.jsp" %>
         <%
             
             Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");

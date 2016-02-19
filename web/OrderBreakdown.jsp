@@ -14,6 +14,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="protect.jsp" %>
         <title>Order Breakdown</title>
         <link rel="stylesheet" href="css/main.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

@@ -32,8 +32,8 @@
             <%
                 Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
                 Supplier currentSupplier = (Supplier) session.getAttribute("currentSupplier");
-                String errorMsg = (String) request.getParameter("errMsg");
-                String succMsg = (String) request.getParameter("succMsg");
+                String errorMsg = (String) session.getAttribute("errorMsg");
+                String succMsg = (String) session.getAttribute("succMsg");
             %>
 
             <%

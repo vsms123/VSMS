@@ -1,7 +1,7 @@
 <%-- 
-    Document   : Validation
-    Created on : Jan 31, 2016, 5:01:37 PM
-    Author     : Benjamin
+    Document   : protect_supplier
+    Created on : Feb 19, 2016, 1:34:16 PM
+    Author     : TC
 --%>
 
 <%@page import="Model.Supplier"%>
@@ -16,10 +16,10 @@
     <body>
         <%
 
-            Vendor protect_Vendor = (Vendor) session.getAttribute("currentVendor");
-            //Supplier protect_Supplier = (Supplier) session.getAttribute("currentSupplier");
-            if (protect_Vendor == null) {
-                session.setAttribute("errorMsg", "Please login to a Vendor account");
+            //Vendor protect_Vendor = (Vendor) session.getAttribute("currentVendor");
+            Supplier protect_Supplier = (Supplier) session.getAttribute("currentSupplier");
+            if (protect_Supplier == null) {
+                session.setAttribute("errorMsg", "Please login to a Supplier account");
                 response.sendRedirect("Login.jsp");
                 return;
             } 
