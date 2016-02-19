@@ -14,8 +14,7 @@
 <html>
     <head>
         <%@ include file="protect.jsp" %>
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
@@ -36,18 +35,18 @@
             String valueSent = "";
         %>
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyingredient
-                $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
+                $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function (responseText) {
                     $("#ingredientlist").html(responseText);
                 });
-                $("#searchingredient").keyup(function() {
-                    $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function(responseText) {
+                $("#searchingredient").keyup(function () {
+                    $.get("userservlet", {vendor_id: "<%=currentVendor.getVendor_id()%>", supplier_id: "1", action: "searchingredienttoadd", word: $('#searchingredient').val()}, function (responseText) {
                         $("#ingredientlist").html(responseText);
                     });
                 });
                 //To show up the modal with the list of ingredients
-                $("#create-ingredient-button").click(function() {
+                $("#create-ingredient-button").click(function () {
                     console.log("My name is create ingredient button");
                     //show modal button
                     $("#create-ingredient-modal").modal('show');
@@ -66,7 +65,7 @@
                     //Value sent gets all the naming and values from the inputs of the dishes quantity
                     valueSent += ",quantity" + identification + ":$('#quantity" + identification + "').val()";
             %>
-                $(".delete-ingredient-button<%=identification%>").click(function() {
+                $(".delete-ingredient-button<%=identification%>").click(function () {
 
                     console.log("My name is delete-dish-button<%=identification%>");
                     //show modal button
@@ -75,19 +74,19 @@
             <%}
             %>
                 //To confirm the creation of ingredients
-                $("#confirm-dish").click(function() {
+                $("#confirm-dish").click(function () {
                     $.ajaxSetup({async: false});
                     $("#loading").show();
 
-                    setTimeout(function() {
-                        $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", action: "confirmIngredientQuantity"<%=valueSent%>}, function(responseText) {
+                    setTimeout(function () {
+                        $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", action: "confirmIngredientQuantity"<%=valueSent%>}, function (responseText) {
                             alert("the confirmation is successful")
                         });
                     }, 1000);
                 });
             });
 
-            $(document).ajaxComplete(function() {
+            $(document).ajaxComplete(function () {
             <%  ArrayList<Ingredient> allIngredientList = IngredientController.getIngredientList();
                 for (Ingredient ingredient : allIngredientList) {
                     int supplier_id = ingredient.getSupplier_id();
@@ -95,11 +94,11 @@
                     String identification = supplier_id + name;
                     identification = identification.replace(" ", "_");
             %>
-                $("#add-ingredient-modal-button<%=identification%>").click(function() {
-                    $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", ingredient_name: "<%=name%>", supplier_id: "<%=supplier_id%>", action: "addIngredient", quantity: 1}, function(responseText) {
+                $("#add-ingredient-modal-button<%=identification%>").click(function () {
+                    $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", ingredient_name: "<%=name%>", supplier_id: "<%=supplier_id%>", action: "addIngredient", quantity: 1}, function (responseText) {
                     });
                     //Reload the browser and exit modal
-                    setTimeout(function() {
+                    setTimeout(function () {
                         location.reload();
                     }, 1000);
                 });
@@ -108,10 +107,10 @@
             %>
 
             });
-            $(document).ajaxStart(function() {
+            $(document).ajaxStart(function () {
                 $("#loading").show();
             });
-            $(document).ajaxStop(function() {
+            $(document).ajaxStop(function () {
                 $("#loading").hide();
             });
         </script>
@@ -128,9 +127,12 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
 
-                <h1><%=IngredientController.getDishByID(UtilityController.convertStringtoInt(dish_idStr)).getDish_name()%></h1>
+                <h1 style="color:black"><%=IngredientController.getDishByID(UtilityController.convertStringtoInt(dish_idStr)).getDish_name()%></h1>
 
-                <table>
+                <table  class="ui padded large striped  table">
+                    <tr>
+                        <th><h2>Ingredient</h2></th><th><h2>Amount</h2></th><th><h2>Unit</h2></th>
+                    </tr>
                     <% while (iter.hasNext()) {
                             Ingredient ingredient = (Ingredient) iter.next();
                             int supplier_id = ingredient.getSupplier_id();
@@ -141,10 +143,13 @@
 
                     %>
                     <tr>
-                        <td><%=ingredient%></td>
+                        <td><h3><%=ingredient.getName()%></h3><%=ingredient.getDescription()%></td>
                         <!--User inputs attributes-->
-                        <td><input type="number" name="quantity<%=identification%>" id="quantity<%=identification%>" value="<%=stringArray.get(0)%>"></td>
-                        <td><%=stringArray.get(1)%></td>
+                        <td>
+                            <div class="ui input">
+                                <input type="number" name="quantity<%=identification%>" id="quantity<%=identification%>" value="<%=stringArray.get(0)%>">
+                            </div></td>
+                        <td><h3><%=stringArray.get(1)%></h3></td>
                         <td><button class="ui red inverted button delete-ingredient-button<%=identification%>"> <i class="remove icon"></i>Delete Ingredient</button></td>
                     </tr>
                     <% }//Refreshing iter for later use               
@@ -156,11 +161,11 @@
 
                 <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                 <input type="hidden" name="dish_id" value="<%=request.getParameter("dish_id")%>">
-
+<br/>
                 <!--To open Search ingredient modal-->
-                <button name="submit" class="ui teal button" id="create-ingredient-button">Add Ingredient</button>
+                <button name="submit" class="ui large green button" id="create-ingredient-button"><i class="plus icon"></i>Add Ingredient</button>
                 <!--To settle the quantities of all lines-->
-                <button type="submit" name="submit" class="ui teal button" id="confirm-dish">Confirm Dish</button>
+                <button type="submit" name="submit" class="ui large green button" id="confirm-dish"><i class="checkmark icon"></i>Save Dish</button>
                 <!--Shown while ajax is loading-->
                 <p id="loading"><font color="red">Your request is loading...</font></p>
 
@@ -215,7 +220,7 @@
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="delete">
 
-                            <input type="submit" value="Delete" class="ui teal button" /> 
+                            <input type="submit" value="Delete" class="ui red button" /> 
                         </form>
                     </div>
                     <div class="actions">
