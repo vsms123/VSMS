@@ -30,8 +30,8 @@
             <h1>Log In</h1>
 
             <%
-                Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
-                Supplier currentSupplier = (Supplier) session.getAttribute("currentSupplier");
+                //Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                //Supplier currentSupplier = (Supplier) session.getAttribute("currentSupplier");
                 String errorMsg = (String) session.getAttribute("errorMsg");
                 String succMsg = (String) session.getAttribute("succMsg");
             %>
