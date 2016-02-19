@@ -33,7 +33,7 @@
                         $("#searchPC").css("display", "none");
                         $("#navbarPC").css("display", "none");
                         $("#PCview").css("display", "none");
-                        
+
                         $("#navbarMobile").css("display", "");
                     } else {
                         $("#searchPC").css("display", "");
@@ -113,9 +113,9 @@
             <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px">
                 <i class="large search icon"></i> Supplier Search
             </a>
-            
+
             <a href="LogoutServlet" class="item" style=" font-size: 16px">
-                <i class="large search icon"></i> Log Out
+                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Log Out
             </a>
 
         </div>
@@ -127,19 +127,19 @@
                 VSMS
             </div>
             <div class="right menu">
-            <div class="ui simple dropdown item" style=" font-size: 16px">
-                <i class="sidebar icon"></i> 
+                <div class="ui simple dropdown item" style=" font-size: 16px">
+                    <i class="sidebar icon"></i> 
 
-                <div class="menu">
-                    <a href="Menu.jsp" class="item" style=" font-size: 16px"><i class="large food icon"></i> Menu</a>
-                    <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                    <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make an Order</a>
-                    <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favorite Suppliers</a>
-                    <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
-                    <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px"><i class="large search icon"></i> Supplier Search</a>
-                    <a href="LogoutServlet">Log Out</a>
+                    <div class="menu">
+                        <a href="Menu.jsp" class="item" style=" font-size: 16px"><i class="large food icon"></i> Menu</a>
+                        <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                        <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make an Order</a>
+                        <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favorite Suppliers</a>
+                        <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
+                        <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px"><i class="large search icon"></i> Supplier Search</a>
+                        <a href="LogoutServlet">Log Out</a>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
 
