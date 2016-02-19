@@ -197,7 +197,7 @@
 
 
                         <!--printing first 10 pendings orders-->
-                        <div class="ui active tab middle aligned animated selection divided list" data-tab="101">
+                        <div class="ui grid" data-tab="101">
 
 
                             <%for (int count = 0; count < 10; count++) {
@@ -208,7 +208,7 @@
 
 
 
-                            <div  class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div  class="item test order four wide column <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
                                     <div class="content">
@@ -243,12 +243,13 @@
                                         %>    
                                     </div>
                                 </a>
+                                <form action="SupplierProcessOrder.jsp" method="POST">
+                                    <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                    <button class="ui deny inverted green button" name="action" type="submit" value="accept">Accept</button>
+                                    <button class="ui deny inverted red button" name="action" type="submit" value="reject">Reject</button>
+                                </form>
                             </div>
-                            <form action="SupplierProcessOrder.jsp" method="POST">
-                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
-                                <button class="ui deny inverted green button" name="action" type="submit" value="accept">Accept</button>
-                                <button class="ui deny inverted red button" name="action" type="submit" value="reject">Reject</button>
-                            </form>
+
 
                             <%}
                                 }%>
