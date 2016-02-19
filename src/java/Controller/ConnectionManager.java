@@ -1,7 +1,5 @@
 package Controller;
 
-
-
 import java.sql.*;
 import java.util.Properties;
 import java.io.InputStream;
@@ -18,29 +16,45 @@ public class ConnectionManager {
     private static String dbUser;
     private static String dbPassword;
     private static String dbURL;
+    private static String awsDbURL;
 
     static {
-        // grab environment variable
-        String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+        // grab environment variable this is for Openshift
+//        String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+//
+//        if (host != null) {
+//            // this is production environment
+//            // obtain database connection properties from environment variables
+//            String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+//            String dbName = System.getenv("OPENSHIFT_APP_NAME");
+//            dbUser = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+//            dbPassword = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+//
+//            dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+//
+//        } else {
+// grap environment variable for AWS
+        try {
+            //Insert input stream here
+            InputStream is = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
+            Properties props = new Properties();
+            props.load(is);
+            //Start with detecting AWS first, if cannot then local host
+            String host = props.getProperty("AWS_MYSQL_DB_HOST");
+            if (host.contains("amazonaws")) {
+                String port = props.getProperty("AWS_MYSQL_DB_PORT");
+                String dbName = props.getProperty("AWS_APP_NAME");
+                dbUser = props.getProperty("AWS_MYSQL_DB_USERNAME");
+                dbPassword = props.getProperty("AWS_MYSQL_DB_PASSWORD");
 
-        if (host != null) {
-            // this is production environment
-            // obtain database connection properties from environment variables
-            String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-            String dbName = System.getenv("OPENSHIFT_APP_NAME");
-            dbUser = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
-            dbPassword = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
-
-            dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
-
-        } else {
-
-            try {
+                dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+                awsDbURL = "jdbc:mysql://" + host + ":"
+                        + port + "/" + dbName + "?user=" + dbUser + "&password=" + dbPassword;
+                System.out.println("the dbURL for AWS is " + dbURL);
+            } else {
                 // Retrieve properties from connection.properties via the CLASSPATH
                 // WEB-INF/classes is on the CLASSPATH
-                InputStream is = ConnectionManager.class.getResourceAsStream(PROPS_FILENAME);
-                Properties props = new Properties();
-                props.load(is);
+                System.out.println("Go to the local environment");
 
                 // load database connection details
                 host = props.getProperty("db.host");
@@ -50,14 +64,14 @@ public class ConnectionManager {
                 dbPassword = props.getProperty("db.password");
 
                 dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
-            } catch (Exception ex) {
-                // unable to load properties file
-                String message = "Unable to load '" + PROPS_FILENAME + "'.";
-
-                System.out.println(message);
-                Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
-                throw new RuntimeException(message, ex);
             }
+        } catch (Exception ex) {
+            // unable to load properties file
+            String message = "Unable to load '" + PROPS_FILENAME + "'.";
+
+            System.out.println(message);
+            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
+            throw new RuntimeException(message, ex);
         }
 
         try {
@@ -86,9 +100,11 @@ public class ConnectionManager {
         Logger
                 .getLogger(ConnectionManager.class
                         .getName()).log(Level.INFO, message);
-
-        return DriverManager.getConnection(dbURL, dbUser, dbPassword);
-
+        if (awsDbURL != null) {
+            return DriverManager.getConnection(awsDbURL);
+        } else {
+            return DriverManager.getConnection(dbURL, dbUser, dbPassword);
+        }
     }
 
     /**
