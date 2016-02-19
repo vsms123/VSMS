@@ -143,6 +143,7 @@ public class UserController extends HttpServlet {
                 supplier.setArea_code(UtilityController.convertStringtoInt(area_code));
                 supplier.setTelephone_number(UtilityController.convertStringtoInt(telephone_number));
                 supplier.setSupplier_description(supplier_description);
+                
                 updateSupplier(supplier);
                 response.sendRedirect("SupplierProfile.jsp");
             } else if (action.equals("editsupplierpassword")) {
