@@ -82,7 +82,7 @@
                 <i class="large user icon"></i>  My Account
 
                 <div class="menu">
-                    <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                    <a href="SupplierProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
@@ -102,7 +102,7 @@
 
                 <div class="menu">
                     <a href="SupplierReviewOrders.jsp" class="item" style=" font-size: 16px"><i class="large food icon"></i> Review Orders</a>
-                    <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                    <a href="SupplierProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>

@@ -27,10 +27,11 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
         <!-- JSP Controller/ Variables Initiation -->
-        <%
-            //ArrayList<Order> orderList = OrderController.retrieveOrderList(1);
-            Supplier s = (Supplier)session.getAttribute("currentSupplier");
-            ArrayList<Order> orderList = OrderController.getSupplierOrders(s.getSupplier_id());
+        <%            //ArrayList<Order> orderList = OrderController.retrieveOrderList(1);
+            
+            Supplier supp = (Supplier) session.getAttribute("currentSupplier");
+            //Supplier s = UserController.retrieveSupplierByID(supp.getSupplier_id());
+            ArrayList<Order> orderList = OrderController.getSupplierOrders(supp.getSupplier_id());
         %>
 
 

@@ -133,17 +133,19 @@ $(function() {
             },
             telephone_number: {
                 required: true,
-                number: true
+                number: true,
+                maxlength: 9,
+                minlength: 8
             },
             vendor_description: "required",
         },
         // Specify the validation error messages
         messages: {
-            email: "Please enter a valid email",
+            email: "Please enter a valid email address",
             address: "Please enter a valid address",
-            area_code: "Please enter a valid area code where number is required",
-            telephone_number: "Please enter valid telephone number where number is required",
-            vendor_description: "Please enter the correct description",
+            area_code: "Please enter a valid area code (numbers only)",
+            telephone_number: "Please enter a valid phone number (numbers only/max 9 digits)",
+            vendor_description: "Please enter a description",
         },
         submitHandler: function(form) {
             form.submit();

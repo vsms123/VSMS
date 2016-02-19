@@ -15,7 +15,7 @@
 
     <head>
         <%@ include file="protect_supplier.jsp" %>
-        
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
@@ -29,8 +29,8 @@
              currentVendor = UserController.retrieveVendorByID(1);
              }
              int vendor_id = currentVendor.getVendor_id();*/
-
-            Supplier s = (Supplier) session.getAttribute("currentSupplier");
+            Supplier supp = (Supplier) session.getAttribute("currentSupplier");
+            Supplier s = UserController.retrieveSupplierByID(supp.getSupplier_id());
             int pending_count = 0;
             if (s != null) {
                 ArrayList<Order> orderList = OrderController.getSupplierOrders(s.getSupplier_id());

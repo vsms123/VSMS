@@ -101,11 +101,19 @@ public class UserController extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Will receive vendor id and supplier id interested
         String vendor_idStr = request.getParameter("vendor_id");
+        String supplier_idStr = request.getParameter("supplier_id");
+        String idStr = "";
+        if (vendor_idStr != null) {
+            idStr = vendor_idStr;
+        } else if (supplier_idStr != null) {
+            idStr = supplier_idStr;
+        }
         String action = request.getParameter("action");
 
-        if (!UtilityController.checkNullStringArray(new String[]{vendor_idStr, action})) {
-            int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
-            Vendor vendor = UserController.retrieveVendorByID(vendor_id);
+        if (!UtilityController.checkNullStringArray(new String[]{idStr, action})) {
+            int id = UtilityController.convertStringtoInt(idStr);
+            Vendor vendor = UserController.retrieveVendorByID(id);
+            Supplier supplier = UserController.retrieveSupplierByID(id);
             if (action.equals("editprofile")) {
                 String email = request.getParameter("email");
                 String address = request.getParameter("address");
@@ -124,6 +132,24 @@ public class UserController extends HttpServlet {
                 vendor.setPassword(new_password);
                 updateVendor(vendor);
                 response.sendRedirect("VendorProfile.jsp");
+            } else if (action.equals("editsupplierprofile")) {
+                String email = request.getParameter("email");
+                String address = request.getParameter("address");
+                String area_code = request.getParameter("area_code");
+                String telephone_number = request.getParameter("telephone_number");
+                String supplier_description = request.getParameter("supplier_description");
+                supplier.setEmail(email);
+                supplier.setAddress(address);
+                supplier.setArea_code(UtilityController.convertStringtoInt(area_code));
+                supplier.setTelephone_number(UtilityController.convertStringtoInt(telephone_number));
+                supplier.setSupplier_description(supplier_description);
+                updateSupplier(supplier);
+                response.sendRedirect("SupplierProfile.jsp");
+            } else if (action.equals("editsupplierpassword")) {
+                String new_password = request.getParameter("new_password");
+                supplier.setPassword(new_password);
+                updateSupplier(supplier);
+                response.sendRedirect("SupplierProfile.jsp");
             }
 
             response.setContentType(
@@ -134,7 +160,6 @@ public class UserController extends HttpServlet {
                     .write("");       // Write response body.
         }
     }
-
 
     public String retrieveSupplierHTMLTable(int vendor_id, ArrayList<Supplier> supplierList, ArrayList<Supplier> currentFavSupplier) {
         StringBuffer htmlTable = new StringBuffer("");

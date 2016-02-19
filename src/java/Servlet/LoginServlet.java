@@ -66,20 +66,20 @@ public class LoginServlet extends HttpServlet {
             
             if (vendor == null && supplier == null) {
                 //redirect to login page
-                request.setAttribute("errorMsg", "Invalid e-mail or password entered");
+                session.setAttribute("errorMsg", "Invalid e-mail or password entered");
             } else if (vendor != null && supplier == null) {
                 //redirect to vendor home
                 url = "Home.jsp";
                 session.setAttribute("currentVendor", vendor);
-                request.setAttribute("errMsg", null);
+                session.setAttribute("errorMsg", null);
 
             } else if (vendor == null && supplier != null) {
                 //redirect to supplier home
                 url = "SupplierHome.jsp";
                 session.setAttribute("currentSupplier", supplier);
-                request.setAttribute("errMsg", null);
+                session.setAttribute("errorMsg", null);
             } else {
-                request.setAttribute("errMsg", "Invalid email or password entered.");
+                request.setAttribute("errorMsg", "Invalid email or password entered.");
             }
             //redirect to respective pages
             
@@ -87,8 +87,9 @@ public class LoginServlet extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
 
-            RequestDispatcher view = request.getRequestDispatcher(url);
-            view.forward(request, response);
+            //RequestDispatcher view = request.getRequestDispatcher(url);
+            //view.forward(request, response);
+            response.sendRedirect(url);
 
         } finally {
             out.flush();
