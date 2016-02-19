@@ -113,7 +113,10 @@
             <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px">
                 <i class="large search icon"></i> Supplier Search
             </a>
-
+            
+            <a href="LogoutServlet" class="item" style=" font-size: 16px">
+                <i class="large search icon"></i> Log Out
+            </a>
 
         </div>
 
@@ -134,6 +137,7 @@
                     <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favorite Suppliers</a>
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                     <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px"><i class="large search icon"></i> Supplier Search</a>
+                    <a href="LogoutServlet">Log Out</a>
                 </div>
             </div>
             </div>

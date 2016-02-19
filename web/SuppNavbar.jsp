@@ -86,7 +86,10 @@
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
-            
+            <a href="LogoutServlet" class="item" style=" font-size: 16px">
+                <i class="large search icon"></i> Log Out
+            </a>
+
 
         </div>
 
