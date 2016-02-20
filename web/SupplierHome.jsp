@@ -43,6 +43,7 @@
         <script>
             $(document).ready(function () {
                 $('.secondary.menu .item').tab();
+                 $('.secondary.menu .mobile.item').tab();
 
                 $('.test.order').popup({
                     position: 'top left'
@@ -128,6 +129,7 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="SuppNavbar.jsp" %>
+
                 <!--PC VIEW START-->
                 <div id="pc" class="pusher">
                     <h1 style="color: black">Order History List</h1>
@@ -836,7 +838,6 @@
                 </div>
                 <!--PC VIEW END-->
 
-
                 <!--MOBILE VIEW START-->
 
                 <div id="mobile" class="pusher">
@@ -996,25 +997,19 @@
 
 
                     <%
-                            if (order.getStatus().equals("pending")) {
-                                pendingOrders.add(order);
-                            } else if (order.getStatus().equals("approved")) {
-                                completedOrders.add(order);
-                            } else if (order.getStatus().equals("rejected")) {
-                                rejectedOrders.add(order);
-                            }
+                            
                         }
                     %>
 
                     <!--tabs menu-->
                     <div class="ui pointing secondary menu">
-                        <a class="item active" data-tab="first">Pending Orders</a>
-                        <a class="item" data-tab="second">Completed Orders</a>
-                        <a class="item" data-tab="third">Rejected Orders</a>
+                        <a class="mobile item active" data-tab="mobile_first">Pending Orders</a>
+                        <a class="mobile item" data-tab="mobile_second">Completed Orders</a>
+                        <a class="mobile item" data-tab="mobile_third">Rejected Orders</a>
                     </div>
 
                     <!--Pending orders section-->
-                    <div class="ui tab segment active" data-tab="first">
+                    <div class="ui tab segment active" data-tab="mobile_first">
                         <%
                             int pendingList2 = pendingOrders.size();
                             int pendingPageNo2 = pendingList2 / 10;
@@ -1156,7 +1151,7 @@
                                 </div>
 
                                 <button class="ui deny inverted green button" id="triggerModal<%=order.getOrder_id()%>small_mainAccept">Accept</button>
-                                <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>mainReject">Reject</button>
+                                <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>small_mainReject">Reject</button>
 
                             </div>
 
@@ -1175,7 +1170,7 @@
                         <!--Printing the beyond the 10th pending order-->
                         <%
                             for (int j = 2;
-                                    j <= pendingPageNo;
+                                    j <= pendingPageNo2;
                                     j++) {
                         %>
 
@@ -1215,15 +1210,14 @@
                         <!--Start of pagination-->
                         <div>
                             <%
-                                if (pendingPageNo
-                                        > 1) {
+                                if (pendingPageNo2 > 1) {
                             %>
                             <div class="ui pagination secondary menu">
                                 <a class="active item" data-tab="101">
                                     1
                                 </a>
                                 <%
-                                    for (int j = 1; j < pendingPageNo; j++) {
+                                    for (int j = 1; j < pendingPageNo2; j++) {
                                 %>
                                 <a class="item" data-tab="<%=j + 101%>">
                                     <%=j + 1%>
@@ -1255,7 +1249,7 @@
 
 
                     <!--Start of section for completed orders-->
-                    <div class="ui tab segment" data-tab="second">
+                    <div class="ui tab segment" data-tab="mobile_second">
 
                         <%
                             int completedList2 = completedOrders.size();
@@ -1315,7 +1309,7 @@
                         <!--Printing the beyond the 10th completed order-->
                         <%
                             for (int j = 2;
-                                    j <= completedPageNo;
+                                    j <= completedPageNo2;
                                     j++) {
                         %>
 
@@ -1359,7 +1353,7 @@
                         <!--Start of pagination-->
                         <div>
                             <%
-                                if (completedPageNo
+                                if (completedPageNo2
                                         > 1) {
                             %>
                             <div class="ui pagination secondary menu">
@@ -1367,7 +1361,7 @@
                                     1
                                 </a>
                                 <%
-                                    for (int j = 1; j < completedPageNo; j++) {
+                                    for (int j = 1; j < completedPageNo2; j++) {
                                 %>
                                 <a class="item" data-tab="<%=j + 201%>">
                                     <%=j + 1%>
@@ -1413,7 +1407,7 @@
 
                     <!--Start of Rejected Orders section-->
 
-                    <div class="ui tab segment" data-tab="third">
+                    <div class="ui tab segment" data-tab="mobile_third">
 
 
 
@@ -1477,7 +1471,7 @@
                         <!--Printing the beyond the 10th completed order-->
                         <%
                             for (int j = 2;
-                                    j <= rejectedPageNo;
+                                    j <= rejectedPageNo2;
                                     j++) {
                         %>
 
@@ -1521,7 +1515,7 @@
                         <!--Start of pagination-->
                         <div>
                             <%
-                                if (rejectedPageNo
+                                if (rejectedPageNo2
                                         > 1) {
                             %>
                             <div class="ui pagination secondary menu">
@@ -1529,7 +1523,7 @@
                                     1
                                 </a>
                                 <%
-                                    for (int j = 1; j < rejectedPageNo; j++) {
+                                    for (int j = 1; j < rejectedPageNo2; j++) {
                                 %>
                                 <a class="item" data-tab="<%=j + 301%>">
                                     <%=j + 1%>
