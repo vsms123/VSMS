@@ -1,4 +1,3 @@
-
 <%@page import="Controller.UserController"%>
 <%@page import="Model.Vendor"%>
 <%@page import="Controller.UtilityController"%>
