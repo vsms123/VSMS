@@ -175,7 +175,7 @@ public class OrderController extends HttpServlet {
                 htmlTable.append("</tbody>");
                 htmlTable.append("</table>");
                 htmlTable.append("</div>");
-                htmlTable.append("<h5><font color='red'>Total order: " + UtilityController.convertDoubleToCurrString(order.getTotal_final_price()) + "</font></h5><hr/>");
+                htmlTable.append("<h2><font color='red'>Total order: " + UtilityController.convertDoubleToCurrString(order.getTotal_final_price()) + "</font></h2><hr/>");
             }
         }
         htmlTable.append("<h1><font color='red'>Total final price: " + UtilityController.convertDoubleToCurrString(totalFinalPrice) + "</font></h1>");
