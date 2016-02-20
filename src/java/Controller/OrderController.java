@@ -175,10 +175,10 @@ public class OrderController extends HttpServlet {
                 htmlTable.append("</tbody>");
                 htmlTable.append("</table>");
                 htmlTable.append("</div>");
-                htmlTable.append("<h5>Total order: " + UtilityController.convertDoubleToCurrString(order.getTotal_final_price()) + "</h5>");
+                htmlTable.append("<h5><font color='red'>Total order: " + UtilityController.convertDoubleToCurrString(order.getTotal_final_price()) + "</font></h5><hr/>");
             }
         }
-        htmlTable.append("Total final price: " + UtilityController.convertDoubleToCurrString(totalFinalPrice));
+        htmlTable.append("<h1><font color='red'>Total final price: " + UtilityController.convertDoubleToCurrString(totalFinalPrice) + "</font></h1>");
         return htmlTable.toString();
     }
 //    Test controller

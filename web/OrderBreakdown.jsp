@@ -23,8 +23,7 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
         <!--OrderBreakdown.jsp will receive vendor_id:, action: confirm and the list of dishid with their values-->
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
@@ -55,18 +54,18 @@
             });
                     //Confirm the order breakdown
                     $("#confirm-order-breakdown").click(function() {
-                    $("#loading").show();
+            $("#loading").show();
                     console.log("Sending order breakdown");
                     //Timeout is used to make sure that the loading text is shown first before the synchronous ajax kicks
 //                    Synchronous ajax is used to make sure that the order processing could be done with a fixed buffer quantity
                     setTimeout(function() {$.ajaxSetup({async:false});
-                    $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'create', bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {                    });
-                    alert("Order has been sent to suppliers");
-                    window.location.replace('OrderHistory.jsp');
-                    },1000);
+                            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'create', bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {                    });
+                            alert("Order has been sent to suppliers");
+                            window.location.replace('OrderHistory.jsp');
+                    }, 1000);
             });
             });
-            //T
+                    //T
                     $(document).ajaxStart(function() {
             $("#loading").show();
             });
@@ -86,7 +85,7 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-                
+
                 <h1 style="color: black">Order Breakdown</h1>
 
                 <!--Inputting form elements-->
@@ -97,15 +96,15 @@
                         %
                     </div>
                 </div>
-                <button class="ui red inverted button" id="confirm-order-breakdown"> <i class="remove icon"></i>Confirm Order Breakdown</button>
+
                 <p id="loading"><font color="red">Your request is loading...</font></p>
                 <hr>
 
                 <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
                 <div class="content-model-table">                            
                 </div>
-
-
+                <br>
+                <button class="ui red inverted button" id="confirm-order-breakdown"> <i class="remove icon"></i>Confirm Order Breakdown</button>
             </div>
         </div>
 
