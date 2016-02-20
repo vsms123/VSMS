@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.UtilityController;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,6 +13,7 @@ public class Order {
     private Date dt_order;
     private ArrayList<Orderline> orderlines;
     private String status; //status will have 3 values "Approved","Rejected","Pending" in proper case
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     public Order(int order_id, int vendor_id, double total_final_price, Date dt_order, String status,ArrayList<Orderline> orderlines) {
         this.order_id = order_id;
@@ -42,7 +44,7 @@ public class Order {
     }
 
     public double getTotal_final_price() {
-        return total_final_price;
+        return Double.parseDouble(df.format(total_final_price));
     }
 
     public ArrayList<Orderline> getOrderlines() {

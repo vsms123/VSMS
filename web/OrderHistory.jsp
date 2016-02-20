@@ -6,6 +6,7 @@
 <%@page import="Controller.ConnectionManager"%>
 <%@page import="Model.Order"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.text.DecimalFormat"%>
 
 <html>
     <head>
@@ -13,6 +14,7 @@
         <meta charset="utf-8" />
         <%
             Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            DecimalFormat df = new DecimalFormat("0.00");
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
@@ -121,7 +123,7 @@
                                     <!--units to be edited-->
                                     <%--<%=IngredientController.getIngredient(Integer.toString(orderLine.getSupplier_id()), orderLine.getIngredient_name()).getSupplyUnit()%>--%>
                                     <td><%=orderLine.getQuantity()%> &nbsp;</td>
-                                    <td>$<%=orderLine.getFinalprice()%>&nbsp;</td>
+                                    <td>$<%=df.format(orderLine.getFinalprice())%>&nbsp;</td>
 
                                 </tr>
                                 <%}%>
@@ -188,7 +190,7 @@
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
-                                    Price: $<%=order.getTotal_final_price()%> 
+                                    Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
                                 </div>
@@ -225,7 +227,7 @@
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
-                                    Price: $<%=order.getTotal_final_price()%> 
+                                    Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
                                 </div>
@@ -321,7 +323,7 @@
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
-                                    Price: $<%=order.getTotal_final_price()%> 
+                                    Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
                                 </div>
@@ -360,7 +362,7 @@
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
-                                    Price: $<%=order.getTotal_final_price()%> 
+                                    Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
                                 </div>
@@ -478,7 +480,7 @@
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
-                                    Price: $<%=order.getTotal_final_price()%> 
+                                    Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
                                 </div>
@@ -517,7 +519,7 @@
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
-                                    Price: $<%=order.getTotal_final_price()%> 
+                                    Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
                                 </div>

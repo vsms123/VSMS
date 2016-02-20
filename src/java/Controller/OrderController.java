@@ -149,7 +149,7 @@ public class OrderController extends HttpServlet {
             }
 
             if (subtotal > 0.0) {
-                DecimalFormat df = new DecimalFormat("#.##");
+                
                 //Create sub categories sections
                 htmlTable.append("<h3>Supplier #" + count + " " + supplier.getSupplier_name() + "</h3>");
                 count++;
