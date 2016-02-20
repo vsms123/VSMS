@@ -17,8 +17,7 @@
         <!--Form VALIDATION-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             //in case current vendor does not exist
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
@@ -81,7 +80,6 @@
         </script>
         <!--CSS-->
 
-
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
@@ -89,9 +87,9 @@
     <body class="background">
         <div class="transparency">
             <div class="ui segment" style="left:5%;width:90%">
-                <%@ include file="Navbar.jsp" %>
+                <%@include file="Navbar.jsp" %>
 
-                <h1>Supplier Search</h1>
+                <h1 style="color:black">Supplier Search</h1>
 
                 <div class="ui top attached tabular menu">
                     <a class="item active" data-tab="first" id="supplier_name_tab">Supplier Name</a>
@@ -135,7 +133,6 @@
                 <div class="ui bottom attached tab segment" id="ingredient_name_div" data-tab="third">
                     <h3 style="color:black">Search Ingredient by Name</h3>                
                     <div class="ui icon input">
-
                         <input type="text" placeholder="Search..." name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
                         <i class="circular search link icon"></i>
 

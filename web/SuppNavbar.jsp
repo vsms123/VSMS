@@ -71,10 +71,7 @@
             <a href="SupplierHome.jsp" class="item" style=" font-size: 16px">
                 <i class="large home icon"></i> Home
             </a>
-            <a href="SupplierReviewOrders.jsp" class="item" style=" font-size: 16px">
-               <i class="large edit icon"></i> Review Orders
-            </a>
-            
+                        
             <a class="item message" style=" font-size: 16px">
                 <i class="large  mail icon"></i> Messages
             </a>
@@ -86,7 +83,10 @@
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
-            
+            <a href="LogoutServlet" class="item" style=" font-size: 16px">
+                <i class="large search icon"></i> Log Out
+            </a>
+
 
         </div>
 
@@ -101,7 +101,6 @@
                 <i class="sidebar icon"></i> 
 
                 <div class="menu">
-                    <a href="SupplierReviewOrders.jsp" class="item" style=" font-size: 16px"><i class="large food icon"></i> Review Orders</a>
                     <a href="SupplierProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
