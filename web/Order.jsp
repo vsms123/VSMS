@@ -53,7 +53,7 @@
 
                 <!--Inputting form elements-->
 
-                <form action="OrderBreakdown.jsp" method="get">
+                <form action="OrderBreakdown.jsp" method="POST">
                     <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
 
 

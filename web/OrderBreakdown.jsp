@@ -62,6 +62,7 @@
                     setTimeout(function() {$.ajaxSetup({async:false});
                     $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'create', bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {                    });
                     alert("Order has been sent to suppliers");
+                    window.location.replace('OrderHistory.jsp');
                     },1000);
             });
             });
