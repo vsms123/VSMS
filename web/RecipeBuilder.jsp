@@ -1,4 +1,3 @@
-
 <%@page import="Controller.UserController"%>
 <%@page import="Model.Vendor"%>
 <%@page import="Controller.UtilityController"%>
@@ -81,6 +80,7 @@
                     setTimeout(function () {
                         $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", action: "confirmIngredientQuantity"<%=valueSent%>}, function (responseText) {
                             alert("the confirmation is successful")
+                            window.location.replace('Menu.jsp')
                         });
                     }, 1000);
                 });
@@ -182,10 +182,10 @@
                         <table id="ingredientlist" class="ui single line table">                                
                         </table>
                     </div>
-                    
-                        <div class="actions">
-                            <button class="ui inverted deny orange button">Cancel</button>
-                        </div>
+
+                    <div class="actions">
+                        <button class="ui inverted deny orange button">Cancel</button>
+                    </div>
                 </div
 
 
@@ -200,7 +200,7 @@
 
                 %>
                 <div id="deletemodaldiv<%=identification%>" class="ui small modal">
-              
+
                     <div class="header">
                         <h2>Delete Dish</h2>
                     </div>
@@ -216,18 +216,18 @@
                             <input type="hidden" name="supplier_id" value="<%=ingredient.getSupplier_id()%>">
                             <input type="hidden" name="dish_id" value="<%=dish_idStr%>">
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
-                            
-                        <input type="hidden" name="action" value="delete">
 
-                            
-                        
-                    </div>
-                    <div class="actions">
-                        <input type="submit" value="Delete" class="ui inverted red button" /> 
+                            <input type="hidden" name="action" value="delete">
+
+
+
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="Delete" class="ui inverted red button" /> 
                         </form>    
-                            <button class="ui inverted deny orange button">Cancel</button>
-                        
-                           
+                        <button class="ui inverted deny orange button">Cancel</button>
+
+
                     </div>
                 </div>
                 <%}%>

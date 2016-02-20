@@ -48,8 +48,7 @@
                 <%@ include file="Navbar.jsp" %>
 
 
-                <%
-                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                <%                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
                     if (currentVendor == null) {
                         currentVendor = UserController.retrieveVendorByID(1);
                     }
@@ -87,40 +86,46 @@
 
 
                 <button class="ui green large button edit-profile-button">Edit Profile</button>
-                <button class="ui green large button edit-password-button">Edit Password</button>
+                <button class="ui green large button edit-password-button">Change Password</button>
 
 
                 <!--Create a modal for editing the profile-->
                 <div id="editprofilemodal" class="ui small modal">
 
                     <div class="header">
-                        Edit Profile
+                        <h2>Edit Profile</h2>
                     </div>
                     <div class="content">
                         <form id="editProfile" class="editProfile ui form" action="userservlet" method="post"> 
                             <!--Inputting form elements-->
-                            <label for="email">Email:</label> 
-                            <input id="email" value="<%=currentVendor.getEmail()%>" type="text" name="email">
+                            <label for="email"><h3>Email:</h3></label>
+                            <input id="email" value="<%=currentVendor.getEmail()%>" type="text" name="email"><br/>
+                            <br/>
+                            <label for="area_code"><h3>Area Code / Telephone Number:</h3></label> 
+                            <div class="ui grid">
+                                <div class="three wide column">
+                                    <input id="area_code" value="<%=currentVendor.getArea_code()%>" type="text" name="area_code">
+                                </div>
+                                <div class="thirteen wide column">
+                                    <input id="telephone_number" value="<%=currentVendor.getTelephone_number()%>" type="text" name="telephone_number">
+                                </div>
+                            </div><br/>
 
-                            <label for="area_code">Area Code / Telephone Number:</label> 
-                            <input id="area_code" value="<%=currentVendor.getArea_code()%>" type="text" name="area_code">
-                            <input id="telephone_number" value="<%=currentVendor.getTelephone_number()%>" type="text" name="telephone_number">
-
-                            <label for ="address">Address:</label> 
+                            <label for ="address"><h3>Address:</h3></label> 
                             <textarea id="address" name="address"><%=currentVendor.getAddress()%></textarea>
-
-                            <label for ="vendor_description">Vendor Description:</label> 
+                            <br/><br/>
+                            <label for ="vendor_description"><h3>Description:</h3></label> 
                             <textarea id="vendor_description" name="vendor_description"><%=currentVendor.getVendor_description()%></textarea>
-
+                            <br/>
                             <!--Input hidden attributes-->
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="editprofile">
 
-                            <input type="submit" value="Edit Profile" class="ui teal button" />
-                        </form>
-                    </div>
-                    <div class="actions">
 
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="Save Changes" class="ui inverted green button" />
+                        </form>
                         <button class="ui inverted deny orange button">Cancel</button>
 
                     </div>
@@ -131,28 +136,29 @@
                 <div id="editpasswordmodal" class="ui small modal">
 
                     <div class="header">
-                        Edit Password
+                        <h2>Edit Password</h2> 
                     </div>
                     <div class="content">
                         <form id="editPassword" class="editPassword ui form" action="userservlet" method="post"> 
                             <!--Inputting form elements-->
-                            <label for="old_password">Old Password:</label> 
-                            <input id="old_password" type="text" name="old_password">
+                            <label for="old_password"><h3>Old Password:</h3></label> 
+                            <input id="old_password" type="text" name="old_password"><br/><br/>
 
-                            <label for="new_password">New Password:</label> 
-                            <input id="new_password" type="text" name="new_password">
-                            <label for="new2_password">Repeat Password:</label> 
-                            <input id="new2_password" type="text" name="new2_password">
+                            <label for="new_password"><h3>New Password:</h3></label> 
+                            <input id="new_password" type="text" name="new_password"><br/><br/>
+
+                            <label for="new2_password"><h3>Re-enter new Password:</h3></label> 
+                            <input id="new2_password" type="text" name="new2_password"><br/><br/>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="editpassword">
 
-                            <input type="submit" value="Edit password" class="ui teal button" /> 
-                        </form>
-                    </div>
-                    <div class="actions">
 
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="Confirm password" class="ui inverted green button" /> 
+                        </form>
                         <button class="ui inverted deny orange button">Cancel</button>
 
                     </div>

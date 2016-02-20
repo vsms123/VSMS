@@ -15,11 +15,10 @@
 <html>
     <head>
         <%@ include file="protect.jsp" %>
-         <%
-                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
-                    if (currentVendor == null) {
-                        currentVendor = UserController.retrieveVendorByID(1);
-                    }
+        <%             Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
         %>
         <title>Menu</title>
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -27,11 +26,11 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
-                $.post("ingredientservlet", function(responseText) {
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
+                $.post("ingredientservlet", function (responseText) {
                     $("#dishListAdded").append(responseText);
                 });
-                $('.create-dish-button').click(function() {
+                $('.create-dish-button').click(function () {
                     console.log("My name is create-dish-button");
 
                     //show modal button
@@ -42,14 +41,14 @@
                 for (Dish dish : dishList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
-                $(".edit-dish-button<%=dish.getDish_id()%>").click(function() {
+                $(".edit-dish-button<%=dish.getDish_id()%>").click(function () {
 
                     console.log("My name is edit-dish-button<%=dish.getDish_id()%>");
                     //show modal button
                     $('#editmodaldiv<%=dish.getDish_id()%>').modal('show');
                 });
                 //              Will go through delete-dish-button1 or delete-dish-button2 (regarding the dish id)
-                $(".delete-dish-button<%=dish.getDish_id()%>").click(function() {
+                $(".delete-dish-button<%=dish.getDish_id()%>").click(function () {
 
                     console.log("My name is delete-dish-button<%=dish.getDish_id()%>");
                     //show modal button
@@ -66,7 +65,7 @@
 
 
         </script>
-       
+
     </head>
     <body class="background">
 
@@ -76,7 +75,7 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-               
+
                 <h1 style="color: black">Menu</h1>
                 <br/>
                 <div class="ui middle aligned animated selection divided list">
@@ -127,11 +126,11 @@
                             <!--Input hidden attributes-->
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="add">
-                            <input type="submit" value="Add" class="ui teal button" /> 
-                        </form>
-                    </div>
-                    <div class="actions">
 
+                            </div>
+                            <div class="actions">
+                                <button type="submit" class="ui inverted green button"><i class="plus icon"></i>Add</button>
+                        </form>
                         <button class="ui inverted deny orange button">Cancel</button>
 
 
