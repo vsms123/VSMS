@@ -860,7 +860,7 @@
                     <div id="modalOrder<%=order.getOrder_id()%>mobile" class="ui modal">
 
                         <div class="header">
-                            <h1>Order No. lala <%=order.getOrder_id()%></h1>
+                            <h1>Order No. <%=order.getOrder_id()%></h1>
                         </div>
                         <div class="image content">
                             <div class="ui medium image">
