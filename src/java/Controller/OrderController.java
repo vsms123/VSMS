@@ -15,6 +15,7 @@ import Model.Orderline;
 import Model.Supplier;
 import Model.Vendor;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -148,7 +149,7 @@ public class OrderController extends HttpServlet {
             }
 
             if (subtotal > 0.0) {
-                
+                DecimalFormat df = new DecimalFormat("#.##");
                 //Create sub categories sections
                 htmlTable.append("<h3>Supplier #" + count + " " + supplier.getSupplier_name() + "</h3>");
                 count++;
@@ -250,10 +251,12 @@ public class OrderController extends HttpServlet {
         while (iter.hasNext()) {
             Ingredient ingredient = (Ingredient) iter.next();
             int aggQuantity = ingredientAggQuantityMap.get(ingredient);
+            if (aggQuantity != 0) {
+                //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
+                Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * (double) aggQuantity, aggQuantity, 0.0);
+                orderlineList.add(orderline);
+            }
 
-            //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
-            Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * (double) aggQuantity, aggQuantity, 0.0);
-            orderlineList.add(orderline);
         }
         //for debugging purpose
         System.out.println(orderlineList.toString());
@@ -270,10 +273,11 @@ public class OrderController extends HttpServlet {
             //Adding bufferqty percentage into the aggregate quantity
             double bufferqtymultiplier = bufferqtyperc / 100.0 + 1;
             int aggQuantity = (int) Math.ceil(ingredientAggQuantityMap.get(ingredient) * bufferqtymultiplier);
-
-            //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
-            Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * (double) aggQuantity, aggQuantity, bufferqtyperc);
-            orderlineList.add(orderline);
+            if (aggQuantity != 0) {
+                //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
+                Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * (double) aggQuantity, aggQuantity, bufferqtyperc);
+                orderlineList.add(orderline);
+            }
         }
         //for debugging purpose
         System.out.println(orderlineList.toString());

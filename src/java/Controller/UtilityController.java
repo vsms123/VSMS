@@ -1,5 +1,6 @@
 package Controller;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,8 +53,9 @@ public class UtilityController {
     }
 
     public static String convertDoubleToCurrString(double money) {
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        String moneyString = formatter.format(money);
+        //NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        DecimalFormat df = new DecimalFormat("0.00");
+        String moneyString = "" + df.format(money);
         return moneyString;
     }
     
