@@ -92,7 +92,7 @@
                 <!--Inputting form elements-->
                 <h2><label for= "bufferqtyperc"> Buffer Quantity (in Percentage)</label></h2>
                 <div class="ui right labeled input">
-                    <input type="number" value=0 name="bufferqtyperc" id="bufferqtyperc"/>
+                    <input type="number" min=0 max=100 value=0 name="bufferqtyperc" id="bufferqtyperc"/>
                     <div class="ui basic label">
                         %
                     </div>
