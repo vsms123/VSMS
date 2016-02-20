@@ -143,7 +143,7 @@ public class UserController extends HttpServlet {
                 supplier.setArea_code(UtilityController.convertStringtoInt(area_code));
                 supplier.setTelephone_number(UtilityController.convertStringtoInt(telephone_number));
                 supplier.setSupplier_description(supplier_description);
-                
+
                 updateSupplier(supplier);
                 response.sendRedirect("SupplierProfile.jsp");
             } else if (action.equals("editsupplierpassword")) {
@@ -206,7 +206,9 @@ public class UserController extends HttpServlet {
             htmlTable.append("<div class='item test ingredient'><a><div class='content'>");
             //Need to send in a list with this supplier_id to SupplierSearchProfile
             //Replacement of ingredient name is necessary to settle an ingredient name with a space in between
-            htmlTable.append("<h2>" + ingredient.getName() + "</a></h2>");
+            String s = ingredient.getName().replaceAll(" ", "%20");
+            htmlTable.append("<h2><a href=IngredientProfile.jsp?ingredient_name=" + s + "&supplier_id=" + ingredient.getSupplier_id() + ">" + ingredient.getName() + "</a></h2>");
+            //<a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>"><%=ingredient.getName()%></a>
 //            htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
 //            htmlTable.append("" + ingredient.getSubcategory() + "</div>");
             htmlTable.append("<div><div style=\"color:black\">Supplier: </div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></h3></div>");
