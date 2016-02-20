@@ -114,7 +114,7 @@
                 </div>
                 <br>
                 <% if (total > 0) { %>
-                <button class="ui green inverted massive button" id="confirm-order-breakdown"> <i class="check icon"></i>Confirm Order Breakdown</button>
+                <button class="ui green inverted large button" id="confirm-order-breakdown"> <i class="check icon"></i>Confirm Order Breakdown</button>
                 <% }%>
             </div>
         </div>
