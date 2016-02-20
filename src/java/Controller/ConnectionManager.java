@@ -41,30 +41,34 @@ public class ConnectionManager {
             props.load(is);
             //Start with detecting AWS first, if cannot then local host
 //            String host = props.getProperty("AWS_MYSQL_DB_HOST");
-//            if (host.contains("amazonaws")) {
-//                String port = props.getProperty("AWS_MYSQL_DB_PORT");
-//                String dbName = props.getProperty("AWS_APP_NAME");
-//                dbUser = props.getProperty("AWS_MYSQL_DB_USERNAME");
-//                dbPassword = props.getProperty("AWS_MYSQL_DB_PASSWORD");
-//
-//                dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
-//                awsDbURL = "jdbc:mysql://" + host + ":"
-//                        + port + "/" + dbName + "?user=" + dbUser + "&password=" + dbPassword;
-//                System.out.println("the dbURL for AWS is " + dbURL);
-//            } else {
+            String username = System.getProperty("user.name");
+            String host ="";
+            if (username.contains("ec2")) {
+                host = props.getProperty("AWS_MYSQL_DB_HOST");
+                String port = props.getProperty("AWS_MYSQL_DB_PORT");
+                String dbName = props.getProperty("AWS_APP_NAME");
+                dbUser = props.getProperty("AWS_MYSQL_DB_USERNAME");
+                dbPassword = props.getProperty("AWS_MYSQL_DB_PASSWORD");
+
+                dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+                awsDbURL = "jdbc:mysql://" + host + ":"
+                        + port + "/" + dbName + "?user=" + dbUser + "&password=" + dbPassword;
+                System.out.println("the dbURL for AWS is " + dbURL);
+            } else {
+                
                 // Retrieve properties from connection.properties via the CLASSPATH
                 // WEB-INF/classes is on the CLASSPATH
                 System.out.println("Go to the local environment");
 
                 // load database connection details
-                String host = props.getProperty("db.host");
+                host = props.getProperty("db.host");
                 String port = props.getProperty("db.port");
                 String dbName = props.getProperty("db.name");
                 dbUser = props.getProperty("db.user");
                 dbPassword = props.getProperty("db.password");
 
                 dbURL = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
-//            }
+            }
         } catch (Exception ex) {
             // unable to load properties file
             String message = "Unable to load '" + PROPS_FILENAME + "'.";
