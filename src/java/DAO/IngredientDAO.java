@@ -141,7 +141,7 @@ public class IngredientDAO {
         String query = "";
         try {
             conn = ConnectionManager.getConnection();
-            query = "update Ingredient set supply_unit=?, category=?, ingredient_description=?, offered_price=? where supplier_id=? AND ingredient_name=?";
+            query = "update ingredient set supply_unit=?, category=?, ingredient_description=?, offered_price=? where supplier_id=? AND ingredient_name=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, ingredient.getSupplyUnit());
             statement.setString(2, ingredient.getSubcategory());
@@ -297,7 +297,7 @@ public class IngredientDAO {
         ArrayList<Dish> dishList = new ArrayList<Dish>();
         try {
             conn = ConnectionManager.getConnection();
-            query = "select * from Dish where vendor_id=?";
+            query = "select * from dish where vendor_id=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, vendor_id);
             rs = statement.executeQuery();
@@ -337,7 +337,7 @@ public class IngredientDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            query = "select * from Ingredient_Quantity where dish_id=?";
+            query = "select * from ingredient_quantity where dish_id=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, dish_id);
             rs = statement.executeQuery();
@@ -377,7 +377,7 @@ public class IngredientDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            query = "insert into Dish (dish_id, dish_name, vendor_id, dish_description) values (?,?,?,?)";
+            query = "insert into dish (dish_id, dish_name, vendor_id, dish_description) values (?,?,?,?)";
             statement = conn.prepareStatement(query);
             statement.setString(1, dish.getDish_id() + "");
             statement.setString(2, dish.getDish_name());
@@ -467,7 +467,7 @@ public class IngredientDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            query = "Delete from Dish where dish_id=? AND vendor_id=?";
+            query = "Delete from dish where dish_id=? AND vendor_id=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, dish.getDish_id() + "");
             statement.setString(2, dish.getVendor_id() + "");
@@ -500,7 +500,7 @@ public class IngredientDAO {
         String query = "";
         try {
             conn = ConnectionManager.getConnection();
-            query = "Delete from Ingredient_Quantity where dish_id=? AND ingredient_name=? AND vendor_id=? AND supplier_id=?";
+            query = "Delete from ingredient_quantity where dish_id=? AND ingredient_name=? AND vendor_id=? AND supplier_id=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, dish_id);
             statement.setString(2, ingredient_name);
@@ -536,7 +536,7 @@ public class IngredientDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            query = "update Dish set dish_id=?, dish_name=?, vendor_id=?, dish_description=? where dish_id=? AND vendor_id=?";
+            query = "update dish set dish_id=?, dish_name=?, vendor_id=?, dish_description=? where dish_id=? AND vendor_id=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, dish.getDish_id() + "");
             statement.setString(2, dish.getDish_name());
@@ -583,7 +583,7 @@ public class IngredientDAO {
         String query = "";
         try {
             conn = ConnectionManager.getConnection();
-            query = "update Ingredient_Quantity set quantity=?, unit=? where dish_id=? AND ingredient_name=? AND vendor_id=? AND supplier_id=?";
+            query = "update ingredient_quantity set quantity=?, unit=? where dish_id=? AND ingredient_name=? AND vendor_id=? AND supplier_id=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, quantity);
             statement.setString(2, unit);
@@ -661,7 +661,7 @@ public class IngredientDAO {
         ArrayList<Dish> dishList = new ArrayList<Dish>();
         try {
             conn = ConnectionManager.getConnection();
-            query = "select * from Dish";
+            query = "select * from dish";
             statement = conn.prepareStatement(query);
             rs = statement.executeQuery();
             while (rs.next()) {
@@ -699,7 +699,7 @@ public class IngredientDAO {
         Dish dish = null;
         try {
             conn = ConnectionManager.getConnection();
-            query = "select * from Dish where dish_id=?";
+            query = "select * from dish where dish_id=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, UtilityController.convertIntToString(dish_id));
             rs = statement.executeQuery();

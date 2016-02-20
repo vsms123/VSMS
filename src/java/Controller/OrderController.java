@@ -137,28 +137,48 @@ public class OrderController extends HttpServlet {
         StringBuffer htmlTable = new StringBuffer("");
         Iterator iter = supplierOrderMap.keySet().iterator();
         double totalFinalPrice = 0;
+        int count = 1;
         while (iter.hasNext()) {
             Supplier supplier = (Supplier) iter.next();
             Order order = supplierOrderMap.get(supplier);
-            //Create sub categories sections
-            htmlTable.append("<h3>" + supplier.getSupplier_name() + "</h3>");
-            htmlTable.append("<table>");
-            htmlTable.append("<tr>");
-            htmlTable.append("<th></th>");
-            htmlTable.append("</tr>");
+
+            double subtotal = 0;
             for (Orderline orderline : order.getOrderlines()) {
-                htmlTable.append("<tr>");
-                htmlTable.append("<td>" + orderline.getIngredient_name() + "</td>");
-                htmlTable.append("<td>" + orderline.getQuantity() + "</td>");
-                htmlTable.append("<td>" + IngredientController.getIngredient(Integer.toString(orderline.getSupplier_id()), orderline.getIngredient_name()).getSupplyUnit() + "</td>");
-                htmlTable.append("<td>" + UtilityController.convertDoubleToCurrString(orderline.getFinalprice()) + "</td>");
-                htmlTable.append("</tr>");
-                totalFinalPrice += orderline.getFinalprice();
+                subtotal += orderline.getFinalprice();
             }
-            htmlTable.append("</table>");
-            htmlTable.append("<h5>Total order: " + UtilityController.convertDoubleToCurrString(order.getTotal_final_price()) + "</h5>");
+
+            if (subtotal > 0.0) {
+                
+                //Create sub categories sections
+                htmlTable.append("<h3>Supplier #" + count + " " + supplier.getSupplier_name() + "</h3>");
+                count++;
+                htmlTable.append("<div class='ui six wide'>");
+                htmlTable.append("<table class='ui celled table six wide'>");
+                htmlTable.append("<thead><tr>");
+                htmlTable.append("<th>Ingredient</th>");
+                htmlTable.append("<th>Quantity</th>");
+                htmlTable.append("<th>Unit</th>");
+                htmlTable.append("<th>Subtotal</th>");
+                htmlTable.append("</tr></thead>");
+                htmlTable.append("<tbody>");
+                for (Orderline orderline : order.getOrderlines()) {
+                    if (orderline.getFinalprice() > 0.0) {
+                        htmlTable.append("<tr>");
+                        htmlTable.append("<td class='eight wide'>" + orderline.getIngredient_name() + "</td>");
+                        htmlTable.append("<td class='two wide'>" + orderline.getQuantity() + "</td>");
+                        htmlTable.append("<td class='two wide'>" + IngredientController.getIngredient(Integer.toString(orderline.getSupplier_id()), orderline.getIngredient_name()).getSupplyUnit() + "</td>");
+                        htmlTable.append("<td class='two wide'>" + UtilityController.convertDoubleToCurrString(orderline.getFinalprice()) + "</td>");
+                        htmlTable.append("</tr>");
+                        totalFinalPrice += orderline.getFinalprice();
+                    }
+                }
+                htmlTable.append("</tbody>");
+                htmlTable.append("</table>");
+                htmlTable.append("</div>");
+                htmlTable.append("<h2><font color='red'>Total order: " + UtilityController.convertDoubleToCurrString(order.getTotal_final_price()) + "</font></h2><hr/>");
+            }
         }
-        htmlTable.append("Total final price: " + UtilityController.convertDoubleToCurrString(totalFinalPrice));
+        htmlTable.append("<h1><font color='red'>Total final price: " + UtilityController.convertDoubleToCurrString(totalFinalPrice) + "</font></h1>");
         return htmlTable.toString();
     }
 //    Test controller
@@ -232,7 +252,7 @@ public class OrderController extends HttpServlet {
             int aggQuantity = ingredientAggQuantityMap.get(ingredient);
 
             //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
-            Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * aggQuantity, aggQuantity, 0.0);
+            Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * (double) aggQuantity, aggQuantity, 0.0);
             orderlineList.add(orderline);
         }
         //for debugging purpose
@@ -252,7 +272,7 @@ public class OrderController extends HttpServlet {
             int aggQuantity = (int) Math.ceil(ingredientAggQuantityMap.get(ingredient) * bufferqtymultiplier);
 
             //    an orderline needs int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage        //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
-            Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * aggQuantity, aggQuantity, bufferqtyperc);
+            Orderline orderline = new Orderline(vendor_id, order_id, ingredient.getSupplier_id(), ingredient.getName(), UtilityController.convertStringtoDouble(ingredient.getOfferedPrice()) * (double) aggQuantity, aggQuantity, bufferqtyperc);
             orderlineList.add(orderline);
         }
         //for debugging purpose
@@ -394,29 +414,29 @@ public class OrderController extends HttpServlet {
     public static String getSupplierSalesAmountDataTable(int vendor_id) {
         String stringReturn = "[";
         ArrayList<Order> orderList = OrderController.retrieveOrderList(vendor_id);
-        
-       //Need to group the suppliers and amount of sales together
-       HashMap<Supplier,Double> vendorSupplierSales = new HashMap<Supplier,Double>(); 
+
+        //Need to group the suppliers and amount of sales together
+        HashMap<Supplier, Double> vendorSupplierSales = new HashMap<Supplier, Double>();
         for (Order order : orderList) {
-              ArrayList<Orderline> orderlineList = order.getOrderlines();
-              for(Orderline orderline: orderlineList){
-                  Supplier supplier = UserController.retrieveSupplierByID(orderline.getSupplier_id());
-                  double sales = orderline.getFinalprice();
-                  //Polling and input inside hashmap
-                  if(!vendorSupplierSales.containsKey(supplier)){
-                      vendorSupplierSales.put(supplier, sales);
-                  } else{
-                      vendorSupplierSales.put(supplier, vendorSupplierSales.get(supplier)+sales);
-                  }
-              }
+            ArrayList<Orderline> orderlineList = order.getOrderlines();
+            for (Orderline orderline : orderlineList) {
+                Supplier supplier = UserController.retrieveSupplierByID(orderline.getSupplier_id());
+                double sales = orderline.getFinalprice();
+                //Polling and input inside hashmap
+                if (!vendorSupplierSales.containsKey(supplier)) {
+                    vendorSupplierSales.put(supplier, sales);
+                } else {
+                    vendorSupplierSales.put(supplier, vendorSupplierSales.get(supplier) + sales);
+                }
+            }
         }
-        
+
         //Put the hashmap into data table values
         Iterator iter = vendorSupplierSales.keySet().iterator();
-        while(iter.hasNext()){
-            Supplier supplier = (Supplier)iter.next();
+        while (iter.hasNext()) {
+            Supplier supplier = (Supplier) iter.next();
             double totalSales = vendorSupplierSales.get(supplier);
-            
+
             String content = "\"" + supplier.getSupplier_name() + "\"";
             String salesOrderStr = "{v: " + totalSales + ", f: '" + String.format("%1$,.2f", totalSales) + "'}";
             String wrapContent = "[" + content + "," + salesOrderStr + "],";
@@ -428,9 +448,8 @@ public class OrderController extends HttpServlet {
         System.out.println(stringReturn);
         return stringReturn;
     }
-    
-//Make a data table that consists on Vendor --> number of Orders
 
+//Make a data table that consists on Vendor --> number of Orders
     public static String getVendorOrderDataTable() {
         String stringReturn = "[";
         ArrayList<Vendor> vendorList = UserDAO.retrieveVendorList();
@@ -502,11 +521,11 @@ public class OrderController extends HttpServlet {
         System.out.println(stringReturn);
         return stringReturn;
     }
-    
-    public static  ArrayList<Order> getSupplierOrders(int suppID){
+
+    public static ArrayList<Order> getSupplierOrders(int suppID) {
         ArrayList<Integer> suppOrdList = OrderDAO.retrieveSupplierOrders(suppID);
         ArrayList<Order> ordList = new ArrayList<Order>();
-        for(Integer i: suppOrdList){
+        for (Integer i : suppOrdList) {
             ordList.add(OrderDAO.retrieveOrderByID(i));
         }
 //        for (Integer i : suppOrdList) {
@@ -515,11 +534,11 @@ public class OrderController extends HttpServlet {
 //                ordList.add(o);
 //            }
 //        }
-        
+
         return ordList;
     }
-    
-    public static void updateOrdStatus(int order_id, String status){
+
+    public static void updateOrdStatus(int order_id, String status) {
         OrderDAO.updateOrderStatus(order_id, status);
     }
 }

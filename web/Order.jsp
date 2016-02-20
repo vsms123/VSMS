@@ -53,7 +53,7 @@
 
                 <!--Inputting form elements-->
 
-                <form action="OrderBreakdown.jsp" method="get">
+                <form action="OrderBreakdown.jsp" method="POST">
                     <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
 
 
@@ -70,7 +70,7 @@
 
                             <td><h3><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></h3></td>
                             <td> <div class="ui input">
-                                    <input type="number" value=1 placeholder="quantity.." name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>">&nbsp;
+                                    <input type="number" value="0" min="0" max="99999" maxlength="5" placeholder="quantity.." name="dish<%=dish.getDish_id()%>" id="ordervalue<%=dish.getDish_id()%>">&nbsp;
                                 </div>
                             </td>
 
