@@ -54,7 +54,7 @@
                     <input id="password" type="password" name="password" onblur="checkInput(this)" />
                     <label for="password">Password</label>
                 </div>
-                <input type="submit" value="Enter" />
+                <input style="font-size:16px" type="submit" value="Enter" />
             </form>
             <p><%=errorMsg%></p>
             <p><%=succMsg%></p>
