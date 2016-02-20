@@ -55,10 +55,16 @@
                 for (Order orderModal : orderList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
-                $(".test.order.<%=orderModal.getOrder_id()%>").click(function () {
+                $(".test.order.pc.<%=orderModal.getOrder_id()%>").click(function () {
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>').modal('show');
                 });
+
+                    $(".test.order.mobile.<%=orderModal.getOrder_id()%>").click(function () {
+
+                    $('#modalOrder<%=orderModal.getOrder_id()%>mobile').modal('show');
+                });
+
 
                 $("#triggerModal<%=orderModal.getOrder_id()%>accept").click(function () {
 
@@ -334,7 +340,7 @@
                             <div  class="item four wide column" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
-                                    <div class="content test order <%=order.getOrder_id()%>">
+                                    <div class="content test order pc <%=order.getOrder_id()%>">
                                         <h2>Order No. <%=order.getOrder_id()%></h2>
                                     </div>
                                 </a>
@@ -851,10 +857,10 @@
 
 
 
-                    <div id="modalOrder<%=order.getOrder_id()%>" class="ui modal">
+                    <div id="modalOrder<%=order.getOrder_id()%>mobile" class="ui modal">
 
                         <div class="header">
-                            <h1>Order No. <%=order.getOrder_id()%></h1>
+                            <h1>Order No. lala <%=order.getOrder_id()%></h1>
                         </div>
                         <div class="image content">
                             <div class="ui medium image">
@@ -1036,8 +1042,9 @@
 
                             <div  class="item" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
+                                <!--click search-->
                                 <a>
-                                    <div class="content test order <%=order.getOrder_id()%>">
+                                    <div class="content test order mobile <%=order.getOrder_id()%>">
                                         <h2>Order No. <%=order.getOrder_id()%></h2>
                                     </div>
                                 </a>
