@@ -13,6 +13,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="protect.jsp" %>
         <%
             Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             //in case current vendor does not exist
