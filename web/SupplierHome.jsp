@@ -878,7 +878,7 @@
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
-                                    <th>Name413513</th>
+                                    <th>Name</th>
                                     <th>Unit</th>
                                     <th>Price</th>
                                     </tr>
