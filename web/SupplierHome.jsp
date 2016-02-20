@@ -78,7 +78,7 @@
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>mainReject').modal('show');
                 });
-                
+
                 $("#triggerModal<%=orderModal.getOrder_id()%>small_accept").click(function () {
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>small_accept').modal('show');
@@ -840,11 +840,10 @@
                 <!--MOBILE VIEW START-->
 
                 <div id="mobile" class="pusher">
-                    
+
                     <h1 style="color: black">Order History List</h1>
 
                     <%
-
                         //                    creation of order modals and sorting of orders done here
                         for (Order order : orderList) {
                     %>
