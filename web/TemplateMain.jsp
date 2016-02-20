@@ -62,6 +62,20 @@
                             for (OrderTemplate template : templates) {
                         %>
                         <div class="item test template" data-content="Click to view/edit order template"  data-variation="inverted">
+                            <div class="right floated content">
+                                
+                                <form action="EditOrderTemplate.jsp">
+                                <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
+                                <button class="ui green inverted button">Edit</button>
+                                </form>
+                                
+                                <form action="DeleteTemplateServlet">
+                                <input type="hidden" value="1" name="vendor_id"> 
+                                <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
+                                <button class="ui inverted red button">Delete</button>
+                                </form>
+                            </div>
+                            
                             <div class="content">
                                 <h2>
 
@@ -72,16 +86,7 @@
                             </div>
                         </div>
                
-                                <form action="EditOrderTemplate.jsp">
-                                <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
-                                <input type="submit" value="Edit">
-                                </form>
                                 
-                                <form action="DeleteTemplateServlet">
-                                <input type="hidden" value="1" name="vendor_id"> 
-                                <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
-                                <input type="submit" value="Delete">
-                                </form>
                         <%
                             }
                         %>
