@@ -867,11 +867,11 @@
                                     Items:
 
                                 </div>
-                                <table class="ui single line table">
+                                <table class="ui unstackable table">
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
-                                    <th>Name</th>
+                                    <th>Name413513</th>
                                     <th>Unit</th>
                                     <th>Price</th>
                                     </tr>
@@ -1156,7 +1156,7 @@
                                 </div>
 
                                 <button class="ui deny inverted green button" id="triggerModal<%=order.getOrder_id()%>small_mainAccept">Accept</button>
-                                <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>small_mainReject">Reject</button>
+                                <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>mainReject">Reject</button>
 
                             </div>
 
