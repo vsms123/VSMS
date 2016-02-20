@@ -59,6 +59,26 @@
                     $('#modalOrder<%=orderModal.getOrder_id()%>').modal('show');
                 });
 
+                $("#triggerModal<%=orderModal.getOrder_id()%>accept").click(function () {
+
+                    $('#modalOrder<%=orderModal.getOrder_id()%>accept').modal('show');
+                });
+
+                $("#triggerModal<%=orderModal.getOrder_id()%>reject").click(function () {
+
+                    $('#modalOrder<%=orderModal.getOrder_id()%>reject').modal('show');
+                });
+                
+                 $("#triggerModal<%=orderModal.getOrder_id()%>mainAccept").click(function () {
+
+                    $('#modalOrder<%=orderModal.getOrder_id()%>mainAccept').modal('show');
+                });
+
+                $("#triggerModal<%=orderModal.getOrder_id()%>mainReject").click(function () {
+
+                    $('#modalOrder<%=orderModal.getOrder_id()%>mainReject').modal('show');
+                });
+
             <%}%>
             });
 
@@ -149,17 +169,98 @@
                             </div>
                         </div>
                         <div class="actions">
+                            <button class="ui left floated deny inverted orange button">Take me Back</button>
                             <%
                                 if (order.getStatus().equals("pending")) {
                             %>
-                            <form action="SupplierProcessOrder.jsp" method="POST">
-                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
-                                <button onclick="return confirm('Are you sure you want to continue')"  class="ui deny inverted green button" name="action" type="submit" value="accept">Accept</button>
-                                <button onclick="return confirm('Are you sure you want to continue')"  class="ui deny inverted red button" name="action" type="submit" value="reject">Reject</button>
-                            </form><%
+
+                            <div id="modalOrder<%=order.getOrder_id()%>accept" class="ui small modal">
+
+                                <div class="header">
+                                    <h1>Order No. <%=order.getOrder_id()%></h1>
+                                </div>
+                                <div class="image content">
+
+                                    <div class="description">
+                                        <div class="ui header" style="color: black">
+                                            Are you sure you want to <font color="green">ACCEPT</font> order?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                        </div>
+                                        <div class="six float centered wide column">
+                                            <form action="SupplierProcessOrder.jsp" method="POST">
+                                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                                <button class="ui deny large inverted green button" name="action" type="submit" value="accept">Yes</button>
+                                            </form>
+                                        </div>
+                                        <div class="six float centered wide column">
+
+                                            <button class="ui large red deny inverted button">No</button>
+                                        </div> 
+                                        <div class="two wide column">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <!--Modal for rejection here-->          
+
+
+                            <div id="modalOrder<%=order.getOrder_id()%>reject" class="ui small modal">
+
+                                <div class="header">
+                                    <h1>Order No. <%=order.getOrder_id()%></h1>
+                                </div>
+                                <div class="image content">
+
+                                    <div class="description">
+                                        <div class="ui header" style="color: black">
+                                            Are you sure you want to <font color="red">REJECT</font> order?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                        </div>
+                                        <div class="six float centered wide column">
+                                            <form action="SupplierProcessOrder.jsp" method="POST">
+                                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                                <button class="ui deny large inverted green button" name="action" type="submit" value="reject">Yes</button>
+                                            </form>
+                                        </div>
+                                        <div class="six float centered wide column">
+
+                                            <button class="ui large red deny inverted button">No</button>
+                                        </div> 
+                                        <div class="two wide column">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+
+                            <button   class="ui inverted green button" id="triggerModal<%=order.getOrder_id()%>accept">Accept</button>
+                            <button  class="ui inverted red button" id="triggerModal<%=order.getOrder_id()%>reject">Reject</button>
+
+                            </form>
+
+                            <%
                                 }
                             %>
-                            <button class="ui deny inverted orange button">Take me Back</button>
+
                         </div>
                     </div>
 
@@ -208,46 +309,125 @@
 
 
 
-                            <div  class="item test order four wide column <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div  class="item four wide column" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
-                                    <div class="content">
-                                        <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
-                                    </div>
-                                    <div>
-                                        Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
-                                        <br>
-                                        Price: $<%=order.getTotal_final_price()%> &nbsp;
-                                        <br>
-                                        &nbsp;
-
-
-                                    </div>
-                                    <div>
-                                        <% int counter = 1;
-                                            for (Orderline o : order.getOrderlines()) {
-                                                if (counter <= 3) {
-                                        %>
-                                        <div><%=counter%>. <%=o.getIngredient_name()%> x <%=o.getQuantity()%></div>
-                                        <%
-                                                    counter++;
-                                                }
-
-                                            }
-                                            if (counter > 3) {
-                                        %>
-                                        <br>
-                                        Tap to view <%=counter - 2%> more item(s)
-                                        <%
-                                            }
-                                        %>    
+                                    <div class="content test order <%=order.getOrder_id()%>">
+                                        <h2>Order No. <%=order.getOrder_id()%></h2>
                                     </div>
                                 </a>
-                                <form action="SupplierProcessOrder.jsp" method="POST">
-                                    <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
-                                    <button class="ui deny inverted green button" name="action" type="submit" value="accept">Accept</button>
-                                    <button class="ui deny inverted red button" name="action" type="submit" value="reject">Reject</button>
-                                </form>
+                                <%=order.getDtOrder()%> 
+                                <div>
+                                    Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
+                                    <br>
+                                    Price: $<%=order.getTotal_final_price()%> &nbsp;
+                                    <br>
+                                    &nbsp;
+
+
+                                </div>
+                                <div>
+                                    <% int counter = 1;
+                                        for (Orderline o : order.getOrderlines()) {
+                                            if (counter <= 3) {
+                                    %>
+                                    <div><%=counter%>. <%=o.getIngredient_name()%> x <%=o.getQuantity()%></div>
+                                    <%
+                                                counter++;
+                                            }
+
+                                        }
+                                        if (counter > 3) {
+                                    %>
+                                    <br>
+                                    Tap to view <%=counter - 2%> more item(s)
+                                    <%
+                                        }
+                                    %>    
+                                </div>
+                                <br/>
+
+                                <!--modal for main accept-->
+
+                                <div id="modalOrder<%=order.getOrder_id()%>mainAccept" class="ui small modal">
+
+                                    <div class="header">
+                                        <h1>Order No. <%=order.getOrder_id()%></h1>
+                                    </div>
+                                    <div class="image content">
+
+                                        <div class="description">
+                                            <div class="ui header" style="color: black">
+                                                Are you sure you want to <font color="green">ACCEPT</font> order?
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="ui grid">
+                                            <div class="two wide column">
+                                            </div>
+                                            <div class="six float centered wide column">
+                                                <form action="SupplierProcessOrder.jsp" method="POST">
+                                                    <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                                    <button class="ui deny inverted green button" name="action" type="submit" value="accept">Yes</button>
+                                                </form>
+                                            </div>
+                                            <div class="six float centered wide column">
+
+                                                <button class="ui large red deny inverted button">No</button>
+                                            </div> 
+                                            <div class="two wide column">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!--main accept-->
+                                    <!--main rejection starts here-->
+                                    
+                                    
+                                    <div id="modalOrder<%=order.getOrder_id()%>mainReject" class="ui small modal">
+
+                                <div class="header">
+                                    <h1>Order No. <%=order.getOrder_id()%></h1>
+                                </div>
+                                <div class="image content">
+
+                                    <div class="description">
+                                        <div class="ui header" style="color: black">
+                                            Are you sure you want to <font color="red">REJECT</font> order?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                        </div>
+                                        <div class="six float centered wide column">
+                                            <form action="SupplierProcessOrder.jsp" method="POST">
+                                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                                <button class="ui deny large inverted green button" name="action" type="submit" value="reject">Yes</button>
+                                            </form>
+                                        </div>
+                                        <div class="six float centered wide column">
+
+                                            <button class="ui large red deny inverted button">No</button>
+                                        </div> 
+                                        <div class="two wide column">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                                    <!--main reject-->
+                                    
+                                    
+                                    
+                                </div>
+
+                                    <button class="ui deny inverted green button" id="triggerModal<%=order.getOrder_id()%>mainAccept">Accept</button>
+                                    <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>mainReject">Reject</button>
+                                
                             </div>
 
 
@@ -256,6 +436,10 @@
 
 
                         </div>
+
+                        <!--Outside-->
+
+
 
 
                         <!--Printing the beyond the 10th pending order-->

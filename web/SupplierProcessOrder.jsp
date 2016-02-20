@@ -42,7 +42,7 @@
 
 
             <div class="ui segment" style="left:5%;width:90%">
-                <%@ include file="Navbar.jsp" %>
+                <%@ include file="SuppNavbar.jsp" %>
 
 
                 <h1 style="color: black">Order History List</h1>
@@ -57,7 +57,7 @@
                 %>
                 
                 <div class="actions">
-                    <form action="SupplierReviewOrders.jsp">
+                    <form action="SupplierHome.jsp">
                         <button class="ui deny inverted orange button" type="submit">Take me Back</button>
                     </form>
                 </div>

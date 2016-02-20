@@ -193,10 +193,10 @@
 
 
 
-                        <div  class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                        <div  class="item" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                             <a>
-                                <div class="content">
+                                <div class="content test order <%=order.getOrder_id()%>">
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
                                 <div>
@@ -220,27 +220,34 @@
 
                                         }
                                         if (counter > 3) {
-                                            %>
-                                            <br>
-                                            Tap to view <%=counter-2%> more item(s)
-                                            <%
+                                    %>
+                                    <br>
+                                    Tap to view <%=counter - 2%> more item(s)
+                                    <%
                                         }
                                     %>    
                                 </div>
                             </a>
                         </div>
-                        <form action="SupplierProcessOrder.jsp" method="POST">
+
+
+                        <!--Reject or accept-->
+
+                        
+  <form action="SupplierProcessOrder.jsp" method="POST">
                             <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
                             <button class="ui deny inverted green button" name="action" type="submit" value="accept">Accept</button>
                             <button class="ui deny inverted red button" name="action" type="submit" value="reject">Reject</button>
                         </form>
+
+
 
                         <%}
                             }%>
 
 
                     </div>
-
+                          
 
                     <!--Printing the beyond the 10th pending order-->
                     <%
