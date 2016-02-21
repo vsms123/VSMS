@@ -138,7 +138,13 @@
 
                 <!--PC VIEW START-->
                 <div id="pc" class="pusher">
-                    <h1 style="color: black">Order History List</h1>
+                    <h1 class="ui header">
+                        <i class="history icon"></i>
+                        <div class="content" >
+                            Order History
+                            <div  style="color:black"  class="sub header">Viewing/Approving Received Orders</div>
+                        </div>
+                    </h1>
 
                     <%
 
