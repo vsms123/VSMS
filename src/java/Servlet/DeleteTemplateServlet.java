@@ -49,7 +49,7 @@ public class DeleteTemplateServlet extends HttpServlet {
                 OrderDAO.deleteTemplate(template);
             }
         }
-        response.sendRedirect("/VSMS/TemplateMain.jsp");
+        response.sendRedirect("TemplateMain.jsp");
         
     }
 

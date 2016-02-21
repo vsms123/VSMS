@@ -53,14 +53,14 @@ public class EditTemplateServlet extends HttpServlet {
                     }
                 }
                 if (count == 0) {
-                    response.sendRedirect("/VSMS/OrderTemplate.jsp?errorMsg=Please create a template with at least 1 dish&orderId=" + template.getOrder_id());
+                    response.sendRedirect("OrderTemplate.jsp?errorMsg=Please create a template with at least 1 dish&orderId=" + template.getOrder_id());
                 } else {
 
                     template.setDishList(dishList);
                     template.setStringList(quantityList);
                     template.setName(request.getParameter("templateName"));
                     OrderDAO.updateTemplate(template);
-                    response.sendRedirect("/VSMS/TemplateMain.jsp");
+                    response.sendRedirect("TemplateMain.jsp");
                 }
             }
         }
