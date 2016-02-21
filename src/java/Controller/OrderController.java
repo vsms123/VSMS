@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 import javamail.EmailController;
+import javamail.EmailControllerAWS;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -92,7 +93,9 @@ public class OrderController extends HttpServlet {
 
                     //MailController Method
 //              Will send the email to all the suppliers and the vendor
+//                    EmailControllerAWS.sendOrderMessageToVendorSupplier(order, vendor_id);
                     EmailController.sendOrderMessageToVendorSupplier(order, vendor_id);
+
                 }
                 response.sendRedirect("Order.jsp");
             }
@@ -124,6 +127,8 @@ public class OrderController extends HttpServlet {
 
             //MailController Method
             //Will send the email to all the suppliers and the vendor
+//            EmailControllerAWS.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
+            
             EmailController.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
 
             response.sendRedirect("SupplierConfirmationThankYou.jsp");
@@ -511,7 +516,7 @@ public class OrderController extends HttpServlet {
 
                 //Iterate through the treemap
                 Iterator iter = dateCountMap.keySet().iterator();
-                
+
                 while (iter.hasNext()) {
                     Date date = (Date) iter.next();
                     int counts = dateCountMap.get(date);
