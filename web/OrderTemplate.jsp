@@ -79,6 +79,8 @@
                         %>
                     </table>
                     <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"/>
+                    <input type="hidden" name="order_id" value="<%=UtilityController.convertStringtoInt(orderId)%>"/>
+                    <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Edit</button>
                     <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Place Order</button>
                 </form>  
                 <%
