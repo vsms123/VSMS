@@ -99,9 +99,9 @@
                 <br/>
 <h2 style="color: black">Search by:</h2>
                 <div class="ui top attached tabular menu">
-                    <a class="item active" data-tab="first" id="supplier_name_tab"><h3>Supplier Name</h3></a>
-                    <a class="item" data-tab="second" id="supplier_type_tab"><h3>Supplier Type</h3></a>
-                    <a class="item" data-tab="third" id="ingredient_name_tab"><h3>Ingredients</h3></a>
+                    <a class="item active" style="font-size:18px" data-tab="first" id="supplier_name_tab">Supplier Name</a>
+                    <a class="item" style="font-size:18px" data-tab="second" id="supplier_type_tab">Supplier Type</a>
+                    <a class="item" style="font-size:18px" data-tab="third" id="ingredient_name_tab">Ingredients</a>
                 </div>
 
                 <div class="ui bottom attached tab segment active" id="supplier_name_div" data-tab="first">
