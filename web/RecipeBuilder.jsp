@@ -126,6 +126,16 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
+                
+                <h1 class="ui header">
+                    <img src="resource/pictures/dishIcon.png" alt="HTML5 Icon" style="width:45px;height:45px;">
+                    
+                    <div class="content">
+                        Ingredient Profile
+                        <div class="sub header">Check this ingredient</div>
+                    </div>
+                </h1>
+                <br/>
 
                 <h1 style="color:black"><%=IngredientController.getDishByID(UtilityController.convertStringtoInt(dish_idStr)).getDish_name()%></h1>
 

@@ -27,8 +27,7 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
 
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
@@ -36,7 +35,7 @@
         %>
         <script>
             $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
-            
+
             }
         </script>
 
@@ -48,8 +47,15 @@
         <div class="transparency">
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-
-                <h1 style="color: black">Order</h1>
+                <h1 class="ui header">
+                    <i class="in cart icon"></i>
+                    <div class="content" >
+                        Order Creation
+                        <div  style="color:black"  class="sub header">Making an Order</div>
+                    </div>
+                </h1>
+                <br/>
+                <!--<h1 style="color: black">Order</h1>-->
 
                 <!--Inputting form elements-->
 
@@ -63,7 +69,7 @@
                         <tr>
                             <th><h2>Dish</h2></th><th><h2>Quantity</h2></th>
                         </tr>
-                        <%                    
+                        <%
                             for (Dish dish : dishList) {
                         %>
                         <tr>

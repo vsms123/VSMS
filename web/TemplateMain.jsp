@@ -14,8 +14,7 @@
 <html>
     <head>
         <%@ include file="protect.jsp" %>
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             //in case current vendor does not exist
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
@@ -28,7 +27,7 @@
         <title>Order Template Main</title>
         <script>
 
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('.test.template').popup({
                     position: 'top left'
                 });
@@ -45,10 +44,15 @@
                 <div  class="ui segment" style="left:5%;width:90%">
 
                     <%@ include file="Navbar.jsp" %>
+                    <h1 class="ui header">
+                        <i class="file text outline icon"></i>
+                        <div class="content" >
+                            Order Template
+                            <div  style="color:black"  class="sub header">Managing/Ordering With Order Templates</div>
+                        </div>
+                    </h1>
+                    <br/>
 
-                    <p></p>
-
-                    <h1 style="color:black">Order Templates</h1><br/>
                     <%
                         //in case current vendor does not exist
                         if (currentVendor == null) {
@@ -63,30 +67,30 @@
                         %>
                         <div class="item test template" data-content="Click to view/edit order template"  data-variation="inverted">
                             <div class="right floated content">
-                                
+
                                 <form action="EditOrderTemplate.jsp">
-                                <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
-                                <button class="ui green inverted button">Edit</button>
+                                    <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
+                                    <button class="ui green inverted button">Edit</button>
                                 </form>
-                                
+
                                 <form action="DeleteTemplateServlet">
-                                <input type="hidden" value="1" name="vendor_id"> 
-                                <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
-                                <button class="ui inverted red button">Delete</button>
+                                    <input type="hidden" value="1" name="vendor_id"> 
+                                    <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
+                                    <button class="ui inverted red button">Delete</button>
                                 </form>
                             </div>
-                            
+
                             <div class="content">
                                 <h2>
 
                                     <a href="OrderTemplate.jsp?orderId=<%=template.getOrder_id()%>"><%=template.getName()%></a>
-                  
+
                                 </h2>
-                                
+
                             </div>
                         </div>
-               
-                                
+
+
                         <%
                             }
                         %>

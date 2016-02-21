@@ -147,7 +147,7 @@
         <div id="modalMessage" class="ui basic modal">
             <i class="close icon"></i>
             <div class="header">
-                <h1>Message</h1>
+                <h1>Messages</h1>
             </div>
             <div class="image content">
                 <div class="ui medium image">
@@ -168,14 +168,14 @@
         <div id="modalAccount" class="ui basic modal">
             <i class="close icon"></i>
             <div class="header">
-                <h1>Account/Profile</h1>
+                <h1>Account Settings</h1>
             </div>
             <div class="image content">
                 <div class="ui medium image">
                     <img src="./resource/pictures/underconstruction.PNG">
                 </div>
                 <div class="description">
-                    <p><h2>Users manage their Account and Profile.</h2></p>
+                    <p><h2>Where Users manage their Account Settings.</h2></p>
                     <div class="ui header" style="color: white">Coming soon..</div>
                     <p>Feature currently being developed. You will be notified about the launch of this feature.</p>
 

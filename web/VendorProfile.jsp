@@ -53,13 +53,13 @@
                         currentVendor = UserController.retrieveVendorByID(1);
                     }
                 %>
-                <h2 class="ui header">
+                <h1 class="ui header">
                     <i class="user icon"></i>
                     <div class="content">
                         View Profile
-                        <div class="sub header">Manage Your Profile</div>
+                        <div  style="color:black"  class="sub header">Managing Your Profile</div>
                     </div>
-                </h2>
+                </h1>
                 <h1 style="color:black"><%=currentVendor.getVendor_name()%></h1>
 
 

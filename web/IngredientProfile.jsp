@@ -48,14 +48,14 @@
                     Ingredient ingredient = IngredientController.getIngredient(supplierIdStr, ingredientName);
                 %>
 
-                <h2 class="ui header">
+                <h1 class="ui header">
                     <img src="resource/pictures/carrot.png" alt="HTML5 Icon" style="width:45px;height:45px;">
                     
                     <div class="content">
                         Ingredient Profile
                         <div class="sub header">Check this ingredient</div>
                     </div>
-                </h2>
+                </h1>
                 <h1 style="color:black"><%=ingredient.getName()%></h1>
                 <table class="ui very padded large striped  table">
                     
