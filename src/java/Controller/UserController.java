@@ -225,20 +225,39 @@ public class UserController extends HttpServlet {
         StringBuffer htmlTable = new StringBuffer("");
 
         for (Ingredient ingredient : ingredientList) {
-            htmlTable.append("<div class='item test ingredient'><a><div class='content'>");
-            //Need to send in a list with this supplier_id to SupplierSearchProfile
-            htmlTable.append("<h3>" + ingredient.getName() + "</h3>");
-            htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
-            htmlTable.append("" + ingredient.getSubcategory() + "</div>");
-            htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
-            htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
-            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></div>");
-            htmlTable.append("</div></div></a></div>");
-            if (!ingredientVendorList.contains(ingredient)) {
-                htmlTable.append("<button id=\"add-ingredient-modal-button" + ingredient.getSupplier_id() + ingredient.getName().replaceAll("\\s+", "_") + "\">Add This Ingredient</button>");
+//            htmlTable.append("<div class='item test ingredient'><a><div class='content'>");
+//            //Need to send in a list with this supplier_id to SupplierSearchProfile
+//            htmlTable.append("<h3>" + ingredient.getName() + "</h3>");
+//            htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
+//            htmlTable.append("" + ingredient.getSubcategory() + "</div>");
+//            htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
+//            htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
+//            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></div>");
+//            htmlTable.append("</div></div></a></div>");
+            
+            
+            
+            String s = ingredient.getName().replaceAll(" ", "%20");
+            htmlTable.append("<div class='item test'>");
+             if (!ingredientVendorList.contains(ingredient)) {
+                htmlTable.append(" <div class=\"right floated content\"><button class='ui green inverted button' id=\"add-ingredient-modal-button" + ingredient.getSupplier_id() + ingredient.getName().replaceAll("\\s+", "_") + "\">Add to Dish</button></div>");
             } else {
                 htmlTable.append("<font color =\"red\">Already added</font>");
             }
+            htmlTable.append("<div class='content'>");
+            //Need to send in a list with this supplier_id to SupplierSearchProfile
+            //Replacement of ingredient name is necessary to settle an ingredient name with a space in between
+
+            htmlTable.append( "<div style='color:black;font-size:20px'><b>" + ingredient.getName() + "</b></div>");
+            //<a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>"><%=ingredient.getName()%></a>
+//            htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
+//            htmlTable.append("" + ingredient.getSubcategory() + "</div>");
+            htmlTable.append("<div><div style=\"color:black;font-size:16px;\">Supplier: " + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</div>");
+//            htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
+//            htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
+
+           
+            htmlTable.append("</div></div><br/></div>");
         }
         return htmlTable.toString();
     }
