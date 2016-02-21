@@ -93,8 +93,8 @@ public class OrderController extends HttpServlet {
 
                     //MailController Method
 //              Will send the email to all the suppliers and the vendor
-//                    EmailControllerAWS.sendOrderMessageToVendorSupplier(order, vendor_id);
-                    EmailController.sendOrderMessageToVendorSupplier(order, vendor_id);
+                    EmailControllerAWS.sendOrderMessageToVendorSupplier(order, vendor_id);
+//                    EmailController.sendOrderMessageToVendorSupplier(order, vendor_id);
 
                 }
                 response.sendRedirect("Order.jsp");
@@ -127,9 +127,9 @@ public class OrderController extends HttpServlet {
 
             //MailController Method
             //Will send the email to all the suppliers and the vendor
-//            EmailControllerAWS.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
+            EmailControllerAWS.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
             
-            EmailController.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
+//            EmailController.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
 
             response.sendRedirect("SupplierConfirmationThankYou.jsp");
         }
