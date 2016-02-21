@@ -75,7 +75,7 @@
                 //To confirm the creation of ingredients
                 $("#confirm-dish").click(function () {
                     $.ajaxSetup({async: false});
-                    $("#loading").show();
+                    $(".loading").show();
 
                     setTimeout(function () {
                         $.get("ingredientservlet", {dish_id: "<%=dish_idStr%>", action: "confirmIngredientQuantity"<%=valueSent%>}, function (responseText) {
@@ -108,10 +108,10 @@
 
             });
             $(document).ajaxStart(function () {
-                $("#loading").show();
+                $(".loading").show();
             });
             $(document).ajaxStop(function () {
-                $("#loading").hide();
+                $(".loading").hide();
             });
         </script>
         <!--CSS-->
@@ -126,10 +126,10 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-                
+
                 <h1 class="ui header">
                     <img src="resource/pictures/dishIcon.png" alt="HTML5 Icon" style="width:45px;height:45px;">
-                    
+
                     <div class="content">
                         Recipe Builder
                         <div class="sub header" style="color:black">Designing your own Dish</div>
@@ -174,12 +174,17 @@
                 <br/>
                 <!--To open Search ingredient modal-->
                 <button name="submit" class="ui large green button" id="create-ingredient-button"><i class="plus icon"></i>Add Ingredient</button>
+
+
+
+
                 <!--To settle the quantities of all lines-->
                 <button type="submit" name="submit" class="ui large green button" id="confirm-dish"><i class="checkmark icon"></i>Save Dish</button>
                 <!--Shown while ajax is loading-->
-                <p id="loading"><font color="red">Your request is loading...</font></p>
 
-
+                <div class="ui loading">
+                    <p ><div class="ui active inline loader"></div><font color="red">&nbsp Your request is loading...</font></p>
+                </div>
                 <!--MODAL DIV //This will be used to put the filtering process -->
 
                 <div id="create-ingredient-modal" class="ui small modal">
@@ -188,9 +193,24 @@
                         <h2>Add Ingredients</h2> 
                     </div>
                     <div class="content">
-                        <h3 style="color:black">Find Ingredient : </h3> <div class="ui input"><input type="text" name="searchingredient" id="searchingredient" value=""/></div>
-                        <table id="ingredientlist" class="ui single line table">                                
-                        </table>
+                        <h3 style="color:black">Find Ingredient : </h3> 
+                        <div class="ui input">
+                            <input type="text" name="searchingredient" id="searchingredient" value=""/>
+
+
+                        </div>
+
+                        <div class="ui segment">
+                            <div class="ui active inverted top dimmer loading">
+
+                                <div class="ui text loader">Loading</div>
+                            </div>
+                            <div id="ingredientlist" class="ui middle aligned animated selection divided list">
+
+                            </div>
+
+                        </div>
+
                     </div>
 
                     <div class="actions">

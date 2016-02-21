@@ -115,21 +115,25 @@
                     </div>
                 </div>
                 <!--printing of loading status-->
-                <p class="loading"><font color="red">Your request is loading...</font></p>
+                
                 <hr>
                 <% } else { %>
                 No dishes selected.
                 <% } %>
-
-                <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
-                <div class="content-model-table">                            
+                <div class="ui segment">
+                    <div class="ui active inverted dimmer loading">
+                        <div class="ui large text loader">Loading</div>
+                    </div>
+                    <div class="content-model-table">  
+                    </div>
                 </div>
+                <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
+
+
                 <br>
                 <% if (total > 0) { %>
                 <button class="ui green inverted large button" id="confirm-order-breakdown"> <i class="check icon"></i>Confirm Order Breakdown</button>
-                <font color="red"><div class="ui active dimmer loading">
-                    <div class="ui loader"></div>
-                </div></font>
+
                 <% }%>
             </div>
         </div>
