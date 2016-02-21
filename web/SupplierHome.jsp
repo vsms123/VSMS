@@ -160,7 +160,6 @@
                             <div class="description">
                                 <div class="ui header" style="color: black">
                                     Order ID : <%=order.getOrder_id()%> <br/>
-                                    Supplier : <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> <br/>
                                     Date : <%=order.getDtOrder()%> <br/><br/>
                                     Items:
 
@@ -169,10 +168,10 @@
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
-                                            <th>Name</th>
-                                            <th>Unit</th>
-                                            <th>Price</th>
-                                        </tr>
+                                    <th>Name</th>
+                                    <th>Unit</th>
+                                    <th>Price</th>
+                                    </tr>
                                     </thead>
                                     <%
                                         int count = 0;
@@ -197,11 +196,11 @@
                             </div>
                         </div>
                         <div class="actions">
-                            <button class="ui left floated deny inverted orange button">Take me Back</button>
+
                             <%
                                 if (order.getStatus().equals("pending")) {
                             %>
-
+                            <button class="ui left floated deny inverted orange button">Take me Back</button>
                             <div id="modalOrder<%=order.getOrder_id()%>accept" class="ui small modal">
 
                                 <div class="header">
@@ -357,6 +356,10 @@
                             <!--main reject-->
 
                             <%
+                            } else {
+                            %>
+                            <button class="ui deny inverted orange button">Take me Back</button>
+                            <%
                                 }
                             %>
 
@@ -452,7 +455,7 @@
 
 
                             <%}
-                            }%>
+                                }%>
 
 
                         </div>
@@ -484,35 +487,35 @@
                                     <div class="content ">
                                         <h2>Order No. <%=order.getOrder_id()%></h2>
                                     </div>
-                                
-                                <%=order.getDtOrder()%> 
-                                <div>
-                                    Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
-                                    <br>
-                                    Price: $<%=order.getTotal_final_price()%> &nbsp;
-                                    <br>
-                                    &nbsp;
+
+                                    <%=order.getDtOrder()%> 
+                                    <div>
+                                        Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
+                                        <br>
+                                        Price: $<%=order.getTotal_final_price()%> &nbsp;
+                                        <br>
+                                        &nbsp;
 
 
-                                </div>
-                                <div>
-                                    <% int counter = 1;
-                                        for (Orderline o : order.getOrderlines()) {
-                                            if (counter <= 3) {
-                                    %>
-                                    <div><%=counter%>. <%=o.getIngredient_name()%> x <%=o.getQuantity()%></div>
-                                    <%
-                                                counter++;
+                                    </div>
+                                    <div>
+                                        <% int counter = 1;
+                                            for (Orderline o : order.getOrderlines()) {
+                                                if (counter <= 3) {
+                                        %>
+                                        <div><%=counter%>. <%=o.getIngredient_name()%> x <%=o.getQuantity()%></div>
+                                        <%
+                                                    counter++;
+                                                }
+
                                             }
-
-                                        }
-                                        if (counter > 3) {
-                                    %>
-                                    Tap to view <%=counter - 2%> more item(s)
-                                    <%
-                                        }
-                                    %>    
-                                </div>
+                                            if (counter > 3) {
+                                        %>
+                                        Tap to view <%=counter - 2%> more item(s)
+                                        <%
+                                            }
+                                        %>    
+                                    </div>
                                 </a>
                                 <br/>
                                 <button class="ui deny inverted green button" id="triggerModal<%=order.getOrder_id()%>mainAccept">Accept</button>
@@ -522,7 +525,7 @@
 
 
                             <%}
-                            }%>
+                                }%>
                         </div>
 
                         <%}%>
@@ -586,7 +589,7 @@
 
 
 
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div class="item test order pc <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
                                     <div class="content">
@@ -602,7 +605,7 @@
                             </div>
 
                             <%}
-                            }%>
+                                }%>
 
                         </div>
                         <!--end of printing first 10 completed orders-->  
@@ -625,7 +628,7 @@
                             %>
 
 
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div class="item test order pc <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
                                     <div class="content">
@@ -643,7 +646,7 @@
 
 
                             <%}
-                            }%>
+                                }%>
                         </div>
 
                         <%}%>
@@ -717,7 +720,7 @@
 
 
 
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div class="item test order pc <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
                                     <div class="content">
@@ -733,7 +736,7 @@
                             </div>
 
                             <%}
-                            }%>
+                                }%>
 
                         </div>
                         <!--end of printing first 10 completed orders-->  
@@ -758,7 +761,7 @@
                             %>
 
 
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div class="item test order pc <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
                                     <div class="content">
@@ -776,7 +779,7 @@
 
 
                             <%}
-                            }%>
+                                }%>
                         </div>
 
                         <%}%>
@@ -840,7 +843,6 @@
                             <div class="description">
                                 <div class="ui header" style="color: black">
                                     Order ID : <%=order.getOrder_id()%> <br/>
-                                    Supplier : <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> <br/>
                                     Date : <%=order.getDtOrder()%> <br/><br/>
                                     Items:
 
@@ -849,10 +851,10 @@
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
-                                            <th>Name</th>
-                                            <th>Unit</th>
-                                            <th>Price</th>
-                                        </tr>
+                                    <th>Name</th>
+                                    <th>Unit</th>
+                                    <th>Price</th>
+                                    </tr>
                                     </thead>
                                     <%
                                         int count = 0;
@@ -878,6 +880,7 @@
                         </div>
                         <div class="actions">
                             <button class="ui left floated deny inverted orange button">Take me Back</button>
+
                             <%
                                 if (order.getStatus().equals("pending")) {
                             %>
@@ -1034,6 +1037,10 @@
                             <!--main reject-->
 
                             <%
+                            } else { %>
+
+                            <button class="ui deny inverted orange button">Take me Back</button>
+                            <%
                                 }
                             %>
 
@@ -1123,7 +1130,7 @@
                             <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>small_mainReject">Reject</button>
                             <br/><br/>
                             <%}
-                            }%>
+                                }%>
 
 
                         </div>
@@ -1195,7 +1202,7 @@
                             <br/><br/>
 
                             <%}
-                            }%>
+                                }%>
                         </div>
 
                         <%}%>
@@ -1275,7 +1282,7 @@
 
 
 
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div class="item test order mobile <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
                                     <div class="content">
@@ -1291,7 +1298,7 @@
                             </div>
 
                             <%}
-                            }%>
+                                }%>
 
                         </div>
                         <!--end of printing first 10 completed orders-->  
@@ -1316,7 +1323,7 @@
                             %>
 
 
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div class="item test order mobile <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
                                     <div class="content">
@@ -1334,7 +1341,7 @@
 
 
                             <%}
-                            }%>
+                                }%>
                         </div>
 
                         <%}%>
@@ -1437,7 +1444,7 @@
 
 
 
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div class="item test order mobile <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
                                     <div class="content">
@@ -1453,7 +1460,7 @@
                             </div>
 
                             <%}
-                            }%>
+                                }%>
 
                         </div>
                         <!--end of printing first 10 completed orders-->  
@@ -1478,7 +1485,7 @@
                             %>
 
 
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div class="item test order mobile <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                 <a>
                                     <div class="content">
@@ -1496,7 +1503,7 @@
 
 
                             <%}
-                            }%>
+                                }%>
                         </div>
 
                         <%}%>
