@@ -122,7 +122,7 @@
                 data.addColumn('date', 'Time of Day');
                 data.addColumn('number', '#Orders Made');
 
-                data.addRows(<%=OrderController.getDateOrderDataTable()%>);
+                data.addRows(<%=OrderController.getDateOrderDataTable(currentVendor.getVendor_id())%>);
 
 
                 var options = {
@@ -130,7 +130,7 @@
                     width: 900,
                     height: 500,
                     hAxis: {
-                        format: 'M/d/yy',
+                        format: 'dd/M/yyyy',
                         gridlines: {count: 15}
                     },
                     vAxis: {

@@ -15,8 +15,8 @@ import Model.Orderline;
 import Model.Supplier;
 import Model.Vendor;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,7 +40,6 @@ public class OrderController extends HttpServlet {
         //An ingredient will have  int supplier_id; String name;private String supplyUnit;private String subcategory;private String description;private String offeredPrice;
         //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
         //An  order int order_id,int vendor_id; double total_final_price;Date dt_order;ArrayList<Orderline> orderlines;
-        
         String vendor_idStr = request.getParameter("vendor_id");
         ArrayList<Dish> dishList = IngredientDAO.getDish(vendor_idStr);
         String action = request.getParameter("action");
@@ -150,7 +149,7 @@ public class OrderController extends HttpServlet {
             }
 
             if (subtotal > 0.0) {
-                
+
                 //Create sub categories sections
                 htmlTable.append("<h3>Supplier #" + count + " " + supplier.getSupplier_name() + "</h3>");
                 count++;
@@ -178,7 +177,7 @@ public class OrderController extends HttpServlet {
                 htmlTable.append("</tbody>");
                 htmlTable.append("</table>");
                 htmlTable.append("</div>");
-                
+
             }
         }
         htmlTable.append("<h2><font color='red'>Total price: $" + UtilityController.convertDoubleToCurrString(totalFinalPrice) + "</font></h2>");
@@ -493,32 +492,37 @@ public class OrderController extends HttpServlet {
     }
 
     //Make a data table that consists on Date --> order count sales total
-    public static String getDateOrderDataTable() {
+    public static String getDateOrderDataTable(int vendorid) {
         String stringReturn = "[";
         ArrayList<Vendor> vendorList = UserDAO.retrieveVendorList();
         TreeMap<Date, Integer> dateCountMap = new TreeMap<Date, Integer>();
         for (Vendor vendor : vendorList) {
-            String content = "\"" + vendor.getVendor_name() + "\"";
-            double salesOrder = 0.0;
-            for (Order order : retrieveOrderList(vendor.getVendor_id())) {
-                Date date = order.getDtOrder();
-                if (dateCountMap.containsKey(date)) {
-                    dateCountMap.put(date, dateCountMap.get(date) + 1);
-                } else {
-                    dateCountMap.put(date, 1);
+            if (vendor.getVendor_id() == vendorid) {
+                String content = "\"" + vendor.getVendor_name() + "\"";
+                double salesOrder = 0.0;
+                for (Order order : retrieveOrderList(vendor.getVendor_id())) {
+                    Date date = order.getDtOrder();
+                    if (dateCountMap.containsKey(date)) {
+                        dateCountMap.put(date, dateCountMap.get(date) + 1);
+                    } else {
+                        dateCountMap.put(date, 1);
+                    }
                 }
-            }
 
-            //Iterate through the treemap
-            Iterator iter = dateCountMap.keySet().iterator();
-            while (iter.hasNext()) {
-                Date date = (Date) iter.next();
-                int counts = dateCountMap.get(date);
-                //It needs to be like[new Date(2015, 0, 1), 5]
-                String dateOrderStr = "new Date(" + date.getYear() + ", " + date.getMonth() + "," + date.getDate() + ")";
-                String wrapContent = "[" + dateOrderStr + "," + counts + "],";
-                stringReturn += wrapContent;
+                //Iterate through the treemap
+                Iterator iter = dateCountMap.keySet().iterator();
+                
+                while (iter.hasNext()) {
+                    Date date = (Date) iter.next();
+                    int counts = dateCountMap.get(date);
+                    //It needs to be like[new Date(2015, 0, 1), 5]
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+                    String dateOrderStr = "new Date(" + calendar.get(Calendar.YEAR) + ", " + calendar.get(Calendar.MONTH) + "," + calendar.get(Calendar.DAY_OF_MONTH) + ")";
+                    String wrapContent = "[" + dateOrderStr + "," + counts + "],";
+                    stringReturn += wrapContent;
 
+                }
             }
 
         }
