@@ -13,8 +13,7 @@
         <!--Form VALIDATION-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             //in case current vendor does not exist
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
@@ -56,21 +55,28 @@
         <div class="transparency">
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
+                <h1 class="ui header">
+                    <i class="empty star icon"></i>
+                    <div class="content" >
+                        Favorite Suppliers
+                        <div  style="color:black"  class="sub header">Managing your favorite suppliers</div>
+                    </div>
+                </h1>
+                <br/>
 
-                <h1 style="color:black">Your Favorite Suppliers</h1>
                 <div class="ui middle aligned animated selection divided list">
                     <%for (Supplier supplier : favSupplierList) {%>
 
                     <div class="item test supplier" data-content="Click to go to Supplier's page"  data-variation="inverted">
                         <div class="extra right floated content">
-                            <button class="ui red inverted button delete-favsupplier-button<%=supplier.getSupplier_id()%>"> <i class="remove icon"></i>Remove from Favorites</button>
+                            <button class="ui red inverted  button delete-favsupplier-button<%=supplier.getSupplier_id()%>"> <i class="remove icon"></i>Remove from Favorites</button>
                         </div>
                         <a href="SupplierSearchProfile.jsp?supplier_id=<%=supplier.getSupplier_id()%>" >
                             <div class="content">
                                 <h2><%=supplier.getSupplier_name()%></h2>
                             </div>
                             <div class='description' style='color:black'>
-                                
+
                                 <%=supplier.getSupplier_description()%> <br/>
                                 Email: <%=supplier.getEmail()%>
                             </div>
@@ -88,31 +94,28 @@
                 %>
 
                 <div id="deletemodaldiv<%=supplier.getSupplier_id()%>" class="ui small modal">
-                    <i class="close icon"></i>
+
                     <div class="header">
-                        Delete Favorite Supplier
+                        <h2>Delete Favorite Supplier</h2>
                     </div>
 
                     <div class="content">
                         <form class="ui form" id="deleteFavsupplier" action="userservlet" method="get"> 
                             <!--Inserting delete danger message. -->
 
-                            Are you sure you would like to unfavorite this supplier?
+                            <h3>Are you sure you would like to unfavorite this supplier?</h3>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="supplier_id" value="<%=supplier.getSupplier_id()%>">
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="delete">
 
-                            
-                    </div>
-                    <div class="actions">
-                        <input type="submit" value="Delete" class="ui teal button" /> 
+
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="Delete" class="ui red inverted button" /> 
                         </form>
-                        <div class="ui positive right labeled icon button">
-                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
-                            <i class="checkmark icon"></i>
-                        </div>
+                        <button class="ui orange inverted deny button">Cancel</button>
                     </div>
                 </div>
                 <%}%>

@@ -75,7 +75,7 @@
                             <div  style="color:black"  class="sub header">Viewing Previous Made Orders</div>
                         </div>
                     </h1>
-
+<br/>
                 <%
                     ArrayList<Order> pendingOrders = new ArrayList<Order>();
                     ArrayList<Order> completedOrders = new ArrayList<Order>();
@@ -155,9 +155,9 @@
 
                 <!--tabs menu-->
                 <div class="ui pointing secondary menu">
-                    <a class="item active" data-tab="first">Pending Orders</a>
-                    <a class="item" data-tab="second">Completed Orders</a>
-                    <a class="item" data-tab="third">Rejected Orders</a>
+                    <a class="item active" style="font-size:18px" data-tab="first">Pending Orders</a>
+                    <a class="item"  style="font-size:18px" data-tab="second">Completed Orders</a>
+                    <a class="item" style="font-size:18px" data-tab="third">Rejected Orders</a>
                 </div>
 
                 <!--Pending orders section-->

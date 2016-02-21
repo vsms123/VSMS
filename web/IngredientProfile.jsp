@@ -53,7 +53,7 @@
                     
                     <div class="content">
                         Ingredient Profile
-                        <div class="sub header">Check this ingredient</div>
+                        <div style="color:black" class="sub header">Check this ingredient</div>
                     </div>
                 </h1>
                 <h1 style="color:black"><%=ingredient.getName()%></h1>

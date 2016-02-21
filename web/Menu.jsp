@@ -92,8 +92,8 @@
                         <div class="right floated content">
 
 
-                            <button class="ui green inverted button edit-dish-button<%=dish.getDish_id()%>">Edit</button>
-                            <button class="ui red inverted button delete-dish-button<%=dish.getDish_id()%>"> <i class="remove icon"></i>Delete Dish</button>
+                            <button class="ui green inverted large button edit-dish-button<%=dish.getDish_id()%>">Edit</button>
+                            <button class="ui red inverted large button delete-dish-button<%=dish.getDish_id()%>"> <i class="remove icon"></i>Delete Dish</button>
 
                         </div>
                         <a href="RecipeBuilder.jsp?dish_id=<%=dish.getDish_id()%>" >
@@ -118,18 +118,18 @@
                 <div id="createmodaldiv" class="ui small modal">
 
                     <div class="header">
-                        Add New Dish to Menu
+                        <h2>Add New Dish to Menu</h2>
                     </div>
                     <div class="content">
                         <form id="addDish" class="addDish ui form" action="ingredientservlet" method="post"> 
                             <!--Inputting form elements-->
-                            <label for="dish_name">Dish Name:</label> 
-                            <input id="dish_name" type="text" name="dish_name">
-                            <label for ="dish_description">Dish Description:</label> 
+                            <label for="dish_name"><h3>Dish Name:</h3></label> 
+                            <input id="dish_name" type="text" name="dish_name"><br/><br/>
+                            <label for ="dish_description"><h3>Dish Description:</h3></label> 
                             <textarea id="dish_description" name="dish_description"></textarea>
 
                             <!--Input hidden attributes-->
-                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
+                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"><br/><br/>
                             <input type="hidden" name="action" value="add">
 
                             </div>
@@ -150,7 +150,7 @@
                 <div id="editmodaldiv<%=dish.getDish_id()%>" class="ui small modal">
 
                     <div class="header">
-                        Edit Dish
+                        <h2>Edit Dish</h2>
                     </div>
 
                     <div class="content">

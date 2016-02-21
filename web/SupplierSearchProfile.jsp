@@ -65,7 +65,7 @@
                     Supplier supplier = UserController.retrieveSupplierByID(supplier_id);
                 %>
                 <h2 class="ui header">
-                    <i class="settings icon"></i>
+                    <i class="shipping icon"></i>
                     <div class="content">
                         Supplier Profile
                         <div class="sub header">View Supplier Profile</div>
@@ -79,8 +79,8 @@
 
 
                 <div class="ui top attached tabular menu">
-                    <a class="item active" data-tab="supplierDescription" id="supplier_name_tab">Supplier Details</a>
-                    <a class="item" data-tab="ingredients" id="supplier_type_tab">Supplied Ingredients</a>
+                    <a class="item active" style="font-size:18px" data-tab="supplierDescription" id="supplier_name_tab">Supplier Details</a>
+                    <a class="item"  style="font-size:18px" data-tab="ingredients" id="supplier_type_tab">Supplied Ingredients</a>
                 </div>
                 <div class="ui bottom attached tab segment active" id="supplier_name_div" data-tab="supplierDescription">
                     <table class="ui very padded large striped  table">
