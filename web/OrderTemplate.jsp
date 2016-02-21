@@ -61,7 +61,7 @@
                                 
                                 %>
                                         <td>
-                                    <input type="text" value=<%=template.getName()%> name="templateName" id="templateName"/>
+                                    <input type="text" value="<%=template.getName()%>" name="templateName" id="templateName"/>
                                 </td><%
                                 
                                 if (template.getOrder_id() == UtilityController.convertStringtoInt(orderId)) {

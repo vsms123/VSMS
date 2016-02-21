@@ -1,4 +1,4 @@
-u8<%-- 
+<%-- 
     Document   : RecipeBuilder
     Created on : Jan 18, 2016, 12:59:09 PM
     Author     : Benjamin
@@ -10,11 +10,12 @@ u8<%--
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Dish"%>
 <%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        
         <%@ include file="protect.jsp" %>
         <title>Order</title>
         <link rel="stylesheet" href="css/main.css">
@@ -24,18 +25,12 @@ u8<%--
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
 
-        <%
-            if(request.getParameter("errorMsg")!=null){
-            %>
-                <%=request.getParameter("errorMsg")%>
-            <%
-            }
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             //in case current vendor does not exist
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
-            
+
             ArrayList<Dish> dishList = IngredientController.getDish(UtilityController.convertIntToString(currentVendor.getVendor_id()));
         %>
         <script>
@@ -68,20 +63,26 @@ u8<%--
                         <input type="text" placeholder="Name your template.." name="template" required/>&nbsp;
                     </div>
                     <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
+                    <%
+                        if (request.getParameter("errorMsg") != null) {
+                    %>
+                    <%=request.getParameter("errorMsg")%>
+                    <%
+                        }
 
+                    %>                  
                     <table id="orderListTable" class="ui padded large striped  table">
                         <tr><th><h2>Dish Name</h2></th>
-                            <th><h2>Quantity</h2></th>
+                        <th><h2>Quantity</h2></th>
                         </tr>
-                        <%
-                            for (Dish dish : dishList) {%>
+                        <%                            for (Dish dish : dishList) {%>
                         <tr>
                             <td><h3><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></label></h3></td>
                             <td>
                                 <div class="ui input">
-                        <input type="number" value=0 placeholder="Name your template.." id="ordervalue<%=dish.getDish_id()%>" name="dish<%=dish.getDish_id()%>"/>&nbsp;
-                    </div>
-                                
+                                    <input type="number" value=0 placeholder="Name your template.." id="ordervalue<%=dish.getDish_id()%>" name="dish<%=dish.getDish_id()%>"/>&nbsp;
+                                </div>
+
                         </tr>
                         <%}%>
                     </table>
