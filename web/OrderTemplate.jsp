@@ -27,13 +27,7 @@
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <h1 class="ui header">
-        <i class="file text outline icon"></i>
-        <div class="content" >
-            Order Creation
-            <div  style="color:black"  class="sub header">Managing Order Templates</div>
-        </div>
-    </h1>
+    
     <title>Order Template</title>
 </head>
 <body>
@@ -48,6 +42,13 @@
 
                 <%@ include file="Navbar.jsp" %>
 
+                <h1 class="ui header">
+        <i class="file text outline icon"></i>
+        <div class="content" >
+            Order Creation
+            <div  style="color:black"  class="sub header">Managing Order Templates</div>
+        </div>
+    </h1>
                 <p></p>
                 <h1 style="color:black">Order Template</h1>
                 <!--Displays an order template-->
@@ -79,6 +80,8 @@
                         %>
                     </table>
                     <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"/>
+                    <input type="hidden" name="order_id" value="<%=UtilityController.convertStringtoInt(orderId)%>"/>
+                    <button type="submit" class="ui green large button" name="submit" id="submit" onclick="form.action='EditTemplateServlet';"/><i class="checkmark icon"></i>Edit</button>
                     <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Place Order</button>
                 </form>  
                 <%
