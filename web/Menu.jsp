@@ -164,12 +164,21 @@
                             <!--Input hidden attributes-->
                             <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
-
+                            </div>
                             <div class="actions">
-                                <input type="hidden" name="action" value="edit">
+                                <input type="hidden" name="action" value="edit"/>
+                                <button class="ui green inverted button">Save CHanges</button>
 
-                                <input type="submit" value="Save Changes" class="ui green inverted button" /> 
+
                         </form>
+
+
+
+
+
+
+
+
                         <button class="ui orange deny inverted button">Cancel</button>
                     </div>
 
