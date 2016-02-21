@@ -49,8 +49,7 @@
                 <%@ include file="SuppNavbar.jsp" %>
 
 
-                <%
-                    Supplier supp = (Supplier) session.getAttribute("currentSupplier");
+                <%                    Supplier supp = (Supplier) session.getAttribute("currentSupplier");
                     Supplier currentSupplier = UserController.retrieveSupplierByID(supp.getSupplier_id());
                     session.setAttribute("currentSupplier", currentSupplier);
                     //if (currentSupplier == null) {
@@ -71,26 +70,26 @@
                 <table class="ui very padded large striped  table">
                     <tr>
                         <th><h2>Email</h2></th>
-                    <td><h3><%=currentSupplier.getEmail()%></h3></td>
+                        <td><h3><%=currentSupplier.getEmail()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Address</h2></th>
-                    <td><h3><%=currentSupplier.getAddress()%></h3></td>
+                        <td><h3><%=currentSupplier.getAddress()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Telephone Number</h2></th>
-                    <td><h3><%="(" + currentSupplier.getArea_code() + ")" + currentSupplier.getTelephone_number()%></h3></td>
+                        <td><h3><%="(" + currentSupplier.getArea_code() + ")" + currentSupplier.getTelephone_number()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Description</h2></th>
-                    <td><h3><%=currentSupplier.getSupplier_description()%></h3></td>
+                        <td><h3><%=currentSupplier.getSupplier_description()%></h3></td>
                     </tr>
                 </table>
 
 
 
                 <button class="ui green large button edit-profile-button">Edit Profile</button>
-                <button class="ui green large button edit-password-button">Edit Password</button>
+                <button class="ui green large button edit-password-button">Change Password</button>
 
 
                 <!--Create a modal for editing the profile-->
@@ -102,28 +101,37 @@
                     <div class="content">
                         <form onsubmit="location.reload()" id="editProfile" class="editProfile ui form" action="userservlet" method="post"> 
                             <!--Inputting form elements-->
-                            <label for="email">Email:</label> 
+                            <label for="email"><h3>Email:</h3></label>
                             <input id="email" value="<%=currentSupplier.getEmail()%>" type="text" name="email">
 
-                            <label for="area_code">Area Code / Telephone Number:</label> 
-                            <input id="area_code" value="<%=currentSupplier.getArea_code()%>" type="text" name="area_code">
-                            <input id="telephone_number" value="<%=currentSupplier.getTelephone_number()%>" type="text" name="telephone_number">
+                            <br/>
+                            <label for="area_code"><h3>Area Code / Telephone Number:</h3></label> 
 
-                            <label for ="address">Address:</label> 
+                            <div class="ui grid">
+                                <div class="three wide column">
+                                    <input id="area_code" value="<%=currentSupplier.getArea_code()%>" type="text" name="area_code">
+
+                                </div>
+                                <div class="thirteen wide column">
+                                    <input id="telephone_number" value="<%=currentSupplier.getTelephone_number()%>" type="text" name="telephone_number">
+                                </div>
+                            </div><br/>
+                            <label for ="address"><h3>Address:</h3></label> 
                             <textarea id="address" name="address"><%=currentSupplier.getAddress()%></textarea>
-
-                            <label for ="supplier_description">Supplier Description:</label> 
+                            <br/><br/>
+                            <label for ="supplier_description"><h3>Description:</h3></label> 
                             <textarea id="supplier_description" name="supplier_description"><%=currentSupplier.getSupplier_description()%></textarea>
+                            <br/>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="supplier_id" value="<%=currentSupplier.getSupplier_id()%>">
                             <input type="hidden" name="action" value="editsupplierprofile">
 
-                            <input type="submit" value="Edit Profile" class="ui teal button" />
-                        </form>
-                    </div>
-                    <div class="actions">
 
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="Save Changes" class="ui green inverted button" />
+                        </form>
                         <button class="ui inverted deny orange button">Cancel</button>
 
                     </div>

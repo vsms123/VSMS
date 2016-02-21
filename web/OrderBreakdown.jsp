@@ -32,9 +32,14 @@
             ArrayList<Dish> dishList = IngredientController.getDish(vendor_idStr);
             //    Empty String to contain POST AJAX String of Dish Quantity List
             String valueStr = "";
-
+            int total = 0;
             for (Dish dish : dishList) {
-                valueStr += "," + "dish" + dish.getDish_id() + ":" + request.getParameter("dish" + dish.getDish_id());
+                int quan = Integer.parseInt(request.getParameter("dish" + dish.getDish_id()));
+                total += quan;
+                if (quan != 0) {
+                    valueStr += "," + "dish" + dish.getDish_id() + ":" + request.getParameter("dish" + dish.getDish_id());
+                }
+
             }
         %>
         <script>
@@ -89,6 +94,7 @@
                 <h1 style="color: black">Order Breakdown</h1>
 
                 <!--Inputting form elements-->
+                <% if (total > 0) { %>
                 <h2><label for= "bufferqtyperc"> Buffer Quantity (in Percentage)</label></h2>
                 <div class="ui right labeled input">
                     <input type="number" min=0 max=100 value=0 name="bufferqtyperc" id="bufferqtyperc"/>
@@ -99,12 +105,17 @@
 
                 <p id="loading"><font color="red">Your request is loading...</font></p>
                 <hr>
+                <% } else { %>
+                No dishes selected.
+                <% } %>
 
                 <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
                 <div class="content-model-table">                            
                 </div>
                 <br>
-                <button class="ui green inverted massive button" id="confirm-order-breakdown"> <i class="check icon"></i>Confirm Order Breakdown</button>
+                <% if (total > 0) { %>
+                <button class="ui green inverted large button" id="confirm-order-breakdown"> <i class="check icon"></i>Confirm Order Breakdown</button>
+                <% }%>
             </div>
         </div>
 

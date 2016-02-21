@@ -6,6 +6,7 @@
 package Model;
 
 import Controller.UtilityController;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Orderline {
     private double finalprice;
     private int quantity;
     private double bufferpercentage;
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     public Orderline(int vendor_id, int order_id, int supplier_id, String ingredient_name, double finalprice, int quantity, double bufferpercentage) {
         this.vendor_id = vendor_id;
@@ -48,7 +50,8 @@ public class Orderline {
     }
 
     public double getFinalprice() {
-        return finalprice;
+        
+        return Double.parseDouble(df.format(finalprice));
     }
 
     public int getQuantity() {

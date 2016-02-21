@@ -90,7 +90,7 @@
                 <i class="large shop icon" ></i> Order
 
                 <div class="menu">
-                    <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make an Order</a>
+                    <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make new Order</a>
                     <a href="TemplateMain.jsp" class="item" style=" font-size: 16px"><i class="large file text icon"></i> Order Templates</a>
                     <a href="OrderHistory.jsp" class="item" style=" font-size: 16px"><i class="large history icon"></i> Order History</a>
                 </div>
@@ -133,11 +133,11 @@
                     <div class="menu">
                         <a href="Menu.jsp" class="item" style=" font-size: 16px"><i class="large food icon"></i> Menu</a>
                         <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                        <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make an Order</a>
+                        <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make new Order</a>
                         <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favorite Suppliers</a>
                         <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                         <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px"><i class="large search icon"></i> Supplier Search</a>
-                        <a href="LogoutServlet">Log Out</a>
+                        <a href="LogoutServlet" class="item" style=" font-size: 16px"><img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:16px;height:18px;">Log Out</a>
                     </div>
                 </div>
             </div>

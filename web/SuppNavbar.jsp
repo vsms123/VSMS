@@ -84,9 +84,8 @@
                 </div>
             </div>
             <a href="LogoutServlet" class="item" style=" font-size: 16px">
-                <i class="large search icon"></i> Log Out
+                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Log Out
             </a>
-
 
         </div>
 
@@ -103,6 +102,9 @@
                 <div class="menu">
                     <a href="SupplierProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
+                    <a href="LogoutServlet" class="item" style=" font-size: 16px">
+                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:16px;height:18px;">&nbsp Log Out
+            </a>
                 </div>
             </div>
             </div>

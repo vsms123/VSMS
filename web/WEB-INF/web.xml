@@ -11,6 +11,10 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>Servlet.LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddIngredientServlet</servlet-name>
+        <servlet-class>Servlet.AddIngredientServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AutoCompleteServlet</servlet-name>
         <url-pattern>/autocomplete</url-pattern>
@@ -18,6 +22,10 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddIngredientServlet</servlet-name>
+        <url-pattern>/AddIngredientServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

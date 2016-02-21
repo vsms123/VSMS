@@ -42,7 +42,8 @@
 
         <script>
             $(document).ready(function () {
-                $('.secondary.menu .item').tab();
+                $('.pc.secondary.menu .item').tab();
+                $('.mobile.secondary.menu .item').tab();
 
                 $('.test.order').popup({
                     position: 'top left'
@@ -54,10 +55,16 @@
                 for (Order orderModal : orderList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
-                $(".test.order.<%=orderModal.getOrder_id()%>").click(function () {
+                $(".test.order.pc.<%=orderModal.getOrder_id()%>").click(function () {
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>').modal('show');
                 });
+
+                $(".test.order.mobile.<%=orderModal.getOrder_id()%>").click(function () {
+
+                    $('#modalOrder<%=orderModal.getOrder_id()%>mobile').modal('show');
+                });
+
 
                 $("#triggerModal<%=orderModal.getOrder_id()%>accept").click(function () {
 
@@ -78,7 +85,7 @@
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>mainReject').modal('show');
                 });
-                
+
                 $("#triggerModal<%=orderModal.getOrder_id()%>small_accept").click(function () {
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>small_accept').modal('show');
@@ -128,6 +135,7 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="SuppNavbar.jsp" %>
+
                 <!--PC VIEW START-->
                 <div id="pc" class="pusher">
                     <h1 style="color: black">Order History List</h1>
@@ -161,10 +169,10 @@
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
-                                    <th>Name</th>
-                                    <th>Unit</th>
-                                    <th>Price</th>
-                                    </tr>
+                                            <th>Name</th>
+                                            <th>Unit</th>
+                                            <th>Price</th>
+                                        </tr>
                                     </thead>
                                     <%
                                         int count = 0;
@@ -267,15 +275,86 @@
                             </div>
 
 
-
-
-
-
-
                             <button   class="ui inverted green button" id="triggerModal<%=order.getOrder_id()%>accept">Accept</button>
                             <button  class="ui inverted red button" id="triggerModal<%=order.getOrder_id()%>reject">Reject</button>
 
                             </form>
+
+
+                            <!--modal for main accept-->
+
+                            <div id="modalOrder<%=order.getOrder_id()%>mainAccept" class="ui small modal">
+
+                                <div class="header">
+                                    <h1>Order No. <%=order.getOrder_id()%></h1>
+                                </div>
+                                <div class="image content">
+
+                                    <div class="description">
+                                        <div class="ui header" style="color: black">
+                                            Are you sure you want to <font color="green">ACCEPT</font> order?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                        </div>
+                                        <div class="six float centered wide column">
+                                            <form action="SupplierProcessOrder.jsp" method="POST">
+                                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                                <button class="ui deny inverted green button" name="action" type="submit" value="accept">Yes</button>
+                                            </form>
+                                        </div>
+                                        <div class="six float centered wide column">
+
+                                            <button class="ui large red deny inverted button">No</button>
+                                        </div> 
+                                        <div class="two wide column">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--main accept-->
+                            <!--main rejection starts here-->
+
+
+                            <div id="modalOrder<%=order.getOrder_id()%>mainReject" class="ui small modal">
+
+                                <div class="header">
+                                    <h1>Order No. <%=order.getOrder_id()%></h1>
+                                </div>
+                                <div class="image content">
+
+                                    <div class="description">
+                                        <div class="ui header" style="color: black">
+                                            Are you sure you want to <font color="red">REJECT</font> order?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                        </div>
+                                        <div class="six float centered wide column">
+                                            <form action="SupplierProcessOrder.jsp" method="POST">
+                                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                                <button class="ui deny large inverted green button" name="action" type="submit" value="reject">Yes</button>
+                                            </form>
+                                        </div>
+                                        <div class="six float centered wide column">
+
+                                            <button class="ui large red deny inverted button">No</button>
+                                        </div> 
+                                        <div class="two wide column">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--main reject-->
 
                             <%
                                 }
@@ -297,7 +376,7 @@
                     %>
 
                     <!--tabs menu-->
-                    <div class="ui pointing secondary menu">
+                    <div class="ui pointing pc secondary menu">
                         <a class="item active" data-tab="first">Pending Orders</a>
                         <a class="item" data-tab="second">Completed Orders</a>
                         <a class="item" data-tab="third">Rejected Orders</a>
@@ -318,8 +397,7 @@
 
 
                         <!--printing first 10 pendings orders-->
-                        <div class="ui grid" data-tab="101">
-
+                        <div class="ui active tab grid" data-tab="101">
 
                             <%for (int count = 0; count < 10; count++) {
                                     if (pendingOrders.size() > count) {
@@ -329,13 +407,84 @@
 
 
 
-                            <div  class="item four wide column" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
-
+                            <div  style="color:black" class="test order pc <%=order.getOrder_id()%> item four wide column" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
                                 <a>
-                                    <div class="content test order <%=order.getOrder_id()%>">
+
+                                    <div class="content test order ">
                                         <h2>Order No. <%=order.getOrder_id()%></h2>
                                     </div>
+
+                                    <%=order.getDtOrder()%> 
+                                    <div>
+                                        Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
+                                        <br>
+                                        Price: $<%=order.getTotal_final_price()%> &nbsp;
+                                        <br>
+                                        &nbsp;
+
+
+                                    </div>
+                                    <div>
+                                        <% int counter = 1;
+                                            for (Orderline o : order.getOrderlines()) {
+                                                if (counter <= 3) {
+                                        %>
+                                        <div><%=counter%>. <%=o.getIngredient_name()%> x <%=o.getQuantity()%></div>
+                                        <%
+                                                    counter++;
+                                                }
+
+                                            }
+                                            if (counter > 3) {
+                                        %>
+                                        Tap to view <%=counter - 2%> more item(s)
+                                        <%
+                                            }
+                                        %>    
+                                    </div>
                                 </a>
+
+                                <br/>
+                                <button class="ui deny inverted green button" id="triggerModal<%=order.getOrder_id()%>mainAccept">Accept</button>
+                                <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>mainReject">Reject</button>
+
+                            </div>
+
+
+                            <%}
+                            }%>
+
+
+                        </div>
+
+                        <!--Outside-->
+
+
+
+
+                        <!--Printing the beyond the 10th pending order-->
+                        <%
+                            for (int j = 2;
+                                    j <= pendingPageNo;
+                                    j++) {
+                        %>
+
+                        <div class="ui tab grid" data-tab="<%=j + 100%>">
+
+                            <%for (int count = (j - 1) * 10; count < j * 10; count++) {
+                                    if (pendingOrders.size() > count) {
+
+                                        Order order = pendingOrders.get(count);
+                            %>
+
+
+                            <div style="color:black"  class="item four wide column test order pc <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+
+                                <a>
+                                    <div class="content ">
+                                        <h2>Order No. <%=order.getOrder_id()%></h2>
+                                    </div>
+                                
                                 <%=order.getDtOrder()%> 
                                 <div>
                                     Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
@@ -359,144 +508,21 @@
                                         }
                                         if (counter > 3) {
                                     %>
-                                    <br>
                                     Tap to view <%=counter - 2%> more item(s)
                                     <%
                                         }
                                     %>    
                                 </div>
+                                </a>
                                 <br/>
-
-                                <!--modal for main accept-->
-
-                                <div id="modalOrder<%=order.getOrder_id()%>mainAccept" class="ui small modal">
-
-                                    <div class="header">
-                                        <h1>Order No. <%=order.getOrder_id()%></h1>
-                                    </div>
-                                    <div class="image content">
-
-                                        <div class="description">
-                                            <div class="ui header" style="color: black">
-                                                Are you sure you want to <font color="green">ACCEPT</font> order?
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="actions">
-                                        <div class="ui grid">
-                                            <div class="two wide column">
-                                            </div>
-                                            <div class="six float centered wide column">
-                                                <form action="SupplierProcessOrder.jsp" method="POST">
-                                                    <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
-                                                    <button class="ui deny inverted green button" name="action" type="submit" value="accept">Yes</button>
-                                                </form>
-                                            </div>
-                                            <div class="six float centered wide column">
-
-                                                <button class="ui large red deny inverted button">No</button>
-                                            </div> 
-                                            <div class="two wide column">
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <!--main accept-->
-                                    <!--main rejection starts here-->
-
-
-                                    <div id="modalOrder<%=order.getOrder_id()%>mainReject" class="ui small modal">
-
-                                        <div class="header">
-                                            <h1>Order No. <%=order.getOrder_id()%></h1>
-                                        </div>
-                                        <div class="image content">
-
-                                            <div class="description">
-                                                <div class="ui header" style="color: black">
-                                                    Are you sure you want to <font color="red">REJECT</font> order?
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="actions">
-                                            <div class="ui grid">
-                                                <div class="two wide column">
-                                                </div>
-                                                <div class="six float centered wide column">
-                                                    <form action="SupplierProcessOrder.jsp" method="POST">
-                                                        <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
-                                                        <button class="ui deny large inverted green button" name="action" type="submit" value="reject">Yes</button>
-                                                    </form>
-                                                </div>
-                                                <div class="six float centered wide column">
-
-                                                    <button class="ui large red deny inverted button">No</button>
-                                                </div> 
-                                                <div class="two wide column">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!--main reject-->
-
-
-
-                                </div>
-
                                 <button class="ui deny inverted green button" id="triggerModal<%=order.getOrder_id()%>mainAccept">Accept</button>
                                 <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>mainReject">Reject</button>
-
-                            </div>
-
-
-                            <%}
-                                }%>
-
-
-                        </div>
-
-                        <!--Outside-->
-
-
-
-
-                        <!--Printing the beyond the 10th pending order-->
-                        <%
-                            for (int j = 2;
-                                    j <= pendingPageNo;
-                                    j++) {
-                        %>
-
-                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 100%>">
-
-                            <%for (int count = (j - 1) * 10; count < j * 10; count++) {
-                                    if (pendingOrders.size() > count) {
-
-                                        Order order = pendingOrders.get(count);
-                            %>
-
-
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
-
-                                <a>
-                                    <div class="content">
-                                        <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
-                                    </div>
-                                    <div>
-                                        Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
-                                        Price: $<%=order.getTotal_final_price()%> 
-
-
-                                    </div>
-                                </a>
                             </div>
 
 
 
                             <%}
-                                }%>
+                            }%>
                         </div>
 
                         <%}%>
@@ -507,8 +533,8 @@
                             <%
                                 if (pendingPageNo
                                         > 1) {
-                            %>
-                            <div class="ui pagination secondary menu">
+                            %><br/>
+                            <div class="ui pagination pc secondary menu">
                                 <a class="active item" data-tab="101">
                                     1
                                 </a>
@@ -531,19 +557,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <!--Start of section for completed orders-->
                     <div class="ui tab segment" data-tab="second">
 
@@ -559,13 +572,9 @@
 
                         %>
 
-
-
-
-
                         <!--printing first 10 completed orders-->  
 
-                        <div class="ui active tab middle aligned animated selection divided list" data-tab="201">
+                        <div  class="ui active tab middle aligned animated selection divided list" data-tab="201">
 
 
                             <%for (int count = 0;
@@ -593,12 +602,10 @@
                             </div>
 
                             <%}
-                                }%>
+                            }%>
 
                         </div>
                         <!--end of printing first 10 completed orders-->  
-
-
 
 
 
@@ -636,7 +643,7 @@
 
 
                             <%}
-                                }%>
+                            }%>
                         </div>
 
                         <%}%>
@@ -652,14 +659,14 @@
                                 if (completedPageNo
                                         > 1) {
                             %>
-                            <div class="ui pagination secondary menu">
+                            <div class="ui pagination pc secondary menu">
                                 <a class="active item" data-tab="201">
                                     1
                                 </a>
                                 <%
                                     for (int j = 1; j < completedPageNo; j++) {
                                 %>
-                                <a class="item" data-tab="<%=j + 201%>">
+                                <a class="item" data-tab="<%=j + 1201%>">
                                     <%=j + 1%>
                                 </a>
                                 <%}%>
@@ -675,38 +682,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <!--Start of Rejected Orders section-->
 
                     <div class="ui tab segment" data-tab="third">
-
-
-
 
 
                         <%
@@ -755,7 +733,7 @@
                             </div>
 
                             <%}
-                                }%>
+                            }%>
 
                         </div>
                         <!--end of printing first 10 completed orders-->  
@@ -798,7 +776,7 @@
 
 
                             <%}
-                                }%>
+                            }%>
                         </div>
 
                         <%}%>
@@ -814,7 +792,7 @@
                                 if (rejectedPageNo
                                         > 1) {
                             %>
-                            <div class="ui pagination secondary menu">
+                            <div class="ui pagination pc secondary menu">
                                 <a class="active item" data-tab="301">
                                     1
                                 </a>
@@ -840,18 +818,17 @@
                 <!--MOBILE VIEW START-->
 
                 <div id="mobile" class="pusher">
-                    
+
                     <h1 style="color: black">Order History List</h1>
 
                     <%
-
                         //                    creation of order modals and sorting of orders done here
                         for (Order order : orderList) {
                     %>
 
 
 
-                    <div id="modalOrder<%=order.getOrder_id()%>" class="ui modal">
+                    <div id="modalOrder<%=order.getOrder_id()%>mobile" class="ui modal">
 
                         <div class="header">
                             <h1>Order No. <%=order.getOrder_id()%></h1>
@@ -868,14 +845,14 @@
                                     Items:
 
                                 </div>
-                                <table class="ui single line table">
+                                <table class="ui unstackable table">
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
-                                    <th>Name</th>
-                                    <th>Unit</th>
-                                    <th>Price</th>
-                                    </tr>
+                                            <th>Name</th>
+                                            <th>Unit</th>
+                                            <th>Price</th>
+                                        </tr>
                                     </thead>
                                     <%
                                         int count = 0;
@@ -977,16 +954,84 @@
 
                             </div>
 
-
-
-
-
-
-
                             <button   class="ui inverted green button" id="triggerModal<%=order.getOrder_id()%>small_accept">Accept</button>
                             <button  class="ui inverted red button" id="triggerModal<%=order.getOrder_id()%>small_reject">Reject</button>
 
                             </form>
+
+                            <!--modal for main accept-->
+
+                            <div id="modalOrder<%=order.getOrder_id()%>small_mainAccept" class="ui small modal">
+
+                                <div class="header">
+                                    <h1>Order No. <%=order.getOrder_id()%></h1>
+                                </div>
+                                <div class="image content">
+
+                                    <div class="description">
+                                        <div class="ui header" style="color: black">
+                                            Are you sure you want to <font color="green">ACCEPT</font> order?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                        </div>
+                                        <div class="six float centered wide column">
+                                            <form action="SupplierProcessOrder.jsp" method="POST">
+                                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                                <button class="ui deny inverted green button" name="action" type="submit" value="accept">Yes</button>
+                                            </form>
+                                        </div>
+                                        <div class="six float centered wide column">
+
+                                            <button class="ui large red deny inverted button">No</button>
+                                        </div> 
+                                        <div class="two wide column">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--main accept-->
+                            <!--main rejection starts here-->
+
+
+                            <div id="modalOrder<%=order.getOrder_id()%>small_mainReject" class="ui small modal">
+
+                                <div class="header">
+                                    <h1>Order No. <%=order.getOrder_id()%></h1>
+                                </div>
+                                <div class="image content">
+
+                                    <div class="description">
+                                        <div class="ui header" style="color: black">
+                                            Are you sure you want to <font color="red">REJECT</font> order?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                        </div>
+                                        <div class="six float centered wide column">
+                                            <form action="SupplierProcessOrder.jsp" method="POST">
+                                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                                <button class="ui deny large inverted green button" name="action" type="submit" value="reject">Yes</button>
+                                            </form>
+                                        </div>
+                                        <div class="six float centered wide column">
+
+                                            <button class="ui large red deny inverted button">No</button>
+                                        </div> 
+                                        <div class="two wide column">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--main reject-->
 
                             <%
                                 }
@@ -997,25 +1042,18 @@
 
 
                     <%
-                            if (order.getStatus().equals("pending")) {
-                                pendingOrders.add(order);
-                            } else if (order.getStatus().equals("approved")) {
-                                completedOrders.add(order);
-                            } else if (order.getStatus().equals("rejected")) {
-                                rejectedOrders.add(order);
-                            }
                         }
                     %>
 
                     <!--tabs menu-->
-                    <div class="ui pointing secondary menu">
-                        <a class="item active" data-tab="first">Pending Orders</a>
-                        <a class="item" data-tab="second">Completed Orders</a>
-                        <a class="item" data-tab="third">Rejected Orders</a>
+                    <div class="ui pointing mobile secondary menu">
+                        <a class="item active" data-tab="mobile_first">Pending Orders</a>
+                        <a class="item" data-tab="mobile_second">Completed Orders</a>
+                        <a class="item" data-tab="mobile_third">Rejected Orders</a>
                     </div>
 
                     <!--Pending orders section-->
-                    <div class="ui tab segment active" data-tab="first">
+                    <div class="ui tab segment active" data-tab="mobile_first">
                         <%
                             int pendingList2 = pendingOrders.size();
                             int pendingPageNo2 = pendingList2 / 10;
@@ -1029,7 +1067,7 @@
 
 
                         <!--printing first 10 pendings orders-->
-                        <div class="ui active tab middle aligned animated selection divided list" data-tab="101">
+                        <div class="ui active tab middle aligned animated selection divided list" data-tab="1101">
 
 
                             <%for (int count = 0; count < 10; count++) {
@@ -1040,10 +1078,11 @@
 
 
 
-                            <div  class="item" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div  style="color:black" class="item" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
+                                <!--click search-->
                                 <a>
-                                    <div class="content test order <%=order.getOrder_id()%>">
+                                    <div class="content test order mobile <%=order.getOrder_id()%>">
                                         <h2>Order No. <%=order.getOrder_id()%></h2>
                                     </div>
                                 </a>
@@ -1078,92 +1117,13 @@
                                 </div>
                                 <br/>
 
-                                <!--modal for main accept-->
-
-                                <div id="modalOrder<%=order.getOrder_id()%>small_mainAccept" class="ui small modal">
-
-                                    <div class="header">
-                                        <h1>Order No. <%=order.getOrder_id()%></h1>
-                                    </div>
-                                    <div class="image content">
-
-                                        <div class="description">
-                                            <div class="ui header" style="color: black">
-                                                Are you sure you want to <font color="green">ACCEPT</font> order?
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="actions">
-                                        <div class="ui grid">
-                                            <div class="two wide column">
-                                            </div>
-                                            <div class="six float centered wide column">
-                                                <form action="SupplierProcessOrder.jsp" method="POST">
-                                                    <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
-                                                    <button class="ui deny inverted green button" name="action" type="submit" value="accept">Yes</button>
-                                                </form>
-                                            </div>
-                                            <div class="six float centered wide column">
-
-                                                <button class="ui large red deny inverted button">No</button>
-                                            </div> 
-                                            <div class="two wide column">
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <!--main accept-->
-                                    <!--main rejection starts here-->
-
-
-                                    <div id="modalOrder<%=order.getOrder_id()%>small_mainReject" class="ui small modal">
-
-                                        <div class="header">
-                                            <h1>Order No. <%=order.getOrder_id()%></h1>
-                                        </div>
-                                        <div class="image content">
-
-                                            <div class="description">
-                                                <div class="ui header" style="color: black">
-                                                    Are you sure you want to <font color="red">REJECT</font> order?
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="actions">
-                                            <div class="ui grid">
-                                                <div class="two wide column">
-                                                </div>
-                                                <div class="six float centered wide column">
-                                                    <form action="SupplierProcessOrder.jsp" method="POST">
-                                                        <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
-                                                        <button class="ui deny large inverted green button" name="action" type="submit" value="reject">Yes</button>
-                                                    </form>
-                                                </div>
-                                                <div class="six float centered wide column">
-
-                                                    <button class="ui large red deny inverted button">No</button>
-                                                </div> 
-                                                <div class="two wide column">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!--main reject-->
-
-
-
-                                </div>
-
-                                <button class="ui deny inverted green button" id="triggerModal<%=order.getOrder_id()%>small_mainAccept">Accept</button>
-                                <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>small_mainReject">Reject</button>
-
                             </div>
 
-
+                            <button class="ui deny inverted green button" id="triggerModal<%=order.getOrder_id()%>small_mainAccept">Accept</button>
+                            <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>small_mainReject">Reject</button>
+                            <br/><br/>
                             <%}
-                                }%>
+                            }%>
 
 
                         </div>
@@ -1176,11 +1136,11 @@
                         <!--Printing the beyond the 10th pending order-->
                         <%
                             for (int j = 2;
-                                    j <= pendingPageNo;
+                                    j <= pendingPageNo2;
                                     j++) {
                         %>
 
-                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 100%>">
+                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1100%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
                                     if (pendingOrders.size() > count) {
@@ -1189,25 +1149,53 @@
                             %>
 
 
-                            <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
+                            <div  style="color:black"  class="item" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+
+                                <!--click search-->
                                 <a>
-                                    <div class="content">
-                                        <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
-                                    </div>
-                                    <div>
-                                        Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
-                                        Price: $<%=order.getTotal_final_price()%> 
-
-
+                                    <div class="content test order mobile <%=order.getOrder_id()%>">
+                                        <h2>Order No. <%=order.getOrder_id()%></h2>
                                     </div>
                                 </a>
+                                <%=order.getDtOrder()%> 
+                                <div>
+                                    Vendor: <%=UserController.retrieveVendorByID(order.getVendor_id()).getVendor_name()%> &nbsp;
+                                    <br>
+                                    Price: $<%=order.getTotal_final_price()%> &nbsp;
+                                    <br>
+                                    &nbsp;
+
+
+                                </div>
+                                <div>
+                                    <% int counter = 1;
+                                        for (Orderline o : order.getOrderlines()) {
+                                            if (counter <= 3) {
+                                    %>
+                                    <div><%=counter%>. <%=o.getIngredient_name()%> x <%=o.getQuantity()%></div>
+                                    <%
+                                                counter++;
+                                            }
+
+                                        }
+                                        if (counter > 3) {
+                                    %>
+                                    <br>
+                                    Tap to view <%=counter - 2%> more item(s)
+                                    <%
+                                        }
+                                    %>    
+                                </div>
+                                <br/>
+
                             </div>
-
-
+                            <button class="ui deny inverted green button" id="triggerModal<%=order.getOrder_id()%>small_mainAccept">Accept</button>
+                            <button class="ui deny inverted red button" id="triggerModal<%=order.getOrder_id()%>small_mainReject">Reject</button>
+                            <br/><br/>
 
                             <%}
-                                }%>
+                            }%>
                         </div>
 
                         <%}%>
@@ -1216,17 +1204,16 @@
                         <!--Start of pagination-->
                         <div>
                             <%
-                                if (pendingPageNo
-                                        > 1) {
+                                if (pendingPageNo2 > 1) {
                             %>
-                            <div class="ui pagination secondary menu">
-                                <a class="active item" data-tab="101">
+                            <div class="ui pagination mobile secondary menu">
+                                <a class="active item" data-tab="1101">
                                     1
                                 </a>
                                 <%
-                                    for (int j = 1; j < pendingPageNo; j++) {
+                                    for (int j = 1; j < pendingPageNo2; j++) {
                                 %>
-                                <a class="item" data-tab="<%=j + 101%>">
+                                <a class="item" data-tab="<%=j + 1101%>">
                                     <%=j + 1%>
                                 </a>
                                 <%}%>
@@ -1256,7 +1243,7 @@
 
 
                     <!--Start of section for completed orders-->
-                    <div class="ui tab segment" data-tab="second">
+                    <div class="ui tab segment" data-tab="mobile_second">
 
                         <%
                             int completedList2 = completedOrders.size();
@@ -1276,7 +1263,7 @@
 
                         <!--printing first 10 completed orders-->  
 
-                        <div class="ui active tab middle aligned animated selection divided list" data-tab="201">
+                        <div class="ui active tab middle aligned animated selection divided list" data-tab="1201">
 
 
                             <%for (int count = 0;
@@ -1304,7 +1291,7 @@
                             </div>
 
                             <%}
-                                }%>
+                            }%>
 
                         </div>
                         <!--end of printing first 10 completed orders-->  
@@ -1316,11 +1303,11 @@
                         <!--Printing the beyond the 10th completed order-->
                         <%
                             for (int j = 2;
-                                    j <= completedPageNo;
+                                    j <= completedPageNo2;
                                     j++) {
                         %>
 
-                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 200%>">
+                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1200%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
                                     if (completedOrders.size() > count) {
@@ -1347,7 +1334,7 @@
 
 
                             <%}
-                                }%>
+                            }%>
                         </div>
 
                         <%}%>
@@ -1360,17 +1347,17 @@
                         <!--Start of pagination-->
                         <div>
                             <%
-                                if (completedPageNo
+                                if (completedPageNo2
                                         > 1) {
                             %>
-                            <div class="ui pagination secondary menu">
-                                <a class="active item" data-tab="201">
+                            <div class="ui pagination mobile secondary menu">
+                                <a class="active item" data-tab="1201">
                                     1
                                 </a>
                                 <%
-                                    for (int j = 1; j < completedPageNo; j++) {
+                                    for (int j = 1; j < completedPageNo2; j++) {
                                 %>
-                                <a class="item" data-tab="<%=j + 201%>">
+                                <a class="item" data-tab="<%=j + 1201%>">
                                     <%=j + 1%>
                                 </a>
                                 <%}%>
@@ -1414,7 +1401,7 @@
 
                     <!--Start of Rejected Orders section-->
 
-                    <div class="ui tab segment" data-tab="third">
+                    <div class="ui tab segment" data-tab="mobile_third">
 
 
 
@@ -1438,7 +1425,7 @@
 
                         <!--printing first 10 completed orders-->  
 
-                        <div class="ui active tab middle aligned animated selection divided list" data-tab="301">
+                        <div class="ui active tab middle aligned animated selection divided list" data-tab="1301">
 
 
                             <%for (int count = 0;
@@ -1466,7 +1453,7 @@
                             </div>
 
                             <%}
-                                }%>
+                            }%>
 
                         </div>
                         <!--end of printing first 10 completed orders-->  
@@ -1478,11 +1465,11 @@
                         <!--Printing the beyond the 10th completed order-->
                         <%
                             for (int j = 2;
-                                    j <= rejectedPageNo;
+                                    j <= rejectedPageNo2;
                                     j++) {
                         %>
 
-                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 300%>">
+                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1300%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
                                     if (rejectedOrders.size() > count) {
@@ -1509,7 +1496,7 @@
 
 
                             <%}
-                                }%>
+                            }%>
                         </div>
 
                         <%}%>
@@ -1522,17 +1509,17 @@
                         <!--Start of pagination-->
                         <div>
                             <%
-                                if (rejectedPageNo
+                                if (rejectedPageNo2
                                         > 1) {
                             %>
-                            <div class="ui pagination secondary menu">
-                                <a class="active item" data-tab="301">
+                            <div class="ui pagination mobile secondary menu">
+                                <a class="active item" data-tab="1301">
                                     1
                                 </a>
                                 <%
-                                    for (int j = 1; j < rejectedPageNo; j++) {
+                                    for (int j = 1; j < rejectedPageNo2; j++) {
                                 %>
-                                <a class="item" data-tab="<%=j + 301%>">
+                                <a class="item" data-tab="<%=j + 1301%>">
                                     <%=j + 1%>
                                 </a>
                                 <%}%>
