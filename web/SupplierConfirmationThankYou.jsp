@@ -1,14 +1,11 @@
-<%-- 
-    Document   : SupplierConfirmationThankYou
-    Created on : Jan 31, 2016, 10:25:35 AM
-    Author     : vincentt.2013
---%>
+<!-- ****************************************************************** -->
+<!--THIS IS ACCESSED BY THE SUPPLIER/ NO SESSION and PROTECT IS NECESSARY-->
+<!-- ****************************************************************** -->
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="protect_supplier.jsp" %>
         <title>Thank You</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <!--CSS-->
@@ -24,9 +21,11 @@
 
 
         <div class="transparency">
+            <div class="ui segment" style="left:5%;width:90%">
 
-            <h1>Thank you for your confirmation!</h1>
-            <h2>Please find out more about VSMS from this <a href="#">Link</a></h2>
+                <h1>Thank you for your confirmation!</h1>
+                <h2>Please find out more about VSMS from this <a href="#">Link</a></h2>
+            </div>
         </div>
     </body>
 </html>

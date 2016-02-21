@@ -33,7 +33,7 @@ Use vsms;
 
 CREATE TABLE IF NOT EXISTS `dish` (
   `dish_id` int(11) NOT NULL,
-  `dish_name` varchar(30) NOT NULL,
+  `dish_name` varchar(100) NOT NULL,
   `vendor_id` int(11) NOT NULL,
   `dish_description` text NOT NULL,
   PRIMARY KEY (`dish_id`),

@@ -1,5 +1,5 @@
 <!-- ****************************************************************** -->
-<!--THIS IS ACCESSED BY THE SUPPLIER/ NO SESSION IS NECESSARY-->
+<!--THIS IS ACCESSED BY THE SUPPLIER/ NO SESSION and PROTECT IS NECESSARY-->
 <!-- ****************************************************************** -->
 <%@page import="Model.Order"%>
 <%@page import="Controller.OrderController"%>
@@ -12,7 +12,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="protect.jsp" %>
         <title>Order Confirmation</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 

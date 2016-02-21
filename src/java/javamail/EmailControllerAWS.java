@@ -33,12 +33,13 @@ import javax.mail.internet.MimeMessage;
  */
 public class EmailControllerAWS {
 
+    private static String host = "email-smtp.us-west-2.amazonaws.com";
+
+    private static String user = "AKIAISJWKZRDXAJ2UNTQ";
+    private static String password = "AqAvQKUVFnTtsjzWqrDt9hY2JqzFGHxP6Q0MaYlGgy2A";
+    private static int port = 587;
     
-    private static String host = "email-smtp.us-west-2.amazonaws.com"; 
-    
-    private static String user = "AKIAJBYPMX6PR5HP6NOA";
-    private static String password = "Ajv/MacY4s9LGqMSoRuJK3LSVGtqMCFbrfga//PBwNnK";
-    private static int port = 25;
+    private static String from = "ognidoof@gmail.com";
 
     public EmailControllerAWS() {
     }
@@ -57,10 +58,10 @@ public class EmailControllerAWS {
 
         //Getting confirmation for vendors and suppliers
         String confirmation = "<h3>Your order has been ";
-        if(action.equals("approve")){
-            confirmation += "<font color='green'>"+action +"d</font>";
-        } else{
-            confirmation += "<font color='red'>"+action +"ed</font>";
+        if (action.equals("approve")) {
+            confirmation += "<font color='green'>" + action + "d</font>";
+        } else {
+            confirmation += "<font color='red'>" + action + "ed</font>";
         }
         confirmation += "</h3>";
         EmailControllerAWS.sendMessageToSuppliers(vendor, order, suppOrderMap, confirmation);
@@ -80,7 +81,7 @@ public class EmailControllerAWS {
         HashMap<Integer, String> suppOrderMap = EmailControllerAWS.supplierMessageList(order);
 
         //Getting link for supplier to confirm
-        String link = "<h3><a href='http://localhost:8080/VSMS/OrderConfirmation.jsp?order_id=" + order.getOrder_id() + "'>Confirm here!</a></h3>";
+        String link = "<h3><a href='http://vsms-env.us-west-2.elasticbeanstalk.com/OrderConfirmation.jsp?order_id=" + order.getOrder_id() + "'>Confirm here!</a></h3>";
 
         EmailControllerAWS.sendMessageToSuppliers(vendor, order, suppOrderMap, link);
         EmailControllerAWS.sendMessageToVendor(vendor, order, suppOrderMap, "");
@@ -112,7 +113,7 @@ public class EmailControllerAWS {
             Supplier supplier = UserDAO.getSupplierById(supplier_id);
             messageText.append("<h1>" + supplier.getSupplier_name() + "</h1>");
             //messageText.append("<h3>email : " + supplier.getEmail() + "|| phone number: " + supplier.getTelephone_number() + "</h3>");
-            messageText.append("<h3>You have submitted the following order to " + supplier.getSupplier_name() +  ".</h3>");
+            messageText.append("<h3>You have submitted the following order to " + supplier.getSupplier_name() + ".</h3>");
             messageText.append("<hr>");
             messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
             messageText.append("<font color=\"red\">Order total is : $" + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
@@ -131,7 +132,7 @@ public class EmailControllerAWS {
             Supplier supplier = UserDAO.getSupplierById(supplier_id);
             messageText.append("<h1>" + vendor.getVendor_name() + "</h1>");
             //messageText.append("<h3>email : " + vendor.getEmail() + "|| phone number: " + vendor.getTelephone_number() + "</h3>");
-            messageText.append("<h3>You have received an order from " + vendor.getVendor_name() +  ".</h3>");
+            messageText.append("<h3>You have received an order from " + vendor.getVendor_name() + ".</h3>");
             messageText.append("<hr>");
             messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
             messageText.append("<font color=\"red\">Total price is : $" + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
@@ -144,21 +145,27 @@ public class EmailControllerAWS {
     public static void sendMessage(String toEmail, String subject, String messageHTMLString) {
 
         //Get the session object  
-        Properties props = new Properties();
-        
-    	props.put("mail.transport.protocol", "smtp");
-    	props.put("mail.smtp.port", port); 
-        props.put("mail.smtp.auth", "true");
-    	props.put("mail.smtp.starttls.enable", "true");
-    	props.put("mail.smtp.starttls.required", "true");
-        
+        Properties props = System.getProperties();
+        System.setProperty("line.separator", "\r\n");
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.port", port);
+        props.setProperty("mail.smtp.host", host);
+        props.setProperty("mail.smtp.user", user);
+        props.setProperty("mail.smtp.password", password);
+        props.setProperty("mail.smtps.auth", "true");
+        props.put("mail.debug", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtps.ssl.enable", "true");
+
         Session session = Session.getDefaultInstance(props);
+        session.setDebug(true);
 
         //Compose the message  
         try {
             MimeMessage message = new MimeMessage(session);
 
-            message.setFrom(new InternetAddress(user));
+            message.setFrom(new InternetAddress(from));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 
             message.setSubject(subject);
@@ -166,7 +173,7 @@ public class EmailControllerAWS {
             //send the message  
             Transport transport = session.getTransport();
             transport.connect(host, user, password);
-            transport.send(message);
+             transport.sendMessage(message, message.getAllRecipients());
 
             System.out.println("Message is delivered");
         } catch (MessagingException e) {
