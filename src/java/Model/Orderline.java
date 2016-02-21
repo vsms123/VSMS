@@ -91,7 +91,7 @@ public class Orderline {
     }
 
     public String toString() {
-        return "Ingredient name: " + ingredient_name + " " + "quantity: " + quantity + " " + "finalprice: " + UtilityController.convertDoubleToCurrString(finalprice) + "\n";
+        return "Name: " + ingredient_name + " x " + quantity + ", " + "Item total: $" + UtilityController.convertDoubleToCurrString(finalprice) + "\n";
     }
 
     public String toHTMLString() {

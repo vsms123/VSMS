@@ -111,10 +111,11 @@ public class EmailController {
             int supplier_id = (Integer) iter.next();
             Supplier supplier = UserDAO.getSupplierById(supplier_id);
             messageText.append("<h1>" + supplier.getSupplier_name() + "</h1>");
-            messageText.append("<h3>email : " + supplier.getEmail() + "|| phone number: " + supplier.getTelephone_number() + "</h3>");
+            //messageText.append("<h3>email : " + supplier.getEmail() + "|| phone number: " + supplier.getTelephone_number() + "</h3>");
+            messageText.append("<h3>You have submitted the following order to " + supplier.getSupplier_name() +  ".</h3>");
             messageText.append("<hr>");
             messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
-            messageText.append("<font color=\"red\">Total price is : " + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
+            messageText.append("<font color=\"red\">Order total is : $" + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
 
         }
 
@@ -129,10 +130,11 @@ public class EmailController {
             int supplier_id = (Integer) iter.next();
             Supplier supplier = UserDAO.getSupplierById(supplier_id);
             messageText.append("<h1>" + vendor.getVendor_name() + "</h1>");
-            messageText.append("<h3>email : " + vendor.getEmail() + "|| phone number: " + vendor.getTelephone_number() + "</h3>");
+            //messageText.append("<h3>email : " + vendor.getEmail() + "|| phone number: " + vendor.getTelephone_number() + "</h3>");
+            messageText.append("<h3>You have received an order from " + vendor.getVendor_name() +  ".</h3>");
             messageText.append("<hr>");
             messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
-            messageText.append("<font color=\"red\">Total price is : " + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
+            messageText.append("<font color=\"red\">Total price is : $" + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
 
             sendMessage(supplier.getEmail(), "Order from Vendor " + vendor.getVendor_name(), messageText + additional);
         }
