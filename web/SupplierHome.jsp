@@ -397,7 +397,7 @@
 
 
                         <!--printing first 10 pendings orders-->
-                        <div class="ui active tab grid" data-tab="101">
+                        <div class="ui active tab grid" data-tab="100001">
 
                             <%for (int count = 0; count < 10; count++) {
                                     if (pendingOrders.size() > count) {
@@ -407,8 +407,8 @@
 
 
 
-                            <div  style="color:black" class="test order pc <%=order.getOrder_id()%> item four wide column" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
-                                <a>
+                            <div  style="color:black" class="item four wide column" id="<%=order.getOrder_id()%>">
+                                <a class="test order pc <%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
 
                                     <div class="content test order ">
                                         <h2>Order No. <%=order.getOrder_id()%></h2>
@@ -469,7 +469,7 @@
                                     j++) {
                         %>
 
-                        <div class="ui tab grid" data-tab="<%=j + 100%>">
+                        <div class="ui tab grid" data-tab="<%=j + 100000%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
                                     if (pendingOrders.size() > count) {
@@ -478,9 +478,9 @@
                             %>
 
 
-                            <div style="color:black"  class="item four wide column test order pc <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+                            <div style="color:black"  class="item four wide column" id="<%=order.getOrder_id()%>">
 
-                                <a>
+                                <a class="test order pc <%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
                                     <div class="content ">
                                         <h2>Order No. <%=order.getOrder_id()%></h2>
                                     </div>
@@ -535,13 +535,13 @@
                                         > 1) {
                             %><br/>
                             <div class="ui pagination pc secondary menu">
-                                <a class="active item" data-tab="101">
+                                <a class="active item" data-tab="100001">
                                     1
                                 </a>
                                 <%
                                     for (int j = 1; j < pendingPageNo; j++) {
                                 %>
-                                <a class="item" data-tab="<%=j + 101%>">
+                                <a class="item" data-tab="<%=j + 100001%>">
                                     <%=j + 1%>
                                 </a>
                                 <%}%>
@@ -616,7 +616,7 @@
                                     j++) {
                         %>
 
-                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 200%>">
+                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 200000%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
                                     if (completedOrders.size() > count) {
@@ -705,7 +705,7 @@
 
                         <!--printing first 10 completed orders-->  
 
-                        <div class="ui active tab middle aligned animated selection divided list" data-tab="301">
+                        <div class="ui active tab middle aligned animated selection divided list" data-tab="300001">
 
 
                             <%for (int count = 0;
@@ -749,7 +749,7 @@
                                     j++) {
                         %>
 
-                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 300%>">
+                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 300000%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
                                     if (rejectedOrders.size() > count) {
@@ -793,13 +793,13 @@
                                         > 1) {
                             %>
                             <div class="ui pagination pc secondary menu">
-                                <a class="active item" data-tab="301">
+                                <a class="active item" data-tab="300001">
                                     1
                                 </a>
                                 <%
                                     for (int j = 1; j < rejectedPageNo; j++) {
                                 %>
-                                <a class="item" data-tab="<%=j + 301%>">
+                                <a class="item" data-tab="<%=j + 300001%>">
                                     <%=j + 1%>
                                 </a>
                                 <%}%>
@@ -1067,7 +1067,7 @@
 
 
                         <!--printing first 10 pendings orders-->
-                        <div class="ui active tab middle aligned animated selection divided list" data-tab="1101">
+                        <div class="ui active tab middle aligned animated selection divided list" data-tab="1100001">
 
 
                             <%for (int count = 0; count < 10; count++) {
@@ -1140,7 +1140,7 @@
                                     j++) {
                         %>
 
-                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1100%>">
+                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1100000%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
                                     if (pendingOrders.size() > count) {
@@ -1207,13 +1207,13 @@
                                 if (pendingPageNo2 > 1) {
                             %>
                             <div class="ui pagination mobile secondary menu">
-                                <a class="active item" data-tab="1101">
+                                <a class="active item" data-tab="1100001">
                                     1
                                 </a>
                                 <%
                                     for (int j = 1; j < pendingPageNo2; j++) {
                                 %>
-                                <a class="item" data-tab="<%=j + 1101%>">
+                                <a class="item" data-tab="<%=j + 1100001%>">
                                     <%=j + 1%>
                                 </a>
                                 <%}%>
@@ -1307,7 +1307,7 @@
                                     j++) {
                         %>
 
-                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1200%>">
+                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1200000%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
                                     if (completedOrders.size() > count) {
@@ -1425,7 +1425,7 @@
 
                         <!--printing first 10 completed orders-->  
 
-                        <div class="ui active tab middle aligned animated selection divided list" data-tab="1301">
+                        <div class="ui active tab middle aligned animated selection divided list" data-tab="1300001">
 
 
                             <%for (int count = 0;
@@ -1469,7 +1469,7 @@
                                     j++) {
                         %>
 
-                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1300%>">
+                        <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1300000%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
                                     if (rejectedOrders.size() > count) {
@@ -1513,13 +1513,13 @@
                                         > 1) {
                             %>
                             <div class="ui pagination mobile secondary menu">
-                                <a class="active item" data-tab="1301">
+                                <a class="active item" data-tab="1300001">
                                     1
                                 </a>
                                 <%
                                     for (int j = 1; j < rejectedPageNo2; j++) {
                                 %>
-                                <a class="item" data-tab="<%=j + 1301%>">
+                                <a class="item" data-tab="<%=j + 1300001%>">
                                     <%=j + 1%>
                                 </a>
                                 <%}%>
