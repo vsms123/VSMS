@@ -303,9 +303,9 @@ public class IngredientController extends HttpServlet {
     }
 
     //Make a data table that consists on dish --> number of ingredients
-    public static String getDishDataTable() {
+    public static String getDishDataTable(int vendor_id) {
         String stringReturn = "[";
-        ArrayList<Dish> dishList = getAllDish();
+        ArrayList<Dish> dishList = getDish(UtilityController.convertIntToString(vendor_id));
         for (Dish dish : dishList) {
             String content = "\"" + dish.getDish_name() + "\"";
             int quantityIngredient = dish.getIngredientQuantity().size();
