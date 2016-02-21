@@ -41,7 +41,7 @@ public class TemplateServlet extends HttpServlet {
         String vendor_idStr=request.getParameter("vendor_id");
         int vendorId=UtilityController.convertStringtoInt(vendor_idStr);
         int count=0;
-        int order_id=OrderDAO.generateTemplateId()+1;
+        int order_id=OrderDAO.generateTemplateId(vendor_idStr)+1;
         OrderTemplate template=new OrderTemplate(order_id,vendorId,templateName);
         ArrayList<Dish> dishList = IngredientController.getDish(vendor_idStr);
         for (Dish dish : dishList) {
