@@ -27,13 +27,7 @@
         %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <h1 class="ui header">
-        <i class="file text outline icon"></i>
-        <div class="content" >
-            Order Creation
-            <div  style="color:black"  class="sub header">Managing Order Templates</div>
-        </div>
-    </h1>
+    
     <title>Order Template</title>
 </head>
 <body>
@@ -48,6 +42,13 @@
 
                 <%@ include file="Navbar.jsp" %>
 
+                <h1 class="ui header">
+        <i class="file text outline icon"></i>
+        <div class="content" >
+            Order Creation
+            <div  style="color:black"  class="sub header">Managing Order Templates</div>
+        </div>
+    </h1>
                 <p></p>
                 <h1 style="color:black">Order Template</h1>
                 <!--Displays an order template-->

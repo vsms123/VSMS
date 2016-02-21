@@ -95,7 +95,7 @@
                 var data = new google.visualization.DataTable();
                 data.addColumn('string', 'Dishes');
                 data.addColumn('number', '#ofIngredients');
-                data.addRows(<%=IngredientController.getDishDataTable()%>);
+                data.addRows(<%=IngredientController.getDishDataTable(vendor_id)%>);
 
                 // Set chart options
                 var options = {'title': 'Dishes and Ingredients created',
