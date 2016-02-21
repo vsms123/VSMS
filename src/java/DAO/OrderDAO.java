@@ -177,7 +177,7 @@ public class OrderDAO {
         return templateList;
     }
     //starts code to generate order_id for template
-    public static int generateTemplateId() {
+    public static int generateTemplateId(String vendor_id) {
         ConnectionManager connManager = new ConnectionManager();
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -187,7 +187,8 @@ public class OrderDAO {
         try {
             //creates connections to database
             conn = connManager.getConnection();
-            sql = "Select * from `order_template` order by order_id asc; ";
+            sql = "Select * from `order_template` WHERE vendor_id = ## order by order_id asc; ";
+            sql = sql.replace("##", "" + vendor_id);
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 
