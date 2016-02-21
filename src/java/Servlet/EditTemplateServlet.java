@@ -54,7 +54,9 @@ public class EditTemplateServlet extends HttpServlet {
                 }
                 if (count == 0) {
                     response.sendRedirect("/VSMS/OrderTemplate.jsp?errorMsg=Please create a template with at least 1 dish&orderId="+template.getOrder_id());
-                } else {
+                }else if(!OrderDAO.verifyTemplateName(request.getParameter("templateName"), UtilityController.convertStringtoInt(request.getParameter("vendor_id")))){
+                    response.sendRedirect("/VSMS/OrderTemplate.jsp?errorMsg=Template name has already been used&orderId="+template.getOrder_id());
+                }else {
 
                     template.setDishList(dishList);
                     template.setStringList(quantityList);
