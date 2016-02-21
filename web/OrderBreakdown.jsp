@@ -36,21 +36,21 @@
             int total = 0;
             for (Dish dish : dishList) {
                 //System.out.println(dish==null);
-                String str=request.getParameter("dish" + dish.getDish_id());
-            if(str!=null){  
-                int quan = Integer.parseInt(str);
-                total += quan;
-                if (quan != 0) {
-                    valueStr += "," + "dish" + dish.getDish_id() + ":" + request.getParameter("dish" + dish.getDish_id());
+                String str = request.getParameter("dish" + dish.getDish_id());
+                if (str != null) {
+                    int quan = Integer.parseInt(str);
+                    total += quan;
+                    if (quan != 0) {
+                        valueStr += "," + "dish" + dish.getDish_id() + ":" + request.getParameter("dish" + dish.getDish_id());
+                    }
                 }
-            }
-            
+
             }
         %>
         <script>
                     $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
             //Hide AJAX Loading Message
-            $("#loading").hide();
+            $(".loading").hide();
                     //Generate the order breakdown
                     $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm' <%=valueStr%>}, function(responseText) {
                     $(".content-model-table").html(responseText);
@@ -64,7 +64,7 @@
             });
                     //Confirm the order breakdown
                     $("#confirm-order-breakdown").click(function() {
-            $("#loading").show();
+            $(".loading").show();
                     console.log("Sending order breakdown");
                     //Timeout is used to make sure that the loading text is shown first before the synchronous ajax kicks
 //                    Synchronous ajax is used to make sure that the order processing could be done with a fixed buffer quantity
@@ -77,10 +77,10 @@
             });
                     //T
                     $(document).ajaxStart(function() {
-            $("#loading").show();
+            $(".loading").show();
             });
                     $(document).ajaxStop(function() {
-            $("#loading").hide();
+            $(".loading").hide();
             });</script>
 
         <!--CSS-->
@@ -95,14 +95,14 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-                
+
                 <h1 class="ui header">
-                        <i class="cart icon"></i>
-                        <div class="content" >
-                            Order Breakdown
-                            <div  style="color:black"  class="sub header">Confirming Order</div>
-                        </div>
-                    </h1>
+                    <i class="cart icon"></i>
+                    <div class="content" >
+                        Order Breakdown
+                        <div  style="color:black"  class="sub header">Confirming Order</div>
+                    </div>
+                </h1>
 
 
                 <!--Inputting form elements-->
@@ -114,8 +114,8 @@
                         %
                     </div>
                 </div>
-
-                <p id="loading"><font color="red">Your request is loading...</font></p>
+                <!--printing of loading status-->
+                <p class="loading"><font color="red">Your request is loading...</font></p>
                 <hr>
                 <% } else { %>
                 No dishes selected.
@@ -127,6 +127,9 @@
                 <br>
                 <% if (total > 0) { %>
                 <button class="ui green inverted large button" id="confirm-order-breakdown"> <i class="check icon"></i>Confirm Order Breakdown</button>
+                <font color="red"><div class="ui active dimmer loading">
+                    <div class="ui loader"></div>
+                </div></font>
                 <% }%>
             </div>
         </div>
