@@ -48,7 +48,10 @@
                 <%@ include file="Navbar.jsp" %>
 
 
-                <%                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                <%                    Vendor vend = (Vendor) session.getAttribute("currentVendor");
+                    Vendor currentVendor = UserController.retrieveVendorByID(vend.getVendor_id());
+                    session.setAttribute("currentVendor", currentVendor);
+
                     if (currentVendor == null) {
                         currentVendor = UserController.retrieveVendorByID(1);
                     }
@@ -60,6 +63,21 @@
                         <div  style="color:black"  class="sub header">Managing Your Profile</div>
                     </div>
                 </h1>
+                <%
+                    String errMess = request.getParameter("errMess");
+                    if (errMess != null) {
+                %>
+                <div class="ui negative message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        You have entered the wrong password.
+                    </div>
+                    <p>Please try again.
+                    </p></div>
+                    
+                    <%
+                        }
+                    %>
                 <h1 style="color:black"><%=currentVendor.getVendor_name()%></h1>
 
 
@@ -149,6 +167,7 @@
 
                             <label for="new2_password"><h3>Re-enter new Password:</h3></label> 
                             <input id="new2_password" type="text" name="new2_password"><br/><br/>
+
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
