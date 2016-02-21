@@ -131,8 +131,8 @@
                     <img src="resource/pictures/dishIcon.png" alt="HTML5 Icon" style="width:45px;height:45px;">
                     
                     <div class="content">
-                        Ingredient Profile
-                        <div class="sub header">Check this ingredient</div>
+                        Recipe Builder
+                        <div class="sub header" style="color:black">Designing your own Dish</div>
                     </div>
                 </h1>
                 <br/>
@@ -160,7 +160,7 @@
                                 <input type="number" name="quantity<%=identification%>" id="quantity<%=identification%>" value="<%=stringArray.get(0)%>">
                             </div></td>
                         <td><h3><%=stringArray.get(1)%></h3></td>
-                        <td><button class="ui red inverted button delete-ingredient-button<%=identification%>"> <i class="remove icon"></i>Delete Ingredient</button></td>
+                        <td><button class="ui red inverted button delete-ingredient-button<%=identification%>"> <i class="remove icon"></i>Remove Ingredient</button></td>
                     </tr>
                     <% }//Refreshing iter for later use               
                         iter = ingredientList.keySet().iterator();

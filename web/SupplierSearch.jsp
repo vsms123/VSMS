@@ -89,20 +89,25 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@include file="Navbar.jsp" %>
 
-                <h1 style="color:black">Supplier Search</h1>
-
+                 <h1 class="ui header">
+                    <i class="search icon"></i>
+                    <div class="content" >
+                        Supplier Search
+                        <div  style="color:black"  class="sub header">Find Suppliers/Ingredients</div>
+                    </div>
+                </h1>
+                <br/>
+<h2 style="color: black">Search by:</h2>
                 <div class="ui top attached tabular menu">
-                    <a class="item active" data-tab="first" id="supplier_name_tab">Supplier Name</a>
-                    <a class="item" data-tab="second" id="supplier_type_tab">Supplier Type</a>
-                    <a class="item" data-tab="third" id="ingredient_name_tab">Ingredient</a>
+                    <a class="item active" data-tab="first" id="supplier_name_tab"><h3>Supplier Name</h3></a>
+                    <a class="item" data-tab="second" id="supplier_type_tab"><h3>Supplier Type</h3></a>
+                    <a class="item" data-tab="third" id="ingredient_name_tab"><h3>Ingredients</h3></a>
                 </div>
 
                 <div class="ui bottom attached tab segment active" id="supplier_name_div" data-tab="first">
 
-                    <h3 style="color: black">Search by Supplier Name</h3>
 
-
-                    <div class="ui icon input">
+                    <div class="ui icon large input">
 
 
                         <input type="text" placeholder="Search..." name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
@@ -116,9 +121,9 @@
 
 
                 <div class="ui bottom attached tab segment" id="supplier_type_div" data-tab="second">
-                    <h3 style="color:black">Search by Supplier Type</h3>                
+                                    
 
-                    <div class="ui icon input">
+                    <div class="ui large icon input">
 
 
                         <input type="text" placeholder="Search..." name="searchsupplierbytype" id="searchsupplierbytype" value=""/>
@@ -130,9 +135,8 @@
                     </div>
                 </div>
 
-                <div class="ui bottom attached tab segment" id="ingredient_name_div" data-tab="third">
-                    <h3 style="color:black">Search Ingredient by Name</h3>                
-                    <div class="ui icon input">
+                <div class="ui bottom attached tab segment" id="ingredient_name_div" data-tab="third">              
+                    <div class="ui large icon input">
                         <input type="text" placeholder="Search..." name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
                         <i class="circular search link icon"></i>
 
