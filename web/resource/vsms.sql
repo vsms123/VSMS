@@ -970,7 +970,7 @@ INSERT INTO `ingredient_quantity` (`dish_id`, `ingredient_name`, `quantity`, `ve
 CREATE TABLE IF NOT EXISTS `order` (
   `order_id` int(11) NOT NULL,
   `vendor_id` int(11) NOT NULL,
-  `total_final_price` int(100) NOT NULL,
+  `total_final_price` float NOT NULL,
   `dt` datetime NOT NULL,
   `status` varchar(100) NOT NULL,
   PRIMARY KEY (`order_id`,`vendor_id`),
