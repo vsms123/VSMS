@@ -31,7 +31,7 @@
 
         <!-- JSP Controller/ Variables Initiation -->
         <%
-            ArrayList<Order> orderList = OrderController.retrieveOrderList(1);
+            ArrayList<Order> orderList = OrderController.retrieveOrderList(currentVendor.getVendor_id());
         %>
 
 
