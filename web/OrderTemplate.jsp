@@ -57,6 +57,12 @@
                         <%                ArrayList<OrderTemplate> templates = OrderDAO.retrieveOrderTemplates(currentVendor.getVendor_id());
                             String orderId = request.getParameter("orderId");
                             for (OrderTemplate template : templates) {
+                                
+                                %>
+                                        <td>
+                                    <input type="text" value=<%=template.getName()%> name="templateName" id="templateName"/>
+                                </td><%
+                                
                                 if (template.getOrder_id() == UtilityController.convertStringtoInt(orderId)) {
                                     ArrayList<Dish> dishList = template.getDishList();
                                     ArrayList<Integer> intList = template.getStringList();

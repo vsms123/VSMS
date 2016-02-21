@@ -52,6 +52,7 @@ public class EditTemplateServlet extends HttpServlet {
             }
             template.setDishList(dishList);
             template.setStringList(quantityList);
+            template.setName(request.getParameter("templateName"));
             OrderDAO.updateTemplate(template);
             }
         }
