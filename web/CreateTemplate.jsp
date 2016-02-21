@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+
         <%@ include file="protect.jsp" %>
         <title>Order</title>
         <link rel="stylesheet" href="css/main.css">
@@ -34,9 +34,11 @@
             ArrayList<Dish> dishList = IngredientController.getDish(UtilityController.convertIntToString(currentVendor.getVendor_id()));
         %>
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
-
-            }
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
+                $('.message .close.icon').on('click', function () {
+                    $(this).closest('.message').transition('fade');
+                });
+            });
         </script>
 
         <!--CSS-->
@@ -52,25 +54,44 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
 
-                <h1 style="color: black">Create Template</h1>
+
+                <h1 class="ui header">
+                    <i class="file text outline icon"></i>
+                    <div class="content" >
+                        Create Order Template
+                        <div  style="color:black"  class="sub header">Creating a New Order Template</div>
+                    </div>
+                </h1>
+                <br/>
+
 
 
                 <!--Inputting form elements-->
                 <br/>
                 <form action="TemplateServlet" method="get">
                     <h2 style="color:black">Name of Template:</h2>
-                    <div style="padding-right:40%" class="ui fluid input">
+                    <div style="padding-right:40%" class="ui huge input">
                         <input type="text" placeholder="Name your template.." name="template" required/>&nbsp;
                     </div>
                     <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
+
                     <%
                         if (request.getParameter("errorMsg") != null) {
                     %>
-                    <%=request.getParameter("errorMsg")%>
+                    <div id="remove" class="ui negative message">
+                        <i class="close icon"></i>
+                        <div class="header">
+                            <%=request.getParameter("errorMsg")%>
+                        </div>
+                        Try again
+                    </div>
+
+
+
                     <%
                         }
 
-                    %>                  
+                    %> 
                     <table id="orderListTable" class="ui padded large striped  table">
                         <tr><th><h2>Dish Name</h2></th>
                         <th><h2>Quantity</h2></th>

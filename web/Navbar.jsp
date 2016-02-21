@@ -16,7 +16,7 @@
 
         <script>
             $(document).ready(function () {
-                $('.message').click(function () {
+                $('.message.triggerModal').click(function () {
                     //show modal button
                     $('#modalMessage').modal('show');
                 });
@@ -98,7 +98,7 @@
             <a href="Menu.jsp" class="item" style=" font-size: 16px">
                 <i class="large food icon"></i> Menu
             </a>
-            <a class="item message" style=" font-size: 16px">
+            <a class="item message triggerModal" style=" font-size: 16px">
                 <i class="large  mail icon"></i> Messages
             </a>
             <div class="ui simple dropdown item" style=" font-size: 16px">

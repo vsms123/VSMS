@@ -45,12 +45,14 @@
                     <h1 class="ui header">
                         <i class="file text outline icon"></i>
                         <div class="content" >
-                            Order Creation
-                            <div  style="color:black"  class="sub header">Managing Order Templates</div>
+                            Edit Template
+                            <div  style="color:black"  class="sub header">Editing Template/Order Using Template</div>
                         </div>
                     </h1>
+                    <br/>
                     <p></p>
-                    <h1 style="color:black">Order Template</h1>
+
+
                     <!--Displays an order template-->
                     <form action="OrderBreakdown.jsp" method="get">
                         <table  class="ui padded large striped  table">
@@ -61,9 +63,12 @@
 
                                     if (template.getOrder_id() == UtilityController.convertStringtoInt(orderId)) {
                             %>
-                            <td>
+
+                            <h2 style="color:black">Name of Template:</h2> 
+                            <div class="ui huge  input">
                                 <input type="text" value="<%=template.getName()%>" name="templateName" id="templateName"/>
-                            </td><%
+                            </div>    
+                            <%
                                 ArrayList<Dish> dishList = template.getDishList();
                                 ArrayList<Integer> intList = template.getStringList();
                                 for (int i = 0; i < dishList.size(); i++) {
@@ -84,10 +89,11 @@
                                 }
                             %>
                         </table>
+                        <br/>
                         <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"/>
                         <input type="hidden" name="order_id" value="<%=UtilityController.convertStringtoInt(orderId)%>"/>
-                        <button type="submit" class="ui green large button" name="submit" id="submit" onclick="form.action = 'EditTemplateServlet';"/><i class="checkmark icon"></i>Edit</button>
-                        <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Place Order</button>
+                        <button type="submit" class="ui green large button" name="submit" id="submit" onclick="form.action = 'EditTemplateServlet';"/>Save Changes</button>
+                        <button type="submit" class="ui green large button" name="submit" id="submit"/>Order Using This Template<i class="right arrow icon"></i> </button>
                     </form>  
                     <%
                     %>    
