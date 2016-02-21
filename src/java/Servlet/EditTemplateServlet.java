@@ -38,6 +38,7 @@ public class EditTemplateServlet extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<OrderTemplate> templates = OrderDAO.retrieveOrderTemplates(UtilityController.convertStringtoInt(request.getParameter("vendor_id")));
         String orderId = request.getParameter("order_id");
+        int count=0;
         for (OrderTemplate template : templates) {
             if (template.getOrder_id() == UtilityController.convertStringtoInt(orderId)) {
             ArrayList<Integer> quantityList=new ArrayList<Integer>();
@@ -48,6 +49,7 @@ public class EditTemplateServlet extends HttpServlet {
                 }else{
                     //System.out.println(request.getParameter("dish"+dish.getDish_id()));
                     quantityList.add(UtilityController.convertStringtoInt(request.getParameter("dish"+dish.getDish_id())));
+                    count++;
                 }
             }
             template.setDishList(dishList);
@@ -56,8 +58,11 @@ public class EditTemplateServlet extends HttpServlet {
             OrderDAO.updateTemplate(template);
             }
         }
-        response.sendRedirect("/VSMS/TemplateMain.jsp");
-        
+        if(count==0){
+             response.sendRedirect("/VSMS/OrderTemplate.jsp?errorMsg=Please create a template with at least 1 dish");
+        }else{
+            response.sendRedirect("/VSMS/TemplateMain.jsp");
+        }
             
         /*
         response.setContentType("text/html;charset=UTF-8");
