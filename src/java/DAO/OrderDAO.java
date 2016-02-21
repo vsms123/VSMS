@@ -187,7 +187,7 @@ public class OrderDAO {
         try {
             //creates connections to database
             conn = connManager.getConnection();
-            sql = "Select * from `order_template` order by order_id desc; ";
+            sql = "Select * from `order_template` order by order_id asc; ";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 
