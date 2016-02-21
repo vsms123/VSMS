@@ -53,10 +53,8 @@ public class EditTemplateServlet extends HttpServlet {
                     }
                 }
                 if (count == 0) {
-                    response.sendRedirect("/VSMS/OrderTemplate.jsp?errorMsg=Please create a template with at least 1 dish&orderId="+template.getOrder_id());
-                }else if(!OrderDAO.verifyTemplateName(request.getParameter("templateName"), UtilityController.convertStringtoInt(request.getParameter("vendor_id")))){
-                    response.sendRedirect("/VSMS/OrderTemplate.jsp?errorMsg=Template name has already been used&orderId="+template.getOrder_id());
-                }else {
+                    response.sendRedirect("/VSMS/OrderTemplate.jsp?errorMsg=Please create a template with at least 1 dish&orderId=" + template.getOrder_id());
+                } else {
 
                     template.setDishList(dishList);
                     template.setStringList(quantityList);
@@ -68,19 +66,19 @@ public class EditTemplateServlet extends HttpServlet {
         }
 
         /*
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+         response.setContentType("text/html;charset=UTF-8");
+         try (PrintWriter out = response.getWriter()) {
            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EditTemplateServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EditTemplateServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+         out.println("<!DOCTYPE html>");
+         out.println("<html>");
+         out.println("<head>");
+         out.println("<title>Servlet EditTemplateServlet</title>");            
+         out.println("</head>");
+         out.println("<body>");
+         out.println("<h1>Servlet EditTemplateServlet at " + request.getContextPath() + "</h1>");
+         out.println("</body>");
+         out.println("</html>");
+         }
          */
     }
 
