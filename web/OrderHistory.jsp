@@ -68,9 +68,13 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-
-
-                <h1 style="color: black">Order History List</h1>
+<h1 class="ui header">
+                        <i class="history icon"></i>
+                        <div class="content" >
+                            Order History
+                            <div  style="color:black"  class="sub header">Viewing Previous Made Orders</div>
+                        </div>
+                    </h1>
 
                 <%
                     ArrayList<Order> pendingOrders = new ArrayList<Order>();

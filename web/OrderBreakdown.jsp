@@ -90,12 +90,19 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
+                
+                <h1 class="ui header">
+                        <i class="cart icon"></i>
+                        <div class="content" >
+                            Order Breakdown
+                            <div  style="color:black"  class="sub header">Confirming Order</div>
+                        </div>
+                    </h1>
 
-                <h1 style="color: black">Order Breakdown</h1>
 
                 <!--Inputting form elements-->
                 <% if (total > 0) { %>
-                <h2><label for= "bufferqtyperc"> Buffer Quantity (in Percentage)</label></h2>
+                <h3><label for= "bufferqtyperc"> Buffer Quantity (in Percentage)</label></h3>
                 <div class="ui right labeled input">
                     <input type="number" min=0 max=100 value=0 name="bufferqtyperc" id="bufferqtyperc"/>
                     <div class="ui basic label">

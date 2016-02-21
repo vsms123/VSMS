@@ -76,8 +76,14 @@
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
 
-                <h1 style="color: black">Menu</h1>
-                <br/>
+                <h1 class="ui header">
+                        <i class="food icon"></i>
+                        <div class="content" >
+                            Menu
+                            <div  style="color:black"  class="sub header">Viewing/Managing My Dishes</div>
+                        </div>
+                    </h1>
+                    <br/>
                 <div class="ui middle aligned animated selection divided list">
                     <%for (Dish dish : dishList) {%>
 
