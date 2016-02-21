@@ -53,8 +53,11 @@ public class TemplateServlet extends HttpServlet {
             }
         }
         if (count==0){
-            response.sendRedirect("/VSMS/CreateTemplate.jsp?errorMsg=Please creat a template with at least 1 dish");
-        }else{
+            response.sendRedirect("/VSMS/CreateTemplate.jsp?errorMsg=Please create a template with at least 1 dish");
+        }else if(!OrderDAO.verifyTemplateName(templateName, vendorId)){
+                    response.sendRedirect("/VSMS/CreateTemplate.jsp?errorMsg=Template name has already been used&orderId="+template.getOrder_id());
+                }
+        else{
             OrderDAO.saveTemplate(template);
             response.sendRedirect("/VSMS/TemplateMain.jsp");
         }

@@ -239,7 +239,36 @@ public class OrderDAO {
     }
     //End population of order quantity
     
-    //Method to save template to database
+    //Method to verify that a template name has not been used
+    public static boolean verifyTemplateName(String name, int vendor_id){
+        int i=0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+
+        //insert new order into data base
+        try {
+            conn = ConnectionManager.getConnection();
+            sql = "select * from order_template where vendor_id=#1 AND name=#2";
+            sql = sql.replace("#1", "" + "'"+vendor_id+"'");
+            sql = sql.replace("#2", "" + "'"+name+"'");
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                i++;
+            }
+            
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return i==0;
+    }
+    //End of method to ensure uniqueness of template names
+
+//Method to save template to database
     public static void saveTemplate(OrderTemplate template){
         Connection conn = null;
         PreparedStatement stmt = null;

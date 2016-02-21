@@ -38,27 +38,35 @@ public class EditTemplateServlet extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<OrderTemplate> templates = OrderDAO.retrieveOrderTemplates(UtilityController.convertStringtoInt(request.getParameter("vendor_id")));
         String orderId = request.getParameter("order_id");
+        int count = 0;
         for (OrderTemplate template : templates) {
             if (template.getOrder_id() == UtilityController.convertStringtoInt(orderId)) {
-            ArrayList<Integer> quantityList=new ArrayList<Integer>();
-            ArrayList<Dish> dishList = IngredientController.getDish(request.getParameter("vendor_id"));
-            for(Dish dish:dishList){
-                if(request.getParameter("dish"+dish.getDish_id())==null){
-                    quantityList.add(0);
-                }else{
-                    //System.out.println(request.getParameter("dish"+dish.getDish_id()));
-                    quantityList.add(UtilityController.convertStringtoInt(request.getParameter("dish"+dish.getDish_id())));
+                ArrayList<Integer> quantityList = new ArrayList<Integer>();
+                ArrayList<Dish> dishList = IngredientController.getDish(request.getParameter("vendor_id"));
+                for (Dish dish : dishList) {
+                    if (request.getParameter("dish" + dish.getDish_id()) == null || UtilityController.convertStringtoInt(request.getParameter("dish" + dish.getDish_id())) <= 0) {
+                        quantityList.add(0);
+                    } else {
+                        //System.out.println(request.getParameter("dish"+dish.getDish_id()));
+                        quantityList.add(UtilityController.convertStringtoInt(request.getParameter("dish" + dish.getDish_id())));
+                        count++;
+                    }
+                }
+                if (count == 0) {
+                    response.sendRedirect("/VSMS/OrderTemplate.jsp?errorMsg=Please create a template with at least 1 dish&orderId="+template.getOrder_id());
+                }else if(!OrderDAO.verifyTemplateName(request.getParameter("templateName"), UtilityController.convertStringtoInt(request.getParameter("vendor_id")))){
+                    response.sendRedirect("/VSMS/OrderTemplate.jsp?errorMsg=Template name has already been used&orderId="+template.getOrder_id());
+                }else {
+
+                    template.setDishList(dishList);
+                    template.setStringList(quantityList);
+                    template.setName(request.getParameter("templateName"));
+                    OrderDAO.updateTemplate(template);
+                    response.sendRedirect("/VSMS/TemplateMain.jsp");
                 }
             }
-            template.setDishList(dishList);
-            template.setStringList(quantityList);
-            template.setName(request.getParameter("templateName"));
-            OrderDAO.updateTemplate(template);
-            }
         }
-        response.sendRedirect("/VSMS/TemplateMain.jsp");
-        
-            
+
         /*
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -73,7 +81,7 @@ public class EditTemplateServlet extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
         }
-        */
+         */
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

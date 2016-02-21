@@ -30,16 +30,21 @@
             String vendor_idStr = request.getParameter("vendor_id");
             String action = request.getParameter("action");
             ArrayList<Dish> dishList = IngredientController.getDish(vendor_idStr);
+            //System.out.println(dishList.size());
             //    Empty String to contain POST AJAX String of Dish Quantity List
             String valueStr = "";
             int total = 0;
             for (Dish dish : dishList) {
-                int quan = Integer.parseInt(request.getParameter("dish" + dish.getDish_id()));
+                //System.out.println(dish==null);
+                String str=request.getParameter("dish" + dish.getDish_id());
+            if(str!=null){  
+                int quan = Integer.parseInt(str);
                 total += quan;
                 if (quan != 0) {
                     valueStr += "," + "dish" + dish.getDish_id() + ":" + request.getParameter("dish" + dish.getDish_id());
                 }
-
+            }
+            
             }
         %>
         <script>
