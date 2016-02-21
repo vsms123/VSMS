@@ -99,7 +99,7 @@
                         <div class="description">
                             <div class="ui header" style="color: black">
                                 Order ID : <%=order.getOrder_id()%> <br/>
-                                Supplier : <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> <br/>
+                                Supplier : <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> <br/>
                                 Date : <%=order.getDtOrder()%> <br/><br/>
                                 Items:
 
@@ -193,7 +193,7 @@
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
                                 <div>
-                                    Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
+                                    Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
                                     Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
@@ -230,7 +230,7 @@
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
                                 <div>
-                                    Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
+                                    Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
                                     Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
@@ -326,7 +326,7 @@
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
                                 <div>
-                                    Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
+                                    Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
                                     Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
@@ -365,7 +365,7 @@
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
                                 <div>
-                                    Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
+                                    Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
                                     Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
@@ -483,7 +483,7 @@
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
                                 <div>
-                                    Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
+                                    Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
                                     Price: $<%=df.format(order.getTotal_final_price())%> 
 
 
@@ -522,7 +522,7 @@
                                     <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
                                 </div>
                                 <div>
-                                    Supplier: <%=UserController.retrieveSupplierByID(order.getVendor_id()).getSupplier_name()%> &nbsp;
+                                    Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
                                     Price: $<%=df.format(order.getTotal_final_price())%> 
 
 

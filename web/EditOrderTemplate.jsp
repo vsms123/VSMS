@@ -50,6 +50,10 @@
                                 String orderId = request.getParameter("orderId");
                                 for (OrderTemplate template : templates) {
                                     if (template.getOrder_id() == UtilityController.convertStringtoInt(orderId)) {
+                                        %>
+                                        <td><div class="ui input">
+                                    <input type="text" value=<%=template.getName()%> placeholder="<%=template.getName()%>" name="templateName" id="templateName"/>&nbsp;
+                                </div></td><%
                                         ArrayList<Dish> dishList = template.getDishList();
                                         ArrayList<Integer> intList = template.getStringList();
                                         for (int i = 0; i < dishList.size(); i++) {

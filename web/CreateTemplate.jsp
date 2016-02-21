@@ -1,4 +1,4 @@
-<%-- 
+u8<%-- 
     Document   : RecipeBuilder
     Created on : Jan 18, 2016, 12:59:09 PM
     Author     : Benjamin
@@ -25,6 +25,11 @@
         <script src="js/formvalidation.js"></script>
 
         <%
+            if(request.getParameter("errorMsg")!=null){
+            %>
+                <%=request.getParameter("errorMsg")%>
+            <%
+            }
             Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             //in case current vendor does not exist
             if (currentVendor == null) {
@@ -60,7 +65,7 @@
                 <form action="TemplateServlet" method="get">
                     <h2 style="color:black">Name of Template:</h2>
                     <div style="padding-right:40%" class="ui fluid input">
-                        <input type="text" placeholder="Name your template.." name="template"/>&nbsp;
+                        <input type="text" placeholder="Name your template.." name="template" required/>&nbsp;
                     </div>
                     <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
 
@@ -74,7 +79,7 @@
                             <td><h3><label for= "dish<%=dish.getDish_id()%>"> <%=dish.getDish_name()%></label></h3></td>
                             <td>
                                 <div class="ui input">
-                        <input type="number" value=1 placeholder="Name your template.." id="ordervalue<%=dish.getDish_id()%>" name="dish<%=dish.getDish_id()%>"/>&nbsp;
+                        <input type="number" value=0 placeholder="Name your template.." id="ordervalue<%=dish.getDish_id()%>" name="dish<%=dish.getDish_id()%>"/>&nbsp;
                     </div>
                                 
                         </tr>

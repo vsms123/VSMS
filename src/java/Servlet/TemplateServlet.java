@@ -40,7 +40,8 @@ public class TemplateServlet extends HttpServlet {
         String templateName=request.getParameter("template");
         String vendor_idStr=request.getParameter("vendor_id");
         int vendorId=UtilityController.convertStringtoInt(vendor_idStr);
-        int order_id=OrderDAO.retrieveOrderTemplates(UtilityController.convertStringtoInt(vendor_idStr)).size()+1;
+        int count=0;
+        int order_id=OrderDAO.generateTemplateId()+1;
         OrderTemplate template=new OrderTemplate(order_id,vendorId,templateName);
         ArrayList<Dish> dishList = IngredientController.getDish(vendor_idStr);
         for (Dish dish : dishList) {
@@ -48,10 +49,15 @@ public class TemplateServlet extends HttpServlet {
             if(quantity>0){
                 template.addDish(dish);
                 template.addInt(quantity);
+                count++;
             }
         }
-        OrderDAO.saveTemplate(template);
-        response.sendRedirect("/VSMS/TemplateMain.jsp");
+        if (count==0){
+            response.sendRedirect("/VSMS/CreateTemplate.jsp?errorMsg=Please creat a template with at least 1 dish");
+        }else{
+            OrderDAO.saveTemplate(template);
+            response.sendRedirect("/VSMS/TemplateMain.jsp");
+        }
         /*
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {

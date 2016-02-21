@@ -176,6 +176,36 @@ public class OrderDAO {
         }
         return templateList;
     }
+    //starts code to generate order_id for template
+    public static int generateTemplateId() {
+        ConnectionManager connManager = new ConnectionManager();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        int orderId=0;
+        try {
+            //creates connections to database
+            conn = connManager.getConnection();
+            sql = "Select * from `order_template` order by order_id desc; ";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            //Retrieves the orders
+            while (rs.next()) {
+                orderId = rs.getInt("order_id");
+               
+            }
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            connManager.close(conn, stmt, rs);
+        }
+        return orderId;
+       
+    }
+    
+    //End code to generate order_id for template
     
     //Start population of order quantity
     public static void populateOrderTemplates(OrderTemplate template) {
