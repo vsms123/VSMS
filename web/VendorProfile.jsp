@@ -36,6 +36,9 @@
                     //show modal button
                     $('#editpasswordmodal').modal('show');
                 });
+                $('.message .close.icon').on('click', function () {
+                    $(this).closest('.message').transition('fade');
+                });
             });
         </script>
     </head>
@@ -160,13 +163,13 @@
                         <form id="editPassword" class="editPassword ui form" action="userservlet" method="post"> 
                             <!--Inputting form elements-->
                             <label for="old_password"><h3>Old Password:</h3></label> 
-                            <input id="old_password" type="text" name="old_password"><br/><br/>
+                            <input id="old_password" type="password" name="old_password"><br/><br/>
 
                             <label for="new_password"><h3>New Password:</h3></label> 
-                            <input id="new_password" type="text" name="new_password"><br/><br/>
+                            <input id="new_password" type="password" name="new_password"><br/><br/>
 
                             <label for="new2_password"><h3>Re-enter new Password:</h3></label> 
-                            <input id="new2_password" type="text" name="new2_password"><br/><br/>
+                            <input id="new2_password" type="password" name="new2_password"><br/><br/>
 
 
                             <!--Input hidden attributes-->
