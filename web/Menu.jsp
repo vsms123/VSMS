@@ -37,7 +37,7 @@
                     $('#createmodaldiv').modal('show');
                 });
             <%
-                ArrayList<Dish> dishList = IngredientController.getDish("1");
+                ArrayList<Dish> dishList = IngredientController.getDish(""+currentVendor.getVendor_id());
                 for (Dish dish : dishList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
