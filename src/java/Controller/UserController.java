@@ -128,10 +128,18 @@ public class UserController extends HttpServlet {
                 updateVendor(vendor);
                 response.sendRedirect("VendorProfile.jsp");
             } else if (action.equals("editpassword")) {
-                String new_password = request.getParameter("new_password");
-                vendor.setPassword(new_password);
-                updateVendor(vendor);
-                response.sendRedirect("VendorProfile.jsp");
+                String old_password = request.getParameter("old_password");
+
+                if (old_password.equals(retrieveVendorByID(Integer.parseInt(vendor_idStr)).getPassword())) {
+                    String new_password = request.getParameter("new_password");
+                    vendor.setPassword(new_password);
+                    updateVendor(vendor);
+                     response.sendRedirect("VendorProfile.jsp");
+                }else {
+                    response.sendRedirect("VendorProfile.jsp?errMess=Wrong password");
+                }
+
+                
             } else if (action.equals("editsupplierprofile")) {
                 String email = request.getParameter("email");
                 String address = request.getParameter("address");
@@ -147,10 +155,19 @@ public class UserController extends HttpServlet {
                 updateSupplier(supplier);
                 response.sendRedirect("SupplierProfile.jsp");
             } else if (action.equals("editsupplierpassword")) {
-                String new_password = request.getParameter("new_password");
-                supplier.setPassword(new_password);
-                updateSupplier(supplier);
-                response.sendRedirect("SupplierProfile.jsp");
+
+                String old_password = request.getParameter("old_password");
+
+                if (old_password.equals(retrieveSupplierByID(Integer.parseInt(supplier_idStr)).getPassword())) {
+                    String new_password = request.getParameter("new_password");
+                    supplier.setPassword(new_password);
+                    updateSupplier(supplier);
+                    response.sendRedirect("SupplierProfile.jsp");
+                }else {
+                    response.sendRedirect("SupplierProfile.jsp?errMess=Wrong password");
+                }
+
+                
             }
 
             response.setContentType(
@@ -234,12 +251,10 @@ public class UserController extends HttpServlet {
 //            htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
 //            htmlTable.append("<div><a href=SupplierSearchProfile.jsp?supplier_id=" + ingredient.getSupplier_id() + ">" + UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name() + "</a></div>");
 //            htmlTable.append("</div></div></a></div>");
-            
-            
-            
+
             String s = ingredient.getName().replaceAll(" ", "%20");
             htmlTable.append("<div class='item test'>");
-             if (!ingredientVendorList.contains(ingredient)) {
+            if (!ingredientVendorList.contains(ingredient)) {
                 htmlTable.append(" <div class=\"right floated content\"><button class='ui green inverted button' id=\"add-ingredient-modal-button" + ingredient.getSupplier_id() + ingredient.getName().replaceAll("\\s+", "_") + "\">Add to Dish</button></div>");
             } else {
                 htmlTable.append("<font color =\"red\">Already added</font>");
@@ -248,7 +263,7 @@ public class UserController extends HttpServlet {
             //Need to send in a list with this supplier_id to SupplierSearchProfile
             //Replacement of ingredient name is necessary to settle an ingredient name with a space in between
 
-            htmlTable.append( "<div style='color:black;font-size:20px'><b>" + ingredient.getName() + "</b></div>");
+            htmlTable.append("<div style='color:black;font-size:20px'><b>" + ingredient.getName() + "</b></div>");
             //<a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>"><%=ingredient.getName()%></a>
 //            htmlTable.append("<div>" + ingredient.getSupplyUnit() + "");
 //            htmlTable.append("" + ingredient.getSubcategory() + "</div>");
@@ -256,7 +271,6 @@ public class UserController extends HttpServlet {
 //            htmlTable.append("<div>" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(ingredient.getOfferedPrice())) + "</div>");
 //            htmlTable.append("<div>" + ingredient.getDescription() + "</div>");
 
-           
             htmlTable.append("</div></div><br/></div>");
         }
         return htmlTable.toString();

@@ -37,7 +37,7 @@
                     $('#createmodaldiv').modal('show');
                 });
             <%
-                ArrayList<Dish> dishList = IngredientController.getDish(""+currentVendor.getVendor_id());
+                ArrayList<Dish> dishList = IngredientController.getDish("" + currentVendor.getVendor_id());
                 for (Dish dish : dishList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
@@ -165,14 +165,16 @@
                             <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
 
+                            <div class="actions">
+                                <input type="hidden" name="action" value="edit">
+
+                                <input type="submit" value="Save Changes" class="ui green inverted button" /> 
+                                <button class="ui orange deny inverted button">Cancel</button>
+                            </div>
+
                         </form>
                     </div>
-                    <div class="actions">
-                        <input type="hidden" name="action" value="edit">
 
-                        <input type="submit" value="Save Changes" class="ui green inverted button" /> 
-                        <button class="ui orange deny inverted button">Cancel</button>
-                    </div>
                 </div>
                 <%}%>
 
