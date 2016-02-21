@@ -164,59 +164,69 @@
                             <!--Input hidden attributes-->
                             <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
-
-                            <div class="actions">
-                                <input type="hidden" name="action" value="edit">
-
-                                <input type="submit" value="Save Changes" class="ui green inverted button" /> 
-                                <button class="ui orange deny inverted button">Cancel</button>
                             </div>
+                            <div class="actions">
+                                <input type="hidden" name="action" value="edit"/>
+                                <button class="ui green inverted button">Save CHanges</button>
+
 
                         </form>
+
+
+
+
+
+
+
+
+                        <button class="ui orange deny inverted button">Cancel</button>
                     </div>
+
 
                 </div>
-                <%}%>
 
-                <!--Create many modals for each dish to be sent-->
-                <%
-                    for (Dish dish : dishList) {
-                %>
-                <div id="deletemodaldiv<%=dish.getDish_id()%>" class="ui small modal">
-                    <div class="header">
-                        Delete <%=dish.getDish_name()%>
-                    </div>
+            </div>
+            <%}%>
 
-                    <div class="content">
-                        <form class="ui form" id="deleteDish" action="ingredientservlet" method="post"> 
-                            <!--Inserting delete danger message. -->
+            <!--Create many modals for each dish to be sent-->
+            <%
+                for (Dish dish : dishList) {
+            %>
+            <div id="deletemodaldiv<%=dish.getDish_id()%>" class="ui small modal">
+                <div class="header">
+                    Delete <%=dish.getDish_name()%>
+                </div>
 
-                            <h3>Are you sure you would like to delete <%=dish.getDish_name()%>?</h3>
-                            <br>
+                <div class="content">
+                    <form class="ui form" id="deleteDish" action="ingredientservlet" method="post"> 
+                        <!--Inserting delete danger message. -->
 
-                            <!--Input hidden attributes-->
-                            <input type="hidden" name="dish_name" value="<%=dish.getDish_name()%>">
-                            <input type="hidden" name="dish_description" value="<%=dish.getDish_description()%>">
-                            <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
-                            <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
-                            <input type="hidden" name="action" value="delete">
+                        <h3>Are you sure you would like to delete <%=dish.getDish_name()%>?</h3>
+                        <br>
+
+                        <!--Input hidden attributes-->
+                        <input type="hidden" name="dish_name" value="<%=dish.getDish_name()%>">
+                        <input type="hidden" name="dish_description" value="<%=dish.getDish_description()%>">
+                        <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
+                        <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
+                        <input type="hidden" name="action" value="delete">
 
 
-                            </div>
-                            <div class="actions">
-                                <input type="submit" value="Delete" class="ui red inverted button" /> 
-                        </form>
-                        <button class="ui orange inverted deny button">Cancel</button>
-                    </div>
+                        </div>
+                        <div class="actions">
+                            <input type="submit" value="Delete" class="ui red inverted button" /> 
+                    </form>
+                    <button class="ui orange inverted deny button">Cancel</button>
                 </div>
             </div>
         </div>
-        <%}%>
-        <!--JAVASCRIPT-->
-        <script>$("#form").validate();</script>
-        <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
-        <script src="js/formvalidation.js" type="text/javascript"></script>
-        <script src="js/main.js" type="text/javascript"></script>
-    </body>
+    </div>
+    <%}%>
+    <!--JAVASCRIPT-->
+    <script>$("#form").validate();</script>
+    <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
+    <script src="js/formvalidation.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+</body>
 </html>
 

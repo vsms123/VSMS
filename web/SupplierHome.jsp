@@ -138,7 +138,13 @@
 
                 <!--PC VIEW START-->
                 <div id="pc" class="pusher">
-                    <h1 style="color: black">Order History List</h1>
+                    <h1 class="ui header">
+                        <i class="history icon"></i>
+                        <div class="content" >
+                            Order History
+                            <div  style="color:black"  class="sub header">Viewing/Approving Received Orders</div>
+                        </div>
+                    </h1>
 
                     <%
 
@@ -380,9 +386,9 @@
 
                     <!--tabs menu-->
                     <div class="ui pointing pc secondary menu">
-                        <a class="item active" data-tab="first">Pending Orders</a>
-                        <a class="item" data-tab="second">Completed Orders</a>
-                        <a class="item" data-tab="third">Rejected Orders</a>
+                        <a class="item active" style="font-size:18px" data-tab="first">Pending Orders</a>
+                        <a class="item" style="font-size:18px" data-tab="second">Completed Orders</a>
+                        <a class="item" style="font-size:18px" data-tab="third">Rejected Orders</a>
                     </div>
 
                     <!--Pending orders section-->

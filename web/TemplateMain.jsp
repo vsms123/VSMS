@@ -47,7 +47,7 @@
                     <h1 class="ui header">
                         <i class="file text outline icon"></i>
                         <div class="content" >
-                            Order Template
+                            Order Templates
                             <div  style="color:black"  class="sub header">Managing/Ordering With Order Templates</div>
                         </div>
                     </h1>
@@ -68,16 +68,16 @@
                         <div class="item test template" data-content="Click to view/edit order template"  data-variation="inverted">
                             <div class="right floated content">
 
-                                <form action="EditOrderTemplate.jsp">
-                                    <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
-                                    <button class="ui green inverted button">Edit</button>
-                                </form>
-
+                               
+                                
                                 <form action="DeleteTemplateServlet">
                                     <input type="hidden" value="1" name="vendor_id"> 
                                     <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
-                                    <button class="ui inverted red button">Delete</button>
+                                    <button class="ui large inverted red button"><i class="delete icon"></i>Delete Template</button>
                                 </form>
+                            
+                            
+                            
                             </div>
 
                             <div class="content">
@@ -86,11 +86,13 @@
                                     <a href="OrderTemplate.jsp?orderId=<%=template.getOrder_id()%>"><%=template.getName()%></a>
 
                                 </h2>
+                                    <br/>
 
                             </div>
                         </div>
-
-
+                                    
+                                    
+                                    
                         <%
                             }
                         %>
