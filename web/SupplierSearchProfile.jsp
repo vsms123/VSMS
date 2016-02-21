@@ -106,10 +106,10 @@
                         ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(vendor.getVendor_id());
                         if (favSupplierList.contains(supplier)) {
                     %>
-                    <button class="ui red large button unfavorite-supplier">Unfavorite</button>
+                    <button class="ui red large button unfavorite-supplier"><i class="remove icon"></i>Remove from Favorites</button>
                     <%
                     } else {
-                    %><button class="ui green large button favorite-supplier">Make as Favorite</button>
+                    %><button class="ui green large button favorite-supplier"><i class="star icon"></i>Add to Favorites</button>
                     <%
                         }
                     %>
@@ -145,7 +145,6 @@
 
 
                 <div id="favoritesupppliermodal" class="ui small modal">
-                    <i class="close icon"></i>
                     <div class="header">
                         Favorite This Supplier
                     </div>
@@ -154,21 +153,19 @@
                         <form class="ui form" id="deleteFavsupplier" action="userservlet" method="get"> 
                             <!--Inserting delete danger message. -->
 
-                            Are you sure you would like to favorite this supplier?
+                            <h3>Are you sure you would like to add <font color="orange"><%=supplier.getSupplier_name()%></font> to favorites?</h3> 
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="supplier_id" value="<%=supplier.getSupplier_id()%>">
                             <input type="hidden" name="vendor_id" value="<%=vendor_id%>">
                             <input type="hidden" name="action" value="create">
 
-                            <input type="submit" value="Favorite this Supplier" class="ui teal button" /> 
-                        </form>
+                            
                     </div>
                     <div class="actions">
-                        <div class="ui positive right labeled icon button">
-                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
-                            <i class="checkmark icon"></i>
-                        </div>
+                        <input type="submit" value="Favorite this Supplier" class="ui inverted green button" /> 
+                        </form>
+                        <button class="ui deny orange inverted button">Cancel</button>
                     </div>
                 </div>
 
@@ -176,28 +173,27 @@
                 <div id="unfavoritesuppliermodal" class="ui small modal">
                     <i class="close icon"></i>
                     <div class="header">
-                        Unfavorite This Supplier
+                        Remove Supplier from Favorites
                     </div>
 
                     <div class="content">
                         <form class="ui form" id="deleteFavsupplier" action="userservlet" method="get"> 
                             <!--Inserting delete danger message. -->
 
-                            Are you sure you would like to unfavorite this supplier?
+                            <h3>
+                                Are you sure you would like remove <font color="orange"><%=supplier.getSupplier_name()%></font> from Favorites?</h3>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="supplier_id" value="<%=supplier.getSupplier_id()%>">
                             <input type="hidden" name="vendor_id" value="<%=vendor_id%>">
                             <input type="hidden" name="action" value="delete">
 
-                            <input type="submit" value="Unfavorite This Supplier" class="ui red button" /> 
-                        </form>
+                           
                     </div>
                     <div class="actions">
-                        <div class="ui positive right labeled icon button">
-                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
-                            <i class="checkmark icon"></i>
-                        </div>
+                         <input type="submit" value="Remove from Favorites" class="ui red inverted button" /> 
+                        </form>
+                        <button class="ui inverted orange deny button">Cancel</button>
                     </div>
                 </div>
 

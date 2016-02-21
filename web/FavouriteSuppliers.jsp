@@ -104,10 +104,11 @@
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="delete">
 
-                            <input type="submit" value="Delete" class="ui teal button" /> 
-                        </form>
+                            
                     </div>
                     <div class="actions">
+                        <input type="submit" value="Delete" class="ui teal button" /> 
+                        </form>
                         <div class="ui positive right labeled icon button">
                             <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
                             <i class="checkmark icon"></i>

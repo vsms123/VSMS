@@ -77,13 +77,13 @@
                 <%@ include file="Navbar.jsp" %>
 
                 <h1 class="ui header">
-                        <i class="food icon"></i>
-                        <div class="content" >
-                            Menu
-                            <div  style="color:black"  class="sub header">Viewing/Managing My Dishes</div>
-                        </div>
-                    </h1>
-                    <br/>
+                    <i class="food icon"></i>
+                    <div class="content" >
+                        Menu
+                        <div  style="color:black"  class="sub header">Viewing/Managing My Dishes</div>
+                    </div>
+                </h1>
+                <br/>
                 <div class="ui middle aligned animated selection divided list">
                     <%for (Dish dish : dishList) {%>
 
@@ -94,6 +94,7 @@
 
                             <button class="ui green inverted button edit-dish-button<%=dish.getDish_id()%>">Edit</button>
                             <button class="ui red inverted button delete-dish-button<%=dish.getDish_id()%>"> <i class="remove icon"></i>Delete Dish</button>
+
                         </div>
                         <a href="RecipeBuilder.jsp?dish_id=<%=dish.getDish_id()%>" >
                             <div class="content">
@@ -102,11 +103,9 @@
                             <div>
                                 <%=dish.getDish_description()%>
                             </div>
+
                         </a>
                     </div>
-
-
-
 
                     <%}%>
                 </div>
@@ -149,7 +148,7 @@
                     for (Dish dish : dishList) {
                 %>
                 <div id="editmodaldiv<%=dish.getDish_id()%>" class="ui small modal">
-                    <i class="close icon"></i>
+
                     <div class="header">
                         Edit Dish
                     </div>
@@ -157,24 +156,22 @@
                     <div class="content">
                         <form class="ui form" action="ingredientservlet" method="post"> 
                             <!--Inputting form elements, already put for -->
-                            <label for="dish_name">Dish Name:</label> 
-                            <input id="dish_name" type="text" name="dish_name" value="<%=dish.getDish_name()%>">
-                            <label for ="dish_description">Dish Description:</label> 
+                            <label for="dish_name"><h3>Dish Name:</h3></label> 
+                            <input id="dish_name" type="text" name="dish_name" value="<%=dish.getDish_name()%>"><br/><br/>
+                            <label for ="dish_description"><h3>Dish Description:</h3></label> 
                             <textarea id="dish_description" name="dish_description"><%=dish.getDish_description()%></textarea>
-
+                            <br/><br/>
                             <!--Input hidden attributes-->
                             <input type="hidden" name="dish_id" value="<%=dish.getDish_id()%>">
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
-                            <input type="hidden" name="action" value="edit">
 
-                            <input type="submit" value="Edit" class="ui teal button" /> 
                         </form>
                     </div>
                     <div class="actions">
-                        <div class="ui positive right labeled icon button">
-                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
-                            <i class="checkmark icon"></i>
-                        </div>
+                        <input type="hidden" name="action" value="edit">
+
+                        <input type="submit" value="Save Changes" class="ui green inverted button" /> 
+                        <button class="ui orange deny inverted button">Cancel</button>
                     </div>
                 </div>
                 <%}%>
@@ -184,7 +181,6 @@
                     for (Dish dish : dishList) {
                 %>
                 <div id="deletemodaldiv<%=dish.getDish_id()%>" class="ui small modal">
-                    <i class="close icon"></i>
                     <div class="header">
                         Delete <%=dish.getDish_name()%>
                     </div>
@@ -193,7 +189,7 @@
                         <form class="ui form" id="deleteDish" action="ingredientservlet" method="post"> 
                             <!--Inserting delete danger message. -->
 
-                            Are you sure you would like to delete <%=dish.getDish_name()%>?
+                            <h3>Are you sure you would like to delete <%=dish.getDish_name()%>?</h3>
                             <br>
 
                             <!--Input hidden attributes-->
@@ -203,14 +199,12 @@
                             <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                             <input type="hidden" name="action" value="delete">
 
-                            <input type="submit" value="Delete" class="ui teal button" /> 
+
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="Delete" class="ui red inverted button" /> 
                         </form>
-                    </div>
-                    <div class="actions">
-                        <div class="ui positive right labeled icon button">
-                            <a class="text-white" href="<?php echo site_url('home/order');?>">Back to Home</a>
-                            <i class="checkmark icon"></i>
-                        </div>
+                        <button class="ui orange inverted deny button">Cancel</button>
                     </div>
                 </div>
             </div>
