@@ -40,8 +40,9 @@ public class OrderController extends HttpServlet {
         //An ingredient will have  int supplier_id; String name;private String supplyUnit;private String subcategory;private String description;private String offeredPrice;
         //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
         //An  order int order_id,int vendor_id; double total_final_price;Date dt_order;ArrayList<Orderline> orderlines;
-        ArrayList<Dish> dishList = IngredientDAO.getDish("1");
+        
         String vendor_idStr = request.getParameter("vendor_id");
+        ArrayList<Dish> dishList = IngredientDAO.getDish(vendor_idStr);
         String action = request.getParameter("action");
         String bufferqtypercStr = request.getParameter("bufferqtyperc");
 
@@ -168,18 +169,19 @@ public class OrderController extends HttpServlet {
                         htmlTable.append("<td class='eight wide'>" + orderline.getIngredient_name() + "</td>");
                         htmlTable.append("<td class='two wide'>" + orderline.getQuantity() + "</td>");
                         htmlTable.append("<td class='two wide'>" + IngredientController.getIngredient(Integer.toString(orderline.getSupplier_id()), orderline.getIngredient_name()).getSupplyUnit() + "</td>");
-                        htmlTable.append("<td class='two wide'>" + UtilityController.convertDoubleToCurrString(orderline.getFinalprice()) + "</td>");
+                        htmlTable.append("<td class='two wide'>$" + UtilityController.convertDoubleToCurrString(orderline.getFinalprice()) + "</td>");
                         htmlTable.append("</tr>");
                         totalFinalPrice += orderline.getFinalprice();
                     }
                 }
+                htmlTable.append("<h2><tr><td/><td/><td><b>Order total: </b></td><td><font>$" + UtilityController.convertDoubleToCurrString(order.getTotal_final_price()) + "</td></tr></font></h2><hr/>");
                 htmlTable.append("</tbody>");
                 htmlTable.append("</table>");
                 htmlTable.append("</div>");
-                htmlTable.append("<h2><font color='red'>Total order: " + UtilityController.convertDoubleToCurrString(order.getTotal_final_price()) + "</font></h2><hr/>");
+                
             }
         }
-        htmlTable.append("<h1><font color='red'>Total final price: " + UtilityController.convertDoubleToCurrString(totalFinalPrice) + "</font></h1>");
+        htmlTable.append("<h2><font color='red'>Total price: $" + UtilityController.convertDoubleToCurrString(totalFinalPrice) + "</font></h2>");
         return htmlTable.toString();
     }
 //    Test controller
