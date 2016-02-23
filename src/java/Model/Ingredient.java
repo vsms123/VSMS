@@ -18,6 +18,7 @@ public class Ingredient {
     private String subcategory;
     private String description;
     private String offeredPrice;
+    private String compo_id;
     
     public Ingredient(int supplier_id,String name,String supplyUnit,String subcategory,String description,String offeredPrice){
         this.supplier_id=supplier_id;
@@ -26,6 +27,7 @@ public class Ingredient {
         this.subcategory=subcategory;
         this.description=description;
         this.offeredPrice=offeredPrice;
+        this.compo_id = name + "|@|" + supplier_id;
     }
 
     public int getSupplier_id() {
@@ -78,6 +80,22 @@ public class Ingredient {
 
     public String toString() {
         return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}';
+    }
+    
+    public boolean equalCheck(Ingredient i){
+        if(i.getName().equals(name) && i.getSupplier_id() == supplier_id){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public String getCompo_ID(){
+        return compo_id;
+    }
+    
+    public void setCompo_ID(String compo_id){
+        this.compo_id = compo_id;
     }
     
     

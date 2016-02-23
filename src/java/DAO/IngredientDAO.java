@@ -170,7 +170,9 @@ public class IngredientDAO {
             }
         }
     }
-
+    
+    
+    
     public static ArrayList<Ingredient> getIngredientList() {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -207,6 +209,46 @@ public class IngredientDAO {
             }
         }
         return ingredientList;
+    }
+    
+    public static HashMap<String, Ingredient> getIngredientMap() {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "";
+        //ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+        HashMap<String, Ingredient> ingredientMap = new HashMap<>();
+
+        try {
+            conn = ConnectionManager.getConnection();
+            query = "select * from ingredient";
+            statement = conn.prepareStatement(query);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                int supId = Integer.parseInt(rs.getString("supplier_id"));
+                String name = rs.getString("ingredient_name");
+                Ingredient ingredient = new Ingredient(supId, name, rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"));
+                ingredientMap.put(name + "|@|" + supId, ingredient);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return ingredientMap;
     }
 
     public static ArrayList<Ingredient> getIngredientBySupplier(int supplier_id) {

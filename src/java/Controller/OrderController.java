@@ -20,9 +20,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import javamail.EmailController;
-import javamail.EmailControllerAWS;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -128,7 +129,6 @@ public class OrderController extends HttpServlet {
             //MailController Method
             //Will send the email to all the suppliers and the vendor
 //            EmailControllerAWS.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
-            
             EmailController.sendConfirmationMessageToVendorSupplier(order, order.getVendor_id(), action);
 
             response.sendRedirect("SupplierConfirmationThankYou.jsp");
@@ -218,34 +218,55 @@ public class OrderController extends HttpServlet {
 
         //iterate through dishQuantityMap
         Iterator iter = dishQuantityMap.keySet().iterator();
+        //Hashmap of <ingredient composite key : quantity>
+        HashMap<String, Integer> ingQuanMap = new HashMap<>();
         while (iter.hasNext()) {
             int dish_id = (int) iter.next();
             int quantityOrder = dishQuantityMap.get(dish_id);
 
-            Dish dish = IngredientDAO.getDishByID(dish_id);
-            //Open the dish to ingredients and accumulate their quantity
-            HashMap<Ingredient, ArrayList<String>> ingredientQuantity = dish.getIngredientQuantity();
-            Iterator iterIngQuantity = ingredientQuantity.keySet().iterator();
-            while (iterIngQuantity.hasNext()) {
-                Ingredient ingredient = (Ingredient) iterIngQuantity.next();
-                ArrayList<String> quantityUnitStr = ingredientQuantity.get(ingredient);
-                String quantityStr = quantityUnitStr.get(0);
-                String unit = quantityUnitStr.get(1);
+            if (quantityOrder != 0) {
+                Dish dish = IngredientDAO.getDishByID(dish_id);
 
-                //aggregate the quantity
-                int quantityAgg = quantityOrder * UtilityController.convertStringtoInt(quantityStr);
+                //Retrieve hashmap of a dish's ingredients and their quantity
+                HashMap<Ingredient, ArrayList<String>> ingredientQuantity = dish.getIngredientQuantity();
 
-                if (!ingredientAggQuantityMap.containsKey(ingredient)) {
-                    //insert ingredient and aggregated quantity to map
-                    ingredientAggQuantityMap.put(ingredient, quantityAgg);
-                } else {
-                    //poll ingredient and aggregated quantity to map
-                    ingredientAggQuantityMap.put(ingredient, ingredientAggQuantityMap.get(ingredient) + quantityAgg);
+                Iterator iterIngQuantity = ingredientQuantity.keySet().iterator();
+
+                //loop ingredients in a single dish
+                while (iterIngQuantity.hasNext()) {
+                    Ingredient ingredient = (Ingredient) iterIngQuantity.next();
+
+                    ArrayList<String> quantityUnitStr = ingredientQuantity.get(ingredient);
+                    int quantity = Integer.parseInt(quantityUnitStr.get(0)) * quantityOrder;
+                    //initialize first entry in map
+                    if (ingQuanMap.isEmpty()) {
+                        ingQuanMap.put(ingredient.getCompo_ID(), quantity);
+                    } else {
+                    //if not empty
+
+                        //if ingredient with this comp key already exists in map
+                        if (ingQuanMap.containsKey(ingredient.getCompo_ID())) {
+                            int currQuantity = ingQuanMap.get(ingredient.getCompo_ID());
+                            ingQuanMap.put(ingredient.getCompo_ID(), currQuantity + quantity);
+                        } else {
+                            ingQuanMap.put(ingredient.getCompo_ID(), quantity);
+                        }
+                    }
                 }
             }
         }
-        //for debugging purpose
-        System.out.println(dishQuantityMap.toString());
+
+        //convert ingQuanMap back to required format HashMap<Ingredient, Integer>
+        for (Map.Entry<String, Integer> entry : ingQuanMap.entrySet()) {
+            String compo_key = entry.getKey();
+            //String[] parts = compo_key.split(("|@|"));
+            HashMap<String, Ingredient> ingredientMap = IngredientDAO.getIngredientMap();
+
+            int quantity = entry.getValue();
+
+            ingredientAggQuantityMap.put(ingredientMap.get(compo_key), quantity);
+        }
+//           
         return ingredientAggQuantityMap;
     }
 
