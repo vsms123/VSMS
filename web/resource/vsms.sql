@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2016 at 04:58 AM
+-- Generation Time: Feb 26, 2016 at 05:08 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -631,7 +631,14 @@ INSERT INTO `ingredient` (`supplier_id`, `ingredient_name`, `supply_unit`, `cate
 (65, 'lobsters', 'piece', 'western', 'lobsters is a very nice food and beverage category that is categorized under western cuisine', 5),
 (65, 'sauerkraut', 'can', 'western', 'sauerkraut is a very nice food and beverage category that is categorized under western cuisine', 4),
 (65, 'spaghetti squash', 'package', 'western', 'spaghetti squash is a very nice food and beverage category that is categorized under western cuisine', 5),
-(65, 'steak', 'piece', 'western', 'steak is a very nice food and beverage category that is categorized under western cuisine', 4.5);
+(65, 'steak', 'piece', 'western', 'steak is a very nice food and beverage category that is categorized under western cuisine', 4.5),
+(66, 'Apple', 'g', 'fruit', 'This ingredient will be used for testing', 0.2),
+(66, 'Beef Ribeye', 'kg', 'meat', 'This ingredient will be used for testing', 10),
+(66, 'Chicken Breast', 'kg', 'meat', 'This ingredient will be used for testing', 6),
+(66, 'Chicken Egg', 'carton', 'Others', 'This ingredient will be used for testing', 4),
+(66, 'Grape', 'g', 'fruit', 'This ingredient will be used for testing', 0.5),
+(66, 'Pork Rib', 'kg', 'meat', 'This ingredient will be used for testing', 3),
+(66, 'Strawberry', 'g', 'fruit', 'This ingredient will be used for testing', 1);
 
 -- --------------------------------------------------------
 
