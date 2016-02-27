@@ -370,6 +370,43 @@ public class IngredientDAO {
         return dishList;
     }
 
+//This method generates a new dishID
+public static int getDishID(String vendor_id) {
+        int dishId=0;
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "";
+        try {
+            conn = ConnectionManager.getConnection();
+            query = "select * from dish where vendor_id=? order by dish_id desc";
+            statement = conn.prepareStatement(query);
+            statement.setString(1, vendor_id);
+            rs = statement.executeQuery();
+            rs.next();
+            dishId = Integer.parseInt(rs.getString("dish_id"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return dishId;
+    }
+//End of dishID generation
+     
     public static HashMap<Ingredient, ArrayList<String>> getIngredientQuantity(String dish_id) {
         HashMap<Ingredient, ArrayList<String>> toReturn = new HashMap<Ingredient, ArrayList<String>>();
         Connection conn = null;
