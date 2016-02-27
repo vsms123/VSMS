@@ -25,6 +25,10 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `dish`
 --
+Drop database vsms;
+
+create database vsms;
+use vsms;
 
 CREATE TABLE IF NOT EXISTS `dish` (
   `dish_id` int(11) NOT NULL,
@@ -572,8 +576,7 @@ INSERT INTO `ingredient` (`supplier_id`, `ingredient_name`, `supply_unit`, `cate
 (56, 'steak', 'piece', 'western', 'steak is a very nice food and beverage category that is categorized under western cuisine', 4.5),
 (57, 'amaretto', 'package', 'beverage', 'amaretto is a very nice food and beverage category that is categorized under beverage cuisine', 1.1),
 (57, 'baking soda', 'can', 'beverage', 'baking soda is a very nice food and beverage category that is categorized under beverage cuisine', 3.9),
-(57, 'black-eyed peas', 'can', 'beverage', 'black-eyed peas is a very nice food and beverage category that is categorized under beverage cuisine', 2.5);
-INSERT INTO `ingredient` (`supplier_id`, `ingredient_name`, `supply_unit`, `category`, `ingredient_description`, `offered_price`) VALUES
+(57, 'black-eyed peas', 'can', 'beverage', 'black-eyed peas is a very nice food and beverage category that is categorized under beverage cuisine', 2.5),
 (57, 'chestnuts', 'can', 'beverage', 'chestnuts is a very nice food and beverage category that is categorized under beverage cuisine', 2.9),
 (57, 'cooking wine', 'can', 'beverage', 'cooking wine is a very nice food and beverage category that is categorized under beverage cuisine', 2.4),
 (57, 'steak', 'piece', 'western', 'steak is a very nice food and beverage category that is categorized under western cuisine', 4.5),
@@ -768,6 +771,7 @@ INSERT INTO `ingredient_quantity` (`dish_id`, `ingredient_name`, `quantity`, `ve
 (37, 'nectarines', 2, 13, 10, 'can'),
 (38, 'ale', 2, 3, 23, 'package'),
 (38, 'cantaloupes', 1, 3, 14, 'piece'),
+(38, 'bean threads', 1, 3, 6, 'can'),
 (39, 'broccoli', 1, 13, 11, 'package'),
 (39, 'feta cheese', 1, 13, 18, 'package'),
 (39, 'peaches', 2, 13, 8, 'can'),
@@ -1044,7 +1048,7 @@ INSERT INTO `supplier` (`supplier_id`, `supplier_name`, `supplier_description`, 
 (3, 'FreshSaladz', 'Established in 2014, we provide the best technology in growing organic vegetables. We conduct research in additive free, genetically modified vegetables infused with a variety of vitamins and minerals. Items Sold: Rainbow cabbage, Blue spinach, Organic olives.', 'fusion', '123', 'joel.gnui.2013@sis.smu.edu.sg', 65, 87221272, 'Jurong Avenue 2, Opposite Jurong Bird Park'),
 (4, 'Animal Farm', 'Animal Farm! Animal Animal Animals! Description: Where the pigs farm. Offering discounts on horse meat and beef. Items Sold: We have poultry ranging from kampong chicken to flying pigs!!', 'western', '123', 'Parin1957@armyspy.com', 65, 87221272, 'Lakeside Street 10, Block 101, #3-10'),
 (5, 'Only a Matter of Thyme', 'Only a Matter of Thyme! Description: Time waits for no one. Delivery across thyme and space. Items Sold: Time', 'spices', '123', 'Parin1957@armyspy.com', 65, 87221272, 'Bart Street 3, Block 41, #1-10'),
-(6, 'Wholesome Wonder Bread', 'Wholesome Wonder Bread is a very famous western supplier with the famous dish Punucapa', 'western', 'Punucapa', 'Parin1957@armyspy.com', 65, 87221272, '1013 Geylang East Avenue 3 #01-136'),
+(6, 'Foodingo (Supplier)', 'Foodingos Supplier Test Account', 'western', '123abc', 'Yosin.a.2009@gmail.com', 65, 87221272, '49 Jalan Pemimpin APS INDUSTRIAL BUILDING'),
 (7, 'Jerrys Iga', 'Jerrys Iga is a very famous asian supplier with the famous dish Iltapata', 'asian', 'Iltapata', 'Parin1957@armyspy.com', 65, 87221272, '49 Jalan Pemimpin APS INDUSTRIAL BUILDING'),
 (8, 'Picadilly Market Grill & BKY', 'Picadilly Market Grill & BKY is a very famous fusion supplier with the famous dish Pichicolo', 'fusion', 'Pichicolo', 'Parin1957@armyspy.com', 65, 87221272, '1 Lok Yang Way Jurong #19B'),
 (9, 'American Discount Foods', 'American Discount Foods is a very famous fusion supplier with the famous dish Araucana', 'fusion', 'Araucana', 'Parin1957@armyspy.com', 65, 87221272, '10 Pioneer Sector 1 #01-00'),
@@ -1104,7 +1108,7 @@ INSERT INTO `supplier` (`supplier_id`, `supplier_name`, `supplier_description`, 
 (63, 'Coffee Beanery', 'Coffee Beanery is a very famous beverage supplier with the famous dish Caracoles', 'beverage', 'Caracoles', 'Parin1957@armyspy.com', 65, 87221272, '63 Hillview Ave #03-09 Lam Soon Ind Bldg Singapore 669569 '),
 (64, 'Breaux Mart Supermarkets', 'Breaux Mart Supermarkets is a very famous western supplier with the famous dish Huilque', 'western', 'Huilque', 'Parin1957@armyspy.com', 65, 87221272, 'Block 35 Tannery Road #11-10 Tannery Block, Ruby Industrial Complex'),
 (65, 'Mars Cafe', 'Mars Cafe is a very famous western supplier with the famous dish Matanzas', 'western', 'Matanzas', 'Parin1957@armyspy.com', 65, 87221272, '5 Tuas Avenue 3 Bok Seng Building'),
-(66, 'Foodingo (Supplier)', 'Foodingo''s Supplier Test Account', 'western', '123abc', 'Yosin.a.2009@gmail.com', 65, 0, '');
+(66, 'Wholesome Wonder Bread', 'Wholesome Wonder Bread is a very famous western supplier with the famous dish Punucapa', 'western', 'Punucapa', 'Parin1957@armyspy.com', 65, 87221272, '1013 Geylang East Avenue 3 #01-136');
 
 -- --------------------------------------------------------
 
@@ -1172,7 +1176,7 @@ CREATE TABLE IF NOT EXISTS `vendor` (
 INSERT INTO `vendor` (`vendor_id`, `vendor_name`, `vendor_description`, `password`, `email`, `area_code`, `telephone_number`, `address`) VALUES
 (1, 'Bob''s Bakery And Bistro', 'Bob bakery and bistro is a renowned Bistro that was established in 1976', '123', 'vincentt.2013@sis.smu.edu.sg', 65, 87221272, '1B Braddel Road #05-02'),
 (2, 'Cozumel Mexican Grille', 'Cozumel Mexican Grille is a very famous asian supplier with the famous dish Punucapa', '123', 'cw.cheung.2013@sis.smu.edu.sg', 65, 87221272, '39 Defu Lane 7'),
-(3, 'Le Peep Restaurant', 'Le Peep Restaurant is a very famous fusion supplier with the famous dish Iltapata', 'Iltapata', 'Parin1957@armyspy.com', 65, 87221272, '11 Tanjong Rhu Road #18-01 The Waterside'),
+(3, 'Foodingo (Vendor)', 'Foodingos Vendor Test Account', '123abc', 'rehanarien@gmail.com', 65, 91234567, 'No. 29 Woodlands Industrial Park E1 #04-17 Northtech'),
 (4, 'Mark & Orlandos', 'Mark & Orlandos is a very famous western supplier with the famous dish Pichicolo', 'Pichicolo', 'Parin1957@armyspy.com', 65, 87221272, 'No. 29 Woodlands Industrial Park E1 #04-17 Northtech'),
 (5, 'Chinalite', 'Chinalite is a very famous asian supplier with the famous dish Araucana', 'Araucana', 'Parin1957@armyspy.com', 65, 87221272, '491B River Valley Road #04-01 Valley Point Office Tower'),
 (6, 'Heritage Society', 'Heritage Society is a very famous vegetable supplier with the famous dish Farellones', 'Farellones', 'Parin1957@armyspy.com', 65, 87221272, '55 Hume Avenue #06-09'),
@@ -1185,7 +1189,7 @@ INSERT INTO `vendor` (`vendor_id`, `vendor_name`, `vendor_description`, `passwor
 (13, 'Ester C CO', 'Ester C CO is a very famous beverage supplier with the famous dish Chilacaya', 'Chilacaya', 'Parin1957@armyspy.com', 65, 87221272, '3016 Bedok Nth Ave 4 #01-03'),
 (14, 'Natural Pharmacy', 'Natural Pharmacy is a very famous beverage supplier with the famous dish Loncopahue', 'Loncopahue', 'Parin1957@armyspy.com', 65, 87221272, '15 Pioneer Sector 2'),
 (15, 'NW Core Collection', 'NW Core Collection is a very famous western supplier with the famous dish Mocopulle', 'Mocopulle', 'Parin1957@armyspy.com', 65, 87221272, '51 Tuas Ave 1 Singapore 639501 '),
-(16, 'Foodingo (Vendor)', 'Foodingo''s Vendor Test Account', '123abc', 'rehanarien@gmail.com', 65, 91234567, '');
+(16, 'Le Peep Restaurant', 'Le Peep Restaurant is a very famous fusion supplier with the famous dish Iltapata', 'Iltapata', 'Parin1957@armyspy.com', 65, 87221272, '11 Tanjong Rhu Road #18-01 The Waterside');
 
 --
 -- Constraints for dumped tables
