@@ -22,23 +22,29 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
                 //To edit user account and password changes
 
                 //Will go through the edit profile button
-                $(".edit-profile-button").click(function () {
+                $(".edit-profile-button").click(function() {
                     console.log("My name is edit-profile-button");
                     //show modal button
                     $('#editprofilemodal').modal('show');
                 });
                 //Will go through the edit password button
-                $(".edit-password-button").click(function () {
+                $(".edit-password-button").click(function() {
                     console.log("My name is edit-password-button");
                     //show modal button
                     $('#editpasswordmodal').modal('show');
                 });
             });
         </script>
+        <style>
+            #map {
+                width: 400px;
+                height: 400px;
+            }
+        </style>
     </head>
     <body class="background">
 
@@ -70,19 +76,19 @@
                 <table class="ui very padded large striped  table">
                     <tr>
                         <th><h2>Email</h2></th>
-                        <td><h3><%=currentSupplier.getEmail()%></h3></td>
+                    <td><h3><%=currentSupplier.getEmail()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Address</h2></th>
-                        <td><h3><%=currentSupplier.getAddress()%></h3></td>
+                    <td><h3><%=currentSupplier.getAddress()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Telephone Number</h2></th>
-                        <td><h3><%="(" + currentSupplier.getArea_code() + ")" + currentSupplier.getTelephone_number()%></h3></td>
+                    <td><h3><%="(" + currentSupplier.getArea_code() + ")" + currentSupplier.getTelephone_number()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Description</h2></th>
-                        <td><h3><%=currentSupplier.getSupplier_description()%></h3></td>
+                    <td><h3><%=currentSupplier.getSupplier_description()%></h3></td>
                     </tr>
                 </table>
 
@@ -91,7 +97,7 @@
                 <button class="ui green large button edit-profile-button">Edit Profile</button>
                 <button class="ui green large button edit-password-button">Change Password</button>
 
-
+                <div id="map"></div>
                 <!--Create a modal for editing the profile-->
                 <div id="editprofilemodal" class="ui small modal">
 
@@ -172,6 +178,38 @@
         </div>
         <!--JAVASCRIPT-->
         <script>$("#form").validate();</script>
+        <!-- Google Maps JS API -->
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <!-- GMaps Library (settings of div style is at the head) -->
+        <script src="js/gmaps.js"></script>
+        <script>
+            /* Map Object */
+            var mapObj = new GMaps({
+                el: '#map',
+                lat: 48.857,
+                lng: 2.295
+            });
+            GMaps.geocode({
+                address: '<%=supplier.getAddress()%>',
+                callback: function(results, status) {
+                    if (status == 'OK') {
+                        latlng = results[0].geometry.location;
+                        mapObj.setCenter(latlng.lat(), latlng.lng());
+                        mapObj.addMarker({
+                            lat: latlng.lat(),
+                            lng: latlng.lng(),
+                            title: '<%=supplier.getSupplier_name()%>',
+                            infoWindow: {
+                                content: '<h4><%=supplier.getSupplier_name()%></h4><div><%=supplier.getAddress()%><br> Singapore, <%=supplier.getZipcode()%></div>',
+                                maxWidth: 100
+                            }
+                        });
+                    } else if (status == 'ZERO_RESULTS') {
+                        alert('Sorry, no results found');
+                    }
+                }
+            })
+        </script>
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
         <script src="js/formvalidation.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>

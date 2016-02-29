@@ -21,26 +21,33 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
                 //To edit user account and password changes
 
                 //Will go through the edit profile button
-                $(".edit-profile-button").click(function () {
+                $(".edit-profile-button").click(function() {
                     console.log("My name is edit-profile-button");
                     //show modal button
                     $('#editprofilemodal').modal('show');
                 });
                 //Will go through the edit password button
-                $(".edit-password-button").click(function () {
+                $(".edit-password-button").click(function() {
                     console.log("My name is edit-password-button");
                     //show modal button
                     $('#editpasswordmodal').modal('show');
                 });
-                $('.message .close.icon').on('click', function () {
+                $('.message .close.icon').on('click', function() {
                     $(this).closest('.message').transition('fade');
                 });
             });
         </script>
+
+        <style>
+            #map {
+                width: 400px;
+                height: 400px;
+            }
+        </style>
     </head>
     <body class="background">
 
@@ -77,10 +84,10 @@
                     </div>
                     <p>Please try again.
                     </p></div>
-                    
-                    <%
-                        }
-                    %>
+
+                <%
+                    }
+                %>
                 <h1 style="color:black"><%=currentVendor.getVendor_name()%></h1>
 
 
@@ -108,7 +115,7 @@
 
                 <button class="ui green large button edit-profile-button">Edit Profile</button>
                 <button class="ui green large button edit-password-button">Change Password</button>
-
+                <div id="map"></div>
 
                 <!--Create a modal for editing the profile-->
                 <div id="editprofilemodal" class="ui small modal">
@@ -192,6 +199,38 @@
         </div>
         <!--JAVASCRIPT-->
         <script>$("#form").validate();</script>
+        <!-- Google Maps JS API -->
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <!-- GMaps Library (settings of div style is at the head) -->
+        <script src="js/gmaps.js"></script>
+        <script>
+            /* Map Object */
+            var mapObj = new GMaps({
+                el: '#map',
+                lat: 48.857,
+                lng: 2.295
+            });
+            GMaps.geocode({
+                address: '<%=currentVendor.getAddress()%>',
+                callback: function(results, status) {
+                    if (status == 'OK') {
+                        latlng = results[0].geometry.location;
+                        mapObj.setCenter(latlng.lat(), latlng.lng());
+                        mapObj.addMarker({
+                            lat: latlng.lat(),
+                            lng: latlng.lng(),
+                            title: "<%=currentVendor.getVendor_name()%>",
+                            infoWindow: {
+                                content: "<h4><%=currentVendor.getVendor_name()%></h4><div><%=currentVendor.getAddress()%><br> Singapore, <%=currentVendor.getZipcode()%></div>",
+                                maxWidth: 100
+                            }
+                        });
+                    } else if (status == 'ZERO_RESULTS') {
+                        alert('Sorry, no results found');
+                    }
+                }
+            })
+        </script>
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
         <script src="js/formvalidation.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>

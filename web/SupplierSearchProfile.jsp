@@ -24,16 +24,16 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
                 //To edit user account and password changes
 
                 //Will go through the edit profile button
-                $(".favorite-supplier").click(function () {
+                $(".favorite-supplier").click(function() {
                     //show modal button
                     $('#favoritesupppliermodal').modal('show');
                 });
                 //Will go through the edit password button
-                $(".unfavorite-supplier").click(function () {
+                $(".unfavorite-supplier").click(function() {
                     //show modal button
                     $('#unfavoritesuppliermodal').modal('show');
                 });
@@ -45,6 +45,12 @@
                 });
             });
         </script>
+        <style>
+            #map {
+                width: 400px;
+                height: 400px;
+            }
+        </style>
         <title>Supplier Search Profile</title>
     </head>
     <body class="background">
@@ -86,42 +92,43 @@
                     <table class="ui very padded large striped  table">
                         <tr>
                             <th><h2>Description</h2></th>
-                            <td><h3><%=supplier.getSupplier_description()%></h3></td>
+                        <td><h3><%=supplier.getSupplier_description()%></h3></td>
                         </tr>
                         <tr>
                             <th><h2>Email</h2></th>
-                            <td><h3><%=supplier.getEmail()%></h3></td>
+                        <td><h3><%=supplier.getEmail()%></h3></td>
                         </tr>
                         <tr>
                             <th><h2>Address</h2></th>
-                            <td><h3><%=supplier.getAddress()%> <%=supplier.getZipcode()%></h3></td>
+                        <td><h3><%=supplier.getAddress()%> <%=supplier.getZipcode()%></h3></td>
                         </tr>
                         <tr>
                             <th><h2>Telephone Number</h2></th>
-                            <td><h3><%="(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()%></h3></td>
+                        <td><h3><%="(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()%></h3></td>
                         </tr>
                         <tr>
                             <th><h2>Expected Delivery Range</h2></th>
-                            <td><h3><%= supplier.getMin_leadtime() + " - " + supplier.getMax_leadtime()%> Days</h3></td>
+                        <td><h3><%= supplier.getMin_leadtime() + " - " + supplier.getMax_leadtime()%> Days</h3></td>
                         </tr>
 
                     </table>
+                    <div id="map"></div>
                     <%
                         ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(vendor.getVendor_id());
                         if (favSupplierList.contains(supplier)) {
                     %>
                     <button class="ui red large button unfavorite-supplier"><i class="remove icon"></i>Remove from Favorites</button>
-                    <%
-                    } else {
-                    %><button class="ui green large button favorite-supplier"><i class="star icon"></i>Add to Favorites</button>
-                    <%
-                        }
-                    %>
-                </div>
+                                                       <%
+                                                       } else {
+                                                       %><button class="ui green large button favorite-supplier"><i class="star icon"></i>Add to Favorites</button>
+                                                       <%
+                                                           }
+                                                       %>
+                    </div>
 
-                <div class="ui bottom attached tab segment" id="supplier_name_div" data-tab="ingredients">
-                    <!--Table to show the ingredient list-->
-                    <table class="ui padded large striped  table">
+                    <div class="ui bottom attached tab segment" id="supplier_name_div" data-tab="ingredients">
+                        <!--Table to show the ingredient list-->
+                        <table class="ui padded large striped  table">
                         <tr>
                             <th><h2>Ingredients Supplied</h2></th>
                         </tr>
@@ -164,10 +171,10 @@
                             <input type="hidden" name="vendor_id" value="<%=vendor_id%>">
                             <input type="hidden" name="action" value="create">
 
-                            
-                    </div>
-                    <div class="actions">
-                        <input type="submit" value="Favorite this Supplier" class="ui inverted green button" /> 
+
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="Favorite this Supplier" class="ui inverted green button" /> 
                         </form>
                         <button class="ui deny orange inverted button">Cancel</button>
                     </div>
@@ -192,10 +199,10 @@
                             <input type="hidden" name="vendor_id" value="<%=vendor_id%>">
                             <input type="hidden" name="action" value="delete">
 
-                           
-                    </div>
-                    <div class="actions">
-                         <input type="submit" value="Remove from Favorites" class="ui red inverted button" /> 
+
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="Remove from Favorites" class="ui red inverted button" /> 
                         </form>
                         <button class="ui inverted orange deny button">Cancel</button>
                     </div>
@@ -205,6 +212,38 @@
         </div>
         <!--JAVASCRIPT-->
         <script>$("#form").validate();</script>
+        <!-- Google Maps JS API -->
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <!-- GMaps Library (settings of div style is at the head) -->
+        <script src="js/gmaps.js"></script>
+        <script>
+            /* Map Object */
+            var mapObj = new GMaps({
+                el: '#map',
+                lat: 48.857,
+                lng: 2.295
+            });
+            GMaps.geocode({
+                address: '<%=supplier.getAddress()%>',
+                callback: function(results, status) {
+                    if (status == 'OK') {
+                        latlng = results[0].geometry.location;
+                        mapObj.setCenter(latlng.lat(), latlng.lng());
+                        mapObj.addMarker({
+                            lat: latlng.lat(),
+                            lng: latlng.lng(),
+                            title: '<%=supplier.getSupplier_name()%>',
+                            infoWindow: {
+                                content: '<h4><%=supplier.getSupplier_name()%></h4><div><%=supplier.getAddress()%><br> Singapore, <%=supplier.getZipcode()%></div>',
+                                maxWidth: 100
+                            }
+                        });
+                    } else if (status == 'ZERO_RESULTS') {
+                        alert('Sorry, no results found');
+                    }
+                }
+            })
+        </script>
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
         <script src="js/formvalidation.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>
