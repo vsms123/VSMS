@@ -35,7 +35,7 @@
             }
             ArrayList<Order> orderList = OrderController.getSupplierOrders(s.getSupplier_id());
             ArrayList<Order> pendingOrders = new ArrayList<Order>();
-            ArrayList<Order> completedOrders = new ArrayList<Order>();
+            ArrayList<Order> incomingOrders = new ArrayList<Order>();
             ArrayList<Order> rejectedOrders = new ArrayList<Order>();
         %>
 
@@ -376,8 +376,8 @@
                     <%
                             if (order.getStatus().equals("pending")) {
                                 pendingOrders.add(order);
-                            } else if (order.getStatus().equals("approved")) {
-                                completedOrders.add(order);
+                            } else if (order.getStatus().equals("incoming")) {
+                                incomingOrders.add(order);
                             } else if (order.getStatus().equals("rejected")) {
                                 rejectedOrders.add(order);
                             }
@@ -387,7 +387,7 @@
                     <!--tabs menu-->
                     <div class="ui pointing pc secondary menu">
                         <a class="item active" style="font-size:18px" data-tab="first">Pending Orders</a>
-                        <a class="item" style="font-size:18px" data-tab="second">Completed Orders</a>
+                        <a class="item" style="font-size:18px" data-tab="second">Incoming Orders</a>
                         <a class="item" style="font-size:18px" data-tab="third">Rejected Orders</a>
                     </div>
 
@@ -566,31 +566,31 @@
 
 
 
-                    <!--Start of section for completed orders-->
+                    <!--Start of section for incoming orders-->
                     <div class="ui tab segment" data-tab="second">
 
                         <%
-                            int completedList = completedOrders.size();
-                            int completedPageNo = completedList / 10;
-                            if (completedPageNo
+                            int incomingList = incomingOrders.size();
+                            int incomingPageNo = incomingList / 10;
+                            if (incomingPageNo
                                     > 0) {
-                                if (completedList % 10 != 0) {
-                                    completedPageNo++;
+                                if (incomingList % 10 != 0) {
+                                    incomingPageNo++;
                                 }
                             }
 
                         %>
 
-                        <!--printing first 10 completed orders-->  
+                        <!--printing first 10 incoming orders-->  
 
                         <div  class="ui active tab middle aligned animated selection divided list" data-tab="201">
 
 
                             <%for (int count = 0;
                                         count < 10; count++) {
-                                    if (completedOrders.size() > count) {
+                                    if (incomingOrders.size() > count) {
 
-                                        Order order = completedOrders.get(count);
+                                        Order order = incomingOrders.get(count);
                             %>
 
 
@@ -614,23 +614,23 @@
                                 }%>
 
                         </div>
-                        <!--end of printing first 10 completed orders-->  
+                        <!--end of printing first 10 incoming orders-->  
 
 
 
-                        <!--Printing the beyond the 10th completed order-->
+                        <!--Printing the beyond the 10th incoming order-->
                         <%
                             for (int j = 2;
-                                    j <= completedPageNo;
+                                    j <= incomingPageNo;
                                     j++) {
                         %>
 
                         <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 200000%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
-                                    if (completedOrders.size() > count) {
+                                    if (incomingOrders.size() > count) {
 
-                                        Order order = completedOrders.get(count);
+                                        Order order = incomingOrders.get(count);
                             %>
 
 
@@ -657,7 +657,7 @@
 
                         <%}%>
 
-                        <!--end of Printing the beyond the 10th completed order-->
+                        <!--end of Printing the beyond the 10th incoming order-->
 
 
 
@@ -665,7 +665,7 @@
                         <!--Start of pagination-->
                         <div>
                             <%
-                                if (completedPageNo
+                                if (incomingPageNo
                                         > 1) {
                             %>
                             <div class="ui pagination pc secondary menu">
@@ -673,7 +673,7 @@
                                     1
                                 </a>
                                 <%
-                                    for (int j = 1; j < completedPageNo; j++) {
+                                    for (int j = 1; j < incomingPageNo; j++) {
                                 %>
                                 <a class="item" data-tab="<%=j + 1201%>">
                                     <%=j + 1%>
@@ -712,7 +712,7 @@
 
 
 
-                        <!--printing first 10 completed orders-->  
+                        <!--printing first 10 incoming orders-->  
 
                         <div class="ui active tab middle aligned animated selection divided list" data-tab="300001">
 
@@ -745,13 +745,13 @@
                                 }%>
 
                         </div>
-                        <!--end of printing first 10 completed orders-->  
+                        <!--end of printing first 10 incoming orders-->  
 
 
 
 
 
-                        <!--Printing the beyond the 10th completed order-->
+                        <!--Printing the beyond the 10th incoming order-->
                         <%
                             for (int j = 2;
                                     j <= rejectedPageNo;
@@ -790,7 +790,7 @@
 
                         <%}%>
 
-                        <!--end of Printing the beyond the 10th completed order-->
+                        <!--end of Printing the beyond the 10th incoming order-->
 
 
 
@@ -1061,7 +1061,7 @@
                     <!--tabs menu-->
                     <div class="ui pointing mobile secondary menu">
                         <a class="item active" data-tab="mobile_first">Pending Orders</a>
-                        <a class="item" data-tab="mobile_second">Completed Orders</a>
+                        <a class="item" data-tab="mobile_second">Incoming Orders</a>
                         <a class="item" data-tab="mobile_third">Rejected Orders</a>
                     </div>
 
@@ -1255,16 +1255,16 @@
 
 
 
-                    <!--Start of section for completed orders-->
+                    <!--Start of section for incoming orders-->
                     <div class="ui tab segment" data-tab="mobile_second">
 
                         <%
-                            int completedList2 = completedOrders.size();
-                            int completedPageNo2 = completedList2 / 10;
-                            if (completedPageNo2
+                            int incomingList2 = incomingOrders.size();
+                            int incomingPageNo2 = incomingList2 / 10;
+                            if (incomingPageNo2
                                     > 0) {
-                                if (completedList2 % 10 != 0) {
-                                    completedPageNo2++;
+                                if (incomingList2 % 10 != 0) {
+                                    incomingPageNo2++;
                                 }
                             }
 
@@ -1274,16 +1274,16 @@
 
 
 
-                        <!--printing first 10 completed orders-->  
+                        <!--printing first 10 incoming orders-->  
 
                         <div class="ui active tab middle aligned animated selection divided list" data-tab="1201">
 
 
                             <%for (int count = 0;
                                         count < 10; count++) {
-                                    if (completedOrders.size() > count) {
+                                    if (incomingOrders.size() > count) {
 
-                                        Order order = completedOrders.get(count);
+                                        Order order = incomingOrders.get(count);
                             %>
 
 
@@ -1307,25 +1307,25 @@
                                 }%>
 
                         </div>
-                        <!--end of printing first 10 completed orders-->  
+                        <!--end of printing first 10 incoming orders-->  
 
 
 
 
 
-                        <!--Printing the beyond the 10th completed order-->
+                        <!--Printing the beyond the 10th incoming order-->
                         <%
                             for (int j = 2;
-                                    j <= completedPageNo2;
+                                    j <= incomingPageNo2;
                                     j++) {
                         %>
 
                         <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 1200000%>">
 
                             <%for (int count = (j - 1) * 10; count < j * 10; count++) {
-                                    if (completedOrders.size() > count) {
+                                    if (incomingOrders.size() > count) {
 
-                                        Order order = completedOrders.get(count);
+                                        Order order = incomingOrders.get(count);
                             %>
 
 
@@ -1352,7 +1352,7 @@
 
                         <%}%>
 
-                        <!--end of Printing the beyond the 10th completed order-->
+                        <!--end of Printing the beyond the 10th incoming order-->
 
 
 
@@ -1360,7 +1360,7 @@
                         <!--Start of pagination-->
                         <div>
                             <%
-                                if (completedPageNo2
+                                if (incomingPageNo2
                                         > 1) {
                             %>
                             <div class="ui pagination mobile secondary menu">
@@ -1368,7 +1368,7 @@
                                     1
                                 </a>
                                 <%
-                                    for (int j = 1; j < completedPageNo2; j++) {
+                                    for (int j = 1; j < incomingPageNo2; j++) {
                                 %>
                                 <a class="item" data-tab="<%=j + 1201%>">
                                     <%=j + 1%>
@@ -1436,7 +1436,7 @@
 
 
 
-                        <!--printing first 10 completed orders-->  
+                        <!--printing first 10 incoming orders-->  
 
                         <div class="ui active tab middle aligned animated selection divided list" data-tab="1300001">
 
@@ -1469,13 +1469,13 @@
                                 }%>
 
                         </div>
-                        <!--end of printing first 10 completed orders-->  
+                        <!--end of printing first 10 incoming orders-->  
 
 
 
 
 
-                        <!--Printing the beyond the 10th completed order-->
+                        <!--Printing the beyond the 10th incoming order-->
                         <%
                             for (int j = 2;
                                     j <= rejectedPageNo2;
@@ -1514,7 +1514,7 @@
 
                         <%}%>
 
-                        <!--end of Printing the beyond the 10th completed order-->
+                        <!--end of Printing the beyond the 10th incoming order-->
 
 
 

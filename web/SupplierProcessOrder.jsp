@@ -28,7 +28,7 @@
             String ord_id = request.getParameter("order_id");
 
             if (action.equals("accept")) {
-                OrderController.updateOrdStatus(Integer.parseInt(ord_id), "approved");
+                OrderController.updateOrdStatus(Integer.parseInt(ord_id), "incoming");
             } else if (action.equals("reject")) {
                 OrderController.updateOrdStatus(Integer.parseInt(ord_id), "rejected");
             }

@@ -78,7 +78,7 @@
 <br/>
                 <%
                     ArrayList<Order> pendingOrders = new ArrayList<Order>();
-                    ArrayList<Order> completedOrders = new ArrayList<Order>();
+                    ArrayList<Order> incomingOrders = new ArrayList<Order>();
                     ArrayList<Order> rejectedOrders = new ArrayList<Order>();
 
 //                    creation of order modals and sorting of orders done here
@@ -145,8 +145,8 @@
 
                         if (order.getStatus().equals("pending")) {
                             pendingOrders.add(order);
-                        } else if (order.getStatus().equals("approved")) {
-                            completedOrders.add(order);
+                        } else if (order.getStatus().equals("incoming")) {
+                            incomingOrders.add(order);
                         } else if (order.getStatus().equals("rejected")) {
                             rejectedOrders.add(order);
                         }
@@ -156,7 +156,7 @@
                 <!--tabs menu-->
                 <div class="ui pointing secondary menu">
                     <a class="item active" style="font-size:18px" data-tab="first">Pending Orders</a>
-                    <a class="item"  style="font-size:18px" data-tab="second">Completed Orders</a>
+                    <a class="item"  style="font-size:18px" data-tab="second">Incoming Orders</a>
                     <a class="item" style="font-size:18px" data-tab="third">Rejected Orders</a>
                 </div>
 
@@ -288,15 +288,15 @@
 
 
 
-                <!--Start of section for completed orders-->
+                <!--Start of section for Incoming orders-->
                 <div class="ui tab segment" data-tab="second">
 
                     <%
-                        int completedList = completedOrders.size();
-                        int completedPageNo = completedList / 10;
-                        if (completedPageNo > 0) {
-                            if (completedList % 10 != 0) {
-                                completedPageNo++;
+                        int incomingList = incomingOrders.size();
+                        int incomingPageNo = incomingList / 10;
+                        if (incomingPageNo > 0) {
+                            if (incomingList % 10 != 0) {
+                                incomingPageNo++;
                             }
                         }
 
@@ -312,9 +312,9 @@
 
 
                         <%for (int count = 0; count < 10; count++) {
-                                if (completedOrders.size() > count) {
+                                if (incomingOrders.size() > count) {
 
-                                    Order order = completedOrders.get(count);
+                                    Order order = incomingOrders.get(count);
                         %>
 
 
@@ -344,17 +344,17 @@
 
 
 
-                    <!--Printing the beyond the 10th completed order-->
+                    <!--Printing the beyond the 10th incoming order-->
                     <%
-                        for (int j = 2; j <= completedPageNo; j++) {
+                        for (int j = 2; j <= incomingPageNo; j++) {
                     %>
 
                     <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 200%>">
 
                         <%for (int count = (j - 1) * 10; count < j * 10; count++) {
-                                if (completedOrders.size() > count) {
+                                if (incomingOrders.size() > count) {
 
-                                    Order order = completedOrders.get(count);
+                                    Order order = incomingOrders.get(count);
                         %>
 
 
@@ -389,14 +389,14 @@
                     <!--Start of pagination-->
                     <div>
                         <%
-                            if (completedPageNo > 1) {
+                            if (incomingPageNo > 1) {
                         %>
                         <div class="ui pagination secondary menu">
                             <a class="active item" data-tab="201">
                                 1
                             </a>
                             <%
-                                for (int j = 1; j < completedPageNo; j++) {
+                                for (int j = 1; j < incomingPageNo; j++) {
                             %>
                             <a class="item" data-tab="<%=j + 201%>">
                                 <%=j + 1%>

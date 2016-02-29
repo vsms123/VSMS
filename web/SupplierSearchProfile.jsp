@@ -94,11 +94,15 @@
                         </tr>
                         <tr>
                             <th><h2>Address</h2></th>
-                            <td><h3><%=supplier.getAddress()%></h3></td>
+                            <td><h3><%=supplier.getAddress()%> <%=supplier.getZipcode()%></h3></td>
                         </tr>
                         <tr>
                             <th><h2>Telephone Number</h2></th>
                             <td><h3><%="(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()%></h3></td>
+                        </tr>
+                        <tr>
+                            <th><h2>Expected Delivery Range</h2></th>
+                            <td><h3><%= supplier.getMin_leadtime() + " - " + supplier.getMax_leadtime()%> Days</h3></td>
                         </tr>
 
                     </table>

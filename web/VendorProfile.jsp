@@ -92,7 +92,7 @@
                     </tr>
                     <tr>
                         <th><h2>Address</h2></th>
-                    <td><h3><%=currentVendor.getAddress()%></h3></td>
+                    <td><h3><%=currentVendor.getAddress()%> <%=currentVendor.getZipcode()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Telephone Number</h2></th>
@@ -135,6 +135,9 @@
                             <label for ="address"><h3>Address:</h3></label> 
                             <textarea id="address" name="address"><%=currentVendor.getAddress()%></textarea>
                             <br/><br/>
+                            <label for ="zipcode"><h3>Zipcode:</h3></label> 
+                            <input id="zipcode" value="<%=currentVendor.getZipcode()%>" type="text" name="zipcode">
+                            <br/>
                             <label for ="vendor_description"><h3>Description:</h3></label> 
                             <textarea id="vendor_description" name="vendor_description"><%=currentVendor.getVendor_description()%></textarea>
                             <br/>

@@ -120,10 +120,12 @@ public class UserController extends HttpServlet {
                 String area_code = request.getParameter("area_code");
                 String telephone_number = request.getParameter("telephone_number");
                 String vendor_description = request.getParameter("vendor_description");
+                String zipcode = request.getParameter("zipcode");
                 vendor.setEmail(email);
                 vendor.setAddress(address);
                 vendor.setArea_code(UtilityController.convertStringtoInt(area_code));
                 vendor.setTelephone_number(UtilityController.convertStringtoInt(telephone_number));
+                vendor.setZipcode(UtilityController.convertStringtoInt(zipcode));
                 vendor.setVendor_description(vendor_description);
                 updateVendor(vendor);
                 response.sendRedirect("VendorProfile.jsp");
