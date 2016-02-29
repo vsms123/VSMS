@@ -4,6 +4,8 @@
     Author     : Benjamin
 --%>
 
+<%@page import="Model.ShoppingCart"%>
+<%@page import="DAO.IngredientDAO"%>
 <%@page import="Controller.IngredientController"%>
 <%@page import="Controller.OrderController"%>
 <%@page import="Controller.UserController"%>
@@ -27,6 +29,10 @@
                 currentVendor = UserController.retrieveVendorByID(1);
             }
             int vendor_id = currentVendor.getVendor_id();
+//Creates a shopping cart whenever a user logs in to be used by that user
+            ShoppingCart cart=new ShoppingCart(IngredientDAO.getDishID(vendor_id+""),"Shopping Cart", vendor_id, "A cart to place your ingredients in");
+            session.setAttribute("ShoppingCart",cart);
+//End of shopping cart creation
         %>
         <script>
             $(document).ready(function() {
