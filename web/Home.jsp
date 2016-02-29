@@ -22,25 +22,24 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <link rel="stylesheet" href="css/main.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             //in case current vendor does not exist
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
             int vendor_id = currentVendor.getVendor_id();
 //Creates a shopping cart whenever a user logs in to be used by that user
-            ShoppingCart cart=new ShoppingCart(IngredientDAO.getDishID(vendor_id+""),"Shopping Cart", vendor_id, "A cart to place your ingredients in");
-            session.setAttribute("ShoppingCart",cart);
+            ShoppingCart cart = new ShoppingCart(IngredientDAO.getDishID(vendor_id + ""), "Shopping Cart", vendor_id, "A cart to place your ingredients in");
+            session.setAttribute("ShoppingCart", cart);
 //End of shopping cart creation
-        %>
+%>
         <script>
-            $(document).ready(function() {
-                $('.message').click(function() {
+            $(document).ready(function () {
+                $('.message').click(function () {
                     //show modal button
                     $('#modalMessage').modal('show');
                 });
-                $('.profile').click(function() {
+                $('.profile').click(function () {
                     //show modal button
                     $('#modalAccount').modal('show');
                 });
@@ -151,7 +150,7 @@
 
                 var button = document.getElementById('change');
 
-                button.onclick = function() {
+                button.onclick = function () {
 
                     // If the format option matches, change it to the new option,
                     // if not, reset it to the original format.
@@ -163,17 +162,15 @@
                 };
             }
         </script>
+
         <script>
-            $(document).ready(function() {
-                $('#testing').click(function() {
-                    $('.vertical.menu').sidebar('toggle');
-                });
-            });
-        </script>
-        <script>
-            $(document).ready(function() {
-                $("#testing").click(function() {
-                    $('.vertical.menu').sidebar('toggle');
+            $(document).ready(function () {
+                $("#testing").click(function () {
+                    $('.vertical.menu').sidebar('setting',{ closable: false})
+                            .sidebar('setting', { dimPage: false })
+                            .sidebar('setting', 'transition', 'overlay')
+                            .sidebar('toggle');
+                    
                 });
 
             });
@@ -205,6 +202,7 @@
                         <p></p>
                         <h1 class="ui header">VSMS Menu</h1>
 
+                        <button id="testing">Test Button</button>
                         <p></p>
                         <h1>We will be adding in more contents here, such as some order status and notifications </h1>
                         <!-- Identify where the pie chart should be drawn. -->
@@ -265,5 +263,18 @@
                         3
                     </a>
                 </div>-->
+
+
+        <div class="ui right sidebar vertical menu">
+            <a class="item">
+               Pending (placeholder values for now)
+            </a>
+            <a class="item">
+                Awaiting Delivery
+            </a>
+            <a class="item">
+                Delivering Today
+            </a>
+        </div>
     </body>
 </html>
