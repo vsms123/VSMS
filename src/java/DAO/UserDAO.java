@@ -83,8 +83,11 @@ public class UserDAO {
                 int area_code = rs.getInt("area_code");
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
+                int zipcode = rs.getInt("zipcode");
+                int min_leadtime = rs.getInt("min_leadtime");
+                int max_leadtime = rs.getInt("max_leadtime");
 
-                Supplier supplier = new Supplier(supplier_id, password, supplier_name, supplier_description, supplier_type, email, area_code, telephone_number, address);
+                Supplier supplier = new Supplier(supplier_id, password, supplier_name, supplier_description, supplier_type, email, area_code, telephone_number, address, zipcode, min_leadtime, max_leadtime);
                 supplierList.add(supplier);
             }
         } catch (SQLException e) {
@@ -119,7 +122,12 @@ public class UserDAO {
                 int area_code = rs.getInt("area_code");
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
-                supplier = new Supplier(supplier_id, password, supplier_name, supplier_description, supplier_type, email, area_code, telephone_number, address);
+
+                int zipcode = rs.getInt("zipcode");
+                int min_leadtime = rs.getInt("min_leadtime");
+                int max_leadtime = rs.getInt("max_leadtime");
+
+                supplier = new Supplier(supplier_id, password, supplier_name, supplier_description, supplier_type, email, area_code, telephone_number, address, zipcode, min_leadtime, max_leadtime);
             }
         } catch (SQLException e) {
             handleSQLException(e, sql);
@@ -132,39 +140,39 @@ public class UserDAO {
         return supplier;
     }
 
-    public static void updateSupplier(Supplier supplier){
+    public static void updateSupplier(Supplier supplier) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "";
-        
+
         try {
             //creates connections to database
             conn = ConnectionManager.getConnection();
             sql = "UPDATE supplier"
-                    +" SET password = #1, supplier_description = #2, supplier_type = #3 , email = #4, area_code = #5 , telephone_number = #6, address = #7"
-                        + " WHERE supplier_id = #8";
-            
-            sql = sql.replace("#1", "'" + supplier.getPassword()+"'");
-            sql = sql.replace("#2", "'" + supplier.getSupplier_description()+"'");
-            sql = sql.replace("#3", "'" + supplier.getSupplier_type()+"'");
-            sql = sql.replace("#4", "'" + supplier.getEmail()+"'");
-            sql = sql.replace("#5", "'" + supplier.getArea_code()+"'");
-            sql = sql.replace("#6", "'" + supplier.getTelephone_number()+"'");
-            sql = sql.replace("#7", "'" + supplier.getAddress()+"'");
-            sql = sql.replace("#8", "'" + supplier.getSupplier_id()+"'");
+                    + " SET password = #1, supplier_description = #2, supplier_type = #3 , email = #4, area_code = #5 , telephone_number = #6, address = #7"
+                    + " WHERE supplier_id = #8";
+
+            sql = sql.replace("#1", "'" + supplier.getPassword() + "'");
+            sql = sql.replace("#2", "'" + supplier.getSupplier_description() + "'");
+            sql = sql.replace("#3", "'" + supplier.getSupplier_type() + "'");
+            sql = sql.replace("#4", "'" + supplier.getEmail() + "'");
+            sql = sql.replace("#5", "'" + supplier.getArea_code() + "'");
+            sql = sql.replace("#6", "'" + supplier.getTelephone_number() + "'");
+            sql = sql.replace("#7", "'" + supplier.getAddress() + "'");
+            sql = sql.replace("#8", "'" + supplier.getSupplier_id() + "'");
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             handleSQLException(e, sql);
         } catch (Exception e) {
             //Supplier is not found
-            
+
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
     }
-    
+
     public static Supplier loginSupplier(String username, String password) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -175,10 +183,10 @@ public class UserDAO {
             //creates connections to database
             conn = ConnectionManager.getConnection();
             sql = "Select * from supplier where email like '#1%' and password = '#2'";
-             sql = sql.replace("#1", username);
+            sql = sql.replace("#1", username);
             sql = sql.replace("#2", password);
             stmt = conn.prepareStatement(sql);
-           
+
             rs = stmt.executeQuery();
 
             //Retrieves the supplier info from database and create a new supplier object to return
@@ -191,7 +199,12 @@ public class UserDAO {
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
                 String email = rs.getString("email");
-                supplier = new Supplier(supplier_id, password, supplier_name, supplier_description, supplier_type, email, area_code, telephone_number, address);
+
+                int zipcode = rs.getInt("zipcode");
+                int min_leadtime = rs.getInt("min_leadtime");
+                int max_leadtime = rs.getInt("max_leadtime");
+
+                supplier = new Supplier(supplier_id, password, supplier_name, supplier_description, supplier_type, email, area_code, telephone_number, address, zipcode, min_leadtime, max_leadtime);
             }
         } catch (SQLException e) {
             handleSQLException(e, sql);
@@ -212,7 +225,7 @@ public class UserDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            query = "INSERT INTO supplier VALUES (?,?,?,?,?,?,?,?,?)";
+            query = "INSERT INTO supplier VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             statement = conn.prepareStatement(query);
             statement.setInt(1, supplier.getSupplier_id());
             statement.setString(2, supplier.getSupplier_name());
@@ -223,6 +236,9 @@ public class UserDAO {
             statement.setInt(7, supplier.getArea_code());
             statement.setInt(8, supplier.getTelephone_number());
             statement.setString(9, supplier.getAddress());
+            statement.setInt(10, supplier.getZipcode());
+            statement.setInt(11, supplier.getMin_leadtime());
+            statement.setInt(12, supplier.getMax_leadtime());
             statement.executeUpdate();
             statement.close();
             conn.close();
@@ -270,7 +286,8 @@ public class UserDAO {
                 int area_code = rs.getInt("area_code");
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
-                Vendor vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address);
+                int zipcode = rs.getInt("zipcode");
+                Vendor vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address,zipcode);
                 vendorList.add(vendor);
             }
         } catch (SQLException e) {
@@ -296,7 +313,7 @@ public class UserDAO {
             sql = sql.replace("#1", username);
             sql = sql.replace("#2", password);
             stmt = conn.prepareStatement(sql);
-            
+
             rs = stmt.executeQuery();
 
             //Retrieves the vendor info from database and create a new vendor object to return
@@ -308,7 +325,8 @@ public class UserDAO {
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
                 String email = rs.getString("email");
-                vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address);
+                int zipcode = rs.getInt("zipcode");
+                vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address,zipcode);
             }
         } catch (SQLException e) {
             handleSQLException(e, sql);
@@ -329,7 +347,7 @@ public class UserDAO {
 
         try {
             conn = ConnectionManager.getConnection();
-            query = "INSERT INTO vendor VALUES (?,?,?,?,?,?,?,?)";
+            query = "INSERT INTO vendor VALUES (?,?,?,?,?,?,?,?,?)";
             statement = conn.prepareStatement(query);
             statement.setInt(1, vendor.getVendor_id());
             statement.setString(2, vendor.getVendor_name());
@@ -339,6 +357,7 @@ public class UserDAO {
             statement.setInt(6, vendor.getArea_code());
             statement.setInt(7, vendor.getTelephone_number());
             statement.setString(8, vendor.getAddress());
+            statement.setInt(9, vendor.getZipcode());
             statement.executeUpdate();
             statement.close();
             conn.close();
@@ -361,34 +380,35 @@ public class UserDAO {
             }
         }
     }
-    
-    public static void updateVendor(Vendor vendor){
+
+    public static void updateVendor(Vendor vendor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "";
-        
+
         try {
             //creates connections to database
             conn = ConnectionManager.getConnection();
             sql = "UPDATE vendor"
-                    +" SET password = #1, vendor_description = #2, email = #3, area_code = #4 , telephone_number = #5, address = #6"
-                        + " WHERE vendor_id = #7";
-            
-            sql = sql.replace("#1", "'" + vendor.getPassword()+"'");
-            sql = sql.replace("#2", "'" + vendor.getVendor_description()+"'");
-            sql = sql.replace("#3", "'" + vendor.getEmail()+"'");
-            sql = sql.replace("#4", "'" + vendor.getArea_code()+"'");
-            sql = sql.replace("#5", "'" + vendor.getTelephone_number()+"'");
-            sql = sql.replace("#6", "'" + vendor.getAddress()+"'");
-            sql = sql.replace("#7", "'" + vendor.getVendor_id()+"'");
+                    + " SET password = #1, vendor_description = #2, email = #3, area_code = #4 , telephone_number = #5, address = #6, zipcode = #7" 
+                    + " WHERE vendor_id = #8";
+
+            sql = sql.replace("#1", "'" + vendor.getPassword() + "'");
+            sql = sql.replace("#2", "'" + vendor.getVendor_description() + "'");
+            sql = sql.replace("#3", "'" + vendor.getEmail() + "'");
+            sql = sql.replace("#4", "'" + vendor.getArea_code() + "'");
+            sql = sql.replace("#5", "'" + vendor.getTelephone_number() + "'");
+            sql = sql.replace("#6", "'" + vendor.getAddress() + "'");
+            sql = sql.replace("#7", "'" + vendor.getZipcode() + "'");
+            sql = sql.replace("#8", "'" + vendor.getVendor_id() + "'");
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             handleSQLException(e, sql);
         } catch (Exception e) {
             //Supplier is not found
-            
+
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
@@ -448,7 +468,8 @@ public class UserDAO {
                 int area_code = rs.getInt("area_code");
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
-                vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address);
+                int zipcode = rs.getInt("zipcode");
+                vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address,zipcode);
             }
         } catch (SQLException e) {
             handleSQLException(e, sql);
@@ -486,7 +507,12 @@ public class UserDAO {
                 int area_code = rs.getInt("area_code");
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
-                Supplier supplier = new Supplier(supplier_id, password, supplier_name, supplier_description, supplier_type, email, area_code, telephone_number, address);
+                int zipcode = rs.getInt("zipcode");
+                int min_leadtime = rs.getInt("min_leadtime");
+                int max_leadtime = rs.getInt("max_leadtime");
+
+                Supplier supplier = new Supplier(supplier_id, password, supplier_name, supplier_description, supplier_type, email, area_code, telephone_number, address, zipcode, min_leadtime, max_leadtime);
+
                 supplierList.add(supplier);
             }
         } catch (SQLException e) {
@@ -569,7 +595,6 @@ public class UserDAO {
         }
     }
 
-    
     //TIM TEMP
     private HashMap suppliers = new HashMap();
 
@@ -582,12 +607,12 @@ public class UserDAO {
         //Supplier s = new Supplier(1, "abc123", "FreshFoodz", "something here", "western", "lala@gmail.com", 65, 646464, "asd");
         //suppliers.put("1", new Supplier(1, "abc123", "FreshFoodz", "something here", "western", "lala@gmail.com", 65, 646464, "asd"));
         //suppliers.put("2", new Supplier(2, "abc123", "Animal Farm", "something here", "western", "lala@gmail.com", 65, 646464, "asd"));
-        
+
         ArrayList<Supplier> supList = retrieveSupplierList();
-        
+
         int count = 1;
-        for(Supplier s: supList){
-            suppliers.put(count+"", s);
+        for (Supplier s : supList) {
+            suppliers.put(count + "", s);
             count++;
         }
     }

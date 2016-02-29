@@ -69,7 +69,7 @@
                     //Timeout is used to make sure that the loading text is shown first before the synchronous ajax kicks
 //                    Synchronous ajax is used to make sure that the order processing could be done with a fixed buffer quantity
                     setTimeout(function() {$.ajaxSetup({async:false});
-                            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'create', bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {                    });
+                            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'create',special_request:$('#special_request').val(), bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {                    });
                             alert("Order has been sent to suppliers");
                             window.location.replace('OrderHistory.jsp');
                     }, 1000);
@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <!--printing of loading status-->
-                
+
                 <hr>
                 <% } else { %>
                 No dishes selected.
@@ -132,6 +132,8 @@
 
                 <br>
                 <% if (total > 0) { %>
+                <h3><label for= "special_request"> Special Request</h3>
+                <textarea name="special_request" id="special_request"></textarea>
                 <button class="ui green inverted large button" id="confirm-order-breakdown"> <i class="check icon"></i>Confirm Order Breakdown</button>
 
                 <% }%>

@@ -1,9 +1,15 @@
 package Controller;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UtilityController {
 
@@ -58,10 +64,28 @@ public class UtilityController {
         String moneyString = "" + df.format(money);
         return moneyString;
     }
-    
+
     public static String convertIntToCurrString(int money) {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         String moneyString = formatter.format(money);
         return moneyString;
+    }
+
+    public static Date convertStringToDate(String date) {
+        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        Date returnDate = null;
+        try {
+            returnDate = format.parse(date);
+        } catch (ParseException ex) {
+            Logger.getLogger(UtilityController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return returnDate;
+    }
+
+    public static Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 }

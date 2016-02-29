@@ -56,9 +56,11 @@ public class OrderDAO {
                 double total_final_price = rs.getDouble("total_final_price");
                 Date dt_order = rs.getDate("dt");
                 String status = rs.getString("status");
+                Date expected_delivery = rs.getDate("expected_delivery");
+                String special_request = rs.getString("special_request");
                 ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
 
-                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, status, orderLineList);
+                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status,expected_delivery,special_request);
                 orderList.add(order);
             }
         } catch (SQLException e) {
@@ -92,9 +94,12 @@ public class OrderDAO {
                 double total_final_price = rs.getDouble("total_final_price");
                 Date dt_order = rs.getDate("dt");
                 String status = rs.getString("status");
+                Date expected_delivery = rs.getDate("expected_delivery");
+                String special_request = rs.getString("special_request");
                 ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
 
-                order = new Order(order_id, vendor_id, total_final_price, dt_order, status, orderLineList);
+                order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status,expected_delivery,special_request);
+
 
             }
         } catch (SQLException e) {
@@ -128,10 +133,12 @@ public class OrderDAO {
                 //int vendor_id = rs.getInt("vendor_id");
                 double total_final_price = rs.getDouble("total_final_price");
                 Date dt_order = rs.getDate("dt");
-                ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
                 String status = rs.getString("status");
+                Date expected_delivery = rs.getDate("expected_delivery");
+                String special_request = rs.getString("special_request");
+                ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
 
-                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, status, orderLineList);
+                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status,expected_delivery,special_request);
 
                 orderList.add(order);
             }
@@ -440,12 +447,14 @@ public class OrderDAO {
         //insert new order into data base
         try {
             conn = ConnectionManager.getConnection();
-            sql = "insert into `order`( order_id, vendor_id, total_final_price,dt,status) values (#1,#2,#3,#4,#5)";
+            sql = "insert into `order`( order_id, vendor_id, total_final_price,dt,status,expected_delivery,special_request) values (#1,#2,#3,#4,#5,#6,#7)";
             sql = sql.replace("#1", "" + order.getOrder_id());
             sql = sql.replace("#2", "" + order.getVendor_id());
             sql = sql.replace("#3", "" + order.getTotal_final_price());
             sql = sql.replace("#4", "" + UtilityController.convertSQLDateTimeString(order.getDtOrder()));
             sql = sql.replace("#5", "" + "'"+order.getStatus()+"'");
+            sql = sql.replace("#6", "" + UtilityController.convertSQLDateTimeString(order.getExpected_delivery()));
+            sql = sql.replace("#7", "" + "'"+order.getSpecial_request()+"'");
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
 
@@ -508,11 +517,13 @@ public class OrderDAO {
         String sql = "";
         try{
             conn = ConnectionManager.getConnection();
-            sql = "UPDATE `order`"+ " SET total_final_price = #1 , status = #2"+ " WHERE order_id=#3 && vendor_id=#4";
+            sql = "UPDATE `order`"+ " SET total_final_price = #1 , status = #2  , expected_delivery = #3 , special_request = #4 "+ " WHERE order_id=#5 && vendor_id=#6";
             sql = sql.replace("#1", "" + order.getTotal_final_price());
             sql = sql.replace("#2", "" + "'"+order.getStatus()+"'");
-            sql = sql.replace("#3", "" + order.getOrder_id());
-            sql = sql.replace("#4", "" + order.getVendor_id());
+            sql = sql.replace("#3", "" + UtilityController.convertSQLDateTimeString(order.getExpected_delivery()));
+            sql = sql.replace("#4", "" + "'"+order.getSpecial_request()+"'");
+            sql = sql.replace("#5", "" + order.getOrder_id());
+            sql = sql.replace("#6", "" + order.getVendor_id());
             
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();

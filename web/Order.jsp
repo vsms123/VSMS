@@ -85,6 +85,7 @@
                         <%}%>
                         <!--Input hidden attributes-->
                     </table>
+                   
                     <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"/>
                     <br/>
 

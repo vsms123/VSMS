@@ -38,7 +38,7 @@ public class EmailControllerAWS {
     private static String user = "AKIAISJWKZRDXAJ2UNTQ";
     private static String password = "AqAvQKUVFnTtsjzWqrDt9hY2JqzFGHxP6Q0MaYlGgy2A";
     private static int port = 587;
-    
+
     private static String from = "ognidoof@gmail.com";
 
     public EmailControllerAWS() {
@@ -116,8 +116,8 @@ public class EmailControllerAWS {
             messageText.append("<h3>You have submitted the following order to " + supplier.getSupplier_name() + ".</h3>");
             messageText.append("<hr>");
             messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
-            messageText.append("<font color=\"red\">Order total is : $" + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
-
+            messageText.append("<font color=\"red\">Total price is : $" + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
+            messageText.append("<b>Special Request:</b> " + order.getSpecial_request());
         }
 
         sendMessage(vendor.getEmail(), "Your orders to suppliers", messageText + additional);
@@ -136,7 +136,7 @@ public class EmailControllerAWS {
             messageText.append("<hr>");
             messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
             messageText.append("<font color=\"red\">Total price is : $" + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
-
+            messageText.append("<b>Special Request:</b> " + order.getSpecial_request());
             sendMessage(supplier.getEmail(), "Order from Vendor " + vendor.getVendor_name(), messageText + additional);
         }
     }
@@ -173,7 +173,7 @@ public class EmailControllerAWS {
             //send the message  
             Transport transport = session.getTransport();
             transport.connect(host, user, password);
-             transport.sendMessage(message, message.getAllRecipients());
+            transport.sendMessage(message, message.getAllRecipients());
 
             System.out.println("Message is delivered");
         } catch (MessagingException e) {

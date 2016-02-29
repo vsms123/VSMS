@@ -15,11 +15,14 @@ import Model.Orderline;
 import Model.Supplier;
 import Model.Vendor;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -45,6 +48,7 @@ public class OrderController extends HttpServlet {
         String vendor_idStr = request.getParameter("vendor_id");
         ArrayList<Dish> dishList = IngredientDAO.getDish(vendor_idStr);
         String action = request.getParameter("action");
+        String special_request = request.getParameter("special_request");
         String bufferqtypercStr = request.getParameter("bufferqtyperc");
 
         String htmlConfirmation = "";
@@ -70,7 +74,7 @@ public class OrderController extends HttpServlet {
                 //Create a hashmap of orderlines based on suppliers
                 HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap = createSupplierOrderlineMap(orderlineList);
                 //Create a hashmap of Order based on suppliers
-                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id);
+                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id,special_request);
                 //Change this into an html to be shown at the modal
                 htmlConfirmation = retrieveConfirmationHTML(supplierOrderMap);
             } else {//create
@@ -83,7 +87,7 @@ public class OrderController extends HttpServlet {
                 //Create a hashmap of orderlines based on suppliers
                 HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap = createSupplierOrderlineMap(orderlineList);
                 //Create a hashmap of Order based on suppliers
-                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id);
+                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id,special_request);
                 //iterate the output
                 Iterator iter = supplierOrderMap.keySet().iterator();
                 while (iter.hasNext()) {
@@ -119,11 +123,14 @@ public class OrderController extends HttpServlet {
         if (!UtilityController.checkNullStringArray(new String[]{order_idStr, action})) {
             int order_id = UtilityController.convertStringtoInt(order_idStr);
             Order order = retrieveOrderByID(order_id);
+            //Take the expected delivery string and special request during confirmations.
+            String expected_deliveryStr = request.getParameter("expected_delivery");
+            
             //Do 3 things: 1. Update this orders inside the database 2. send these update orders to the suppliers and vendors with email 3. Redirect suppliers to a thank you page
             if (action.equals("approve")) {
-                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), "approved", order.getOrderlines()));
+                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "incoming",UtilityController.convertStringToDate(expected_deliveryStr),order.getSpecial_request()));
             } else if (action.equals("reject")) {
-                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), "rejected", order.getOrderlines()));
+                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "rejected",UtilityController.convertStringToDate(expected_deliveryStr),order.getSpecial_request()));
             }
 
             //MailController Method
@@ -334,17 +341,18 @@ public class OrderController extends HttpServlet {
         return supplierOrderlineListMap;
     }
 
-    public HashMap<Supplier, Order> createSupplierOrderMap(HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap, int order_id, int vendor_id) {
+    public HashMap<Supplier, Order> createSupplierOrderMap(HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap, int order_id, int vendor_id, String specialRequest) {
         HashMap<Supplier, Order> supplierOrderMap = new HashMap<Supplier, Order>();
 
-        //iterate through dishQuantityMap
+        //iterate through dishQuantityMap,S
         Iterator iter = supplierOrderlineMap.keySet().iterator();
         while (iter.hasNext()) {
             Supplier supplier = (Supplier) iter.next();
             ArrayList<Orderline> orderlineList = supplierOrderlineMap.get(supplier);
             String status = "pending";
             //  order has int order_id, int vendor_id, double total_final_price, Date dt_order, ArrayList<Orderline> orderlines) {
-            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList), new Date(), status, orderlineList);
+            //The expected orderdate will have a month from today first
+            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList), new Date(), orderlineList, status, UtilityController.addDays(new Date(),30), specialRequest);
             supplierOrderMap.put(supplier, order);
             //to compensate for subsequent orders, so that there would be no duplication
             order_id += 1;
