@@ -32,7 +32,7 @@
             ShoppingCart cart = new ShoppingCart(IngredientDAO.getDishID(vendor_id + ""), "Shopping Cart", vendor_id, "A cart to place your ingredients in");
             session.setAttribute("ShoppingCart", cart);
 //End of shopping cart creation
-%>
+        %>
         <script>
             $(document).ready(function () {
                 $('.message').click(function () {
@@ -166,11 +166,12 @@
         <script>
             $(document).ready(function () {
                 $("#testing").click(function () {
-                    $('.vertical.menu').sidebar('setting',{ closable: false})
-                            .sidebar('setting', { dimPage: false })
+                    $('.vertical.menu').sidebar('setting', {closable: false})
+                            .sidebar('setting', {dimPage: false})
                             .sidebar('setting', 'transition', 'overlay')
                             .sidebar('toggle');
-                    
+                    $( "body" ).removeClass( "pushable" );
+
                 });
 
             });
@@ -185,7 +186,7 @@
 
     <body>
 
-        <div id="pc" class="background">
+        <div id="pc pusher" class="background">
 
 
             <div class="transparency">
@@ -239,6 +240,18 @@
 
 
             </div>
+            <div class="ui right sidebar vertical menu">
+                <a class="item">
+                    Pending (placeholder values for now)
+                </a>
+                <a class="item">
+                    Awaiting Delivery
+                </a>
+                <a class="item">
+                    Delivering Today
+                </a>
+            </div>   
+
         </div>
 
 
@@ -265,16 +278,9 @@
                 </div>-->
 
 
-        <div class="ui right sidebar vertical menu">
-            <a class="item">
-               Pending (placeholder values for now)
-            </a>
-            <a class="item">
-                Awaiting Delivery
-            </a>
-            <a class="item">
-                Delivering Today
-            </a>
-        </div>
+
     </body>
+
+
+
 </html>

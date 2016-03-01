@@ -10,10 +10,11 @@
 <%@page import="Model.Dish"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+    
 <!DOCTYPE html>
 <html>
     <head>
+        
         <%@ include file="protect.jsp" %>
         <%             Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             if (currentVendor == null) {
