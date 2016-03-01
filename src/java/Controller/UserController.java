@@ -181,7 +181,7 @@ public class UserController extends HttpServlet {
         }
     }
 
-    public String retrieveSupplierHTMLTable(int vendor_id, ArrayList<Supplier> supplierList, ArrayList<Supplier> currentFavSupplier) {
+    public static String retrieveSupplierHTMLTable(int vendor_id, ArrayList<Supplier> supplierList, ArrayList<Supplier> currentFavSupplier) {
         StringBuffer htmlTable = new StringBuffer("");
 
         //Create header
