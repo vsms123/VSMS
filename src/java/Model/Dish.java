@@ -82,6 +82,14 @@ public class Dish {
         list.add(unit);
         ingredientQuantity.put(ingredient,list);
     }
+    
+    public void deleteIngredient(Ingredient ingredient){
+        ingredientQuantity.remove(ingredient);
+    }
+    
+    public void deleteAll(){
+        ingredientQuantity.clear();
+    }
 
     @Override
     public String toString() {
