@@ -52,6 +52,14 @@
                     document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                 });
 
+                $(".button").click(function () {
+                    $(this).transition('pulse');
+
+                });
+                 $(".pulse").click(function () {
+                    $(this).transition('pulse');
+
+                });
 
             });
 
@@ -83,38 +91,38 @@
         </div>
 
         <div id="navbarPC" class="ui stackable menu">
-            <a href="Home.jsp" class="item" style=" font-size: 16px">
+            <a href="Home.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large home icon"></i> Home
             </a>
             <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large shop icon" ></i> Order
 
                 <div class="menu">
-                    <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make new Order</a>
-                    <a href="TemplateMain.jsp" class="item" style=" font-size: 16px"><i class="large file text icon"></i> Order Templates</a>
-                    <a href="OrderHistory.jsp" class="item" style=" font-size: 16px"><i class="large history icon"></i> Order History</a>
+                    <a href="Order.jsp" class="item pulse" style=" font-size: 16px"><i class="large edit icon"></i> Make new Order</a>
+                    <a href="TemplateMain.jsp" class="item pulse" style=" font-size: 16px"><i class="large file text icon"></i> Order Templates</a>
+                    <a href="OrderHistory.jsp" class="item pulse" style=" font-size: 16px"><i class="large history icon"></i> Order History</a>
                 </div>
             </div>
-            <a href="Menu.jsp" class="item" style=" font-size: 16px">
+            <a href="Menu.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large food icon"></i> Menu
             </a>
-            <a class="item message triggerModal" style=" font-size: 16px">
+            <a class="item message triggerModal pulse" style=" font-size: 16px">
                 <i class="large  mail icon"></i> Messages
             </a>
-            <div class="ui simple dropdown item" style=" font-size: 16px">
+            <div class="ui simple dropdown item pulse" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
 
                 <div class="menu">
-                    <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                    <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
-                    <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
+                    <a href="VendorProfile.jsp" class="item pulse" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                    <a href="FavouriteSuppliers.jsp" class="item pulse" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
+                    <a class="item profile pulse" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
-            <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px">
+            <a href="SupplierSearch.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large search icon"></i> Supplier Search
             </a>
 
-            <a href="LogoutServlet" class="item" style=" font-size: 16px">
+            <a href="LogoutServlet" class="item pulse" style=" font-size: 16px">
                 <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Log Out
             </a>
 
