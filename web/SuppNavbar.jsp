@@ -27,7 +27,7 @@
                         $("#searchPC").css("display", "none");
                         $("#navbarPC").css("display", "none");
                         $("#PCview").css("display", "none");
-                        
+
                         $("#navbarMobile").css("display", "");
                     } else {
                         $("#searchPC").css("display", "");
@@ -46,6 +46,15 @@
                     document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                 });
 
+
+                $(".button").click(function () {
+                    $(this).transition('pulse');
+
+                });
+                $(".pulse").click(function () {
+                    $(this).transition('pulse');
+
+                });
 
             });
 
@@ -68,22 +77,22 @@
         </div>
 
         <div id="navbarPC" class="ui stackable menu">
-            <a href="SupplierHome.jsp" class="item" style=" font-size: 16px">
+            <a href="SupplierHome.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large home icon"></i> Home
             </a>
-                        
-            <a class="item message" style=" font-size: 16px">
+
+            <a class="item message pulse" style=" font-size: 16px">
                 <i class="large  mail icon"></i> Messages
             </a>
-            <div class="ui simple dropdown item" style=" font-size: 16px">
+            <div class="ui simple dropdown item pulse" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
 
                 <div class="menu">
-                    <a href="SupplierProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                    <a href="SupplierProfile.jsp" class="item pulse" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
-            <a href="LogoutServlet" class="item" style=" font-size: 16px">
+            <a href="LogoutServlet" class="item pulse" style=" font-size: 16px">
                 <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Log Out
             </a>
 
@@ -96,17 +105,17 @@
                 VSMS
             </div>
             <div class="right menu">
-            <div class="ui simple dropdown item" style=" font-size: 16px">
-                <i class="sidebar icon"></i> 
+                <div class="ui simple dropdown item" style=" font-size: 16px">
+                    <i class="sidebar icon"></i> 
 
-                <div class="menu">
-                    <a href="SupplierProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                    <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
-                    <a href="LogoutServlet" class="item" style=" font-size: 16px">
-                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:16px;height:18px;">&nbsp Log Out
-            </a>
+                    <div class="menu">
+                        <a href="SupplierProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
+                        <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
+                        <a href="LogoutServlet" class="item" style=" font-size: 16px">
+                            <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:16px;height:18px;">&nbsp Log Out
+                        </a>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
 
