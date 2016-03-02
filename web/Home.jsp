@@ -35,7 +35,7 @@
             IngredientController.addDish(cart);
             session.setAttribute("CartId",cart.getDish_id());
 //End of shopping cart creation
-        %>
+%>
         <script>
             $(document).ready(function () {
                 $('.message').click(function () {
@@ -173,9 +173,19 @@
                             .sidebar('setting', {dimPage: false})
                             .sidebar('setting', 'transition', 'overlay')
                             .sidebar('toggle');
-                    $( "body" ).removeClass( "pushable" );
+                    $("body").removeClass("pushable");
 
                 });
+                $('#testaccordion').css("display", "none");
+                $("#accordion").click(function () {
+                    $('#testaccordion').transition('vertical flip');
+                    $('.ui.accordion').accordion();
+
+                });
+
+
+
+
 
             });
         </script>
@@ -202,12 +212,42 @@
                     <p></p>
 
 
-                    <div class="ui raised very padded text container">
+                    <div class="ui raised very padded container">
                         <p></p>
                         <h1 class="ui header">VSMS Menu</h1>
 
-                        <button id="testing">Test Button</button>
+                        <button id="testing" class="ui button">Sidebar Widget</button>
+                        <button id="accordion"  class="ui button">Accordion Widget</button>
+
                         <p></p>
+
+                        <!--accordion testing-->
+                        <div id="testaccordion" class="ui styled fluid accordion">
+                            <div class="active title">
+                                <i class="dropdown icon"></i>
+                                Expected Orders for Today
+                            </div>
+                            <div class="active content">
+                                <p>To place all the orders that supplier will be delivering today.</p>
+                            </div>
+                            <div class="title">
+                                <i class="dropdown icon"></i>
+                                Pending Orders
+                            </div>
+                            <div class="content">
+                                <p>Orders pending approval from supplier to be placed here.</p>
+                            </div>
+                            <div class="title">
+                                <i class="dropdown icon"></i>
+                                Approved Orders
+                            </div>
+                            <div class="content">
+                                <p>Orders that had been approved, but not sent comes here</p>
+                            </div>
+                        </div>
+
+                        <p></p>
+
                         <h1>We will be adding in more contents here, such as some order status and notifications </h1>
                         <!-- Identify where the pie chart should be drawn. -->
                         <div id="chart_supplier_sales_amount_pie_div"></div> 
@@ -220,6 +260,13 @@
 
 
                         <p></p>
+
+
+
+
+
+
+
                     </div>
 
 
@@ -243,6 +290,14 @@
 
 
             </div>
+
+
+
+
+
+
+
+            <!--sidebar testing-->
             <div class="ui right sidebar vertical menu">
                 <a class="item">
                     Pending (placeholder values for now)
