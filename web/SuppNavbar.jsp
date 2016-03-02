@@ -92,6 +92,9 @@
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
+            <a href="SupplierAddIngredient.jsp" class="item pulse" style=" font-size: 16px">
+                <i class="large home icon"></i> Add Ingredients
+            </a>
             <a href="LogoutServlet" class="item pulse" style=" font-size: 16px">
                 <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Log Out
             </a>
