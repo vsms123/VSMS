@@ -72,7 +72,7 @@ public class OrderDAO {
     }
 
     //retrieve all order on that are expected to be delivered at the input date.
-    public static ArrayList<Order> retrieveOrderByDate(Date date){
+    public static ArrayList<Order> retrieveOrderByDate(int vendorId, Date date){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -81,7 +81,7 @@ public class OrderDAO {
         try {
             //creates connections to database
             conn = ConnectionManager.getConnection();
-            sql = "Select * from `order` where expected_delivery = " + date;
+            sql = "Select * from `order` WHERE vendor_id =" + vendorId +" && expected_delivery = " + date;
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 
