@@ -4,6 +4,10 @@
     Author     : Benjamin
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="Model.Orderline"%>
+<%@page import="Model.Order"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Model.ShoppingCart"%>
 <%@page import="DAO.IngredientDAO"%>
 <%@page import="Controller.IngredientController"%>
@@ -27,12 +31,20 @@
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
             }
+            DecimalFormat df = new DecimalFormat("0.00");
             int vendor_id = currentVendor.getVendor_id();
 //Creates a shopping cart whenever a user logs in to be used by that user
             ShoppingCart cart = new ShoppingCart(IngredientDAO.getDishID(vendor_id + ""), "Shopping Cart", vendor_id, "A cart to place your ingredients in");
             session.setAttribute("ShoppingCart", cart);
 //End of shopping cart creation
-%>
+
+            ArrayList<Order> orderList = OrderController.retrieveOrderList(currentVendor.getVendor_id());
+            ArrayList<Order> pendingOrders = new ArrayList<Order>();
+            ArrayList<Order> incomingOrders = new ArrayList<Order>();
+            ArrayList<Order> rejectedOrders = new ArrayList<Order>();
+
+
+        %>
         <script>
             $(document).ready(function () {
                 $('.message').click(function () {
@@ -180,8 +192,19 @@
 
                 });
 
+                $('.test.order').popup({
+                    position: 'top left'
+                });
+            <%
+                for (Order orderModal : orderList) {
+            %>
+//              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
+                $(".test.order.<%=orderModal.getOrder_id()%>").click(function () {
 
+                    $('#modalOrder<%=orderModal.getOrder_id()%>').modal('show');
+                });
 
+            <%}%>
 
 
             });
@@ -207,45 +230,139 @@
                     <%@ include file="Navbar.jsp" %>
 
                     <p></p>
+                    <%
+                        for (Order order : orderList) {
+                    %>
+                    <div id="modalOrder<%=order.getOrder_id()%>" class="ui modal">
+
+                        <div class="header">
+                            <h1>Order No. <%=order.getOrder_id()%></h1>
+                        </div>
+                        <div class="image content">
+                            <div class="ui medium image">
+                                <img src="./resource/pictures/Cart.png">
+                            </div>
+                            <div class="description">
+                                <div class="ui header" style="color: black">
+                                    Order ID : <%=order.getOrder_id()%> <br/>
+                                    Supplier : <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> <br/>
+                                    Date : <%=order.getDtOrder()%> <br/><br/>
+                                    Items:
+
+                                </div>
+                                <table class="ui single line table">
+                                    <thead>
+                                        <tr>
+                                            <th><div class="ui ribbon label">No. </div></th>
+                                            <th>Name</th>
+                                            <th>Unit</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <%
+                                        int count = 0;
+                                        for (Orderline orderLine : order.getOrderlines()) {
+                                            count++;
+
+                                    %>
+                                    <tr>
+
+                                        <td><div class="ui ribbon label"><%=count%> </div>&nbsp;</td>
+                                        <td><%=orderLine.getIngredient_name()%> &nbsp;</td>
+
+                                        <!--units to be edited-->
+                                        <%--<%=IngredientController.getIngredient(Integer.toString(orderLine.getSupplier_id()), orderLine.getIngredient_name()).getSupplyUnit()%>--%>
+                                        <td><%=orderLine.getQuantity()%> &nbsp;</td>
+                                        <td>$<%=df.format(orderLine.getFinalprice())%>&nbsp;</td>
+
+                                    </tr>
+                                    <%}%>
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button class="ui deny inverted orange button">Take me Back</button>
+                        </div>
+                    </div>
+                    <%
+                            if (order.getStatus().equals("pending")) {
+                                pendingOrders.add(order);
+                            } else if (order.getStatus().equals("incoming")) {
+                                incomingOrders.add(order);
+                            } else if (order.getStatus().equals("rejected")) {
+                                rejectedOrders.add(order);
+                            }
+
+                        }
+                    %>    
+
+
+
+
 
 
                     <div class="ui raised very padded container">
                         <p></p>
                         <h1 class="ui header">VSMS Menu</h1>
 
-                        <button id="testing" class="ui button">Sidebar Widget</button>
-                        <button id="accordion"  class="ui button">Accordion Widget</button>
+                        <button id="accordion"  class="ui button">View Shortcuts</button>
 
                         <p></p>
 
                         <!--accordion testing-->
                         <div id="testaccordion" class="ui styled fluid accordion">
                             <div class="active title">
-                                <i class="dropdown icon"></i>
-                                Expected Orders for Today
+                                <h3><i class="dropdown icon"></i>
+                                    Quick Order</h3>
                             </div>
                             <div class="active content">
+                                <p>Quick Order Templates goes here</p>
+                            </div>
+                            <div class="title">
+                                <h3><i class="dropdown icon"></i>
+                                    Expected Orders for Today</h3>
+                            </div>
+                            <div class="content">
                                 <p>To place all the orders that supplier will be delivering today.</p>
                             </div>
                             <div class="title">
-                                <i class="dropdown icon"></i>
-                                Pending Orders
+                                <h3><i class="dropdown icon"></i>
+                                    Pending Orders</h3>
                             </div>
                             <div class="content">
-                                <p>Orders pending approval from supplier to be placed here.</p>
+                                <h4>Orders pending approval from supplier:</h4>
+                                <% if (pendingOrders.size() == 0) {
+                                %>There are no Pending Orders at the moment..
+                                <%
+                                } else {
+
+                                %><div class="ui tiny animated selection divided list">
+                                    <%    for (Order pendingOrder : pendingOrders) {
+
+                                    %>
+
+                                    <div  class="item test order <%=pendingOrder.getOrder_id()%>" id="<%=pendingOrder.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+
+                                        <a>
+                                            <div class="content">
+                                                <h3>Order No. <%=pendingOrder.getOrder_id()%></h3> <%=pendingOrder.getDtOrder()%> 
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <%
+                                        }
+                                    %></div><%
+                                        };
+                                    %>
                             </div>
-                            <div class="title">
-                                <i class="dropdown icon"></i>
-                                Approved Orders
-                            </div>
-                            <div class="content">
-                                <p>Orders that had been approved, but not sent comes here</p>
-                            </div>
+
                         </div>
 
                         <p></p>
 
-                        <h1>We will be adding in more contents here, such as some order status and notifications </h1>
+                        <h1>Analytics </h1>
                         <!-- Identify where the pie chart should be drawn. -->
                         <div id="chart_supplier_sales_amount_pie_div"></div> 
                         <!-- Identify where the pie chart should be drawn. -->
@@ -295,17 +412,17 @@
 
 
             <!--sidebar testing-->
-            <div class="ui right sidebar vertical menu">
-                <a class="item">
-                    Pending (placeholder values for now)
-                </a>
-                <a class="item">
-                    Awaiting Delivery
-                </a>
-                <a class="item">
-                    Delivering Today
-                </a>
-            </div>   
+            <!--            <div class="ui right sidebar vertical menu">
+                            <a class="item">
+                                Pending (placeholder values for now)
+                            </a>
+                            <a class="item">
+                                Awaiting Delivery
+                            </a>
+                            <a class="item">
+                                Delivering Today
+                            </a>
+                        </div>   -->
 
         </div>
 
