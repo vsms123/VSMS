@@ -98,10 +98,7 @@
                             <th><h2>Email</h2></th>
                         <td><h3><%=supplier.getEmail()%></h3></td>
                         </tr>
-                        <tr>
-                            <th><h2>Address</h2></th>
-                        <td><h3><%=supplier.getAddress()%> <%=supplier.getZipcode()%></h3></td>
-                        </tr>
+                        
                         <tr>
                             <th><h2>Telephone Number</h2></th>
                         <td><h3><%="(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()%></h3></td>
@@ -110,9 +107,16 @@
                             <th><h2>Expected Delivery Range</h2></th>
                         <td><h3><%= supplier.getMin_leadtime() + " - " + supplier.getMax_leadtime()%> Days</h3></td>
                         </tr>
+                        <tr>
+                            <th><h2>Address</h2></th>
+                        <td><h3><%=supplier.getAddress()%> <%=supplier.getZipcode()%></h3></td>
+                        </tr>
+                        
 
                     </table>
-                    <div id="map"></div>
+                        <div id="map"></div>
+                        <br/>
+                    
                     <%
                         ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(vendor.getVendor_id());
                         if (favSupplierList.contains(supplier)) {
