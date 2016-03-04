@@ -12,8 +12,7 @@
     <head>
         <%@ include file="protect.jsp" %>
         <meta charset="utf-8" />
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             DecimalFormat df = new DecimalFormat("0.00");
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
@@ -36,7 +35,7 @@
 
 
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('.secondary.menu .item').tab();
 
                 $('.test.order').popup({
@@ -49,7 +48,7 @@
                 for (Order orderModal : orderList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
-                $(".test.order.<%=orderModal.getOrder_id()%>").click(function() {
+                $(".test.order.<%=orderModal.getOrder_id()%>").click(function () {
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>').modal('show');
                 });
@@ -68,14 +67,14 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-<h1 class="ui header">
-                        <i class="history icon"></i>
-                        <div class="content" >
-                            Order History
-                            <div  style="color:black"  class="sub header">Viewing Previous Made Orders</div>
-                        </div>
-                    </h1>
-<br/>
+                <h1 class="ui header">
+                    <i class="history icon"></i>
+                    <div class="content" >
+                        Order History
+                        <div  style="color:black"  class="sub header">Viewing Previous Made Orders</div>
+                    </div>
+                </h1>
+                <br/>
                 <%
                     ArrayList<Order> pendingOrders = new ArrayList<Order>();
                     ArrayList<Order> incomingOrders = new ArrayList<Order>();
@@ -104,7 +103,7 @@
                                 Items:
 
                             </div>
-                            <table class="ui single line table">
+                            <table class="ui single line unstackable table">
                                 <thead>
                                     <tr>
                                         <th><div class="ui ribbon label">No. </div></th>

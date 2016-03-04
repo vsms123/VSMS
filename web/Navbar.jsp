@@ -56,7 +56,7 @@
                     $(this).transition('pulse');
 
                 });
-                 $(".pulse").click(function () {
+                $(".pulse").click(function () {
                     $(this).transition('pulse');
 
                 });
@@ -109,7 +109,7 @@
             <a class="item message triggerModal pulse" style=" font-size: 16px">
                 <i class="large  mail icon"></i> Messages
             </a>
-            <div class="ui simple dropdown item pulse" style=" font-size: 16px">
+            <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
 
                 <div class="menu">
@@ -129,28 +129,36 @@
         </div>
 
 
+        <div  id="navbarMobile">
+            <div class="ui top fixed inverted menu"> 
+               <a href="Home.jsp">
+                <div class="item" style=" font-size: 16px">
+                    
+                    VSMS
+                    
+                </div>
+                </a>
+                   <div class="right menu">
+                    <div class="ui simple dropdown item" style=" font-size: 18px">
+                        <i class="sidebar icon"></i> 
 
-        <div id="navbarMobile" class="ui top fixed inverted menu"> 
-            <div class="item" style=" font-size: 16px">
-                VSMS
-            </div>
-            <div class="right menu">
-                <div class="ui simple dropdown item" style=" font-size: 16px">
-                    <i class="sidebar icon"></i> 
-
-                    <div class="menu">
-                        <a href="Menu.jsp" class="item" style=" font-size: 16px"><i class="large food icon"></i> Menu</a>
-                        <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                        <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make new Order</a>
-                        <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favorite Suppliers</a>
-                        <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
-                        <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px"><i class="large search icon"></i> Supplier Search</a>
-                        <a href="LogoutServlet" class="item" style=" font-size: 16px"><img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:16px;height:18px;">Log Out</a>
+                        <div class="menu">
+                            <a href="Menu.jsp" class="item" style=" font-size: 18px"><i class="large food icon"></i> Menu</a>
+                            <a href="VendorProfile.jsp" class="item" style=" font-size: 18px"><i class="large info icon"></i> View Profile</a>
+                            <a href="Order.jsp" class="item" style=" font-size: 18px"><i class="large edit icon"></i> Make new Order</a>
+                            <a href="OrderHistory.jsp" class="item" style=" font-size: 18px"><i class="large history icon"></i> Order History</a>
+                            <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 18px"><i class="large shipping icon"></i> Favorite Suppliers</a>
+                            <a class="item profile" style=" font-size: 18px"><i class="large settings icon"></i> Account Settings</a>
+                            <a href="SupplierSearch.jsp" class="item" style=" font-size: 18px"><i class="large search icon"></i> Supplier Search</a>
+                            <a href="LogoutServlet" class="item" style=" font-size: 18px"><img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:16px;height:18px;">Log Out</a>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div style="padding-top: 20px">
+                
+            </div>
         </div>
-
 
         <div id="modalMessage" class="ui basic modal">
             <i class="close icon"></i>

@@ -139,7 +139,7 @@
 
                 <h1 style="color:black"><%=IngredientController.getDishByID(UtilityController.convertStringtoInt(dish_idStr)).getDish_name()%></h1>
 
-                <table  class="ui padded large striped  table">
+                <table  class="ui padded large striped unstackable  table">
                     <tr>
                         <th><h2>Ingredient</h2></th><th><h2>Amount</h2></th><th><h2>Unit</h2></th>
                     </tr>
@@ -156,9 +156,10 @@
                         <td><h3><%=ingredient.getName()%></h3><%=ingredient.getDescription()%></td>
                         <!--User inputs attributes-->
                         <td>
-                            <div class="ui input">
+                            <div class="ui small input">
                                 <input type="number" name="quantity<%=identification%>" id="quantity<%=identification%>" value="<%=stringArray.get(0)%>">
-                            </div></td>
+                            </div>
+                        </td>
                         <td><h3><%=stringArray.get(1)%></h3></td>
                         <td><button class="ui red inverted button delete-ingredient-button<%=identification%>"> <i class="remove icon"></i>Remove Ingredient</button></td>
                     </tr>

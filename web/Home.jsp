@@ -250,7 +250,7 @@
                                     Items:
 
                                 </div>
-                                <table class="ui single line table">
+                                <table class="ui single line unstackable table">
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
