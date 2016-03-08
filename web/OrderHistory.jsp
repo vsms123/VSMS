@@ -35,7 +35,7 @@
 
 
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('.secondary.menu .item').tab();
 
                 $('.test.order').popup({
@@ -48,7 +48,7 @@
                 for (Order orderModal : orderList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
-                $(".test.order.<%=orderModal.getOrder_id()%>").click(function () {
+                $(".test.order.<%=orderModal.getOrder_id()%>").click(function() {
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>').modal('show');
                 });
@@ -60,7 +60,6 @@
 
     </head>
     <body class="background">
-
 
         <div class="transparency">
 
@@ -75,6 +74,7 @@
                     </div>
                 </h1>
                 <br/>
+
                 <%
                     ArrayList<Order> pendingOrders = new ArrayList<Order>();
                     ArrayList<Order> incomingOrders = new ArrayList<Order>();
@@ -83,7 +83,6 @@
 //                    creation of order modals and sorting of orders done here
                     for (Order order : orderList) {
                 %>
-
 
 
                 <div id="modalOrder<%=order.getOrder_id()%>" class="ui modal">
@@ -96,14 +95,14 @@
                             <img src="./resource/pictures/Cart.png">
                         </div>
                         <div class="description">
-                            <div class="ui header" style="color: black">
+                            <div class="ui header" style="color: black"  >
                                 Order ID : <%=order.getOrder_id()%> <br/>
                                 Supplier : <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> <br/>
                                 Date : <%=order.getDtOrder()%> <br/><br/>
                                 Items:
 
                             </div>
-                            <table class="ui single line unstackable table">
+                            <table class="ui single line unstackable table" >
                                 <thead>
                                     <tr>
                                         <th><div class="ui ribbon label">No. </div></th>
@@ -133,8 +132,11 @@
 
                             </table>
                         </div>
+
                     </div>
+
                     <div class="actions">
+                        <button class="ui deny inverted red button" id="generate-invoice-button">Generate Invoice PDF</button>
                         <button class="ui deny inverted orange button">Take me Back</button>
                     </div>
                 </div>
@@ -160,7 +162,7 @@
                 </div>
 
                 <!--Pending orders section-->
-                <div class="ui tab segment active" data-tab="first">
+                <div class="ui tab segment active" data-tab="first" id="ignorePDF">
                     <%
                         int pendingList = pendingOrders.size();
                         int pendingPageNo = pendingList / 10;
@@ -575,7 +577,20 @@
                 <!--JAVASCRIPT-->
                 <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
                 <script src="js/main.js" type="text/javascript"></script>
+                <script src="js/jsPDFdebug.js" type="text/javascript"></script>
+                <script src="js/html2canvas.js" type="text/javascript"></script>
+                <script>
 
+//Generate invoice picture (hard to get specifically to the modal because of the limitation of looping through the modals
+            $('#generate-invoice-button').click(function() {
+                var pdf = new jsPDF('p', 'pt', 'a4');
+                pdf.addHTML(document.body, 15, 15, {
+                    'background': '#fff',
+                }, function() {
+                    pdf.save('invoice.pdf');
+                });
+            });
+                </script>
             </div>
         </div>
     </body>
