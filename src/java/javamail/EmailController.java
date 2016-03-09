@@ -37,6 +37,9 @@ public class EmailController {
     private static String user = "ognidoof";
     private static String password = "AbC12321CbA";
 
+    public EmailController(){
+    
+    }
     public EmailController(String host, String user, String password) {
         this.host = host;
         this.user = user;
@@ -150,6 +153,7 @@ public class EmailController {
         //Get the session object  
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.auth", "true");
         props.put("mail.debug", "true");
