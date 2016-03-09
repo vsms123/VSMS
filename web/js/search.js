@@ -1,10 +1,23 @@
+//A function is run if it is:
+//        1. The page is refreshed
+//        2. The keyup is run (user types onto the input text box)
+$(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+     searchsuppliername();
+     searchingredient();
+});
 $("#searchsupplierbyname").keyup(function() {
-    
+    searchsuppliername();
+});
+$("#searchingredient").keyup(function() {
+   searchingredient();
+});
+
+function searchsuppliername(){
     //split the current value of searchInput
-    var data = this.value.split(" ");
+    var data = $("#searchsupplierbyname").val().split();
     //create a jquery object of the rows
     var rowData = $(".supplier");
-    if (this.value == "") {
+    if ($("#searchsupplierbyname").val() == "") {
         rowData.hide();
         return;
     }
@@ -23,14 +36,14 @@ $("#searchsupplierbyname").keyup(function() {
     })
             //show the rows that match.
             .show();
-});
+}
 
-$("#searchingredient").keyup(function() {
-    //split the current value of searchInput
-    var data = this.value.split(" ");
+function searchingredient(){
+     //split the current value of searchInput
+    var data = $("#searchingredient").val().split(" ");
     //create a jquery object of the rows
     var rowData = $(".ingredient");
-    if (this.value == "") {
+    if ($("#searchingredient").val() == "") {
         rowData.hide();
         return;
     }
@@ -50,5 +63,4 @@ $("#searchingredient").keyup(function() {
     })
             //show the rows that match.
             .show();
-});
-
+}

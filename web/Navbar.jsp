@@ -29,7 +29,7 @@
                     var width = $(window).width();
                     var height = $(window).height();
 
-                    if ((width <= 920) || (height <= 400)) {
+                    if ((width <= 800) || (height <= 400)) {
                         $("#searchPC").css("display", "none");
                         $("#navbarPC").css("display", "none");
                         $("#PCview").css("display", "none");
