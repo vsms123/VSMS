@@ -136,7 +136,7 @@
                     </div>
 
                     <div class="actions">
-                        <a href="Invoice.jsp?order_id=<%=order.getOrder_id()%>"><button class="ui deny inverted red button">View Invoice</button></a>
+                        <button class="ui deny inverted red button" id="generate-invoice-button">Generate Invoice PDF</button>
                         <button class="ui deny inverted orange button">Take me Back</button>
                     </div>
                 </div>
@@ -577,7 +577,19 @@
                 <!--JAVASCRIPT-->
                 <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
                 <script src="js/main.js" type="text/javascript"></script>
+                <script src="js/jsPDFdebug.js" type="text/javascript"></script>
+                <script src="js/html2canvas.js" type="text/javascript"></script>
+                <script>
 
+//Generate invoice picture (hard to get specifically to the modal because of the limitation of looping through the modals
+            $('#generate-invoice-button').click(function() {
+                var pdf = new jsPDF('p', 'pt', 'a4');
+                pdf.addHTML(document.body, 15, 15, {
+                    'background': '#fff',
+                }, function() {
+                    pdf.save('invoice.pdf');
+                });
+            });
                 </script>
             </div>
         </div>
