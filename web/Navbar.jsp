@@ -72,7 +72,7 @@
 
 
 
-        <div id="PCview" class="ui grid">
+        <div id="PCview" class="ui computer only grid">
             <div class="six wide column">
                 <a href="Home.jsp">
                     <img class="logo" src="./resource/pictures/logofinal.png">
@@ -90,7 +90,7 @@
 
         </div>
 
-        <div id="navbarPC" class="ui stackable menu">
+        <div id="navbarPC" class="ui menu computer only grid">
             <a href="Home.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large home icon"></i> Home
             </a>
@@ -106,9 +106,9 @@
             <a href="Menu.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large food icon"></i> Menu
             </a>
-            <a class="item message triggerModal pulse" style=" font-size: 16px">
+<!--            <a class="item message triggerModal pulse" style=" font-size: 16px">
                 <i class="large  mail icon"></i> Messages
-            </a>
+            </a>-->
             <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
 
@@ -129,13 +129,13 @@
                 <i class="large search icon"></i> Analytics
             </a>
             <a href="LogoutServlet" class="item pulse" style=" font-size: 16px">
-                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Log Out
+                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Logout
             </a>
 
         </div>
 
 
-        <div  id="navbarMobile">
+        <div class="ui container mobile tablet only grid" id="navbarMobile">
             <div class="ui top fixed inverted menu"> 
                 <a href="Home.jsp">
                     <div class="item" style=" font-size: 16px">
