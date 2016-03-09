@@ -76,7 +76,6 @@
                                 <h2><%=supplier.getSupplier_name()%></h2>
                             </div>
                             <div class='description' style='color:black'>
-                                <h4> Email: <%=supplier.getEmail()%></h4>
                                 <%=supplier.getSupplier_description()%> <br/>
 
                             </div>

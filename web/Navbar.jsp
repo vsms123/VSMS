@@ -15,17 +15,17 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script>
-            $(document).ready(function () {
-                $('.message.triggerModal').click(function () {
+            $(document).ready(function() {
+                $('.message.triggerModal').click(function() {
                     //show modal button
                     $('#modalMessage').modal('show');
                 });
-                $('.profile').click(function () {
+                $('.profile').click(function() {
                     //show modal button
                     $('#modalAccount').modal('show');
                 });
 
-                $(window).on('load resize', function () {
+                $(window).on('load resize', function() {
                     var width = $(window).width();
                     var height = $(window).height();
 
@@ -42,21 +42,21 @@
                         $("#navbarMobile").css("display", "none");
                     }
                 });
-                $('#ingredient-name-input').keypress(function (e) {
+                $('#ingredient-name-input').keypress(function(e) {
                     console.log("Keypress  is pressed");
                     if (e.which == 13) {
                         document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                     }
                 });
-                $('#ingredient-name-input-button').click(function () {
+                $('#ingredient-name-input-button').click(function() {
                     document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                 });
 
-                $(".button").click(function () {
+                $(".button").click(function() {
                     $(this).transition('pulse');
 
                 });
-                $(".pulse").click(function () {
+                $(".pulse").click(function() {
                     $(this).transition('pulse');
 
                 });
@@ -114,14 +114,20 @@
 
                 <div class="menu">
                     <a href="VendorProfile.jsp" class="item pulse" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                    <a href="FavouriteSuppliers.jsp" class="item pulse" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
                     <a class="item profile pulse" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
-            <a href="SupplierSearch.jsp" class="item pulse" style=" font-size: 16px">
-                <i class="large search icon"></i> Supplier Search
-            </a>
+            <div class="ui simple dropdown item" style=" font-size: 16px">
+                <i class="large user icon"></i>  Supplier
 
+                <div class="menu">
+                    <a href="FavouriteSuppliers.jsp" class="item pulse" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
+                    <a href="SupplierSearch.jsp" class="item pulse" style=" font-size: 16px"><i class="large search icon"></i> Supplier Search</a>
+                </div>
+            </div>
+            <a href="Analytics.jsp" class="item pulse" style=" font-size: 16px">
+                <i class="large search icon"></i> Analytics
+            </a>
             <a href="LogoutServlet" class="item pulse" style=" font-size: 16px">
                 <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Log Out
             </a>
@@ -131,14 +137,14 @@
 
         <div  id="navbarMobile">
             <div class="ui top fixed inverted menu"> 
-               <a href="Home.jsp">
-                <div class="item" style=" font-size: 16px">
-                    
-                    VSMS
-                    
-                </div>
+                <a href="Home.jsp">
+                    <div class="item" style=" font-size: 16px">
+
+                        VSMS
+
+                    </div>
                 </a>
-                   <div class="right menu">
+                <div class="right menu">
                     <div class="ui simple dropdown item" style=" font-size: 18px">
                         <i class="sidebar icon"></i> 
 
@@ -156,7 +162,7 @@
                 </div>
             </div>
             <div style="padding-top: 20px">
-                
+
             </div>
         </div>
 
