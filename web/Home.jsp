@@ -74,7 +74,7 @@
             });
         </script>
 
- 
+
 
         <script>
             $(document).ready(function () {
@@ -86,7 +86,8 @@
                     $("body").removeClass("pushable");
 
                 });
-                $('#testaccordion').css("display", "none");
+//                $('#testaccordion').css("display", "none");
+                $('#testaccordion').accordion();
                 $("#accordion").click(function () {
                     $('#testaccordion').transition('vertical flip');
                     $('.ui.accordion').accordion();
@@ -96,8 +97,7 @@
                 $('.test.order').popup({
                     position: 'top left'
                 });
-            <%
-                for (Order orderModal : orderList) {
+            <%                for (Order orderModal : orderList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
                 $(".test.order.<%=orderModal.getOrder_id()%>").click(function () {
@@ -155,10 +155,10 @@
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
-                                            <th>Name</th>
-                                            <th>Unit</th>
-                                            <th>Price</th>
-                                        </tr>
+                                    <th>Name</th>
+                                    <th>Unit</th>
+                                    <th>Price</th>
+                                    </tr>
                                     </thead>
                                     <%
                                         int count = 0;
@@ -207,7 +207,7 @@
                         <p></p>
                         <h1 class="ui header">VSMS Menu</h1>
 
-                        <button id="accordion"  class="ui button">View Shortcuts</button>
+                        <!--<button id="accordion"  class="ui button">View Shortcuts</button>-->
 
                         <p></p>
 
@@ -238,19 +238,33 @@
                                 <%
                                 } else {
 
-                                %><div class="ui tiny animated selection divided list">
+                                %><div class="ui tiny animated selection two stackable cards">
                                     <%    for (Order pendingOrder : pendingOrders) {
 
                                     %>
 
-                                    <div  class="item test order <%=pendingOrder.getOrder_id()%>" id="<%=pendingOrder.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
-
+                                    <div  class="ui link card test order <%=pendingOrder.getOrder_id()%>" id="<%=pendingOrder.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
                                         <a>
+
                                             <div class="content">
-                                                <h3>Order No. <%=pendingOrder.getOrder_id()%></h3> <%=pendingOrder.getDtOrder()%> 
+                                                <div class="header"><h3>Order No. <%=pendingOrder.getOrder_id()%></h3></div>
+                                                <div class="meta" style="color:black">
+                                                    <span ><%=pendingOrder.getDtOrder()%> </span><br/>
+<%=UserController.retrieveSupplierByID(pendingOrder.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%>
+                                                </div>
+                                                    
+                                                    
+                                            </div>
+                                            <div class="extra content">
+                                                <div class="right floated author" style="color:black">
+                                                    
+                                                <%=pendingOrder.getOrderlines().size()%> items in this order
+                                                </div>
                                             </div>
                                         </a>
                                     </div>
+
+
 
                                     <%
                                         }

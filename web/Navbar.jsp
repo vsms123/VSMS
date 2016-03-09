@@ -135,12 +135,12 @@
         </div>
 
 
-        <div class="ui container mobile tablet only grid" id="navbarMobile">
+        <div class="ui container mobile only grid" id="navbarMobile">
             <div class="ui top fixed inverted menu"> 
                 <a href="Home.jsp">
                     <div class="item" style=" font-size: 16px">
 
-                        VSMS
+                        Foodingo Marketplace
 
                     </div>
                 </a>
