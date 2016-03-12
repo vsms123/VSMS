@@ -86,18 +86,14 @@
 
         <div id="navbarMobile" class="ui top fixed inverted menu"> 
             <div class="item" style=" font-size: 16px">
-                VSMS
+                <a href="Login.jsp">VSMS</a>
             </div>
             <div class="right menu">
                 <div class="ui simple dropdown item" style=" font-size: 16px">
                     <i class="sidebar icon"></i> 
 
                     <div class="menu">
-                        <a href="SupplierProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                        <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
-                        <a href="LogoutServlet" class="item" style=" font-size: 16px">
-                            <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:16px;height:18px;">&nbsp Log Out
-                        </a>
+                        <a href="Login.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> Return to Login</a>
                     </div>
                 </div>
             </div>
