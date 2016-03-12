@@ -12,8 +12,7 @@
     <head>
         <%@ include file="protect.jsp" %>
         <meta charset="utf-8" />
-        <%
-            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+        <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             DecimalFormat df = new DecimalFormat("0.00");
             if (currentVendor == null) {
                 currentVendor = UserController.retrieveVendorByID(1);
@@ -62,20 +61,20 @@
     </head>
     <body class="background">
 
-
         <div class="transparency">
 
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-<h1 class="ui header">
-                        <i class="history icon"></i>
-                        <div class="content" >
-                            Order History
-                            <div  style="color:black"  class="sub header">Viewing Previous Made Orders</div>
-                        </div>
-                    </h1>
-<br/>
+                <h1 class="ui header">
+                    <i class="history icon"></i>
+                    <div class="content" >
+                        Order History
+                        <div  style="color:black"  class="sub header">Viewing Previous Made Orders</div>
+                    </div>
+                </h1>
+                <br/>
+
                 <%
                     ArrayList<Order> pendingOrders = new ArrayList<Order>();
                     ArrayList<Order> incomingOrders = new ArrayList<Order>();
@@ -84,7 +83,6 @@
 //                    creation of order modals and sorting of orders done here
                     for (Order order : orderList) {
                 %>
-
 
 
                 <div id="modalOrder<%=order.getOrder_id()%>" class="ui modal">
@@ -97,14 +95,14 @@
                             <img src="./resource/pictures/Cart.png">
                         </div>
                         <div class="description">
-                            <div class="ui header" style="color: black">
+                            <div class="ui header" style="color: black"  >
                                 Order ID : <%=order.getOrder_id()%> <br/>
                                 Supplier : <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> <br/>
                                 Date : <%=order.getDtOrder()%> <br/><br/>
                                 Items:
 
                             </div>
-                            <table class="ui single line table">
+                            <table class="ui single line unstackable table" >
                                 <thead>
                                     <tr>
                                         <th><div class="ui ribbon label">No. </div></th>
@@ -134,8 +132,11 @@
 
                             </table>
                         </div>
+
                     </div>
+
                     <div class="actions">
+                        <a href="Invoice.jsp?order_id=<%=order.getOrder_id()%>"><button class="ui deny inverted red button">View Invoice</button></a>
                         <button class="ui deny inverted orange button">Take me Back</button>
                     </div>
                 </div>
@@ -161,7 +162,7 @@
                 </div>
 
                 <!--Pending orders section-->
-                <div class="ui tab segment active" data-tab="first">
+                <div class="ui tab segment active" data-tab="first" id="ignorePDF">
                     <%
                         int pendingList = pendingOrders.size();
                         int pendingPageNo = pendingList / 10;
@@ -577,6 +578,7 @@
                 <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
                 <script src="js/main.js" type="text/javascript"></script>
 
+                </script>
             </div>
         </div>
     </body>

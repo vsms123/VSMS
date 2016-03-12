@@ -40,7 +40,6 @@
                 //SEARCHING AND FILTERING
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyname
                 $('.menu .item').tab();
-
 //Put in the active class at Ingredient Name Search if ingredient name is not empty
             <% if (!ingredientName.isEmpty()) {%>
                 $("#supplier_name_div").removeClass("active");
@@ -90,7 +89,7 @@
 
                         <div class='item test supplier'>
                             <a href="SupplierSearchProfile.jsp?supplier_id=<%=supplier.getSupplier_id()%>">
-                                <div class='content'>
+                                <div class='content-'>
                                     <h2><%=supplier.getSupplier_name()%></h2>
                                 </div>
                                 <div> Type: <%=supplier.getSupplier_type()%>
@@ -121,7 +120,7 @@
                         %>
                         <div class='item test ingredient'>
 
-                            <div class='content'>
+                            <div class='content-itemname'>
                                 <a href="IngredientProfile.jsp?ingredient_name=<%=ingredientStr%>&supplier_id=<%=ingredient.getSupplier_id()%>">
                                     <h2><%=ingredient.getName()%></h2>
                             </div>

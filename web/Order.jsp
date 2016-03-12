@@ -65,7 +65,7 @@
 
 
 
-                    <table  class="ui padded large striped  table">
+                    <table  class="ui padded large striped unstackable table">
                         <tr>
                             <th><h2>Dish</h2></th><th><h2>Quantity</h2></th>
                         </tr>

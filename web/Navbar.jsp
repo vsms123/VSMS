@@ -15,21 +15,21 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script>
-            $(document).ready(function () {
-                $('.message.triggerModal').click(function () {
+            $(document).ready(function() {
+                $('.message.triggerModal').click(function() {
                     //show modal button
                     $('#modalMessage').modal('show');
                 });
-                $('.profile').click(function () {
+                $('.profile').click(function() {
                     //show modal button
                     $('#modalAccount').modal('show');
                 });
 
-                $(window).on('load resize', function () {
+                $(window).on('load resize', function() {
                     var width = $(window).width();
                     var height = $(window).height();
 
-                    if ((width <= 920) || (height <= 400)) {
+                    if ((width <= 800) || (height <= 400)) {
                         $("#searchPC").css("display", "none");
                         $("#navbarPC").css("display", "none");
                         $("#PCview").css("display", "none");
@@ -42,21 +42,21 @@
                         $("#navbarMobile").css("display", "none");
                     }
                 });
-                $('#ingredient-name-input').keypress(function (e) {
+                $('#ingredient-name-input').keypress(function(e) {
                     console.log("Keypress  is pressed");
                     if (e.which == 13) {
                         document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                     }
                 });
-                $('#ingredient-name-input-button').click(function () {
+                $('#ingredient-name-input-button').click(function() {
                     document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                 });
 
-                $(".button").click(function () {
+                $(".button").click(function() {
                     $(this).transition('pulse');
 
                 });
-                 $(".pulse").click(function () {
+                $(".pulse").click(function() {
                     $(this).transition('pulse');
 
                 });
@@ -72,7 +72,7 @@
 
 
 
-        <div id="PCview" class="ui grid">
+        <div id="PCview" class="ui computer only grid">
             <div class="six wide column">
                 <a href="Home.jsp">
                     <img class="logo" src="./resource/pictures/logofinal.png">
@@ -90,7 +90,7 @@
 
         </div>
 
-        <div id="navbarPC" class="ui stackable menu">
+        <div id="navbarPC" class="ui menu computer only grid">
             <a href="Home.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large home icon"></i> Home
             </a>
@@ -106,51 +106,65 @@
             <a href="Menu.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large food icon"></i> Menu
             </a>
-            <a class="item message triggerModal pulse" style=" font-size: 16px">
+<!--            <a class="item message triggerModal pulse" style=" font-size: 16px">
                 <i class="large  mail icon"></i> Messages
-            </a>
-            <div class="ui simple dropdown item pulse" style=" font-size: 16px">
+            </a>-->
+            <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
 
                 <div class="menu">
                     <a href="VendorProfile.jsp" class="item pulse" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                    <a href="FavouriteSuppliers.jsp" class="item pulse" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
                     <a class="item profile pulse" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
-            <a href="SupplierSearch.jsp" class="item pulse" style=" font-size: 16px">
-                <i class="large search icon"></i> Supplier Search
-            </a>
+            <div class="ui simple dropdown item" style=" font-size: 16px">
+                <i class="large user icon"></i>  Supplier
 
+                <div class="menu">
+                    <a href="FavouriteSuppliers.jsp" class="item pulse" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
+                    <a href="SupplierSearch.jsp" class="item pulse" style=" font-size: 16px"><i class="large search icon"></i> Supplier Search</a>
+                </div>
+            </div>
+            <a href="Analytics.jsp" class="item pulse" style=" font-size: 16px">
+                <i class="large search icon"></i> Analytics
+            </a>
             <a href="LogoutServlet" class="item pulse" style=" font-size: 16px">
-                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Log Out
+                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Logout
             </a>
 
         </div>
 
 
+        <div class="ui container mobile only grid" id="navbarMobile">
+            <div class="ui top fixed inverted menu"> 
+                <a href="Home.jsp">
+                    <div class="item" style=" font-size: 16px">
 
-        <div id="navbarMobile" class="ui top fixed inverted menu"> 
-            <div class="item" style=" font-size: 16px">
-                VSMS
-            </div>
-            <div class="right menu">
-                <div class="ui simple dropdown item" style=" font-size: 16px">
-                    <i class="sidebar icon"></i> 
+                        Foodingo Marketplace
 
-                    <div class="menu">
-                        <a href="Menu.jsp" class="item" style=" font-size: 16px"><i class="large food icon"></i> Menu</a>
-                        <a href="VendorProfile.jsp" class="item" style=" font-size: 16px"><i class="large info icon"></i> View Profile</a>
-                        <a href="Order.jsp" class="item" style=" font-size: 16px"><i class="large edit icon"></i> Make new Order</a>
-                        <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 16px"><i class="large shipping icon"></i> Favorite Suppliers</a>
-                        <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
-                        <a href="SupplierSearch.jsp" class="item" style=" font-size: 16px"><i class="large search icon"></i> Supplier Search</a>
-                        <a href="LogoutServlet" class="item" style=" font-size: 16px"><img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:16px;height:18px;">Log Out</a>
+                    </div>
+                </a>
+                <div class="right menu">
+                    <div class="ui simple dropdown item" style=" font-size: 18px">
+                        <i class="sidebar icon"></i> 
+
+                        <div class="menu">
+                            <a href="Menu.jsp" class="item" style=" font-size: 18px"><i class="large food icon"></i> Menu</a>
+                            <a href="VendorProfile.jsp" class="item" style=" font-size: 18px"><i class="large info icon"></i> View Profile</a>
+                            <a href="Order.jsp" class="item" style=" font-size: 18px"><i class="large edit icon"></i> Make new Order</a>
+                            <a href="OrderHistory.jsp" class="item" style=" font-size: 18px"><i class="large history icon"></i> Order History</a>
+                            <a href="FavouriteSuppliers.jsp" class="item" style=" font-size: 18px"><i class="large shipping icon"></i> Favorite Suppliers</a>
+                            <a class="item profile" style=" font-size: 18px"><i class="large settings icon"></i> Account Settings</a>
+                            <a href="SupplierSearch.jsp" class="item" style=" font-size: 18px"><i class="large search icon"></i> Supplier Search</a>
+                            <a href="LogoutServlet" class="item" style=" font-size: 18px"><img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:16px;height:18px;">Log Out</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div style="padding-top: 20px">
 
+            </div>
+        </div>
 
         <div id="modalMessage" class="ui basic modal">
             <i class="close icon"></i>

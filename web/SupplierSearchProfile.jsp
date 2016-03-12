@@ -88,47 +88,54 @@
                     <a class="item active" style="font-size:18px" data-tab="supplierDescription" id="supplier_name_tab">Supplier Details</a>
                     <a class="item"  style="font-size:18px" data-tab="ingredients" id="supplier_type_tab">Supplied Ingredients</a>
                 </div>
+                <!--Email and telephone number will be hidden-->
                 <div class="ui bottom attached tab segment active" id="supplier_name_div" data-tab="supplierDescription">
                     <table class="ui very padded large striped  table">
                         <tr>
                             <th><h2>Description</h2></th>
                         <td><h3><%=supplier.getSupplier_description()%></h3></td>
                         </tr>
+                        <!--<tr>-->
+                            <!--                            <th><h2>Email</h2></th>
+                                                    <td><h3></h3></td>-->
+                            <!--supplier.getEmail()-->
+                            <!--</tr>-->
+
+                            <!--                        <tr>
+                                                        <th><h2>Telephone Number</h2></th>
+                                                    <td><h3></h3></td>
+                            "(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()
+                                                    </tr>-->
                         <tr>
-                            <th><h2>Email</h2></th>
-                        <td><h3><%=supplier.getEmail()%></h3></td>
+                            <th><h2>Expected Delivery Range</h2></th>
+                        <td><h3><%= supplier.getMin_leadtime() + " - " + supplier.getMax_leadtime()%> Days</h3></td>
                         </tr>
                         <tr>
                             <th><h2>Address</h2></th>
                         <td><h3><%=supplier.getAddress()%> <%=supplier.getZipcode()%></h3></td>
                         </tr>
-                        <tr>
-                            <th><h2>Telephone Number</h2></th>
-                        <td><h3><%="(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()%></h3></td>
-                        </tr>
-                        <tr>
-                            <th><h2>Expected Delivery Range</h2></th>
-                        <td><h3><%= supplier.getMin_leadtime() + " - " + supplier.getMax_leadtime()%> Days</h3></td>
-                        </tr>
+
 
                     </table>
                     <div id="map"></div>
+                    <br/>
+
                     <%
                         ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(vendor.getVendor_id());
                         if (favSupplierList.contains(supplier)) {
                     %>
                     <button class="ui red large button unfavorite-supplier"><i class="remove icon"></i>Remove from Favorites</button>
-                                                       <%
-                                                       } else {
-                                                       %><button class="ui green large button favorite-supplier"><i class="star icon"></i>Add to Favorites</button>
-                                                       <%
-                                                           }
-                                                       %>
-                    </div>
+                    <%
+                    } else {
+                    %><button class="ui green large button favorite-supplier"><i class="star icon"></i>Add to Favorites</button>
+                    <%
+                        }
+                    %>
+                </div>
 
-                    <div class="ui bottom attached tab segment" id="supplier_name_div" data-tab="ingredients">
-                        <!--Table to show the ingredient list-->
-                        <table class="ui padded large striped  table">
+                <div class="ui bottom attached tab segment" id="supplier_name_div" data-tab="ingredients">
+                    <!--Table to show the ingredient list-->
+                    <table class="ui padded large striped  table">
                         <tr>
                             <th><h2>Ingredients Supplied</h2></th>
                         </tr>

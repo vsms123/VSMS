@@ -70,8 +70,44 @@ public class OrderDAO {
         }
         return orderList;
     }
-//methods retrieves order from order id
 
+    //retrieve all order on that are expected to be delivered at the input date.
+    public static ArrayList<Order> retrieveOrderByDate(int vendorId, Date date){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        ArrayList<Order> orderList = new ArrayList<Order>();
+        try {
+            //creates connections to database
+            conn = ConnectionManager.getConnection();
+            sql = "Select * from `order` WHERE vendor_id =" + vendorId +" && expected_delivery = " + date;
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            //Retrieves the orders from the database
+            while (rs.next()) {
+                int order_id = rs.getInt("order_id");
+                int vendor_id = rs.getInt("vendor_id");
+                double total_final_price = rs.getDouble("total_final_price");
+                Date dt_order = rs.getDate("dt");
+                String status = rs.getString("status");
+                Date expected_delivery = rs.getDate("expected_delivery");
+                String special_request = rs.getString("special_request");
+                ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
+
+                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status,expected_delivery,special_request);
+                orderList.add(order);
+            }
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return orderList; 
+    }
+
+//methods retrieves order from order id    
     public static Order retrieveOrderByID(int order_id) {
         Connection conn = null;
         PreparedStatement stmt = null;

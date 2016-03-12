@@ -16,7 +16,7 @@
     <head>
         <%@ include file="protect_supplier.jsp" %>
         <meta charset="utf-8" />
-        <title>Order History</title>
+        <title>Supplier Home</title>
 
         <!--CSS-->
         <!-- Import CDN for semantic UI -->    
@@ -141,7 +141,7 @@
                     <h1 class="ui header">
                         <i class="history icon"></i>
                         <div class="content" >
-                            Order History
+                            Order Tracker
                             <div  style="color:black"  class="sub header">Viewing/Approving Received Orders</div>
                         </div>
                     </h1>
