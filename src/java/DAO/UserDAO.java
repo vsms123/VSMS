@@ -287,7 +287,7 @@ public class UserDAO {
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
                 int zipcode = rs.getInt("zipcode");
-                Vendor vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address,zipcode);
+                Vendor vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address, zipcode);
                 vendorList.add(vendor);
             }
         } catch (SQLException e) {
@@ -326,7 +326,7 @@ public class UserDAO {
                 String address = rs.getString("address");
                 String email = rs.getString("email");
                 int zipcode = rs.getInt("zipcode");
-                vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address,zipcode);
+                vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address, zipcode);
             }
         } catch (SQLException e) {
             handleSQLException(e, sql);
@@ -391,7 +391,7 @@ public class UserDAO {
             //creates connections to database
             conn = ConnectionManager.getConnection();
             sql = "UPDATE vendor"
-                    + " SET password = #1, vendor_description = #2, email = #3, area_code = #4 , telephone_number = #5, address = #6, zipcode = #7" 
+                    + " SET password = #1, vendor_description = #2, email = #3, area_code = #4 , telephone_number = #5, address = #6, zipcode = #7"
                     + " WHERE vendor_id = #8";
 
             sql = sql.replace("#1", "'" + vendor.getPassword() + "'");
@@ -469,7 +469,7 @@ public class UserDAO {
                 int telephone_number = rs.getInt("telephone_number");
                 String address = rs.getString("address");
                 int zipcode = rs.getInt("zipcode");
-                vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address,zipcode);
+                vendor = new Vendor(vendor_id, password, vendor_name, vendor_description, email, area_code, telephone_number, address, zipcode);
             }
         } catch (SQLException e) {
             handleSQLException(e, sql);
@@ -615,5 +615,123 @@ public class UserDAO {
             suppliers.put(count + "", s);
             count++;
         }
+    }
+
+    public static int getAvailableVendorID() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        int lastID = 1;
+        try {
+            //creates connections to database
+            conn = ConnectionManager.getConnection();
+            sql = "Select vendor_id from vendor order by vendor_id desc";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            //Retrieves the last vendor id if any entries exist in database and increment by 1, else default 1
+            
+            if (rs.next()) {
+                lastID = rs.getInt("vendor_id");
+                lastID++;
+            }
+
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } catch (Exception e) {
+            
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return lastID;
+    }
+    
+    public static int getAvailableSupplierID() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        int lastID = 1;
+        try {
+            //creates connections to database
+            conn = ConnectionManager.getConnection();
+            sql = "Select supplier_id from supplier order by supplier_id desc";
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            //Retrieves the last supplier id if any entries exist in database and increment by 1, else default 1
+            
+            if (rs.next()) {
+                lastID = rs.getInt("supplier_id");
+                lastID++;
+            }
+
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } catch (Exception e) {
+            
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        return lastID;
+    }
+    
+    public static boolean checkVendorEmail(String email) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        boolean check = false;
+        try {
+            //creates connections to database
+            conn = ConnectionManager.getConnection();
+            sql = "Select * from vendor where email = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+            
+            //if email exists in vendor table
+            if (rs.next()) {
+                check = true;
+            }
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } catch (Exception e) {
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        
+        //true if email exists, false if not
+        return check;
+    }
+    
+    public static boolean checkSupplierEmail(String email) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        boolean check = false;
+        try {
+            //creates connections to database
+            conn = ConnectionManager.getConnection();
+            sql = "Select * from supplier where email = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+            
+            //if email exists in supplier table
+            if (rs.next()) {
+                check = true;
+            }
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } catch (Exception e) {
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        
+        //true if email exists, false if not
+        return check;
     }
 }
