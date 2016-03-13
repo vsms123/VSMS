@@ -40,5 +40,29 @@
                         %>
 
                     </table>
+                        
+                        <br>
+                    <br>
+                    Send cart to orderbreakdown
+                    <form action="OrderBreakdown.jsp" method="POST">
+                        <input type="hidden" value="1" name="dish<%=cart.getDish_id()%>">
+                        <input type="hidden" name="vendor_id" value="1">
+                        <input type="hidden" name="cart" value="yes">
+                        <input type="submit" value="Submit"> 
+                    </form>
+                        
+                        <br>
+                    <br>
+                    Save current shopping cart to template
+                    <table border="1"><tr>
+                        <form action="OrderByIngredientServlet" method="get">
+                            <td>Template name<input type="text" value="" name="name" required></td>
+                            <td>Template description<input type="text" value="" name="description" required></td>
+                            <input type="hidden" name="action" value="save">
+                            <input type="hidden" name="CartId" value="<%=cartID%>">
+                            <td><input type="submit" value="save"></td>
+                        </form>
+                        </tr>
+                    </table>
     </body>
 </html>
