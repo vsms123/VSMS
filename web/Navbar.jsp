@@ -4,6 +4,13 @@
     Author     : Benjamin
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Set"%>
+<%@page import="Model.Ingredient"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Dish"%>
+<%@page import="DAO.IngredientDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,9 +23,9 @@
 
         <script>
             $(document).ready(function() {
-                $('.message.triggerModal').click(function() {
+                $('.cart.triggerModal').click(function() {
                     //show modal button
-                    $('#modalMessage').modal('show');
+                    $('#modalCart').modal('show');
                 });
                 $('.profile').click(function() {
                     //show modal button
@@ -131,7 +138,9 @@
             <a href="LogoutServlet" class="item pulse" style=" font-size: 16px">
                 <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Logout
             </a>
-
+<a class="item cart triggerModal pulse" style=" font-size: 16px">
+                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Cart
+            </a>
         </div>
 
 
@@ -166,7 +175,7 @@
             </div>
         </div>
 
-        <div id="modalMessage" class="ui basic modal">
+        <div id="modalCart" class="ui basic modal">
             <i class="close icon"></i>
             <div class="header">
                 <h1>Messages</h1>
@@ -176,10 +185,26 @@
                     <img src="./resource/pictures/underconstruction.PNG">
                 </div>
                 <div class="description">
-                    <p><h2>Users may check notifications and receive alerts about new updates.</h2></p>
-                    <div class="ui header" style="color: white">Coming soon..</div>
-                    <p>Feature currently being developed. You will be notified about the launch of this feature.</p>
+                        <%
+                            int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
+                            Dish cart = (Dish) IngredientDAO.getIngredientTemplateByID(cartID);
+                        %>
+                    <table border="1">
+                        <tr><td>Ingredient</td><td>Quantity</td><td>Units</td></tr>
+                        <%
+                            HashMap<Ingredient, ArrayList<String>> map = cart.getIngredientQuantity();
+                            Set<Ingredient> ingredientSet = map.keySet();
+                            Iterator iter = ingredientSet.iterator();
+                            while (iter.hasNext()) {
+                                Ingredient ing = (Ingredient) iter.next();
+                                ArrayList<String> list = map.get(ing);
+                        %>
+                        <tr><td><%=ing.getName()%></td><td><%=list.get(0)%></td><td><%=list.get(1)%></td></tr>
+                        <%
+                            }
+                        %>
 
+                    </table>
                 </div>
             </div>
             <div class="actions">
