@@ -1,8 +1,3 @@
-<%-- 
-    Document   : SupplierProfile
-    Created on : Feb 19, 2016, 4:20:44 PM
-    Author     : TC
---%>
 
 <%@page import="Controller.UserController"%>
 <%@page import="Model.Vendor"%>
@@ -101,7 +96,8 @@
                 <!--Create a modal for editing the profile-->
                 <div id="editprofilemodal" class="ui small modal">
 
-                    <div class="header">
+Benjamin Ang, [13.03.16 11:07]
+<div class="header">
                         Edit Profile
                     </div>
                     <div class="content">
@@ -172,15 +168,16 @@
 
                         <button class="ui inverted deny orange button">Cancel</button>
 
-                    </div>
+Benjamin Ang, [13.03.16 11:07]
+</div>
                 </div>
             </div>
         </div>
         <!--JAVASCRIPT-->
         <script>$("#form").validate();</script>
-        <!-- Google Maps JS API -->
+        <!— Google Maps JS API —>
         <script src="https://maps.googleapis.com/maps/api/js"></script>
-        <!-- GMaps Library (settings of div style is at the head) -->
+        <!— GMaps Library (settings of div style is at the head) —>
         <script src="js/gmaps.js"></script>
         <script>
             /* Map Object */
@@ -190,7 +187,7 @@
                 lng: 2.295
             });
             GMaps.geocode({
-                address: '<%=supplier.getAddress()%>',
+                address: '<%=currentSupplier.getAddress()%>',
                 callback: function(results, status) {
                     if (status == 'OK') {
                         latlng = results[0].geometry.location;
@@ -198,9 +195,9 @@
                         mapObj.addMarker({
                             lat: latlng.lat(),
                             lng: latlng.lng(),
-                            title: '<%=supplier.getSupplier_name()%>',
+                            title: '<%=currentSupplier.getSupplier_name()%>',
                             infoWindow: {
-                                content: '<h4><%=supplier.getSupplier_name()%></h4><div><%=supplier.getAddress()%><br> Singapore, <%=supplier.getZipcode()%></div>',
+                                content: '<h4><%=currentSupplier.getSupplier_name()%></h4><div><%=currentSupplier.getAddress()%><br> Singapore, <%=currentSupplier.getZipcode()%></div>',
                                 maxWidth: 100
                             }
                         });
@@ -215,4 +212,3 @@
         <script src="js/main.js" type="text/javascript"></script>
     </body>
 </html>
-
