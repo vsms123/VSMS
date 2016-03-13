@@ -17,7 +17,20 @@
     <head>
 
         <title>Add Ingredient</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+
+
+        <!--        
+                <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+                        <link rel="stylesheet" type="text/css" href="css/demo.css" />
+                        <link rel="stylesheet" type="text/css" href="css/component.css" />
+        -->
+
+
         <!--Form VALIDATION-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
@@ -37,6 +50,23 @@
                     //show modal button
                     $('#editpasswordmodal').modal('show');
                 });
+
+                function readURL(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            $('#image').attr('src', e.target.result);
+                        }
+
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+
+                $("#imgInp").change(function () {
+                    readURL(this);
+                });
+
             });
         </script>
     </head>
@@ -55,19 +85,19 @@
                     //session.setAttribute("currentSupplier", currentSupplier);
                     Supplier currentSupplier = UserController.retrieveSupplierByID(1);
                     String msg = "";
-                    
-                    if(request.getParameter("msg")!=null){
+
+                    if (request.getParameter("msg") != null) {
                         msg = request.getParameter("msg");
                     }
-                    
+
                     //if (currentSupplier == null) {
                     //    currentSupplier = UserController.retrieveSupplierByID(currentSupplier.getSupplier_id());
                     //}
-%>
+                %>
                 <%=msg%>
                 <form class="ui form" action="AddIngredientServlet" method="post">
                     <input type="hidden" value="<%=currentSupplier.getSupplier_id()%>" name="supplier_id" />
-                    <h4 class="ui dividing header">Ingredient Information</h4>
+                    <h2 class="ui header">Ingredient Information</h2>
                     <div class="field">
                         <label>Name</label>
                         <div class="two fields">
@@ -110,116 +140,126 @@
                             <textarea placeholder="Description of Ingredient goes here" name="ingredient_desc"></textarea>
                         </div>
                     </div>
-                    <!--further samples-->
-                    <!--
-                    <div class="field">
-                        <label>Short Text</label>
-                        <textarea rows="2"></textarea>
-                    </div>
-                    <h4 class="ui dividing header">Billing Information</h4>
-                    <div class="field">
-                        <label>Card Type</label>
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="card[type]">
-                            <div class="default text">Type</div>
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <div class="item" data-value="visa">
-                                    <i class="visa icon"></i>
-                                    Visa
-                                </div>
-                                <div class="item" data-value="amex">
-                                    <i class="amex icon"></i>
-                                    American Express
-                                </div>
-                                <div class="item" data-value="discover">
-                                    <i class="discover icon"></i>
-                                    Discover
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fields">
-                        <div class="seven wide field">
-                            <label>Card Number</label>
-                            <input type="text" name="card[number]" maxlength="16" placeholder="Card #">
-                        </div>
-                        <div class="three wide field">
-                            <label>CVC</label>
-                            <input type="text" name="card[cvc]" maxlength="3" placeholder="CVC">
-                        </div>
-                        <div class="six wide field">
-                            <label>Expiration</label>
-                            <div class="two fields">
-                                <div class="field">
-                                    <select class="ui fluid search dropdown" name="card[expire-month]">
-                                        <option value="">Month</option>
-                                        <option value="1">January</option>
-                                        <option value="2">February</option>
-                                        <option value="3">March</option>
-                                        <option value="4">April</option>
-                                        <option value="5">May</option>
-                                        <option value="6">June</option>
-                                        <option value="7">July</option>
-                                        <option value="8">August</option>
-                                        <option value="9">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
-                                    </select>
-                                </div>
-                                <div class="field">
-                                    <input type="text" name="card[expire-year]" maxlength="4" placeholder="Year">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h4 class="ui dividing header">Receipt</h4>
-                    <div class="field">
-                        <label>Send Receipt To:</label>
-                        <div class="ui fluid multiple search selection dropdown">
-                            <input type="hidden" name="receipt">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Saved Contacts</div>
-                            <div class="menu">
-                                <div class="item" data-value="jenny" data-text="Jenny">
-                                    <img class="ui mini avatar image" src="/images/avatar/small/jenny.jpg">
-                                    Jenny Hess
-                                </div>
-                                <div class="item" data-value="elliot" data-text="Elliot">
-                                    <img class="ui mini avatar image" src="/images/avatar/small/elliot.jpg">
-                                    Elliot Fu
-                                </div>
-                                <div class="item" data-value="stevie" data-text="Stevie">
-                                    <img class="ui mini avatar image" src="/images/avatar/small/stevie.jpg">
-                                    Stevie Feliciano
-                                </div>
-                                <div class="item" data-value="christian" data-text="Christian">
-                                    <img class="ui mini avatar image" src="/images/avatar/small/christian.jpg">
-                                    Christian
-                                </div>
-                                <div class="item" data-value="matt" data-text="Matt">
-                                    <img class="ui mini avatar image" src="/images/avatar/small/matt.jpg">
-                                    Matt
-                                </div>
-                                <div class="item" data-value="justen" data-text="Justen">
-                                    <img class="ui mini avatar image" src="/images/avatar/small/justen.jpg">
-                                    Justen Kitsune
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui segment">
-                        <div class="field">
-                            <div class="ui toggle checkbox">
-                                <input type="checkbox" name="gift" tabindex="0" class="hidden">
-                                <label>Do not include a receipt in the package</label>
-                            </div>
-                        </div>
-                    </div>-->
-                    <input class="ui button" type="submit" value="Enter" />
-                    
+
+
+                    <input class="ui button" type="submit" value="Create Ingredient" />
+
                 </form>
+                <form id="form1" runat="server">
+                    <input type='file' id="imgInp" />
+                    <img id="image" src="#" alt="your image" />
+                </form>
+
+                <!--further samples-->
+                <!--
+                <div class="field">
+                    <label>Short Text</label>
+                    <textarea rows="2"></textarea>
+                </div>
+                <h4 class="ui dividing header">Billing Information</h4>
+                <div class="field">
+                    <label>Card Type</label>
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="card[type]">
+                        <div class="default text">Type</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <div class="item" data-value="visa">
+                                <i class="visa icon"></i>
+                                Visa
+                            </div>
+                            <div class="item" data-value="amex">
+                                <i class="amex icon"></i>
+                                American Express
+                            </div>
+                            <div class="item" data-value="discover">
+                                <i class="discover icon"></i>
+                                Discover
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="seven wide field">
+                        <label>Card Number</label>
+                        <input type="text" name="card[number]" maxlength="16" placeholder="Card #">
+                    </div>
+                    <div class="three wide field">
+                        <label>CVC</label>
+                        <input type="text" name="card[cvc]" maxlength="3" placeholder="CVC">
+                    </div>
+                    <div class="six wide field">
+                        <label>Expiration</label>
+                        <div class="two fields">
+                            <div class="field">
+                                <select class="ui fluid search dropdown" name="card[expire-month]">
+                                    <option value="">Month</option>
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <input type="text" name="card[expire-year]" maxlength="4" placeholder="Year">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="ui dividing header">Receipt</h4>
+                <div class="field">
+                    <label>Send Receipt To:</label>
+                    <div class="ui fluid multiple search selection dropdown">
+                        <input type="hidden" name="receipt">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Saved Contacts</div>
+                        <div class="menu">
+                            <div class="item" data-value="jenny" data-text="Jenny">
+                                <img class="ui mini avatar image" src="/images/avatar/small/jenny.jpg">
+                                Jenny Hess
+                            </div>
+                            <div class="item" data-value="elliot" data-text="Elliot">
+                                <img class="ui mini avatar image" src="/images/avatar/small/elliot.jpg">
+                                Elliot Fu
+                            </div>
+                            <div class="item" data-value="stevie" data-text="Stevie">
+                                <img class="ui mini avatar image" src="/images/avatar/small/stevie.jpg">
+                                Stevie Feliciano
+                            </div>
+                            <div class="item" data-value="christian" data-text="Christian">
+                                <img class="ui mini avatar image" src="/images/avatar/small/christian.jpg">
+                                Christian
+                            </div>
+                            <div class="item" data-value="matt" data-text="Matt">
+                                <img class="ui mini avatar image" src="/images/avatar/small/matt.jpg">
+                                Matt
+                            </div>
+                            <div class="item" data-value="justen" data-text="Justen">
+                                <img class="ui mini avatar image" src="/images/avatar/small/justen.jpg">
+                                Justen Kitsune
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui segment">
+                    <div class="field">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" name="gift" tabindex="0" class="hidden">
+                            <label>Do not include a receipt in the package</label>
+                        </div>
+                    </div>
+                </div>-->
+
+
+
                 <!--JAVASCRIPT-->
                 <script>$("#form").validate();</script>
                 <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
