@@ -37,7 +37,6 @@
 //Creates a shopping cart whenever a user logs in to be used by that user
         if(session.getAttribute("CartId")==null){    
             Dish cart = new Dish(IngredientDAO.getIngredientTemplateID("1"), "Shopping Cart", vendor_id, "A cart to place your ingredients in");
-            %>The new ingredient number isssssssssssssssssssssss<%=IngredientDAO.getIngredientTemplateID(vendor_id + "")%><%
             IngredientDAO.addIngredientTemplate(cart);
             session.setAttribute("CartId",cart.getDish_id());
         }

@@ -70,8 +70,10 @@ public class OrderByIngredientServlet extends HttpServlet {
             ShoppingCart.setDish_name(request.getParameter("name"));
             ShoppingCart.setDish_description(request.getParameter("description"));
             IngredientDAO.updateIngredientTemplate(ShoppingCart);
+            Dish cart = new Dish(IngredientDAO.getIngredientTemplateID("1"), "Shopping Cart", 1, "A cart to place your ingredients in");
+            IngredientDAO.addIngredientTemplate(cart);
+            
         }else if(action.equals("select")){
-            System.out.print("something was sent here");
             IngredientDAO.setSelectColumn(ShoppingCart.getVendor_id(), cartNum);
         }
     }
