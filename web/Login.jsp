@@ -26,14 +26,18 @@
         <img class="ui centered image" src="./resource/pictures/logofinal.png">
 
         <div class="box">
-
-            <h1>Log In</h1>
-
+            <a href="RegisterA.jsp"><button class="ui right floated button purple active ">Register New Account</button></a>
+            <h1 class="floated left">Log In</h1>
+            
             <%
                 //Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
                 //Supplier currentSupplier = (Supplier) session.getAttribute("currentSupplier");
                 String errorMsg = (String) session.getAttribute("errorMsg");
                 String succMsg = (String) session.getAttribute("succMsg");
+                String msg = "";
+                if(request.getAttribute("msg")!=null){
+                    msg = request.getAttribute("msg").toString();
+                }
             %>
 
             <%
@@ -54,10 +58,13 @@
                     <input id="password" type="password" name="password" onblur="checkInput(this)" />
                     <label for="password">Password</label>
                 </div>
+
                 <input style="font-size:16px" type="submit" value="Enter" />
             </form>
             <p><%=errorMsg%></p>
             <p><%=succMsg%></p>
+            <p><%=msg%></p>
+
         </div>
     </body>
 

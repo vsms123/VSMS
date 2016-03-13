@@ -4,6 +4,7 @@
     Author     : Benjamin
 --%>
 
+<%@page import="Model.Dish"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="Model.Orderline"%>
 <%@page import="Model.Order"%>
@@ -34,8 +35,12 @@
             DecimalFormat df = new DecimalFormat("0.00");
             int vendor_id = currentVendor.getVendor_id();
 //Creates a shopping cart whenever a user logs in to be used by that user
-            ShoppingCart cart = new ShoppingCart(IngredientDAO.getDishID(vendor_id + ""), "Shopping Cart", vendor_id, "A cart to place your ingredients in");
-            session.setAttribute("ShoppingCart", cart);
+        if(session.getAttribute("CartId")==null){    
+            Dish cart = new Dish(IngredientDAO.getIngredientTemplateID("1"), "Shopping Cart", vendor_id, "A cart to place your ingredients in");
+            %>The new ingredient number isssssssssssssssssssssss<%=IngredientDAO.getIngredientTemplateID(vendor_id + "")%><%
+            IngredientDAO.addIngredientTemplate(cart);
+            session.setAttribute("CartId",cart.getDish_id());
+        }
 //End of shopping cart creation
 
             ArrayList<Order> orderList = OrderController.retrieveOrderList(currentVendor.getVendor_id());

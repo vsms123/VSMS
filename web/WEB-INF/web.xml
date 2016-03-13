@@ -15,6 +15,14 @@
         <servlet-name>AddIngredientServlet</servlet-name>
         <servlet-class>Servlet.AddIngredientServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterAServlet</servlet-name>
+        <servlet-class>Servlet.RegisterAServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisterBServlet</servlet-name>
+        <servlet-class>Servlet.RegisterBServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AutoCompleteServlet</servlet-name>
         <url-pattern>/autocomplete</url-pattern>
@@ -26,6 +34,14 @@
     <servlet-mapping>
         <servlet-name>AddIngredientServlet</servlet-name>
         <url-pattern>/AddIngredientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterAServlet</servlet-name>
+        <url-pattern>/RegisterAServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterBServlet</servlet-name>
+        <url-pattern>/RegisterBServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
