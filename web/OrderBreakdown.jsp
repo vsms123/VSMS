@@ -4,6 +4,7 @@
     Author     : Benjamin
 --%>
 
+<%@page import="DAO.IngredientDAO"%>
 <%@page import="Controller.UserController"%>
 <%@page import="Model.Vendor"%>
 <%@page import="Controller.UtilityController"%>
@@ -29,7 +30,15 @@
             }
             String vendor_idStr = request.getParameter("vendor_id");
             String action = request.getParameter("action");
-            ArrayList<Dish> dishList = IngredientController.getDish(vendor_idStr);
+            String cart=request.getParameter("cart");
+            System.out.println(cart);
+            ArrayList<Dish> dishList;
+            if(cart!=null&&cart.equals("yes")){
+                System.out.println("I came here");
+                dishList=IngredientDAO.getIngredientTemplates(vendor_idStr);
+            }else{
+                dishList = IngredientController.getDish(vendor_idStr);
+            }
             //System.out.println(dishList.size());
             //    Empty String to contain POST AJAX String of Dish Quantity List
             String valueStr = "";

@@ -30,14 +30,11 @@ Drop database vsms;
 create database vsms;
 use vsms;
 
-CREATE TABLE IF NOT EXISTS `dish` (
+CREATE TABLE `dish` (
   `dish_id` int(11) NOT NULL,
   `dish_name` varchar(100) NOT NULL,
   `vendor_id` int(11) NOT NULL,
-  `dish_description` text NOT NULL,
-  PRIMARY KEY (`dish_id`),
-  KEY `dish_name` (`dish_name`,`vendor_id`),
-  KEY `vendor_id` (`vendor_id`)
+  `dish_description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -148,14 +145,11 @@ INSERT INTO `dish` (`dish_id`, `dish_name`, `vendor_id`, `dish_description`) VAL
 -- Table structure for table `dish_order`
 --
 
-CREATE TABLE IF NOT EXISTS `dish_order` (
+CREATE TABLE `dish_order` (
   `dish_id` int(11) NOT NULL,
   `vendor_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `dish_quantity` int(11) NOT NULL,
-  PRIMARY KEY (`dish_id`,`vendor_id`,`order_id`),
-  KEY `dish_quantity` (`dish_quantity`),
-  KEY `vendor_id` (`vendor_id`)
+  `dish_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -164,10 +158,9 @@ CREATE TABLE IF NOT EXISTS `dish_order` (
 -- Table structure for table `favourite_supplier`
 --
 
-CREATE TABLE IF NOT EXISTS `favourite_supplier` (
+CREATE TABLE `favourite_supplier` (
   `vendor_id` int(11) NOT NULL,
-  `supplier_id` int(11) NOT NULL,
-  PRIMARY KEY (`vendor_id`,`supplier_id`)
+  `supplier_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -187,18 +180,13 @@ INSERT INTO `favourite_supplier` (`vendor_id`, `supplier_id`) VALUES
 -- Table structure for table `ingredient`
 --
 
-CREATE TABLE IF NOT EXISTS `ingredient` (
+CREATE TABLE `ingredient` (
   `supplier_id` int(11) NOT NULL,
   `ingredient_name` varchar(100) NOT NULL,
   `supply_unit` varchar(100) NOT NULL,
   `category` varchar(100) NOT NULL,
   `ingredient_description` text NOT NULL,
-  `offered_price` float NOT NULL,
-  PRIMARY KEY (`supplier_id`,`ingredient_name`),
-  KEY `ingredient_type` (`category`),
-  KEY `unit` (`supply_unit`),
-  KEY `ingredient_name` (`ingredient_name`),
-  KEY `offered_price` (`offered_price`)
+  `offered_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -576,7 +564,8 @@ INSERT INTO `ingredient` (`supplier_id`, `ingredient_name`, `supply_unit`, `cate
 (56, 'steak', 'piece', 'western', 'steak is a very nice food and beverage category that is categorized under western cuisine', 4.5),
 (57, 'amaretto', 'package', 'beverage', 'amaretto is a very nice food and beverage category that is categorized under beverage cuisine', 1.1),
 (57, 'baking soda', 'can', 'beverage', 'baking soda is a very nice food and beverage category that is categorized under beverage cuisine', 3.9),
-(57, 'black-eyed peas', 'can', 'beverage', 'black-eyed peas is a very nice food and beverage category that is categorized under beverage cuisine', 2.5),
+(57, 'black-eyed peas', 'can', 'beverage', 'black-eyed peas is a very nice food and beverage category that is categorized under beverage cuisine', 2.5);
+INSERT INTO `ingredient` (`supplier_id`, `ingredient_name`, `supply_unit`, `category`, `ingredient_description`, `offered_price`) VALUES
 (57, 'chestnuts', 'can', 'beverage', 'chestnuts is a very nice food and beverage category that is categorized under beverage cuisine', 2.9),
 (57, 'cooking wine', 'can', 'beverage', 'cooking wine is a very nice food and beverage category that is categorized under beverage cuisine', 2.4),
 (57, 'steak', 'piece', 'western', 'steak is a very nice food and beverage category that is categorized under western cuisine', 4.5),
@@ -649,17 +638,13 @@ INSERT INTO `ingredient` (`supplier_id`, `ingredient_name`, `supply_unit`, `cate
 -- Table structure for table `ingredient_quantity`
 --
 
-CREATE TABLE IF NOT EXISTS `ingredient_quantity` (
+CREATE TABLE `ingredient_quantity` (
   `dish_id` int(11) NOT NULL,
   `ingredient_name` varchar(100) NOT NULL,
   `quantity` int(15) NOT NULL,
   `vendor_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
-  `unit` varchar(100) NOT NULL,
-  PRIMARY KEY (`dish_id`,`ingredient_name`,`vendor_id`,`supplier_id`),
-  KEY `vendor_id` (`vendor_id`),
-  KEY `supplier_id` (`supplier_id`),
-  KEY `unit` (`unit`)
+  `unit` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -681,10 +666,10 @@ INSERT INTO `ingredient_quantity` (`dish_id`, `ingredient_name`, `quantity`, `ve
 (7, 'borscht', 1, 15, 7, 'bottle'),
 (7, 'red pepper flakes', 2, 15, 9, 'package'),
 (7, 'spaghetti squash', 2, 15, 6, 'package'),
-(8, 'peaches', 1, 5, 8, 'can'),
-(8, 'provolone', 1, 5, 8, 'package'),
 (8, 'leeks', 1, 5, 7, 'package'),
 (8, 'mushrooms', 1, 5, 7, 'can'),
+(8, 'peaches', 1, 5, 8, 'can'),
+(8, 'provolone', 1, 5, 8, 'package'),
 (9, 'bay leaves', 2, 7, 11, 'can'),
 (9, 'Canadian bacon', 2, 7, 23, 'piece'),
 (9, 'sesame seeds', 2, 7, 11, 'package'),
@@ -699,9 +684,9 @@ INSERT INTO `ingredient_quantity` (`dish_id`, `ingredient_name`, `quantity`, `ve
 (12, 'provolone', 2, 14, 8, 'package'),
 (12, 'spearmint', 2, 14, 10, 'package'),
 (13, 'garlic', 1, 4, 6, 'piece'),
-(13, 'pasta', 2, 4, 6, 'can'),
-(13, 'leeks', 1, 4, 7, 'package'),
 (13, 'grouper', 1, 4, 7, 'piece'),
+(13, 'leeks', 1, 4, 7, 'package'),
+(13, 'pasta', 2, 4, 6, 'can'),
 (14, 'granola', 1, 2, 10, 'can'),
 (14, 'grouper', 1, 2, 7, 'piece'),
 (14, 'ricotta cheese', 2, 2, 17, 'package'),
@@ -774,8 +759,8 @@ INSERT INTO `ingredient_quantity` (`dish_id`, `ingredient_name`, `quantity`, `ve
 (37, 'lobsters', 2, 13, 24, 'piece'),
 (37, 'nectarines', 2, 13, 10, 'can'),
 (38, 'ale', 2, 3, 23, 'package'),
-(38, 'cantaloupes', 1, 3, 14, 'piece'),
 (38, 'bean threads', 1, 3, 6, 'can'),
+(38, 'cantaloupes', 1, 3, 14, 'piece'),
 (39, 'broccoli', 1, 13, 11, 'package'),
 (39, 'feta cheese', 1, 13, 18, 'package'),
 (39, 'peaches', 2, 13, 8, 'can'),
@@ -973,20 +958,46 @@ INSERT INTO `ingredient_quantity` (`dish_id`, `ingredient_name`, `quantity`, `ve
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ingredient_template`
+--
+
+CREATE TABLE `ingredient_template` (
+  `template_id` int(11) NOT NULL,
+  `template_name` varchar(100) NOT NULL,
+  `vendor_id` int(11) NOT NULL,
+  `template_description` text NOT NULL,
+  `selected` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ingredient_template_quantity`
+--
+
+CREATE TABLE `ingredient_template_quantity` (
+  `template_id` int(11) NOT NULL,
+  `ingredient_name` varchar(100) NOT NULL,
+  `quantity` int(15) NOT NULL,
+  `vendor_id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
+  `unit` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `order`
 --
 
-CREATE TABLE IF NOT EXISTS `order` (
+CREATE TABLE `order` (
   `order_id` int(11) NOT NULL,
   `vendor_id` int(11) NOT NULL,
   `total_final_price` float NOT NULL,
   `dt` datetime NOT NULL,
   `status` varchar(100) NOT NULL,
-  `expected_delivery` datetime ,
-  `special_request` varchar(200) ,
-  PRIMARY KEY (`order_id`,`vendor_id`),
-  KEY `total_price` (`total_final_price`),
-  KEY `vendor_id` (`vendor_id`)
+  `expected_delivery` datetime DEFAULT NULL,
+  `special_request` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -995,17 +1006,14 @@ CREATE TABLE IF NOT EXISTS `order` (
 -- Table structure for table `orderline`
 --
 
-CREATE TABLE IF NOT EXISTS `orderline` (
+CREATE TABLE `orderline` (
   `vendor_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `supplier_id` varchar(100) NOT NULL,
   `ingredient_name` varchar(100) NOT NULL,
   `price` float NOT NULL,
   `quantity` int(11) NOT NULL,
-  `buffer_percentage` int(11) NOT NULL,
-  PRIMARY KEY (`vendor_id`,`order_id`,`supplier_id`,`ingredient_name`),
-  KEY `price` (`price`,`quantity`),
-  KEY `buffer_percentage` (`buffer_percentage`)
+  `buffer_percentage` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1014,12 +1022,10 @@ CREATE TABLE IF NOT EXISTS `orderline` (
 -- Table structure for table `order_template`
 --
 
-CREATE TABLE IF NOT EXISTS `order_template` (
+CREATE TABLE `order_template` (
   `order_id` int(11) NOT NULL,
   `vendor_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  PRIMARY KEY (`order_id`,`vendor_id`),
-  KEY `vendor_id` (`vendor_id`)
+  `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1028,7 +1034,7 @@ CREATE TABLE IF NOT EXISTS `order_template` (
 -- Table structure for table `supplier`
 --
 
-CREATE TABLE IF NOT EXISTS `supplier` (
+CREATE TABLE `supplier` (
   `supplier_id` int(11) NOT NULL,
   `supplier_name` varchar(100) NOT NULL,
   `supplier_description` text NOT NULL,
@@ -1038,87 +1044,82 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `area_code` int(11) NOT NULL,
   `telephone_number` int(11) NOT NULL,
   `address` varchar(100) NOT NULL,
-  `zipcode` int NOT NULL,
-  `min_leadtime` int NOT NULL,
-  `max_leadtime` int NOT NULL,
-  PRIMARY KEY (`supplier_id`),
-  KEY `supplier_name` (`supplier_name`),
-  KEY `supplier_type` (`supplier_type`),
-  KEY `password` (`password`)
+  `zipcode` int(11) NOT NULL,
+  `min_leadtime` int(11) NOT NULL,
+  `max_leadtime` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`supplier_id`, `supplier_name`, `supplier_description`, `supplier_type`, `password`, `email`, `area_code`, `telephone_number`, `address`,`zipcode`,`min_leadtime`,`max_leadtime`) VALUES
-(1, 'FreshFruitz', 'Providing the freshest and cheapest fruits since 1987. Offering a wide range, from tropical to imported exotic fruits. Items Sold: Rainbow pinapples, Purple apples, Pink oranges etc.', 'western', '123', 'bowei.liu.2013@sis.smu.edu.sg', 65, 87221272, 'Punggol Street 10, Industrial Block #B1-10',680253,5,6),
-(2, 'FreshFoodz', 'Providing the freshest and cheapest chicken since 1887. Offering a wide range of fresh chicken parts. Items Sold: Chicken feet, foreign and local chicken.', 'asian', '123', 'benjaminang.2013@sis.smu.edu.sg', 65, 87221272, 'Lakeside Street 20, Block 401, #11-10',649000,1,4),
-(3, 'FreshSaladz', 'Established in 2014, we provide the best technology in growing organic vegetables. We conduct research in additive free, genetically modified vegetables infused with a variety of vitamins and minerals. Items Sold: Rainbow cabbage, Blue spinach, Organic olives.', 'fusion', '123', 'joel.gnui.2013@sis.smu.edu.sg', 65, 87221272, 'Jurong Avenue 2, Opposite Jurong Bird Park',628925,1,3),
-(4, 'Animal Farm', 'Animal Farm! Animal Animal Animals! Description: Where the pigs farm. Offering discounts on horse meat and beef. Items Sold: We have poultry ranging from kampong chicken to flying pigs!!', 'western', '123', 'Parin1957@armyspy.com', 65, 87221272, 'Lakeside Street 10, Block 101, #3-10',426484,2,10),
-(5, 'Only a Matter of Thyme', 'Only a Matter of Thyme! Description: Time waits for no one. Delivery across thyme and space. Items Sold: Time', 'spices', '123', 'Parin1957@armyspy.com', 65, 87221272, 'Bart Street 3, Block 41, #1-10',247964,5,5),
-(6, 'Foodingo (Supplier)', 'Foodingos Supplier Test Account', 'western', '123abc', 'Yosin.a.2009@gmail.com', 65, 87221272, '49 Jalan Pemimpin APS INDUSTRIAL BUILDING',577203,1,2),
-(7,'Wholesome Wonder Bread','Wholesome Wonder Bread is a very famous western supplier with the famous dish Punucapa','western','123abc','jameslautsejian@gmail.com',65,87221272,'1013 Geylang East Avenue 3 #01-136',247964,7,14),
-(8,'Jerrys Iga','Jerrys Iga is a very famous asian supplier with the famous dish Iltapata','asian','Iltapata','Parin1957@armyspy.com',65,87221272,'49 Jalan Pemimpin APS INDUSTRIAL BUILDING',247964,7,14),
-(9,'Picadilly Market Grill & BKY','Picadilly Market Grill & BKY is a very famous fusion supplier with the famous dish Pichicolo','fusion','Pichicolo','Parin1957@armyspy.com',65,87221272,'1 Lok Yang Way Jurong #19B',247964,7,14),
-(10,'American Discount Foods','American Discount Foods is a very famous fusion supplier with the famous dish Araucana','fusion','Araucana','Parin1957@armyspy.com',65,87221272,'10 Pioneer Sector 1 #01-00',247964,7,14),
-(11,'Natures Herbs','Natures Herbs is a very famous vegetable supplier with the famous dish Farellones','vegetable','Farellones','Parin1957@armyspy.com',65,87221272,'Block 5022 Ang Mo Kio Industrial Park 2 #01-31',247964,7,14),
-(12,'Hawaiian Isles Water CO','Hawaiian Isles Water CO is a very famous beverage supplier with the famous dish Apiau','beverage','Apiau','Parin1957@armyspy.com',65,87221272,'70 Woodlands Industrial Park E',247964,7,14),
-(13,'American Estates Wines','American Estates Wines is a very famous beverage supplier with the famous dish Galvarino','beverage','Galvarino','Parin1957@armyspy.com',65,87221272,'86 International Road',247964,7,14),
-(14,'Java Detour','Java Detour is a very famous beverage supplier with the famous dish Caracoles','beverage','Caracoles','Parin1957@armyspy.com',65,87221272,'Block 192 Pandan Loop #01-26 PANTECH INDUSTRIAL COMPLEX',247964,7,14),
-(15,'Hoyt Fusion Group','Hoyt Fusion Group is a very famous asian supplier with the famous dish Huilque','asian','Huilque','Parin1957@armyspy.com',65,87221272,'31 Penjuru Lane',247964,7,14),
-(16,'Nembo Imports','Nembo Imports is a very famous beverage supplier with the famous dish Matanzas','beverage','Matanzas','Parin1957@armyspy.com',65,87221272,'8 Woodlands Loop',247964,7,14),
-(17,'Buehlers Foods Inc','Buehlers Foods Inc is a very famous fusion supplier with the famous dish Collaguasi','fusion','Collaguasi','Parin1957@armyspy.com',65,87221272,'11 Joo Koon Circle',247964,7,14),
-(18,'Ester C CO','Ester C CO is a very famous asian supplier with the famous dish Chilacaya','asian','Chilacaya','Parin1957@armyspy.com',65,87221272,'1002 Eunos Avenue 8 #01-42',247964,7,14),
-(19,'Natural Pharmacy','Natural Pharmacy is a very famous fusion supplier with the famous dish Loncopahue','fusion','Loncopahue','Parin1957@armyspy.com',65,87221272,'126 Gul Circle',247964,7,14),
-(20,'NW Core Collection','NW Core Collection is a very famous fusion supplier with the famous dish Mocopulle','fusion','Mocopulle','Parin1957@armyspy.com',65,87221272,'642 Rowell Road #02-115',247964,7,14),
-(21,'C Plus','C Plus is a very famous fusion supplier with the famous dish Conanoxa','fusion','Conanoxa','Parin1957@armyspy.com',65,87221272,'545 Orchard Road #11-13 Far East Shopping Centre',247964,7,14),
-(22,'Saigon Deli','Saigon Deli is a very famous asian supplier with the famous dish Quinquegua','asian','Quinquegua','Parin1957@armyspy.com',65,87221272,'90 Horne Road',247964,7,14),
-(23,'College Hill Coffee CO','College Hill Coffee CO is a very famous beverage supplier with the famous dish Ñancul','beverage','Ñancul','Parin1957@armyspy.com',65,87221272,'25 Tuas Avenue 2',247964,7,14),
-(24,'Main St Market','Main St Market is a very famous western supplier with the famous dish Huequecura','western','Huequecura','Parin1957@armyspy.com',65,87221272,'206 Tagore Lane',247964,7,14),
-(25,'Harrys Occult Shop Inc','Harrys Occult Shop Inc is a very famous western supplier with the famous dish Llimpo','western','Llimpo','Parin1957@armyspy.com',65,87221272,'50 Hillview Terrace',247964,7,14),
-(26,'Lambeth Groves Llc','Lambeth Groves Llc is a very famous asian supplier with the famous dish Ipres','asian','Ipres','Parin1957@armyspy.com',65,87221272,'30 Loyang Way, Loyang Industrial Estate #03-04',247964,7,14),
-(27,'Dannys Meats & Catering','Dannys Meats & Catering is a very famous western supplier with the famous dish Tacata','western','Tacata','Parin1957@armyspy.com',65,87221272,'35 Pioneer Sector 2',247964,7,14),
-(28,'Turkey Hill Minit Market','Turkey Hill Minit Market is a very famous western supplier with the famous dish Tijeral','western','Tijeral','Parin1957@armyspy.com',65,87221272,'No. 6 Sixth Lok Yang Road Jurong Industrial Estate',247964,7,14),
-(29,'Hy Vee Floral','Hy Vee Floral is a very famous fusion supplier with the famous dish Chapire','fusion','Chapire','Parin1957@armyspy.com',65,87221272,'9 Tuas Avenue 18',247964,7,14),
-(30,'B & G Gourmet Of Hillsdale','B & G Gourmet Of Hillsdale is a very famous fusion supplier with the famous dish Marchihue','fusion','Marchihue','Parin1957@armyspy.com',65,87221272,'104 Jurong East Street 13 #01-102',247964,7,14),
-(31,'Two Brothers Wine & Spirit','Two Brothers Wine & Spirit is a very famous beverage supplier with the famous dish Alca','beverage','Alca','Parin1957@armyspy.com',65,87221272,'39 Defu Lane 7',247964,7,14),
-(32,'Kaufmann Wine','Kaufmann Wine is a very famous beverage supplier with the famous dish Rarinco','beverage','Rarinco','Parin1957@armyspy.com',65,87221272,'11 Tanjong Rhu Road #18-01 The Waterside',247964,7,14),
-(33,'Food Help','Food Help is a very famous fusion supplier with the famous dish Churigualla','fusion','Churigualla','Parin1957@armyspy.com',65,87221272,'No. 29 Woodlands Industrial Park E1 #04-17 Northtech',247964,7,14),
-(34,'Smoky Bay Natural Foods Inc','Smoky Bay Natural Foods Inc is a very famous western supplier with the famous dish Pachica','western','Pachica','Parin1957@armyspy.com',65,87221272,'491B River Valley Road #04-01 Valley Point Office Tower',247964,7,14),
-(35,'Baseline Ii Inc','Baseline Ii Inc is a very famous western supplier with the famous dish Maiquillahue','western','Maiquillahue','Parin1957@armyspy.com',65,87221272,'55 Hume Avenue #06-09',247964,7,14),
-(36,'Tommy Boy Asian','Tommy Boy Asian is a very famous asian supplier with the famous dish Gualliguaica','asian','Gualliguaica','Parin1957@armyspy.com',65,87221272,'Blk 2021 Bukit Batok Street 23 #01-226',247964,7,14),
-(37,'Brownies','Brownies is a very famous western supplier with the famous dish Cerrillos','western','Cerrillos','Parin1957@armyspy.com',65,87221272,'Block 3005 Ubi Avenue 3 #01-64',247964,7,14),
-(38,'Kountry Korner Grocery Store','Kountry Korner Grocery Store is a very famous vegetable supplier with the famous dish Buenaventura','vegetable','Buenaventura','Parin1957@armyspy.com',65,87221272,'3018 Bedok Nth St 5 #01-32 Singapore 486132',247964,7,14),
-(39,'SAL Daylight Donuts','SAL Daylight Donuts is a very famous fusion supplier with the famous dish Puchilco','fusion','Puchilco','Parin1957@armyspy.com',65,87221272,'Paya Lebar Rd Singapore 1440',247964,7,14),
-(40,'Sovereign Grounds','Sovereign Grounds is a very famous fusion supplier with the famous dish Quistagama','fusion','Quistagama','Parin1957@armyspy.com',65,87221272,'6 Joo Koon Crescent',247964,7,14),
-(41,'Quick Trip','Quick Trip is a very famous asian supplier with the famous dish Hualaihué','asian','Hualaihué','Parin1957@armyspy.com',65,87221272,'32 Tuas View Loop',247964,7,14),
-(42,'K C Foods','K C Foods is a very famous vegetable supplier with the famous dish Gultro','vegetable','Gultro','Parin1957@armyspy.com',65,87221272,'3016 Bedok Nth Ave 4 #01-03',247964,7,14),
-(43,'Natural Foods Store','Natural Foods Store is a very famous fusion supplier with the famous dish Chigualoco','fusion','Chigualoco','Parin1957@armyspy.com',65,87221272,'15 Pioneer Sector 2',247964,7,14),
-(44,'LA India Brand','LA India Brand is a very famous western supplier with the famous dish Loros','western','Loros','Parin1957@armyspy.com',65,87221272,'51 Tuas Ave 1 Singapore 639501 ',247964,7,14),
-(45,'Bill Champ','Bill Champ is a very famous western supplier with the famous dish Huecahuecan','western','Huecahuecan','Parin1957@armyspy.com',65,87221272,'623 Aljunied Road #07-03 ALJUNIED INDUSTRIAL COMPLEX',247964,7,14),
-(46,'Alex Lee Inc','Alex Lee Inc is a very famous western supplier with the famous dish Lancagua','western','Lancagua','Parin1957@armyspy.com',65,87221272,'21 Lor Ampas #09-00 Singapore 328782',247964,7,14),
-(47,'Friday Harbor Market Place','Friday Harbor Market Place is a very famous vegetable supplier with the famous dish Pejerrey','vegetable','Pejerrey','Parin1957@armyspy.com',65,87221272,'66 Tannery Lane #01-04D Sindo Building',247964,7,14),
-(48,'Quick Trip','Quick Trip is a very famous fusion supplier with the famous dish Central','fusion','Central','Parin1957@armyspy.com',65,87221272,'26 Benoi Sector Jurong',247964,7,14),
-(49,'People Gotta Eat','People Gotta Eat is a very famous fusion supplier with the famous dish Negrete','fusion','Negrete','Parin1957@armyspy.com',65,87221272,'322D King Georges Avenue',247964,7,14),
-(50,'Hot Spot Stores','Hot Spot Stores is a very famous fusion supplier with the famous dish Chinquio','fusion','Chinquio','Parin1957@armyspy.com',65,87221272,'8 Tanjong Penjuru JURONG INDUSTRIAL ESTATE',247964,7,14),
-(51,'Drug Warehouse Wine & Spirits','Drug Warehouse Wine & Spirits is a very famous fusion supplier with the famous dish Ausipas','fusion','Ausipas','Parin1957@armyspy.com',65,87221272,'44 Pioneer Sector 2',247964,7,14),
-(52,'King Soopers 65','King Soopers 65 is a very famous fusion supplier with the famous dish Junquillar','fusion','Junquillar','Parin1957@armyspy.com',65,87221272,'8 Tanjong Penjuru',247964,7,14),
-(53,'Adonijah Health Food','Adonijah Health Food is a very famous fusion supplier with the famous dish Ayrocollo','fusion','Ayrocollo','Parin1957@armyspy.com',65,87221272,'11 Kian Teck Road',247964,7,14),
-(54,'Bike Stop','Bike Stop is a very famous asian supplier with the famous dish Curanilahue','asian','Curanilahue','Parin1957@armyspy.com',65,87221272,'261 Waterloo Street #02-26',247964,7,14),
-(55,'Chocolate Studio','Chocolate Studio is a very famous fusion supplier with the famous dish Mellipilla','fusion','Mellipilla','Parin1957@armyspy.com',65,87221272,'Blk 9-H Yuan Ching Road #15-82',247964,7,14),
-(56,'Olympic Bagel Company Inc','Olympic Bagel Company Inc is a very famous western supplier with the famous dish Pumanque','western','Pumanque','Parin1957@armyspy.com',65,87221272,'20 Shaw Road #06-05 CHING SHINE INDUSTRIAL BUILDING',247964,7,14),
-(57,'RGA Enterprises','RGA Enterprises is a very famous western supplier with the famous dish Punucapa','western','Punucapa','Parin1957@armyspy.com',65,87221272,'1 Scotts Road #16-12',247964,7,14),
-(58,'Desert Sage Herbs Inc','Desert Sage Herbs Inc is a very famous beverage supplier with the famous dish Iltapata','beverage','Iltapata','Parin1957@armyspy.com',65,87221272,'23A Jalan Grisek',247964,7,14),
-(59,'Hills Pharmacy','Hills Pharmacy is a very famous western supplier with the famous dish Pichicolo','western','Pichicolo','Parin1957@armyspy.com',65,87221272,'8A Tuas Ave 13 Singapore 638981',247964,7,14),
-(60,'Western Botanicals Inc','Western Botanicals Inc is a very famous western supplier with the famous dish Araucana','western','Araucana','Parin1957@armyspy.com',65,87221272,'Block 3016 Bedok North Avenue 4 #01-03 EASTECH',247964,7,14),
-(61,'Cleos Seafood','Cleos Seafood is a very famous asian supplier with the famous dish Farellones','asian','Farellones','Parin1957@armyspy.com',65,87221272,'48 Tuas Basin Link Singapore 638778 ',247964,7,14),
-(62,'Captain Marden','Captain Marden is a very famous asian supplier with the famous dish Apiau','asian','Apiau','Parin1957@armyspy.com',65,87221272,'1 Bt Batok St 22 #03-28 Singapore 659592',247964,7,14),
-(63,'Food Town','Food Town is a very famous western supplier with the famous dish Galvarino','western','Galvarino','Parin1957@armyspy.com',65,87221272,'50 Kian Teck Road',247964,7,14),
-(64,'Coffee Beanery','Coffee Beanery is a very famous beverage supplier with the famous dish Caracoles','beverage','Caracoles','Parin1957@armyspy.com',65,87221272,'63 Hillview Ave #03-09 Lam Soon Ind Bldg Singapore 669569 ',247964,7,14),
-(65,'Breaux Mart Supermarkets','Breaux Mart Supermarkets is a very famous western supplier with the famous dish Huilque','western','Huilque','Parin1957@armyspy.com',65,87221272,'Block 35 Tannery Road #11-10 Tannery Block, Ruby Industrial Complex',247964,7,14),
-(66,'Mars Cafe','Mars Cafe is a very famous western supplier with the famous dish Matanzas','western','Matanzas','Parin1957@armyspy.com',65,87221272,'5 Tuas Avenue 3 Bok Seng Building',247964,7,14);
-
+INSERT INTO `supplier` (`supplier_id`, `supplier_name`, `supplier_description`, `supplier_type`, `password`, `email`, `area_code`, `telephone_number`, `address`, `zipcode`, `min_leadtime`, `max_leadtime`) VALUES
+(1, 'FreshFruitz', 'Providing the freshest and cheapest fruits since 1987. Offering a wide range, from tropical to imported exotic fruits. Items Sold: Rainbow pinapples, Purple apples, Pink oranges etc.', 'western', '123', 'bowei.liu.2013@sis.smu.edu.sg', 65, 87221272, 'Punggol Street 10, Industrial Block #B1-10', 680253, 5, 6),
+(2, 'FreshFoodz', 'Providing the freshest and cheapest chicken since 1887. Offering a wide range of fresh chicken parts. Items Sold: Chicken feet, foreign and local chicken.', 'asian', '123', 'benjaminang.2013@sis.smu.edu.sg', 65, 87221272, 'Lakeside Street 20, Block 401, #11-10', 649000, 1, 4),
+(3, 'FreshSaladz', 'Established in 2014, we provide the best technology in growing organic vegetables. We conduct research in additive free, genetically modified vegetables infused with a variety of vitamins and minerals. Items Sold: Rainbow cabbage, Blue spinach, Organic olives.', 'fusion', '123', 'joel.gnui.2013@sis.smu.edu.sg', 65, 87221272, 'Jurong Avenue 2, Opposite Jurong Bird Park', 628925, 1, 3),
+(4, 'Animal Farm', 'Animal Farm! Animal Animal Animals! Description: Where the pigs farm. Offering discounts on horse meat and beef. Items Sold: We have poultry ranging from kampong chicken to flying pigs!!', 'western', '123', 'Parin1957@armyspy.com', 65, 87221272, 'Lakeside Street 10, Block 101, #3-10', 426484, 2, 10),
+(5, 'Only a Matter of Thyme', 'Only a Matter of Thyme! Description: Time waits for no one. Delivery across thyme and space. Items Sold: Time', 'spices', '123', 'Parin1957@armyspy.com', 65, 87221272, 'Bart Street 3, Block 41, #1-10', 247964, 5, 5),
+(6, 'Foodingo (Supplier)', 'Foodingos Supplier Test Account', 'western', '123abc', 'Yosin.a.2009@gmail.com', 65, 87221272, '49 Jalan Pemimpin APS INDUSTRIAL BUILDING', 577203, 1, 2),
+(7, 'Wholesome Wonder Bread', 'Wholesome Wonder Bread is a very famous western supplier with the famous dish Punucapa', 'western', '123abc', 'jameslautsejian@gmail.com', 65, 87221272, '1013 Geylang East Avenue 3 #01-136', 247964, 7, 14),
+(8, 'Jerrys Iga', 'Jerrys Iga is a very famous asian supplier with the famous dish Iltapata', 'asian', 'Iltapata', 'Parin1957@armyspy.com', 65, 87221272, '49 Jalan Pemimpin APS INDUSTRIAL BUILDING', 247964, 7, 14),
+(9, 'Picadilly Market Grill & BKY', 'Picadilly Market Grill & BKY is a very famous fusion supplier with the famous dish Pichicolo', 'fusion', 'Pichicolo', 'Parin1957@armyspy.com', 65, 87221272, '1 Lok Yang Way Jurong #19B', 247964, 7, 14),
+(10, 'American Discount Foods', 'American Discount Foods is a very famous fusion supplier with the famous dish Araucana', 'fusion', 'Araucana', 'Parin1957@armyspy.com', 65, 87221272, '10 Pioneer Sector 1 #01-00', 247964, 7, 14),
+(11, 'Natures Herbs', 'Natures Herbs is a very famous vegetable supplier with the famous dish Farellones', 'vegetable', 'Farellones', 'Parin1957@armyspy.com', 65, 87221272, 'Block 5022 Ang Mo Kio Industrial Park 2 #01-31', 247964, 7, 14),
+(12, 'Hawaiian Isles Water CO', 'Hawaiian Isles Water CO is a very famous beverage supplier with the famous dish Apiau', 'beverage', 'Apiau', 'Parin1957@armyspy.com', 65, 87221272, '70 Woodlands Industrial Park E', 247964, 7, 14),
+(13, 'American Estates Wines', 'American Estates Wines is a very famous beverage supplier with the famous dish Galvarino', 'beverage', 'Galvarino', 'Parin1957@armyspy.com', 65, 87221272, '86 International Road', 247964, 7, 14),
+(14, 'Java Detour', 'Java Detour is a very famous beverage supplier with the famous dish Caracoles', 'beverage', 'Caracoles', 'Parin1957@armyspy.com', 65, 87221272, 'Block 192 Pandan Loop #01-26 PANTECH INDUSTRIAL COMPLEX', 247964, 7, 14),
+(15, 'Hoyt Fusion Group', 'Hoyt Fusion Group is a very famous asian supplier with the famous dish Huilque', 'asian', 'Huilque', 'Parin1957@armyspy.com', 65, 87221272, '31 Penjuru Lane', 247964, 7, 14),
+(16, 'Nembo Imports', 'Nembo Imports is a very famous beverage supplier with the famous dish Matanzas', 'beverage', 'Matanzas', 'Parin1957@armyspy.com', 65, 87221272, '8 Woodlands Loop', 247964, 7, 14),
+(17, 'Buehlers Foods Inc', 'Buehlers Foods Inc is a very famous fusion supplier with the famous dish Collaguasi', 'fusion', 'Collaguasi', 'Parin1957@armyspy.com', 65, 87221272, '11 Joo Koon Circle', 247964, 7, 14),
+(18, 'Ester C CO', 'Ester C CO is a very famous asian supplier with the famous dish Chilacaya', 'asian', 'Chilacaya', 'Parin1957@armyspy.com', 65, 87221272, '1002 Eunos Avenue 8 #01-42', 247964, 7, 14),
+(19, 'Natural Pharmacy', 'Natural Pharmacy is a very famous fusion supplier with the famous dish Loncopahue', 'fusion', 'Loncopahue', 'Parin1957@armyspy.com', 65, 87221272, '126 Gul Circle', 247964, 7, 14),
+(20, 'NW Core Collection', 'NW Core Collection is a very famous fusion supplier with the famous dish Mocopulle', 'fusion', 'Mocopulle', 'Parin1957@armyspy.com', 65, 87221272, '642 Rowell Road #02-115', 247964, 7, 14),
+(21, 'C Plus', 'C Plus is a very famous fusion supplier with the famous dish Conanoxa', 'fusion', 'Conanoxa', 'Parin1957@armyspy.com', 65, 87221272, '545 Orchard Road #11-13 Far East Shopping Centre', 247964, 7, 14),
+(22, 'Saigon Deli', 'Saigon Deli is a very famous asian supplier with the famous dish Quinquegua', 'asian', 'Quinquegua', 'Parin1957@armyspy.com', 65, 87221272, '90 Horne Road', 247964, 7, 14),
+(23, 'College Hill Coffee CO', 'College Hill Coffee CO is a very famous beverage supplier with the famous dish Ñancul', 'beverage', 'Ñancul', 'Parin1957@armyspy.com', 65, 87221272, '25 Tuas Avenue 2', 247964, 7, 14),
+(24, 'Main St Market', 'Main St Market is a very famous western supplier with the famous dish Huequecura', 'western', 'Huequecura', 'Parin1957@armyspy.com', 65, 87221272, '206 Tagore Lane', 247964, 7, 14),
+(25, 'Harrys Occult Shop Inc', 'Harrys Occult Shop Inc is a very famous western supplier with the famous dish Llimpo', 'western', 'Llimpo', 'Parin1957@armyspy.com', 65, 87221272, '50 Hillview Terrace', 247964, 7, 14),
+(26, 'Lambeth Groves Llc', 'Lambeth Groves Llc is a very famous asian supplier with the famous dish Ipres', 'asian', 'Ipres', 'Parin1957@armyspy.com', 65, 87221272, '30 Loyang Way, Loyang Industrial Estate #03-04', 247964, 7, 14),
+(27, 'Dannys Meats & Catering', 'Dannys Meats & Catering is a very famous western supplier with the famous dish Tacata', 'western', 'Tacata', 'Parin1957@armyspy.com', 65, 87221272, '35 Pioneer Sector 2', 247964, 7, 14),
+(28, 'Turkey Hill Minit Market', 'Turkey Hill Minit Market is a very famous western supplier with the famous dish Tijeral', 'western', 'Tijeral', 'Parin1957@armyspy.com', 65, 87221272, 'No. 6 Sixth Lok Yang Road Jurong Industrial Estate', 247964, 7, 14),
+(29, 'Hy Vee Floral', 'Hy Vee Floral is a very famous fusion supplier with the famous dish Chapire', 'fusion', 'Chapire', 'Parin1957@armyspy.com', 65, 87221272, '9 Tuas Avenue 18', 247964, 7, 14),
+(30, 'B & G Gourmet Of Hillsdale', 'B & G Gourmet Of Hillsdale is a very famous fusion supplier with the famous dish Marchihue', 'fusion', 'Marchihue', 'Parin1957@armyspy.com', 65, 87221272, '104 Jurong East Street 13 #01-102', 247964, 7, 14),
+(31, 'Two Brothers Wine & Spirit', 'Two Brothers Wine & Spirit is a very famous beverage supplier with the famous dish Alca', 'beverage', 'Alca', 'Parin1957@armyspy.com', 65, 87221272, '39 Defu Lane 7', 247964, 7, 14),
+(32, 'Kaufmann Wine', 'Kaufmann Wine is a very famous beverage supplier with the famous dish Rarinco', 'beverage', 'Rarinco', 'Parin1957@armyspy.com', 65, 87221272, '11 Tanjong Rhu Road #18-01 The Waterside', 247964, 7, 14),
+(33, 'Food Help', 'Food Help is a very famous fusion supplier with the famous dish Churigualla', 'fusion', 'Churigualla', 'Parin1957@armyspy.com', 65, 87221272, 'No. 29 Woodlands Industrial Park E1 #04-17 Northtech', 247964, 7, 14),
+(34, 'Smoky Bay Natural Foods Inc', 'Smoky Bay Natural Foods Inc is a very famous western supplier with the famous dish Pachica', 'western', 'Pachica', 'Parin1957@armyspy.com', 65, 87221272, '491B River Valley Road #04-01 Valley Point Office Tower', 247964, 7, 14),
+(35, 'Baseline Ii Inc', 'Baseline Ii Inc is a very famous western supplier with the famous dish Maiquillahue', 'western', 'Maiquillahue', 'Parin1957@armyspy.com', 65, 87221272, '55 Hume Avenue #06-09', 247964, 7, 14),
+(36, 'Tommy Boy Asian', 'Tommy Boy Asian is a very famous asian supplier with the famous dish Gualliguaica', 'asian', 'Gualliguaica', 'Parin1957@armyspy.com', 65, 87221272, 'Blk 2021 Bukit Batok Street 23 #01-226', 247964, 7, 14),
+(37, 'Brownies', 'Brownies is a very famous western supplier with the famous dish Cerrillos', 'western', 'Cerrillos', 'Parin1957@armyspy.com', 65, 87221272, 'Block 3005 Ubi Avenue 3 #01-64', 247964, 7, 14),
+(38, 'Kountry Korner Grocery Store', 'Kountry Korner Grocery Store is a very famous vegetable supplier with the famous dish Buenaventura', 'vegetable', 'Buenaventura', 'Parin1957@armyspy.com', 65, 87221272, '3018 Bedok Nth St 5 #01-32 Singapore 486132', 247964, 7, 14),
+(39, 'SAL Daylight Donuts', 'SAL Daylight Donuts is a very famous fusion supplier with the famous dish Puchilco', 'fusion', 'Puchilco', 'Parin1957@armyspy.com', 65, 87221272, 'Paya Lebar Rd Singapore 1440', 247964, 7, 14),
+(40, 'Sovereign Grounds', 'Sovereign Grounds is a very famous fusion supplier with the famous dish Quistagama', 'fusion', 'Quistagama', 'Parin1957@armyspy.com', 65, 87221272, '6 Joo Koon Crescent', 247964, 7, 14),
+(41, 'Quick Trip', 'Quick Trip is a very famous asian supplier with the famous dish Hualaihué', 'asian', 'Hualaihué', 'Parin1957@armyspy.com', 65, 87221272, '32 Tuas View Loop', 247964, 7, 14),
+(42, 'K C Foods', 'K C Foods is a very famous vegetable supplier with the famous dish Gultro', 'vegetable', 'Gultro', 'Parin1957@armyspy.com', 65, 87221272, '3016 Bedok Nth Ave 4 #01-03', 247964, 7, 14),
+(43, 'Natural Foods Store', 'Natural Foods Store is a very famous fusion supplier with the famous dish Chigualoco', 'fusion', 'Chigualoco', 'Parin1957@armyspy.com', 65, 87221272, '15 Pioneer Sector 2', 247964, 7, 14),
+(44, 'LA India Brand', 'LA India Brand is a very famous western supplier with the famous dish Loros', 'western', 'Loros', 'Parin1957@armyspy.com', 65, 87221272, '51 Tuas Ave 1 Singapore 639501 ', 247964, 7, 14),
+(45, 'Bill Champ', 'Bill Champ is a very famous western supplier with the famous dish Huecahuecan', 'western', 'Huecahuecan', 'Parin1957@armyspy.com', 65, 87221272, '623 Aljunied Road #07-03 ALJUNIED INDUSTRIAL COMPLEX', 247964, 7, 14),
+(46, 'Alex Lee Inc', 'Alex Lee Inc is a very famous western supplier with the famous dish Lancagua', 'western', 'Lancagua', 'Parin1957@armyspy.com', 65, 87221272, '21 Lor Ampas #09-00 Singapore 328782', 247964, 7, 14),
+(47, 'Friday Harbor Market Place', 'Friday Harbor Market Place is a very famous vegetable supplier with the famous dish Pejerrey', 'vegetable', 'Pejerrey', 'Parin1957@armyspy.com', 65, 87221272, '66 Tannery Lane #01-04D Sindo Building', 247964, 7, 14),
+(48, 'Quick Trip', 'Quick Trip is a very famous fusion supplier with the famous dish Central', 'fusion', 'Central', 'Parin1957@armyspy.com', 65, 87221272, '26 Benoi Sector Jurong', 247964, 7, 14),
+(49, 'People Gotta Eat', 'People Gotta Eat is a very famous fusion supplier with the famous dish Negrete', 'fusion', 'Negrete', 'Parin1957@armyspy.com', 65, 87221272, '322D King Georges Avenue', 247964, 7, 14),
+(50, 'Hot Spot Stores', 'Hot Spot Stores is a very famous fusion supplier with the famous dish Chinquio', 'fusion', 'Chinquio', 'Parin1957@armyspy.com', 65, 87221272, '8 Tanjong Penjuru JURONG INDUSTRIAL ESTATE', 247964, 7, 14),
+(51, 'Drug Warehouse Wine & Spirits', 'Drug Warehouse Wine & Spirits is a very famous fusion supplier with the famous dish Ausipas', 'fusion', 'Ausipas', 'Parin1957@armyspy.com', 65, 87221272, '44 Pioneer Sector 2', 247964, 7, 14),
+(52, 'King Soopers 65', 'King Soopers 65 is a very famous fusion supplier with the famous dish Junquillar', 'fusion', 'Junquillar', 'Parin1957@armyspy.com', 65, 87221272, '8 Tanjong Penjuru', 247964, 7, 14),
+(53, 'Adonijah Health Food', 'Adonijah Health Food is a very famous fusion supplier with the famous dish Ayrocollo', 'fusion', 'Ayrocollo', 'Parin1957@armyspy.com', 65, 87221272, '11 Kian Teck Road', 247964, 7, 14),
+(54, 'Bike Stop', 'Bike Stop is a very famous asian supplier with the famous dish Curanilahue', 'asian', 'Curanilahue', 'Parin1957@armyspy.com', 65, 87221272, '261 Waterloo Street #02-26', 247964, 7, 14),
+(55, 'Chocolate Studio', 'Chocolate Studio is a very famous fusion supplier with the famous dish Mellipilla', 'fusion', 'Mellipilla', 'Parin1957@armyspy.com', 65, 87221272, 'Blk 9-H Yuan Ching Road #15-82', 247964, 7, 14),
+(56, 'Olympic Bagel Company Inc', 'Olympic Bagel Company Inc is a very famous western supplier with the famous dish Pumanque', 'western', 'Pumanque', 'Parin1957@armyspy.com', 65, 87221272, '20 Shaw Road #06-05 CHING SHINE INDUSTRIAL BUILDING', 247964, 7, 14),
+(57, 'RGA Enterprises', 'RGA Enterprises is a very famous western supplier with the famous dish Punucapa', 'western', 'Punucapa', 'Parin1957@armyspy.com', 65, 87221272, '1 Scotts Road #16-12', 247964, 7, 14),
+(58, 'Desert Sage Herbs Inc', 'Desert Sage Herbs Inc is a very famous beverage supplier with the famous dish Iltapata', 'beverage', 'Iltapata', 'Parin1957@armyspy.com', 65, 87221272, '23A Jalan Grisek', 247964, 7, 14),
+(59, 'Hills Pharmacy', 'Hills Pharmacy is a very famous western supplier with the famous dish Pichicolo', 'western', 'Pichicolo', 'Parin1957@armyspy.com', 65, 87221272, '8A Tuas Ave 13 Singapore 638981', 247964, 7, 14),
+(60, 'Western Botanicals Inc', 'Western Botanicals Inc is a very famous western supplier with the famous dish Araucana', 'western', 'Araucana', 'Parin1957@armyspy.com', 65, 87221272, 'Block 3016 Bedok North Avenue 4 #01-03 EASTECH', 247964, 7, 14),
+(61, 'Cleos Seafood', 'Cleos Seafood is a very famous asian supplier with the famous dish Farellones', 'asian', 'Farellones', 'Parin1957@armyspy.com', 65, 87221272, '48 Tuas Basin Link Singapore 638778 ', 247964, 7, 14),
+(62, 'Captain Marden', 'Captain Marden is a very famous asian supplier with the famous dish Apiau', 'asian', 'Apiau', 'Parin1957@armyspy.com', 65, 87221272, '1 Bt Batok St 22 #03-28 Singapore 659592', 247964, 7, 14),
+(63, 'Food Town', 'Food Town is a very famous western supplier with the famous dish Galvarino', 'western', 'Galvarino', 'Parin1957@armyspy.com', 65, 87221272, '50 Kian Teck Road', 247964, 7, 14),
+(64, 'Coffee Beanery', 'Coffee Beanery is a very famous beverage supplier with the famous dish Caracoles', 'beverage', 'Caracoles', 'Parin1957@armyspy.com', 65, 87221272, '63 Hillview Ave #03-09 Lam Soon Ind Bldg Singapore 669569 ', 247964, 7, 14),
+(65, 'Breaux Mart Supermarkets', 'Breaux Mart Supermarkets is a very famous western supplier with the famous dish Huilque', 'western', 'Huilque', 'Parin1957@armyspy.com', 65, 87221272, 'Block 35 Tannery Road #11-10 Tannery Block, Ruby Industrial Complex', 247964, 7, 14),
+(66, 'Mars Cafe', 'Mars Cafe is a very famous western supplier with the famous dish Matanzas', 'western', 'Matanzas', 'Parin1957@armyspy.com', 65, 87221272, '5 Tuas Avenue 3 Bok Seng Building', 247964, 7, 14);
 
 -- --------------------------------------------------------
 
@@ -1126,14 +1127,10 @@ INSERT INTO `supplier` (`supplier_id`, `supplier_name`, `supplier_description`, 
 -- Table structure for table `template_quantity`
 --
 
-CREATE TABLE IF NOT EXISTS `template_quantity` (
+CREATE TABLE `template_quantity` (
   `order_id` int(11) NOT NULL,
   `dish_id` int(11) NOT NULL,
-  `dish_quantity` int(11) NOT NULL,
-  PRIMARY KEY (`order_id`,`dish_id`,`dish_quantity`),
-  KEY `dish_quantity` (`dish_quantity`),
-  KEY `dish_id` (`dish_id`),
-  KEY `order_id` (`order_id`)
+  `dish_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1142,12 +1139,10 @@ CREATE TABLE IF NOT EXISTS `template_quantity` (
 -- Table structure for table `test`
 --
 
-CREATE TABLE IF NOT EXISTS `test` (
+CREATE TABLE `test` (
   `value1` varchar(100) NOT NULL,
   `value2` varchar(100) NOT NULL,
-  `value3` varchar(100) NOT NULL,
-  PRIMARY KEY (`value1`),
-  KEY `value2` (`value2`,`value3`)
+  `value3` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1165,7 +1160,7 @@ INSERT INTO `test` (`value1`, `value2`, `value3`) VALUES
 -- Table structure for table `vendor`
 --
 
-CREATE TABLE IF NOT EXISTS `vendor` (
+CREATE TABLE `vendor` (
   `vendor_id` int(11) NOT NULL,
   `vendor_name` varchar(100) NOT NULL,
   `vendor_description` varchar(100) NOT NULL,
@@ -1174,33 +1169,147 @@ CREATE TABLE IF NOT EXISTS `vendor` (
   `area_code` int(11) NOT NULL,
   `telephone_number` int(11) NOT NULL,
   `address` varchar(100) NOT NULL,
-  `zipcode` int NOT NULL,
-  PRIMARY KEY (`vendor_id`),
-  KEY `vendor_name` (`vendor_name`,`vendor_description`),
-  KEY `password` (`password`)
+  `zipcode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `vendor`
 --
 
-INSERT INTO `vendor` (`vendor_id`, `vendor_name`, `vendor_description`, `password`, `email`, `area_code`, `telephone_number`, `address`,`zipcode`) VALUES
-(1, 'Bob''s Bakery And Bistro', 'Bob bakery and bistro is a renowned Bistro that was established in 1976', '123', 'vincentt.2013@sis.smu.edu.sg', 65, 87221272, '1B Braddel Road #05-02',579701),
-(2, 'Cozumel Mexican Grille', 'Cozumel Mexican Grille is a very famous asian supplier with the famous dish Punucapa', '123', 'cw.cheung.2013@sis.smu.edu.sg', 65, 87221272, '39 Defu Lane 7',539353),
-(3, 'Foodingo (Vendor)', 'Foodingos Vendor Test Account', '123abc', 'rehanarien@gmail.com', 65, 91234567, 'No. 29 Woodlands Industrial Park E1 #04-17 Northtech',757716),
-(4,'Le Peep Restaurant','Le Peep Restaurant is a very famous fusion supplier with the famous dish Iltapata','123abc','ongzhikan@gmail.com',65,87221272,'11 Tanjong Rhu Road #18-01 The Waterside',308215),
-(5,'Mark & Orlandos','Mark & Orlandos is a very famous western supplier with the famous dish Pichicolo','123abc','Shuqing316@gmail.com',65,87221272,'No. 29 Woodlands Industrial Park E1 #04-17 Northtech',308215),
-(6,'Chinalite','Chinalite is a very famous asian supplier with the famous dish Araucana','Araucana','Parin1957@armyspy.com',65,87221272,'491B River Valley Road #04-01 Valley Point Office Tower',308215),
-(7,'Heritage Society','Heritage Society is a very famous vegetable supplier with the famous dish Farellones','Farellones','Parin1957@armyspy.com',65,87221272,'55 Hume Avenue #06-09',308215),
-(8,'Breakers Sports Bar & Grill','Breakers Sports Bar & Grill is a very famous western supplier with the famous dish Apiau','Apiau','Parin1957@armyspy.com',65,87221272,'Blk 2021 Bukit Batok Street 23 #01-226',308215),
-(9,'Old Timers Restaurant','Old Timers Restaurant is a very famous western supplier with the famous dish Galvarino','Galvarino','Parin1957@armyspy.com',65,87221272,'Block 3005 Ubi Avenue 3 #01-64',308215),
-(10,'Enchiladas Restaurant CO','Enchiladas Restaurant CO is a very famous beverage supplier with the famous dish Caracoles','Caracoles','Parin1957@armyspy.com',65,87221272,'3018 Bedok Nth St 5 #01-32 Singapore 486132',308215),
-(11,'Charlie Chiangs Asian Bistro','Charlie Chiangs Asian Bistro is a very famous asian supplier with the famous dish Huilque','Huilque','Parin1957@armyspy.com',65,87221272,'Paya Lebar Rd Singapore 1440',308215),
-(12,'Main Street Depot','Main Street Depot is a very famous fusion supplier with the famous dish Matanzas','Matanzas','Parin1957@armyspy.com',65,87221272,'6 Joo Koon Crescent',308215),
-(13,'Perryville Inn','Perryville Inn is a very famous western supplier with the famous dish Collaguasi','Collaguasi','Parin1957@armyspy.com',65,87221272,'32 Tuas View Loop',308215),
-(14,'Ester C CO','Ester C CO is a very famous beverage supplier with the famous dish Chilacaya','Chilacaya','Parin1957@armyspy.com',65,87221272,'3016 Bedok Nth Ave 4 #01-03',308215),
-(15,'Natural Pharmacy','Natural Pharmacy is a very famous beverage supplier with the famous dish Loncopahue','Loncopahue','Parin1957@armyspy.com',65,87221272,'15 Pioneer Sector 2',308215),
-(16,'NW Core Collection','NW Core Collection is a very famous western supplier with the famous dish Mocopulle','Mocopulle','Parin1957@armyspy.com',65,87221272,'51 Tuas Ave 1 Singapore 639501 ',308215);
+INSERT INTO `vendor` (`vendor_id`, `vendor_name`, `vendor_description`, `password`, `email`, `area_code`, `telephone_number`, `address`, `zipcode`) VALUES
+(1, 'Bob''s Bakery And Bistro', 'Bob bakery and bistro is a renowned Bistro that was established in 1976', '123', 'vincentt.2013@sis.smu.edu.sg', 65, 87221272, '1B Braddel Road #05-02', 579701),
+(2, 'Cozumel Mexican Grille', 'Cozumel Mexican Grille is a very famous asian supplier with the famous dish Punucapa', '123', 'cw.cheung.2013@sis.smu.edu.sg', 65, 87221272, '39 Defu Lane 7', 539353),
+(3, 'Foodingo (Vendor)', 'Foodingos Vendor Test Account', '123abc', 'rehanarien@gmail.com', 65, 91234567, 'No. 29 Woodlands Industrial Park E1 #04-17 Northtech', 757716),
+(4, 'Le Peep Restaurant', 'Le Peep Restaurant is a very famous fusion supplier with the famous dish Iltapata', '123abc', 'ongzhikan@gmail.com', 65, 87221272, '11 Tanjong Rhu Road #18-01 The Waterside', 308215),
+(5, 'Mark & Orlandos', 'Mark & Orlandos is a very famous western supplier with the famous dish Pichicolo', '123abc', 'Shuqing316@gmail.com', 65, 87221272, 'No. 29 Woodlands Industrial Park E1 #04-17 Northtech', 308215),
+(6, 'Chinalite', 'Chinalite is a very famous asian supplier with the famous dish Araucana', 'Araucana', 'Parin1957@armyspy.com', 65, 87221272, '491B River Valley Road #04-01 Valley Point Office Tower', 308215),
+(7, 'Heritage Society', 'Heritage Society is a very famous vegetable supplier with the famous dish Farellones', 'Farellones', 'Parin1957@armyspy.com', 65, 87221272, '55 Hume Avenue #06-09', 308215),
+(8, 'Breakers Sports Bar & Grill', 'Breakers Sports Bar & Grill is a very famous western supplier with the famous dish Apiau', 'Apiau', 'Parin1957@armyspy.com', 65, 87221272, 'Blk 2021 Bukit Batok Street 23 #01-226', 308215),
+(9, 'Old Timers Restaurant', 'Old Timers Restaurant is a very famous western supplier with the famous dish Galvarino', 'Galvarino', 'Parin1957@armyspy.com', 65, 87221272, 'Block 3005 Ubi Avenue 3 #01-64', 308215),
+(10, 'Enchiladas Restaurant CO', 'Enchiladas Restaurant CO is a very famous beverage supplier with the famous dish Caracoles', 'Caracoles', 'Parin1957@armyspy.com', 65, 87221272, '3018 Bedok Nth St 5 #01-32 Singapore 486132', 308215),
+(11, 'Charlie Chiangs Asian Bistro', 'Charlie Chiangs Asian Bistro is a very famous asian supplier with the famous dish Huilque', 'Huilque', 'Parin1957@armyspy.com', 65, 87221272, 'Paya Lebar Rd Singapore 1440', 308215),
+(12, 'Main Street Depot', 'Main Street Depot is a very famous fusion supplier with the famous dish Matanzas', 'Matanzas', 'Parin1957@armyspy.com', 65, 87221272, '6 Joo Koon Crescent', 308215),
+(13, 'Perryville Inn', 'Perryville Inn is a very famous western supplier with the famous dish Collaguasi', 'Collaguasi', 'Parin1957@armyspy.com', 65, 87221272, '32 Tuas View Loop', 308215),
+(14, 'Ester C CO', 'Ester C CO is a very famous beverage supplier with the famous dish Chilacaya', 'Chilacaya', 'Parin1957@armyspy.com', 65, 87221272, '3016 Bedok Nth Ave 4 #01-03', 308215),
+(15, 'Natural Pharmacy', 'Natural Pharmacy is a very famous beverage supplier with the famous dish Loncopahue', 'Loncopahue', 'Parin1957@armyspy.com', 65, 87221272, '15 Pioneer Sector 2', 308215),
+(16, 'NW Core Collection', 'NW Core Collection is a very famous western supplier with the famous dish Mocopulle', 'Mocopulle', 'Parin1957@armyspy.com', 65, 87221272, '51 Tuas Ave 1 Singapore 639501 ', 308215);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `dish`
+--
+ALTER TABLE `dish`
+  ADD PRIMARY KEY (`dish_id`),
+  ADD KEY `dish_name` (`dish_name`,`vendor_id`),
+  ADD KEY `vendor_id` (`vendor_id`);
+
+--
+-- Indexes for table `dish_order`
+--
+ALTER TABLE `dish_order`
+  ADD PRIMARY KEY (`dish_id`,`vendor_id`,`order_id`),
+  ADD KEY `dish_quantity` (`dish_quantity`),
+  ADD KEY `vendor_id` (`vendor_id`);
+
+--
+-- Indexes for table `favourite_supplier`
+--
+ALTER TABLE `favourite_supplier`
+  ADD PRIMARY KEY (`vendor_id`,`supplier_id`);
+
+--
+-- Indexes for table `ingredient`
+--
+ALTER TABLE `ingredient`
+  ADD PRIMARY KEY (`supplier_id`,`ingredient_name`),
+  ADD KEY `ingredient_type` (`category`),
+  ADD KEY `unit` (`supply_unit`),
+  ADD KEY `ingredient_name` (`ingredient_name`),
+  ADD KEY `offered_price` (`offered_price`);
+
+--
+-- Indexes for table `ingredient_quantity`
+--
+ALTER TABLE `ingredient_quantity`
+  ADD PRIMARY KEY (`dish_id`,`ingredient_name`,`vendor_id`,`supplier_id`),
+  ADD KEY `vendor_id` (`vendor_id`),
+  ADD KEY `supplier_id` (`supplier_id`),
+  ADD KEY `unit` (`unit`);
+
+--
+-- Indexes for table `ingredient_template`
+--
+ALTER TABLE `ingredient_template`
+  ADD PRIMARY KEY (`template_id`),
+  ADD KEY `template_name` (`template_name`),
+  ADD KEY `vendor_id` (`vendor_id`),
+  ADD KEY `selected` (`selected`);
+ALTER TABLE `ingredient_template` ADD FULLTEXT KEY `template_description` (`template_description`);
+
+--
+-- Indexes for table `ingredient_template_quantity`
+--
+ALTER TABLE `ingredient_template_quantity`
+  ADD PRIMARY KEY (`template_id`,`ingredient_name`,`vendor_id`,`supplier_id`);
+
+--
+-- Indexes for table `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`order_id`,`vendor_id`),
+  ADD KEY `total_price` (`total_final_price`),
+  ADD KEY `vendor_id` (`vendor_id`);
+
+--
+-- Indexes for table `orderline`
+--
+ALTER TABLE `orderline`
+  ADD PRIMARY KEY (`vendor_id`,`order_id`,`supplier_id`,`ingredient_name`),
+  ADD KEY `price` (`price`,`quantity`),
+  ADD KEY `buffer_percentage` (`buffer_percentage`);
+
+--
+-- Indexes for table `order_template`
+--
+ALTER TABLE `order_template`
+  ADD PRIMARY KEY (`order_id`,`vendor_id`),
+  ADD KEY `vendor_id` (`vendor_id`);
+
+--
+-- Indexes for table `supplier`
+--
+ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`supplier_id`),
+  ADD KEY `supplier_name` (`supplier_name`),
+  ADD KEY `supplier_type` (`supplier_type`),
+  ADD KEY `password` (`password`);
+
+--
+-- Indexes for table `template_quantity`
+--
+ALTER TABLE `template_quantity`
+  ADD PRIMARY KEY (`order_id`,`dish_id`,`dish_quantity`),
+  ADD KEY `dish_quantity` (`dish_quantity`),
+  ADD KEY `dish_id` (`dish_id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `test`
+--
+ALTER TABLE `test`
+  ADD PRIMARY KEY (`value1`),
+  ADD KEY `value2` (`value2`,`value3`);
+
+--
+-- Indexes for table `vendor`
+--
+ALTER TABLE `vendor`
+  ADD PRIMARY KEY (`vendor_id`),
+  ADD KEY `vendor_name` (`vendor_name`,`vendor_description`),
+  ADD KEY `password` (`password`);
 
 --
 -- Constraints for dumped tables
@@ -1216,8 +1325,8 @@ ALTER TABLE `dish`
 -- Constraints for table `dish_order`
 --
 ALTER TABLE `dish_order`
-  ADD CONSTRAINT `dish_order_ibfk_2` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`vendor_id`),
-  ADD CONSTRAINT `dish_order_ibfk_1` FOREIGN KEY (`dish_id`) REFERENCES `dish` (`dish_id`);
+  ADD CONSTRAINT `dish_order_ibfk_1` FOREIGN KEY (`dish_id`) REFERENCES `dish` (`dish_id`),
+  ADD CONSTRAINT `dish_order_ibfk_2` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`vendor_id`);
 
 --
 -- Constraints for table `ingredient`
