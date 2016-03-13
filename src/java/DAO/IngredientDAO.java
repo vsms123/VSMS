@@ -7,6 +7,7 @@ package DAO;
 
 import Controller.ConnectionManager;
 import Controller.UtilityController;
+import static DAO.IngredientDAO.getTemplateQuantity;
 import Model.Dish;
 import Model.Ingredient;
 import Model.Supplier;
@@ -1291,6 +1292,48 @@ public static Dish getIngredientTemplateByID(int dish_id) {
         }
         return dish;
     }
-}
+
 //End retrieving ingredient template
 
+//Retrieves the template that is selected as one-click-order
+public static Dish getOneClickIngredientTemplate(int vendor_id) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "";
+        Dish dish = null;
+        try {
+            conn = ConnectionManager.getConnection();
+            query = "select * from ingredient_template where vendor_id=? AND selected=?";
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, vendor_id);
+            statement.setInt(2, 1);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                int dishId = Integer.parseInt(rs.getString("template_id"));
+                int venId = Integer.parseInt(rs.getString("vendor_id"));
+                dish = new Dish(dishId, rs.getString("template_name"), venId, rs.getString("template_description"), getTemplateQuantity(rs.getString("template_id")));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return dish;
+    }
+}
+//End of template retrieval
