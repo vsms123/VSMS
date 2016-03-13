@@ -54,6 +54,8 @@ public class OrderByIngredientServlet extends HttpServlet {
         //End variable initialization
         //This code block takes in gets the shopping cart from database and adds ingredients to it
         if(action.equals("add")){    
+            System.out.println(ShoppingCart==null);
+            System.out.println(ingredient==null);
             ShoppingCart.addIngredient(ingredient, ingredientQuantity, ingredient.getSupplyUnit());
             IngredientDAO.updateIngredientTemplate(ShoppingCart);
         }else if(action.equals("delete")){

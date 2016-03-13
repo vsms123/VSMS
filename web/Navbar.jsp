@@ -25,6 +25,7 @@
             $(document).ready(function() {
                 $('.cart.triggerModal').click(function() {
                     //show modal button
+                    $("description").html(results);
                     $('#modalCart').modal('show');
                 });
                 $('.profile').click(function() {
@@ -138,9 +139,7 @@
             <a href="LogoutServlet" class="item pulse" style=" font-size: 16px">
                 <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Logout
             </a>
-<a class="item cart triggerModal pulse" style=" font-size: 16px">
-                <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Cart
-            </a>
+
         </div>
 
 
@@ -185,26 +184,7 @@
                     <img src="./resource/pictures/underconstruction.PNG">
                 </div>
                 <div class="description">
-                        <%
-                            int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
-                            Dish cart = (Dish) IngredientDAO.getIngredientTemplateByID(cartID);
-                        %>
-                    <table border="1">
-                        <tr><td>Ingredient</td><td>Quantity</td><td>Units</td></tr>
-                        <%
-                            HashMap<Ingredient, ArrayList<String>> map = cart.getIngredientQuantity();
-                            Set<Ingredient> ingredientSet = map.keySet();
-                            Iterator iter = ingredientSet.iterator();
-                            while (iter.hasNext()) {
-                                Ingredient ing = (Ingredient) iter.next();
-                                ArrayList<String> list = map.get(ing);
-                        %>
-                        <tr><td><%=ing.getName()%></td><td><%=list.get(0)%></td><td><%=list.get(1)%></td></tr>
-                        <%
-                            }
-                        %>
-
-                    </table>
+                        
                 </div>
             </div>
             <div class="actions">

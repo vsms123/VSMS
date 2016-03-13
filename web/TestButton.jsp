@@ -36,8 +36,8 @@
                     <%@ include file="Navbar.jsp" %>
                     <h1>OrderIngredientTest</h1>
                     <%
-                        //int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
-                        //Dish cart = (Dish) IngredientDAO.getIngredientTemplateByID(cartID);
+                        int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
+                        Dish cart = (Dish) IngredientDAO.getIngredientTemplateByID(cartID);
                         IngredientDAO.updateIngredientTemplate(cart);
 
                         ArrayList<Ingredient> ingredientList = IngredientDAO.getIngredientBySupplier(1);
@@ -65,9 +65,9 @@
                     <table border="1">
                         <tr><td>Ingredient</td><td>Quantity</td><td>Units</td></tr>
                         <%
-                            //HashMap<Ingredient, ArrayList<String>> map = cart.getIngredientQuantity();
-                            //Set<Ingredient> ingredientSet = map.keySet();
-                            //Iterator iter = ingredientSet.iterator();
+                            HashMap<Ingredient, ArrayList<String>> map = cart.getIngredientQuantity();
+                            Set<Ingredient> ingredientSet = map.keySet();
+                            Iterator iter = ingredientSet.iterator();
                             while (iter.hasNext()) {
                                 Ingredient ing = (Ingredient) iter.next();
                                 ArrayList<String> list = map.get(ing);

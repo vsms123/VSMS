@@ -87,6 +87,26 @@
                         Supplier Search
                         <div  style="color:black"  class="sub header">Find Suppliers/Ingredients</div>
                     </div>
+                    <div>
+                        <table border="1">
+                        <tr><td>Ingredient</td><td>Quantity</td><td>Units</td></tr>
+                        <%
+                            int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
+                            Dish cart = (Dish) IngredientDAO.getIngredientTemplateByID(cartID);
+                            HashMap<Ingredient, ArrayList<String>> map = cart.getIngredientQuantity();
+                            Set<Ingredient> ingredientSet = map.keySet();
+                            Iterator iter = ingredientSet.iterator();
+                            while (iter.hasNext()) {
+                                Ingredient ing = (Ingredient) iter.next();
+                                ArrayList<String> list = map.get(ing);
+                        %>
+                        <tr><td><%=ing.getName()%></td><td><%=list.get(0)%></td><td><%=list.get(1)%></td></tr>
+                        <%
+                            }
+                        %>
+
+                    </table>
+                    </div>
                 </h1>
                 <br/>
                 <h2 style="color: black">Search by:</h2>
