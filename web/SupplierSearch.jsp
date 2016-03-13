@@ -73,7 +73,7 @@
             url: 'OrderByIngredientServlet',
             data: $(this).serialize(),
             success: function () {
-              alert('form was submitted');
+              alert('Item added to cart');
             }
           });
 
@@ -88,24 +88,7 @@
                         <div  style="color:black"  class="sub header">Find Suppliers/Ingredients</div>
                     </div>
                     <div>
-                        <table border="1">
-                        <tr><td>Ingredient</td><td>Quantity</td><td>Units</td></tr>
-                        <%
-                            int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
-                            Dish cart = (Dish) IngredientDAO.getIngredientTemplateByID(cartID);
-                            HashMap<Ingredient, ArrayList<String>> map = cart.getIngredientQuantity();
-                            Set<Ingredient> ingredientSet = map.keySet();
-                            Iterator iter = ingredientSet.iterator();
-                            while (iter.hasNext()) {
-                                Ingredient ing = (Ingredient) iter.next();
-                                ArrayList<String> list = map.get(ing);
-                        %>
-                        <tr><td><%=ing.getName()%></td><td><%=list.get(0)%></td><td><%=list.get(1)%></td></tr>
-                        <%
-                            }
-                        %>
-
-                    </table>
+                        <a href="ShoppingCartDisplay.jsp">Shopping Cart</a>
                     </div>
                 </h1>
                 <br/>
