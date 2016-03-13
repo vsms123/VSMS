@@ -38,6 +38,7 @@
                 dishList=IngredientDAO.getIngredientTemplates(vendor_idStr);
             }else{
                 dishList = IngredientController.getDish(vendor_idStr);
+                cart="no";
             }
             //System.out.println(dishList.size());
             //    Empty String to contain POST AJAX String of Dish Quantity List

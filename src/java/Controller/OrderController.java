@@ -46,7 +46,15 @@ public class OrderController extends HttpServlet {
         //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
         //An  order int order_id,int vendor_id; double total_final_price;Date dt_order;ArrayList<Orderline> orderlines;
         String vendor_idStr = request.getParameter("vendor_id");
-        ArrayList<Dish> dishList = IngredientDAO.getDish(vendor_idStr);
+        ArrayList<Dish> dishList;
+        String cart=request.getParameter("cart");
+            System.out.println(cart);
+            if(cart!=null&&cart.equals("yes")){
+                System.out.println("I am at ordercontroller");
+                dishList=IngredientDAO.getIngredientTemplates(vendor_idStr);
+            }else{
+                dishList = IngredientController.getDish(vendor_idStr);
+            }
         String action = request.getParameter("action");
         String special_request = request.getParameter("special_request");
         String bufferqtypercStr = request.getParameter("bufferqtyperc");
