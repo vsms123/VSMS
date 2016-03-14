@@ -5,6 +5,8 @@
  */
 package Servlet;
 
+import DAO.IngredientDAO;
+import Model.Dish;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,7 +31,10 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Dish ShoppingCart=IngredientDAO.getIngredientTemplateByID((Integer)request.getSession().getAttribute("CartId"));
         request.getSession().invalidate();
+        
+        IngredientDAO.deleteIngredientTemplate(ShoppingCart);
         response.sendRedirect("Login.jsp");
     }
 

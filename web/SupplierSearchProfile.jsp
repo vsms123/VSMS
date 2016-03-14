@@ -151,6 +151,16 @@
                                         <a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>"><%=ingredient.getName()%></a>
                                     </h3>
                                 </div>
+                                    <div>
+                                <form action="OrderByIngredientServlet" method="get">
+                                    Quantity<input type="text" value="0" name="quantity">
+                                    <input type="hidden" name="ingredientname" value="<%=ingredient.getName()%>">
+                                    <input type="hidden" name="supplierId" value="<%=ingredient.getSupplier_id()%>">
+                                    <input type="hidden" name="CartId" value="<%=(Integer)session.getAttribute("CartId")%>">
+                                    <input type="hidden" name="action" value="add">
+                                    <input type="submit">
+                                </form>
+                            </div>
                             </td>
                         </tr>
                         <%}%>

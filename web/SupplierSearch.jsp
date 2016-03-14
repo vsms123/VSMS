@@ -19,6 +19,7 @@
         <!--Form VALIDATION-->
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <%            Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             //in case current vendor does not exist
             if (currentVendor == null) {
@@ -60,12 +61,34 @@
         <div class="transparency">
             <div class="ui segment" style="left:5%;width:90%">
                 <%@include file="Navbar.jsp" %>
+                <script>
+      $(function () {
 
+        $('form').on('submit', function (e) {
+
+          e.preventDefault();
+
+          $.ajax({
+            type: 'get',
+            url: 'OrderByIngredientServlet',
+            data: $(this).serialize(),
+            success: function () {
+              alert('Item added to cart');
+            }
+          });
+
+        });
+
+      });
+    </script>
                 <h1 class="ui header">
                     <i class="search icon"></i>
                     <div class="content" >
                         Supplier Search
                         <div  style="color:black"  class="sub header">Find Suppliers/Ingredients</div>
+                    </div>
+                    <div>
+                        <a href="ShoppingCartDisplay.jsp">Shopping Cart</a>
                     </div>
                 </h1>
                 <br/>
@@ -127,7 +150,19 @@
                             <div>
                                 <div style="color:black">Supplier: <h3><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></h3></div>
                             </div>
+                            <div>
+                                <form action="OrderByIngredientServlet" method="get">
+                                    Quantity<input type="text" value="0" name="quantity">
+                                    <input type="hidden" name="ingredientname" value="<%=ingredient.getName()%>">
+                                    <input type="hidden" name="supplierId" value="<%=ingredient.getSupplier_id()%>">
+                                    <input type="hidden" name="CartId" value="<%=(Integer)session.getAttribute("CartId")%>">
+                                    <input type="hidden" name="action" value="add">
+                                    <input type="submit">
+                                </form>
+                            </div>
+                            
                         </div>
+
                         <%}%>
                     </div>
                 </div>

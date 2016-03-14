@@ -4,6 +4,13 @@
     Author     : Benjamin
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Set"%>
+<%@page import="Model.Ingredient"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Dish"%>
+<%@page import="DAO.IngredientDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,9 +23,10 @@
 
         <script>
             $(document).ready(function() {
-                $('.message.triggerModal').click(function() {
+                $('.cart.triggerModal').click(function() {
                     //show modal button
-                    $('#modalMessage').modal('show');
+                    $("description").html(results);
+                    $('#modalCart').modal('show');
                 });
                 $('.profile').click(function() {
                     //show modal button
@@ -166,7 +174,7 @@
             </div>
         </div>
 
-        <div id="modalMessage" class="ui basic modal">
+        <div id="modalCart" class="ui basic modal">
             <i class="close icon"></i>
             <div class="header">
                 <h1>Messages</h1>
@@ -176,10 +184,7 @@
                     <img src="./resource/pictures/underconstruction.PNG">
                 </div>
                 <div class="description">
-                    <p><h2>Users may check notifications and receive alerts about new updates.</h2></p>
-                    <div class="ui header" style="color: white">Coming soon..</div>
-                    <p>Feature currently being developed. You will be notified about the launch of this feature.</p>
-
+                        
                 </div>
             </div>
             <div class="actions">

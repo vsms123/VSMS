@@ -46,7 +46,16 @@ public class OrderController extends HttpServlet {
         //A OrderLine will have int vendor_id;int order_id;int supplier_id;String ingredient_name;double finalprice;int quantity;double bufferpercentage;
         //An  order int order_id,int vendor_id; double total_final_price;Date dt_order;ArrayList<Orderline> orderlines;
         String vendor_idStr = request.getParameter("vendor_id");
-        ArrayList<Dish> dishList = IngredientDAO.getDish(vendor_idStr);
+        ArrayList<Dish> dishList;
+        String cart=request.getParameter("cart");
+            System.out.println(cart);
+            if(cart!=null&&cart.equals("yes")){
+                System.out.println("I am at ordercontroller");
+                dishList=IngredientDAO.getIngredientTemplates(vendor_idStr);
+                System.out.println(dishList.toString());
+            }else{
+                dishList = IngredientController.getDish(vendor_idStr);
+            }
         String action = request.getParameter("action");
         String special_request = request.getParameter("special_request");
         String bufferqtypercStr = request.getParameter("bufferqtyperc");
@@ -61,7 +70,12 @@ public class OrderController extends HttpServlet {
                 HashMap<Integer, Integer> dishQuantityMap = createDishQuantityMap(dishList, request);
                 int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
                 //Create an hashmap with <Ingredient, aggregated quantity> (TESTED)
-                HashMap<Ingredient, Integer> ingredientAggQuantityMap = createIngredientAggQuantityMap(dishQuantityMap);
+                HashMap<Ingredient, Integer> ingredientAggQuantityMap;
+                if(cart.equals("yes")){
+                    ingredientAggQuantityMap=createIngredientTemplateAggQuantityMap(dishQuantityMap);
+                }else{
+                    ingredientAggQuantityMap = createIngredientAggQuantityMap(dishQuantityMap);
+                }
                 ArrayList<Orderline> orderlineList = new ArrayList<Orderline>();
                 if (bufferqtypercStr != null) {//This means it comes from order breakdown
                     int bufferqtyperc = UtilityController.convertStringtoInt(bufferqtypercStr);
@@ -276,7 +290,64 @@ public class OrderController extends HttpServlet {
 //           
         return ingredientAggQuantityMap;
     }
+    
+    public HashMap<Ingredient, Integer> createIngredientTemplateAggQuantityMap(HashMap<Integer, Integer> dishQuantityMap) {
+        HashMap<Ingredient, Integer> ingredientAggQuantityMap = new HashMap<Ingredient, Integer>();
 
+        //iterate through dishQuantityMap
+        Iterator iter = dishQuantityMap.keySet().iterator();
+        //Hashmap of <ingredient composite key : quantity>
+        HashMap<String, Integer> ingQuanMap = new HashMap<>();
+        while (iter.hasNext()) {
+            int dish_id = (int) iter.next();
+            int quantityOrder = dishQuantityMap.get(dish_id);
+
+            if (quantityOrder != 0) {
+                Dish dish = IngredientDAO.getIngredientTemplateByID(dish_id);
+
+                //Retrieve hashmap of a dish's ingredients and their quantity
+                HashMap<Ingredient, ArrayList<String>> ingredientQuantity = dish.getIngredientQuantity();
+
+                Iterator iterIngQuantity = ingredientQuantity.keySet().iterator();
+
+                //loop ingredients in a single dish
+                while (iterIngQuantity.hasNext()) {
+                    Ingredient ingredient = (Ingredient) iterIngQuantity.next();
+
+                    ArrayList<String> quantityUnitStr = ingredientQuantity.get(ingredient);
+                    int quantity = Integer.parseInt(quantityUnitStr.get(0)) * quantityOrder;
+                    //initialize first entry in map
+                    if (ingQuanMap.isEmpty()) {
+                        ingQuanMap.put(ingredient.getCompo_ID(), quantity);
+                    } else {
+                    //if not empty
+
+                        //if ingredient with this comp key already exists in map
+                        if (ingQuanMap.containsKey(ingredient.getCompo_ID())) {
+                            int currQuantity = ingQuanMap.get(ingredient.getCompo_ID());
+                            ingQuanMap.put(ingredient.getCompo_ID(), currQuantity + quantity);
+                        } else {
+                            ingQuanMap.put(ingredient.getCompo_ID(), quantity);
+                        }
+                    }
+                }
+            }
+        }
+
+        //convert ingQuanMap back to required format HashMap<Ingredient, Integer>
+        for (Map.Entry<String, Integer> entry : ingQuanMap.entrySet()) {
+            String compo_key = entry.getKey();
+            //String[] parts = compo_key.split(("|@|"));
+            HashMap<String, Ingredient> ingredientMap = IngredientDAO.getIngredientMap();
+
+            int quantity = entry.getValue();
+
+            ingredientAggQuantityMap.put(ingredientMap.get(compo_key), quantity);
+        }
+//           
+        return ingredientAggQuantityMap;
+    }
+    
     public ArrayList<Orderline> createOrderlineList(HashMap<Ingredient, Integer> ingredientAggQuantityMap, int vendor_id, int order_id) {
         ArrayList<Orderline> orderlineList = new ArrayList<Orderline>();
 
