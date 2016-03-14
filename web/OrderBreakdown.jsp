@@ -36,6 +36,7 @@
             if(cart!=null&&cart.equals("yes")){
                 System.out.println("I came here");
                 dishList=IngredientDAO.getIngredientTemplates(vendor_idStr);
+                System.out.println(dishList.size());
             }else{
                 dishList = IngredientController.getDish(vendor_idStr);
                 cart="no";
@@ -62,7 +63,7 @@
             //Hide AJAX Loading Message
             $(".loading").hide();
                     //Generate the order breakdown
-                    $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm' <%=valueStr%>}, function(responseText) {
+                    $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm',cart:<%="'"+cart+"'"%> <%=valueStr%> }, function(responseText) {
                     $(".content-model-table").html(responseText);
                     });
                     //Regenerate the order breakdown when bufferQtyTextbox is changed
