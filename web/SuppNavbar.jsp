@@ -49,7 +49,7 @@
 
                 $(".button").click(function () {
                     $(this).transition('pulse');
-
+                    $('#removePicture').css('display','none');
                 });
                 $(".pulse").click(function () {
                     $(this).transition('pulse');

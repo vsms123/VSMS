@@ -23,6 +23,10 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
         <link rel="stylesheet" href="css/main.css">
 
+        <link rel="stylesheet" href="css/demo.css">
+        <link rel="stylesheet" href="css/component.css">
+        <link rel="stylesheet" href="css/normalize.css">
+
 
         <!--        
                 <link rel="stylesheet" type="text/css" href="css/normalize.css" />
@@ -56,12 +60,22 @@
                         var reader = new FileReader();
 
                         reader.onload = function (e) {
-                            $('#image').attr('src', e.target.result);
+                            if (e !== "#") {
+                                $('#removePicture').css('display', '');
+                            }
+                            $('#image').css('display', '').attr('src', e.target.result);
+                            $('.uploadArea').css('display', 'none');
                         }
 
                         reader.readAsDataURL(input.files[0]);
                     }
                 }
+                $('#removePicture').click(function () {
+                    $('#image').css('display', 'none').attr('src', '#');
+
+                    $('.uploadArea').css('display', '');
+                    $('.toRemove').css('display', 'none');
+                });
 
                 $("#imgInp").change(function () {
                     readURL(this);
@@ -93,7 +107,7 @@
                     //if (currentSupplier == null) {
                     //    currentSupplier = UserController.retrieveSupplierByID(currentSupplier.getSupplier_id());
                     //}
-                %>
+%>
                 <%=msg%>
                 <form class="ui form" action="AddIngredientServlet" method="post">
                     <input type="hidden" value="<%=currentSupplier.getSupplier_id()%>" name="supplier_id" />
@@ -141,14 +155,31 @@
                         </div>
                     </div>
 
-
+                    <h4>Add an Image:</h4>
+                    
+                    <div class="box uploadArea">
+                        <input type="file" name="file-5[]" id="imgInp" class="inputfile inputfile-4" />
+                        <label style='border:5px dotted; height:250px; width:250px;' for="imgInp">
+                            <figure>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="300px" height="200px" viewBox="0 0 20 17">
+                                <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/>
+                                </svg>
+                            </figure> 
+                            <span>Click to Upload Picture&hellip;</span>
+                        </label>
+                    </div>
+                    <img id="image" src="#" class='ingredientImage' style='display:none' alt="your image" />
+                    <button id="removePicture" style="display:none" class="ui red button">Remove Image</button>
+                    
+                    <br/>
                     <input class="ui button" type="submit" value="Create Ingredient" />
 
+
                 </form>
-                <form id="form1" runat="server">
-                    <input type='file' id="imgInp" />
-                    <img id="image" src="#" alt="your image" />
-                </form>
+
+
+
+
 
                 <!--further samples-->
                 <!--

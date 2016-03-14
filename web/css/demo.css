@@ -166,12 +166,11 @@ a:focus {
 
 .box {
 	background-color: #dfc8ca;
-	padding: 6.25rem 1.25rem;
+/*	padding: 6.25rem 1.25rem;*/
+        height: 250px;
+        width: 250px;
 }
 
-.box + .box {
-	margin-top: 2.5rem;
-}
 
 
 /* Related demos */
