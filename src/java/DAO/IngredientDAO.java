@@ -1,5 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license head
+
+er, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -73,7 +75,7 @@ public class IngredientDAO {
         String query = "";
         try {
             conn = ConnectionManager.getConnection();
-            query = "insert into ingredient (supplier_id, ingredient_name, supply_unit, category, ingredient_description, offered_price) values (?,?,?,?,?,?)";
+            query = "insert into ingredient (supplier_id, ingredient_name, supply_unit, category, ingredient_description, offered_price,picture) values (?,?,?,?,?,?,?)";
             statement = conn.prepareStatement(query);
             statement.setString(1, ingredient.getSupplier_id() + "");
             statement.setString(2, ingredient.getName());
@@ -81,6 +83,10 @@ public class IngredientDAO {
             statement.setString(4, ingredient.getSubcategory());
             statement.setString(5, ingredient.getDescription());
             statement.setString(6, ingredient.getOfferedPrice());
+            //Insert picture if exists
+            if (ingredient.getPicture() != null) {
+                statement.setBinaryStream(7, ingredient.getPicture());
+            }
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,7 +148,7 @@ public class IngredientDAO {
         String query = "";
         try {
             conn = ConnectionManager.getConnection();
-            query = "update ingredient set supply_unit=?, category=?, ingredient_description=?, offered_price=? where supplier_id=? AND ingredient_name=?";
+            query = "update ingredient set supply_unit=?, category=?, ingredient_description=?, offered_price=? ,picture=? where supplier_id=? AND ingredient_name=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, ingredient.getSupplyUnit());
             statement.setString(2, ingredient.getSubcategory());
@@ -150,6 +156,10 @@ public class IngredientDAO {
             statement.setString(4, ingredient.getOfferedPrice());
             statement.setString(5, ingredient.getSupplier_id() + "");
             statement.setString(6, ingredient.getName());
+            //Insert picture if exists
+            if (ingredient.getPicture() != null) {
+                statement.setBinaryStream(7, ingredient.getPicture());
+            }
             int row = statement.executeUpdate();
 
         } catch (Exception e) {
@@ -171,9 +181,7 @@ public class IngredientDAO {
             }
         }
     }
-    
-    
-    
+
     public static ArrayList<Ingredient> getIngredientList() {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -188,7 +196,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"));
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), rs.getBlob("picture").getBinaryStream());
                 ingredientList.add(ingredient);
             }
         } catch (Exception e) {
@@ -211,7 +219,7 @@ public class IngredientDAO {
         }
         return ingredientList;
     }
-    
+
     public static HashMap<String, Ingredient> getIngredientMap() {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -228,7 +236,7 @@ public class IngredientDAO {
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
                 String name = rs.getString("ingredient_name");
-                Ingredient ingredient = new Ingredient(supId, name, rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"));
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), rs.getBlob("picture").getBinaryStream());
                 ingredientMap.put(name + "|@|" + supId, ingredient);
             }
         } catch (Exception e) {
@@ -267,7 +275,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"));
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), rs.getBlob("picture").getBinaryStream());
                 ingredientList.add(ingredient);
             }
 
@@ -307,7 +315,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"));
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), rs.getBlob("picture").getBinaryStream());
                 ingredientList.add(ingredient);
             }
 
@@ -370,7 +378,7 @@ public class IngredientDAO {
         }
         return dishList;
     }
-    
+
     //Loads all shopping cart templates of a vendor
     public static ArrayList<Dish> getIngredientTemplates(String vendor_id) {
         Connection conn = null;
@@ -412,10 +420,9 @@ public class IngredientDAO {
     }
 
     //End loading of templates
-    
 //This method generates a new dishID
     public static int getDishID(String vendor_id) {
-        int dishId=0;
+        int dishId = 0;
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -445,13 +452,13 @@ public class IngredientDAO {
                 }
             }
         }
-        return dishId+1;
+        return dishId + 1;
     }
 //End of dishID generation
- 
+
     //This method generates a new TemplateID
     public static int getIngredientTemplateID(String vendor_id) {
-        int dishId=0;
+        int dishId = 0;
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -461,8 +468,8 @@ public class IngredientDAO {
             query = "select * from ingredient_template order by template_id desc";
             statement = conn.prepareStatement(query);
             rs = statement.executeQuery();
-            if(rs.next()){
-            dishId = Integer.parseInt(rs.getString("template_id"));
+            if (rs.next()) {
+                dishId = Integer.parseInt(rs.getString("template_id"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -482,7 +489,7 @@ public class IngredientDAO {
                 }
             }
         }
-        return dishId+1;
+        return dishId + 1;
     }
 //End of templateID generation
     
@@ -567,7 +574,7 @@ public class IngredientDAO {
         }
         return toReturn;
     }
-    
+
     //This method gets the ingredient template quantities
     public static HashMap<Ingredient, ArrayList<String>> getTemplateQuantity(String dish_id) {
         HashMap<Ingredient, ArrayList<String>> toReturn = new HashMap<Ingredient, ArrayList<String>>();
@@ -610,8 +617,7 @@ public class IngredientDAO {
         return toReturn;
     }
     //End method
-    
-    
+
     public static void addDish(Dish dish) {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -655,7 +661,7 @@ public class IngredientDAO {
         }
 
     }
-    
+
     //Adds ingredient template to database
     public static void addIngredientTemplate(Dish dish) {
         Connection conn = null;
@@ -779,7 +785,7 @@ public class IngredientDAO {
 
     }
     //End method block
-    
+
     public static void deleteDish(Dish dish) {
         HashMap<Ingredient, ArrayList<String>> map = dish.getIngredientQuantity();
         Set<Ingredient> iSet = map.keySet();
@@ -821,8 +827,8 @@ public class IngredientDAO {
         }
 
     }
-   
-        //Method deletes and ingredient template
+
+    //Method deletes and ingredient template
     public static void deleteIngredientTemplate(Dish dish) {
         HashMap<Ingredient, ArrayList<String>> map = dish.getIngredientQuantity();
         Set<Ingredient> iSet = map.keySet();
@@ -864,7 +870,8 @@ public class IngredientDAO {
         }
 
     }
- //end deletion method
+
+    //end deletion method
     public static void deleteIngredientQuantity(String dish_id, String ingredient_name, String vendor_id, String supplier_id) {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -899,7 +906,7 @@ public class IngredientDAO {
         }
 
     }
-    
+
     //This method deletes an ingredient_template_quantity from the database
     public static void deleteTemplateQuantity(String dish_id, String ingredient_name, String vendor_id, String supplier_id) {
         Connection conn = null;
@@ -986,9 +993,9 @@ public class IngredientDAO {
         }
     }
     //End updating of ingredient template
-    
+
     //This method clears the select column in ingredient template
-    public static void setSelectColumn(int vendorID,int templateID) {
+    public static void setSelectColumn(int vendorID, int templateID) {
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -998,15 +1005,15 @@ public class IngredientDAO {
             conn = ConnectionManager.getConnection();
             query = "select * from ingredient_template where vendor_id=?";
             statement = conn.prepareStatement(query);
-            statement.setString(1, vendorID+"");
-            rs=statement.executeQuery();
-            while(rs.next()){
-                String template_id=rs.getString("template_id");
-                String template_name=rs.getString("template_name");
-                String vendor_id=rs.getString("vendor_id");
-                String template_description=rs.getString("template_description");
-                String selected=rs.getString("selected");
-                if(template_id.equals(templateID+"")){
+            statement.setString(1, vendorID + "");
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                String template_id = rs.getString("template_id");
+                String template_name = rs.getString("template_name");
+                String vendor_id = rs.getString("vendor_id");
+                String template_description = rs.getString("template_description");
+                String selected = rs.getString("selected");
+                if (template_id.equals(templateID + "")) {
                     query = "update ingredient_template set template_id=?, template_name=?, vendor_id=?, template_description=?, selected=? where template_id=? AND vendor_id=?";
                     statement = conn.prepareStatement(query);
                     statement.setString(1, template_id);
@@ -1017,7 +1024,7 @@ public class IngredientDAO {
                     statement.setString(6, template_id);
                     statement.setString(7, vendor_id);
                     int row = statement.executeUpdate();
-                }else{    
+                } else {
                     query = "update ingredient_template set template_id=?, template_name=?, vendor_id=?, template_description=?, selected=? where template_id=? AND vendor_id=?";
                     statement = conn.prepareStatement(query);
                     statement.setString(1, template_id);
@@ -1051,7 +1058,6 @@ public class IngredientDAO {
     }
     //end clear method
 
-    
     public static void updateDish(Dish dish) {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -1177,7 +1183,7 @@ public class IngredientDAO {
         return 0;
     }
     //End method block
-    
+
     public static ArrayList<Integer> getSupplierIdByIngredient(String ingredient_name) {
         Connection conn = null;
         PreparedStatement statement = null;
@@ -1293,9 +1299,9 @@ public class IngredientDAO {
         }
         return dish;
     }
-    
+
 //This method retrieves an ingredient template with the same id as the one passed in
-public static Dish getIngredientTemplateByID(int dish_id) {
+    public static Dish getIngredientTemplateByID(int dish_id) {
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -1335,9 +1341,8 @@ public static Dish getIngredientTemplateByID(int dish_id) {
     }
 
 //End retrieving ingredient template
-
 //Retrieves the template that is selected as one-click-order
-public static Dish getOneClickIngredientTemplate(int vendor_id) {
+    public static Dish getOneClickIngredientTemplate(int vendor_id) {
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -1378,3 +1383,5 @@ public static Dish getOneClickIngredientTemplate(int vendor_id) {
     }
 }
 //End of template retrieval
+
+

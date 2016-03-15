@@ -8,17 +8,19 @@ package Servlet;
 import DAO.IngredientDAO;
 import Model.Ingredient;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author TC
  */
-
 @WebServlet(name = "AddIngredientServlet", urlPatterns = {"/AddIngredientServlet"})
 public class AddIngredientServlet extends HttpServlet {
 
@@ -33,28 +35,38 @@ public class AddIngredientServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
+        try {
         //int supplier_id,String name,String supplyUnit,String subcategory,String description,String offeredPrice
-        
-        int supplier_id = Integer.parseInt(request.getParameter("supplier_id"));
-        String name = request.getParameter("ingredient_name");
-        String supplyUnit = request.getParameter("unit");
-        String subcategory = request.getParameter("category");
-        String description = request.getParameter("ingredient_desc");
-        String offeredPrice = request.getParameter("offered_price");
-        
-        Ingredient ingred = new Ingredient(supplier_id, name, supplyUnit, subcategory, description, offeredPrice);
-        
-        IngredientDAO.addIngredient(ingred);
-        } catch (Exception ex){
-            
+            System.out.println("It comes here");
+            int supplier_id = Integer.parseInt(request.getParameter("supplier_id"));
+            System.out.println("It comes here1");
+            String name = request.getParameter("ingredient_name");
+            System.out.println("It comes here2");
+            String supplyUnit = request.getParameter("unit");
+            String subcategory = request.getParameter("category");
+            String description = request.getParameter("ingredient_desc");
+            String offeredPrice = request.getParameter("offered_price");
+            System.out.println("name: "+name +"supply unit"+supplyUnit+"subcategory"+subcategory+"description"+description+"offeredprice"+offeredPrice);
+            Part filePart = request.getPart("picture");
+            InputStream picture = null;
+            if (filePart != null) {
+                System.out.println(filePart.getName());
+                System.out.println(filePart.getSize());
+                System.out.println(filePart.getContentType());
+
+                picture = filePart.getInputStream();
+            }
+            Ingredient ingred = new Ingredient(supplier_id, name, supplyUnit, subcategory, description, offeredPrice,picture);
+
+            IngredientDAO.addIngredient(ingred);
+        } catch (Exception ex) {
+
         } finally {
             response.sendRedirect("SupplierAddIngredient.jsp?msg=Ingredient%20Added");
         }
-        
+
         //response.setContentType("text/html;charset=UTF-8");
         //try (PrintWriter out = response.getWriter()) {
-            
 //            //retrieves input from user from Login Page
 //            String username = request.getParameter("username");
 //            String password = request.getParameter("password");
@@ -74,7 +86,7 @@ public class AddIngredientServlet extends HttpServlet {
 //            if (vendor == null && supplier == null) {
 //                //redirect to login page
 //                session.setAttribute("errorMsg", "Invalid e-mail or password entered");
-       // }
+        // }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
