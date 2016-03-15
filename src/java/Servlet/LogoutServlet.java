@@ -31,10 +31,14 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Dish ShoppingCart=IngredientDAO.getIngredientTemplateByID((Integer)request.getSession().getAttribute("CartId"));
-        request.getSession().invalidate();
+
+        if (request.getSession().getAttribute("CartId") != null) {
+            int cartid = (Integer) request.getSession().getAttribute("CartId");
+            Dish ShoppingCart = IngredientDAO.getIngredientTemplateByID(cartid);
+            IngredientDAO.deleteIngredientTemplate(ShoppingCart);
+        }
         
-        IngredientDAO.deleteIngredientTemplate(ShoppingCart);
+        request.getSession().invalidate();
         response.sendRedirect("Login.jsp");
     }
 
