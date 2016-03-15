@@ -58,25 +58,30 @@ public class OrderByIngredientServlet extends HttpServlet {
             System.out.println(ingredient==null);
             ShoppingCart.addIngredient(ingredient, ingredientQuantity, ingredient.getSupplyUnit());
             IngredientDAO.updateIngredientTemplate(ShoppingCart);
+            response.sendRedirect("SupplierSearch.jsp");
         }else if(action.equals("delete")){
         //End code block
         //This code block removes an ingredient from the shopping cart
             ShoppingCart.deleteIngredient(ingredient);
             IngredientDAO.updateIngredientTemplate(ShoppingCart);
+            response.sendRedirect("SupplierSearch.jsp");
         //End removing ingredient
         //This code block
         }else if(action.equals("invalidate")){
         //delete the temporary shopping cart upon logout
             IngredientDAO.deleteIngredientTemplate(ShoppingCart);
+            response.sendRedirect("Login.jsp");
         }else if(action.equals("save")){
             ShoppingCart.setDish_name(request.getParameter("name"));
             ShoppingCart.setDish_description(request.getParameter("description"));
             IngredientDAO.updateIngredientTemplate(ShoppingCart);
             Dish cart = new Dish(IngredientDAO.getIngredientTemplateID("1"), "Shopping Cart", 1, "A cart to place your ingredients in");
             IngredientDAO.addIngredientTemplate(cart);
+            response.sendRedirect("ShoppingCartDisplay.jsp");
             
         }else if(action.equals("select")){
             IngredientDAO.setSelectColumn(ShoppingCart.getVendor_id(), cartNum);
+            response.sendRedirect("ManageTemplate.jsp");
         }
     }
 
@@ -94,7 +99,7 @@ public class OrderByIngredientServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         //System.out.print("something was sent here");
-        response.sendRedirect("TestButton.jsp");
+        //response.sendRedirect("TestButton.jsp");
     }
 
     /**

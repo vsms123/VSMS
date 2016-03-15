@@ -47,11 +47,15 @@
                             <td>
                                 <!--End loading list of templates-->
                                 <!--sets a selected template as the one-click-order-->
+                                <%if(IngredientDAO.isOneClickOrder(dish.getDish_id())){%>
+                                selected
+                                <%}else{%>
                                 <form action="OrderByIngredientServlet" method="get">
                                     <input type="hidden" name="CartId" value="<%=dish.getDish_id()%>">
                                     <input type="hidden" name="action" value="select">
-                                    <input type="submit">
+                                    <input type="submit" value="select">
                                 </form>
+                                <%}%>
                             </td>
                         </tr>
                         <%      }
