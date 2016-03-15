@@ -174,12 +174,7 @@
                     <br/>
                     <input class="ui button" type="submit" value="Create Ingredient" />
 
-                
-                <input type='file' id="imgInp" />
-                
-                <h1> Preview your picture here</h1>
-                <img id="image" src="#" alt="your image" />
-                </form
+               
             </div>
             <!--further samples-->
             <!--
