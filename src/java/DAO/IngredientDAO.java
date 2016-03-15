@@ -490,7 +490,48 @@ public class IngredientDAO {
         return dishId + 1;
     }
 //End of templateID generation
+    
+    //This method decides if an ingredient method is selected as one-click-order
+    public static boolean isOneClickOrder(int dish_id) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "";
+        int selected=0;
+        try {
+            conn = ConnectionManager.getConnection();
+            query = "select * from ingredient_template where template_id=?";
+            statement = conn.prepareStatement(query);
+            statement.setString(1, UtilityController.convertIntToString(dish_id));
+            rs = statement.executeQuery();
+            
+            while (rs.next()) {
+                selected=rs.getInt("selected");
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return selected==1;
+    }
+     
+     //end method
+    
     public static HashMap<Ingredient, ArrayList<String>> getIngredientQuantity(String dish_id) {
         HashMap<Ingredient, ArrayList<String>> toReturn = new HashMap<Ingredient, ArrayList<String>>();
         Connection conn = null;

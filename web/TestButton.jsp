@@ -4,6 +4,8 @@
     Author     : David
 --%>
 
+<%@page import="Model.Vendor"%>
+<%@page import="Controller.UserController"%>
 <%@page import="Model.Dish"%>
 <%@page import="Controller.IngredientController"%>
 <%@page import="java.util.Iterator"%>
@@ -149,6 +151,24 @@
                                         <input type="submit" value="delete">
                                     </form>
                                 </td></tr></table>
+----------------------------Start of One-Click-Order---------------------------------------------------------------------                
+            <%
+                   Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+            //in case current vendor does not exist
+            if (currentVendor == null) {
+                currentVendor = UserController.retrieveVendorByID(1);
+            }
+                   Dish oneClickOrder=IngredientDAO.getOneClickIngredientTemplate(currentVendor.getVendor_id());
+                %>
+                
+                    <form action="OrderBreakdown.jsp" method="POST">
+                        <input type="hidden" value="1" name="dish<%=oneClickOrder.getDish_id()%>">
+                        <input type="hidden" name="vendor_id" value="1">
+                        <input type="hidden" name="cart" value="yes">
+                        <input type="submit" value="One Click Order"> 
+                    </form>
+--------------------------------------------------------------------------------------------------------------------                
+                
                 </div>
             </div>
         </div>
