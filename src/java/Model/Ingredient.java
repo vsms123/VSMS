@@ -6,6 +6,8 @@
 package Model;
 
 import Controller.UtilityController;
+import java.io.InputStream;
+import java.sql.Blob;
 
 /**
  *
@@ -19,7 +21,17 @@ public class Ingredient {
     private String description;
     private String offeredPrice;
     private String compo_id;
-    
+    private InputStream picture;
+    public Ingredient(int supplier_id,String name,String supplyUnit,String subcategory,String description,String offeredPrice,InputStream picture){
+        this.supplier_id=supplier_id;
+        this.name=name;
+        this.supplyUnit=supplyUnit;
+        this.subcategory=subcategory;
+        this.description=description;
+        this.offeredPrice=offeredPrice;
+        this.compo_id = name + "|@|" + supplier_id;
+        this.picture = picture;
+    }
     public Ingredient(int supplier_id,String name,String supplyUnit,String subcategory,String description,String offeredPrice){
         this.supplier_id=supplier_id;
         this.name=name;
@@ -28,6 +40,7 @@ public class Ingredient {
         this.description=description;
         this.offeredPrice=offeredPrice;
         this.compo_id = name + "|@|" + supplier_id;
+        this.picture = null;
     }
 
     public int getSupplier_id() {
@@ -78,8 +91,16 @@ public class Ingredient {
         this.offeredPrice = offeredPrice;
     }
 
+    public InputStream getPicture() {
+        return picture;
+    }
+
+    public void setPicture(InputStream picture) {
+        this.picture = picture;
+    }
+
     public String toString() {
-        return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}';
+        return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}' +" picture: "+picture.toString();
     }
     
     public boolean equalCheck(Ingredient i){

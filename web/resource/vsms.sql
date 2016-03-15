@@ -186,7 +186,8 @@ CREATE TABLE `ingredient` (
   `supply_unit` varchar(100) NOT NULL,
   `category` varchar(100) NOT NULL,
   `ingredient_description` text NOT NULL,
-  `offered_price` float NOT NULL
+  `offered_price` float NOT NULL,
+   `picture` longblob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
