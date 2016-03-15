@@ -39,17 +39,17 @@
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
         <script src="js/formvalidation.js"></script>
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
                 //To edit user account and password changes
 
                 //Will go through the edit profile button
-                $(".edit-profile-button").click(function() {
+                $(".edit-profile-button").click(function () {
                     console.log("My name is edit-profile-button");
                     //show modal button
                     $('#editprofilemodal').modal('show');
                 });
                 //Will go through the edit password button
-                $(".edit-password-button").click(function() {
+                $(".edit-password-button").click(function () {
                     console.log("My name is edit-password-button");
                     //show modal button
                     $('#editpasswordmodal').modal('show');
@@ -59,26 +59,27 @@
                     if (input.files && input.files[0]) {
                         var reader = new FileReader();
 
-                        reader.onload = function(e) {
+                        reader.onload = function (e) {
                             if (e !== "#") {
                                 $('#removePicture').css('display', '');
                             }
                             $('#image').css('display', '').attr('src', e.target.result);
                             $('.uploadArea').css('display', 'none');
+                            $('#imagePrompt').css('display', 'none');
                             $("#image_upload").val(e.target.result);
                         }
 
                         reader.readAsDataURL(input.files[0]);
                     }
                 }
-                $('#removePicture').click(function() {
+                $('#removePicture').click(function () {
                     $('#image').css('display', 'none').attr('src', '#');
-
+                    $('#imagePrompt').css('display', '');
                     $('.uploadArea').css('display', '');
                     $('.toRemove').css('display', 'none');
                 });
 
-                $("#imgInp").change(function() {
+                $("#imgInp").change(function () {
                     readURL(this);
                 });
 
@@ -157,7 +158,7 @@
                         </div>
                     </div>
 
-                    <h4>Add an Image:</h4>
+                    <h4>Add an Image: </h4>
 
                     <div class="box uploadArea">
                         <input type="file" name="file-5[]" id="imgInp" class="inputfile inputfile-4" />
@@ -168,11 +169,14 @@
                                 </svg>
                             </figure> 
                             <span>Click to Upload Picture&hellip;</span>
+
                         </label>
+
                     </div>
+                    <text id="imagePrompt">Please choose an image size of 300px x 300px </text>
                     <img id="image" src="#" class='ingredientImage' style='display:none' alt="your image" />
                     <button id="removePicture" style="display:none" class="ui red button">Remove Image</button>
-
+                    <br/>
                     <br/>
                     <input class="ui button" type="submit" value="Create Ingredient" />
                 </form>
