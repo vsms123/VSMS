@@ -59,18 +59,19 @@
                     if (input.files && input.files[0]) {
                         var reader = new FileReader();
 
-                        reader.onload = function (e) {
+                        reader.onload = function(e) {
                             if (e !== "#") {
                                 $('#removePicture').css('display', '');
                             }
                             $('#image').css('display', '').attr('src', e.target.result);
                             $('.uploadArea').css('display', 'none');
+                            $("#image_upload").val(e.target.result);
                         }
 
                         reader.readAsDataURL(input.files[0]);
                     }
                 }
-                $('#removePicture').click(function () {
+                $('#removePicture').click(function() {
                     $('#image').css('display', 'none').attr('src', '#');
 
                     $('.uploadArea').css('display', '');
@@ -109,7 +110,8 @@
                     //}
 %>
                 <%=msg%>
-                <form class="ui form" action="AddIngredientServlet" method="post" enctype="multipart/form-data">
+                <form class="ui form" action="AddIngredientServlet" method="post">
+                    <input type="hidden" value="" id="image_upload" name="image_upload"/>
                     <input type="hidden" value="<%=currentSupplier.getSupplier_id()%>" name="supplier_id" />
                     <h2 class="ui header">Ingredient Information</h2>
                     <div class="field">
@@ -156,7 +158,7 @@
                     </div>
 
                     <h4>Add an Image:</h4>
-                    
+
                     <div class="box uploadArea">
                         <input type="file" name="file-5[]" id="imgInp" class="inputfile inputfile-4" />
                         <label style='border:5px dotted; height:250px; width:250px;' for="imgInp">
@@ -170,11 +172,11 @@
                     </div>
                     <img id="image" src="#" class='ingredientImage' style='display:none' alt="your image" />
                     <button id="removePicture" style="display:none" class="ui red button">Remove Image</button>
-                    
+
                     <br/>
                     <input class="ui button" type="submit" value="Create Ingredient" />
+                </form>
 
-               
             </div>
             <!--further samples-->
             <!--
@@ -291,7 +293,7 @@
             <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
             <script src="js/formvalidation.js" type="text/javascript"></script>
             <script src="js/main.js" type="text/javascript"></script>
-
+        </div>
     </body>
 </html>
 

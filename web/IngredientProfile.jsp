@@ -4,6 +4,8 @@
     Author     : Benjamin
 --%>
 
+<%@page import="com.sun.faces.io.Base64InputStream"%>
+<%@page import="java.io.InputStream"%>
 <%@page import="Controller.UtilityController"%>
 <%@page import="Model.Ingredient"%>
 <%@page import="Controller.UserController"%>
@@ -37,8 +39,7 @@
                 <%@ include file="Navbar.jsp" %>
 
 
-                <%
-                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                <%                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
                     if (currentVendor == null) {
                         currentVendor = UserController.retrieveVendorByID(1);
                     }
@@ -50,7 +51,7 @@
 
                 <h1 class="ui header">
                     <img src="resource/pictures/carrot.png" alt="HTML5 Icon" style="width:45px;height:45px;">
-                    
+
                     <div class="content">
                         Ingredient Profile
                         <div style="color:black" class="sub header">Check this ingredient</div>
@@ -58,30 +59,41 @@
                 </h1>
                 <h1 style="color:black"><%=ingredient.getName()%></h1>
                 <table class="ui very padded large striped  table">
-                    
+
                     <tr>
                         <th><h2>Description</h2></th>
-                        <td><h3><%=ingredient.getDescription()%></h3></td>
+                    <td><h3><%=ingredient.getDescription()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Supplier</h2></th>
-                        <td><h3><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></h3></td>
+                    <td><h3><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Supply Unit</h2></th>
-                        <td><h3><%=ingredient.getSupplyUnit()%></h3></td>
+                    <td><h3><%=ingredient.getSupplyUnit()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Sub Category</h2></th>
-                        <td><h3><%=ingredient.getSubcategory()%></h3></td>
+                    <td><h3><%=ingredient.getSubcategory()%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Offered Price</h2></th>
-                        <td><h3><%=ingredient.getOfferedPrice()%></h3></td>
+                    <td><h3><%=ingredient.getOfferedPrice()%></h3></td>
                     </tr>
-                    
+                    <tr>
+                        <th><h2>Picture</h2></th>
+                        <%
+                            InputStream picture = ingredient.getPicture();
+                            System.out.println("the picture is "+picture);
+                            String image="resource\\pictures\\default-placeholder.png";
+                            if(picture!=null){
+                                image=UtilityController.convertInputStreamToString(picture);
+                            }
+                        %>
+                    <td><img id="image" src="<%=image%>" class='ingredientImage' alt="your image" /></td>
+                    </tr>
                 </table>
-                        <button class="ui large orange button"><a style="color:white" href="SupplierSearchProfile.jsp?supplier_id=<%=ingredient.getSupplier_id()%>" >To <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%>'s Page</a></button>
+                <button class="ui large orange button"><a style="color:white" href="SupplierSearchProfile.jsp?supplier_id=<%=ingredient.getSupplier_id()%>" >To <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%>'s Page</a></button>
             </div>
         </div>
         <!--JAVASCRIPT-->

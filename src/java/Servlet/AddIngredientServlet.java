@@ -7,8 +7,10 @@ package Servlet;
 
 import DAO.IngredientDAO;
 import Model.Ingredient;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.sql.Blob;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,16 +48,10 @@ public class AddIngredientServlet extends HttpServlet {
             String subcategory = request.getParameter("category");
             String description = request.getParameter("ingredient_desc");
             String offeredPrice = request.getParameter("offered_price");
-            System.out.println("name: "+name +"supply unit"+supplyUnit+"subcategory"+subcategory+"description"+description+"offeredprice"+offeredPrice);
-            Part filePart = request.getPart("picture");
-            InputStream picture = null;
-            if (filePart != null) {
-                System.out.println(filePart.getName());
-                System.out.println(filePart.getSize());
-                System.out.println(filePart.getContentType());
-
-                picture = filePart.getInputStream();
-            }
+            String pictureStr = request.getParameter("image_upload");
+            System.out.println("name: "+name +"supply unit"+supplyUnit+"subcategory"+subcategory+"description"+description+"offeredprice"+offeredPrice+"picture "+pictureStr);
+            InputStream picture = new ByteArrayInputStream(pictureStr.getBytes(StandardCharsets.UTF_8));
+            
             Ingredient ingred = new Ingredient(supplier_id, name, supplyUnit, subcategory, description, offeredPrice,picture);
 
             IngredientDAO.addIngredient(ingred);

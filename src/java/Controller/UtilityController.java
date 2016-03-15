@@ -1,5 +1,10 @@
 package Controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Blob;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -84,6 +89,44 @@ public class UtilityController {
         return returnDate;
     }
 
+    // convert InputStream to String
+    public static String convertInputStreamToString(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
+
+    }
+
+    public static InputStream convertBlobToInputStream(Blob blob) throws Exception {
+        InputStream stream = null;
+        if (blob != null) {
+            stream = blob.getBinaryStream();
+        }
+        return stream;
+    }
+
     public static Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -98,7 +141,7 @@ public class UtilityController {
         Pattern pattern = Pattern.compile(regex);
 
         Matcher matcher = pattern.matcher(email);
-        
+
         return matcher.matches();
     }
 }

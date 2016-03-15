@@ -14,6 +14,7 @@ import java.sql.Blob;
  * @author David
  */
 public class Ingredient {
+
     private int supplier_id;
     private String name;
     private String supplyUnit;
@@ -22,23 +23,25 @@ public class Ingredient {
     private String offeredPrice;
     private String compo_id;
     private InputStream picture;
-    public Ingredient(int supplier_id,String name,String supplyUnit,String subcategory,String description,String offeredPrice,InputStream picture){
-        this.supplier_id=supplier_id;
-        this.name=name;
-        this.supplyUnit=supplyUnit;
-        this.subcategory=subcategory;
-        this.description=description;
-        this.offeredPrice=offeredPrice;
+
+    public Ingredient(int supplier_id, String name, String supplyUnit, String subcategory, String description, String offeredPrice, InputStream picture) {
+        this.supplier_id = supplier_id;
+        this.name = name;
+        this.supplyUnit = supplyUnit;
+        this.subcategory = subcategory;
+        this.description = description;
+        this.offeredPrice = offeredPrice;
         this.compo_id = name + "|@|" + supplier_id;
         this.picture = picture;
     }
-    public Ingredient(int supplier_id,String name,String supplyUnit,String subcategory,String description,String offeredPrice){
-        this.supplier_id=supplier_id;
-        this.name=name;
-        this.supplyUnit=supplyUnit;
-        this.subcategory=subcategory;
-        this.description=description;
-        this.offeredPrice=offeredPrice;
+
+    public Ingredient(int supplier_id, String name, String supplyUnit, String subcategory, String description, String offeredPrice) {
+        this.supplier_id = supplier_id;
+        this.name = name;
+        this.supplyUnit = supplyUnit;
+        this.subcategory = subcategory;
+        this.description = description;
+        this.offeredPrice = offeredPrice;
         this.compo_id = name + "|@|" + supplier_id;
         this.picture = null;
     }
@@ -100,26 +103,27 @@ public class Ingredient {
     }
 
     public String toString() {
-        return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}' +" picture: "+picture.toString();
+        if (picture!=null) {
+            return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}' + " picture: " +picture.toString() ;
+        } else {
+            return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}' + " picture: null" ;
+        }
     }
-    
-    public boolean equalCheck(Ingredient i){
-        if(i.getName().equals(name) && i.getSupplier_id() == supplier_id){
+
+    public boolean equalCheck(Ingredient i) {
+        if (i.getName().equals(name) && i.getSupplier_id() == supplier_id) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
-    public String getCompo_ID(){
+
+    public String getCompo_ID() {
         return compo_id;
     }
-    
-    public void setCompo_ID(String compo_id){
+
+    public void setCompo_ID(String compo_id) {
         this.compo_id = compo_id;
     }
-    
-    
-    
-         
+
 }

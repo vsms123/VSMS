@@ -1,7 +1,7 @@
 /*
  * To change this license head
 
-er, choose License Headers in Project Properties.
+ er, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -44,7 +44,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"));
+                ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
             }
 
         } catch (Exception e) {
@@ -196,7 +196,8 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), rs.getBlob("picture").getBinaryStream());
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
+                System.out.println(ingredient);
                 ingredientList.add(ingredient);
             }
         } catch (Exception e) {
@@ -236,7 +237,7 @@ public class IngredientDAO {
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
                 String name = rs.getString("ingredient_name");
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), rs.getBlob("picture").getBinaryStream());
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
                 ingredientMap.put(name + "|@|" + supId, ingredient);
             }
         } catch (Exception e) {
@@ -275,7 +276,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), rs.getBlob("picture").getBinaryStream());
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
                 ingredientList.add(ingredient);
             }
 
@@ -315,7 +316,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), rs.getBlob("picture").getBinaryStream());
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
                 ingredientList.add(ingredient);
             }
 
@@ -492,23 +493,23 @@ public class IngredientDAO {
         return dishId + 1;
     }
 //End of templateID generation
-    
+
     //This method decides if an ingredient method is selected as one-click-order
     public static boolean isOneClickOrder(int dish_id) {
         Connection conn = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "";
-        int selected=0;
+        int selected = 0;
         try {
             conn = ConnectionManager.getConnection();
             query = "select * from ingredient_template where template_id=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, UtilityController.convertIntToString(dish_id));
             rs = statement.executeQuery();
-            
+
             while (rs.next()) {
-                selected=rs.getInt("selected");
+                selected = rs.getInt("selected");
             }
 
         } catch (Exception e) {
@@ -529,11 +530,10 @@ public class IngredientDAO {
                 }
             }
         }
-        return selected==1;
+        return selected == 1;
     }
-     
-     //end method
-    
+
+    //end method
     public static HashMap<Ingredient, ArrayList<String>> getIngredientQuantity(String dish_id) {
         HashMap<Ingredient, ArrayList<String>> toReturn = new HashMap<Ingredient, ArrayList<String>>();
         Connection conn = null;
@@ -1383,5 +1383,4 @@ public class IngredientDAO {
     }
 }
 //End of template retrieval
-
 
