@@ -6,14 +6,12 @@ import Model.Supplier;
 import Model.Vendor;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import javamail.EmailController;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.codec.digest.DigestUtils;
 
 @WebServlet("/userservlet/*")
 public class UserController extends HttpServlet {
@@ -131,10 +129,10 @@ public class UserController extends HttpServlet {
                 response.sendRedirect("VendorProfile.jsp");
             } else if (action.equals("editpassword")) {
                 String old_password = request.getParameter("old_password");
-
-                if (old_password.equals(retrieveVendorByID(Integer.parseInt(vendor_idStr)).getPassword())) {
+                String hashPW = DigestUtils.sha1Hex(old_password);
+                if (hashPW.equals(retrieveVendorByID(Integer.parseInt(vendor_idStr)).getPassword())) {
                     String new_password = request.getParameter("new_password");
-                    vendor.setPassword(new_password);
+                    vendor.setPassword(DigestUtils.sha1Hex(new_password));
                     updateVendor(vendor);
                      response.sendRedirect("VendorProfile.jsp");
                 }else {
@@ -159,10 +157,10 @@ public class UserController extends HttpServlet {
             } else if (action.equals("editsupplierpassword")) {
 
                 String old_password = request.getParameter("old_password");
-
-                if (old_password.equals(retrieveSupplierByID(Integer.parseInt(supplier_idStr)).getPassword())) {
+                String hashPW = DigestUtils.sha1Hex(old_password);
+                if (hashPW.equals(retrieveSupplierByID(Integer.parseInt(supplier_idStr)).getPassword())) {
                     String new_password = request.getParameter("new_password");
-                    supplier.setPassword(new_password);
+                    supplier.setPassword(DigestUtils.sha1Hex(new_password));
                     updateSupplier(supplier);
                     response.sendRedirect("SupplierProfile.jsp");
                 }else {

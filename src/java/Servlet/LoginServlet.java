@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -99,7 +100,7 @@ public class LoginServlet extends HttpServlet {
 
     private Vendor attemptLoginVendor(String username, String password) {
 
-        Vendor vendor = UserDAO.loginVendor(username, password);
+        Vendor vendor = UserDAO.loginVendor(username, DigestUtils.sha1Hex(password));
 //        int actualEmail = vendor.getVendor_id();
         return vendor;
 
@@ -107,7 +108,7 @@ public class LoginServlet extends HttpServlet {
 
     private Supplier attemptLoginSupplier(String username, String password) {
 
-        Supplier supplier = UserDAO.loginSupplier(username, password);
+        Supplier supplier = UserDAO.loginSupplier(username, DigestUtils.sha1Hex(password));
 //        String actualEmail = supplier.getEmail();
         return supplier;
     }

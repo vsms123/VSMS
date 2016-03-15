@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -56,7 +57,7 @@ public class RegisterBServlet extends HttpServlet {
                 //vendor
                 //public Vendor(int vendor_id, String password, String vendor_name, String vendor_description, String email, int area_code, int telephone_number, String address, int zipcode) {
                 int vendor_id = UserDAO.getAvailableVendorID();
-                Vendor v = new Vendor(vendor_id, password1, name, desc, email, area_code, phone_no, address, postal);
+                Vendor v = new Vendor(vendor_id, DigestUtils.sha1Hex(password1), name, desc, email, area_code, phone_no, address, postal);
 
                 UserDAO.signUpVendor(v);
 
@@ -70,7 +71,7 @@ public class RegisterBServlet extends HttpServlet {
                 int min_leadtime = Integer.parseInt(request.getParameter("min_leadtime"));
                 int max_leadtime = Integer.parseInt(request.getParameter("max_leadtime"));
                 //public Supplier(int supplier_id, String password, String supplier_name, String supplier_description, String supplier_type, String email, int area_code, int telephone_number, String address, int zipcode, int min_leadtime, int max_leadtime) {
-                Supplier s = new Supplier(supplier_id, password1, name, desc, supplier_type, email, area_code,phone_no, address, postal, min_leadtime, max_leadtime);
+                Supplier s = new Supplier(supplier_id, DigestUtils.sha1Hex(password1), name, desc, supplier_type, email, area_code,phone_no, address, postal, min_leadtime, max_leadtime);
                 
                 UserDAO.signUpSupplier(s);
                 

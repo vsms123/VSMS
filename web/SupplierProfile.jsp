@@ -150,12 +150,12 @@ Benjamin Ang, [13.03.16 11:07]
                         <form onsubmit="location.reload()" id="editPassword" class="editPassword ui form" action="userservlet" method="post"> 
                             <!--Inputting form elements-->
                             <label for="old_password">Old Password:</label> 
-                            <input id="old_password" type="text" name="old_password">
+                            <input id="old_password" type="password" name="old_password">
 
                             <label for="new_password">New Password:</label> 
-                            <input id="new_password" type="text" name="new_password">
+                            <input id="new_password" type="password" name="new_password">
                             <label for="new2_password">Repeat Password:</label> 
-                            <input id="new2_password" type="text" name="new2_password">
+                            <input id="new2_password" type="password" name="new2_password">
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="supplier_id" value="<%=currentSupplier.getSupplier_id()%>">
