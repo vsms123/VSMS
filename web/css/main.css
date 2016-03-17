@@ -23,7 +23,6 @@
 
 
 
-
 .ingredientImage{
     height: 300px;
     width:300px;
@@ -70,8 +69,14 @@ body{
 
 
 .logo{
-    max-height: 150px;
-    max-width: 200px
+    max-height: 250px;
+    max-width: 300px
+}
+
+
+.loginLogo{
+    max-height: 250px;
+    max-width: 300px
 }
 
 .transparency{

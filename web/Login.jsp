@@ -23,7 +23,7 @@
     </head>
     <body class="background">
 
-        <img class="ui centered image" src="./resource/pictures/logofinal.png">
+        <img class="ui centered image loginLogo" src="./resource/pictures/logofinal.png">
 
         <div class="box">
             <a href="RegisterA.jsp"><button class="ui right floated button purple active ">Register New Account</button></a>
