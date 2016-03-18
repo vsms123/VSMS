@@ -3,6 +3,7 @@
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Vendor"%>
 <%@page import="Controller.UserController"%>
+<%@page import="Controller.UtilityController"%>
 <%@page import="Model.Supplier"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -158,7 +159,8 @@
                                     <h2><%=ingredient.getName()%></h2>
                             </div>
                             <div>
-                                <div style="color:black">Supplier: <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></div>
+                                <div style="color:black">Supplier: <font color="blue"><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></font></div>
+                                <div style="color:black">Price: <font color="green">S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(ingredient.getOfferedPrice()))%> per <%=ingredient.getSupplyUnit()%></font></div>
                             </div>
                             </a>
                             <br/>

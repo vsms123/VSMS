@@ -78,7 +78,7 @@
                     </tr>
                     <tr>
                         <th><h2>Offered Price</h2></th>
-                    <td><h3><%=ingredient.getOfferedPrice()%></h3></td>
+                    <td><h3>S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(ingredient.getOfferedPrice()))%></h3></td>
                     </tr>
                     <tr>
                         <th><h2>Picture</h2></th>
@@ -93,7 +93,7 @@
                     <td><img id="image" src="<%=image%>" class='ingredientImage' alt="your image" /></td>
                     </tr>
                 </table>
-                <button class="ui large orange button"><a style="color:white" href="SupplierSearchProfile.jsp?supplier_id=<%=ingredient.getSupplier_id()%>" >To <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%>'s Page</a></button>
+                <a style="color:white" href="SupplierSearchProfile.jsp?supplier_id=<%=ingredient.getSupplier_id()%>" ><button class="ui large orange button">To <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%>'s Page</button></a>
             </div>
         </div>
         <!--JAVASCRIPT-->
