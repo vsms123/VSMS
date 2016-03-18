@@ -60,7 +60,7 @@ public class OrderDAO {
                 String special_request = rs.getString("special_request");
                 ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
 
-                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status,expected_delivery,special_request);
+                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status, expected_delivery, special_request);
                 orderList.add(order);
             }
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class OrderDAO {
     }
 
     //retrieve all order on that are expected to be delivered at the input date.
-    public static ArrayList<Order> retrieveOrderByDate(int vendorId, Date date){
+    public static ArrayList<Order> retrieveOrderByDate(int vendorId, Date date) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -81,7 +81,7 @@ public class OrderDAO {
         try {
             //creates connections to database
             conn = ConnectionManager.getConnection();
-            sql = "Select * from `order` WHERE vendor_id =" + vendorId +" && expected_delivery = " + date;
+            sql = "Select * from `order` WHERE vendor_id =" + vendorId + " && expected_delivery = " + date;
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 
@@ -96,7 +96,7 @@ public class OrderDAO {
                 String special_request = rs.getString("special_request");
                 ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
 
-                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status,expected_delivery,special_request);
+                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status, expected_delivery, special_request);
                 orderList.add(order);
             }
         } catch (SQLException e) {
@@ -104,7 +104,7 @@ public class OrderDAO {
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-        return orderList; 
+        return orderList;
     }
 
 //methods retrieves order from order id    
@@ -134,8 +134,7 @@ public class OrderDAO {
                 String special_request = rs.getString("special_request");
                 ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
 
-                order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status,expected_delivery,special_request);
-
+                order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status, expected_delivery, special_request);
 
             }
         } catch (SQLException e) {
@@ -174,7 +173,7 @@ public class OrderDAO {
                 String special_request = rs.getString("special_request");
                 ArrayList<Orderline> orderLineList = retrieveOrderLineList(vendor_id, order_id);
 
-                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status,expected_delivery,special_request);
+                Order order = new Order(order_id, vendor_id, total_final_price, dt_order, orderLineList, status, expected_delivery, special_request);
 
                 orderList.add(order);
             }
@@ -185,8 +184,8 @@ public class OrderDAO {
         }
         return orderList;
     }
-    
-     //methods retrieves all order templates from a particular vendor
+
+    //methods retrieves all order templates from a particular vendor
     public static ArrayList<OrderTemplate> retrieveOrderTemplates(int vendor_id) {
         ConnectionManager connManager = new ConnectionManager();
         Connection conn = null;
@@ -203,12 +202,12 @@ public class OrderDAO {
             rs = stmt.executeQuery();
 
             //Retrieves the orders
-            ArrayList<Integer> checkList=new ArrayList<Integer>();
+            ArrayList<Integer> checkList = new ArrayList<Integer>();
             while (rs.next()) {
                 int order_id = rs.getInt("order_id");
                 String name = rs.getString("name");
-                
-                OrderTemplate template=new OrderTemplate(order_id, vendor_id,name);
+
+                OrderTemplate template = new OrderTemplate(order_id, vendor_id, name);
                 populateOrderTemplates(template);
                 templateList.add(template);
             }
@@ -219,14 +218,16 @@ public class OrderDAO {
         }
         return templateList;
     }
+
     //starts code to generate order_id for template
+
     public static int generateTemplateId(String vendor_id) {
         ConnectionManager connManager = new ConnectionManager();
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "";
-        int orderId=0;
+        int orderId = 0;
         try {
             //creates connections to database
             conn = connManager.getConnection();
@@ -238,7 +239,7 @@ public class OrderDAO {
             //Retrieves the orders
             while (rs.next()) {
                 orderId = rs.getInt("order_id");
-               
+
             }
         } catch (SQLException e) {
             handleSQLException(e, sql);
@@ -246,11 +247,10 @@ public class OrderDAO {
             connManager.close(conn, stmt, rs);
         }
         return orderId;
-       
+
     }
-    
+
     //End code to generate order_id for template
-    
     //Start population of order quantity
     public static void populateOrderTemplates(OrderTemplate template) {
         ConnectionManager connManager = new ConnectionManager();
@@ -279,13 +279,13 @@ public class OrderDAO {
         } finally {
             connManager.close(conn, stmt, rs);
         }
-       
+
     }
     //End population of order quantity
-    
+
     //Method to verify that a template name has not been used
-    public static boolean verifyTemplateName(String name, int vendor_id){
-        int i=0;
+    public static boolean verifyTemplateName(String name, int vendor_id) {
+        int i = 0;
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -295,25 +295,25 @@ public class OrderDAO {
         try {
             conn = ConnectionManager.getConnection();
             sql = "select * from order_template where vendor_id=#1 AND name=#2";
-            sql = sql.replace("#1", "" + "'"+vendor_id+"'");
-            sql = sql.replace("#2", "" + "'"+name+"'");
+            sql = sql.replace("#1", "" + "'" + vendor_id + "'");
+            sql = sql.replace("#2", "" + "'" + name + "'");
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 i++;
             }
-            
+
         } catch (SQLException e) {
             handleSQLException(e, sql);
         } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
-        return i==0;
+        return i == 0;
     }
     //End of method to ensure uniqueness of template names
 
 //Method to save template to database
-    public static void saveTemplate(OrderTemplate template){
+    public static void saveTemplate(OrderTemplate template) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -325,13 +325,13 @@ public class OrderDAO {
             sql = "insert into order_template( order_id, vendor_id, name) values (#1,#2,#3)";
             sql = sql.replace("#1", "" + template.getOrder_id());
             sql = sql.replace("#2", "" + template.getVendor_id());
-            sql = sql.replace("#3", "" + "'"+template.getName()+"'");
+            sql = sql.replace("#3", "" + "'" + template.getName() + "'");
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
 
             ArrayList<Dish> dishList = template.getDishList();
-            for (int i=0;i<dishList.size();i++) {
-                Dish dish=dishList.get(i);
+            for (int i = 0; i < dishList.size(); i++) {
+                Dish dish = dishList.get(i);
                 sql = "insert into template_quantity (order_id, dish_id, dish_quantity) values (#1,#2,#3)";
                 sql = sql.replace("#1", "" + template.getOrder_id());
                 sql = sql.replace("#2", "" + dish.getDish_id());
@@ -348,9 +348,9 @@ public class OrderDAO {
         }
     }
     //End method to save template to database
-    
+
     //Method to save changes to an order template to database
-    public static void updateTemplate(OrderTemplate template){
+    public static void updateTemplate(OrderTemplate template) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -359,26 +359,26 @@ public class OrderDAO {
         //insert new order into data base
         try {
             conn = ConnectionManager.getConnection();
-            sql = "UPDATE `order_template`"+ " SET name = #1"+ " WHERE order_id=#2 && vendor_id=#3";
-            sql = sql.replace("#1", "" + "'"+template.getName()+"'");
+            sql = "UPDATE `order_template`" + " SET name = #1" + " WHERE order_id=#2 && vendor_id=#3";
+            sql = sql.replace("#1", "" + "'" + template.getName() + "'");
             sql = sql.replace("#2", "" + template.getOrder_id());
             sql = sql.replace("#3", "" + template.getVendor_id());
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
 
             ArrayList<Dish> dishList = template.getDishList();
-            for (int i=0;i<dishList.size();i++) {
-                Dish dish=dishList.get(i);
-                int quantity=template.getStringList().get(i);
-                if(quantity>0){    
-                    sql = "UPDATE `template_quantity`"+ " SET dish_quantity = #1"+ " WHERE order_id=#2 && dish_id=#3";
+            for (int i = 0; i < dishList.size(); i++) {
+                Dish dish = dishList.get(i);
+                int quantity = template.getStringList().get(i);
+                if (quantity > 0) {
+                    sql = "UPDATE `template_quantity`" + " SET dish_quantity = #1" + " WHERE order_id=#2 && dish_id=#3";
                     sql = sql.replace("#1", "" + quantity);
                     sql = sql.replace("#2", "" + template.getOrder_id());
                     sql = sql.replace("#3", "" + dish.getDish_id());
                     stmt = conn.prepareStatement(sql);
                     stmt.executeUpdate();
-                }else{
-                    deleteTemplateQuantity(template.getOrder_id(),dish.getDish_id());
+                } else {
+                    deleteTemplateQuantity(template.getOrder_id(), dish.getDish_id());
                 }
             }
         } catch (SQLException e) {
@@ -388,9 +388,9 @@ public class OrderDAO {
         }
     }
     //End method to save changes to an order template to database
-    
+
     //Start method to delete order templates
-    public static void deleteTemplate(OrderTemplate template){    
+    public static void deleteTemplate(OrderTemplate template) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -413,9 +413,9 @@ public class OrderDAO {
         }
     }
     //end method to delete order templates
-    
+
     //Method to delete a row in template_quantity
-    public static void deleteTemplateQuantity(int order_id, int dish_id){    
+    public static void deleteTemplateQuantity(int order_id, int dish_id) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -434,7 +434,7 @@ public class OrderDAO {
         }
     }
     //End method to delete row in template_quantity
-    
+
     //method retrieves all orderline items of a particular order
     public static ArrayList<Orderline> retrieveOrderLineList(int vendor_id, int order_id) {
         Connection conn = null;
@@ -488,9 +488,9 @@ public class OrderDAO {
             sql = sql.replace("#2", "" + order.getVendor_id());
             sql = sql.replace("#3", "" + order.getTotal_final_price());
             sql = sql.replace("#4", "" + UtilityController.convertSQLDateTimeString(order.getDtOrder()));
-            sql = sql.replace("#5", "" + "'"+order.getStatus()+"'");
+            sql = sql.replace("#5", "" + "'" + order.getStatus() + "'");
             sql = sql.replace("#6", "" + UtilityController.convertSQLDateTimeString(order.getExpected_delivery()));
-            sql = sql.replace("#7", "" + "'"+order.getSpecial_request()+"'");
+            sql = sql.replace("#7", "" + "'" + order.getSpecial_request() + "'");
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
 
@@ -545,37 +545,37 @@ public class OrderDAO {
             ConnectionManager.close(conn, stmt, rs);
         }
     }
-    
- public static void updateOrder(Order order){
+
+    public static void updateOrder(Order order) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "";
-        try{
+        try {
             conn = ConnectionManager.getConnection();
-            sql = "UPDATE `order`"+ " SET total_final_price = #1 , status = #2  , expected_delivery = #3 , special_request = #4 "+ " WHERE order_id=#5 && vendor_id=#6";
+            sql = "UPDATE `order`" + " SET total_final_price = #1 , status = #2  , expected_delivery = #3 , special_request = #4 " + " WHERE order_id=#5 && vendor_id=#6";
             sql = sql.replace("#1", "" + order.getTotal_final_price());
-            sql = sql.replace("#2", "" + "'"+order.getStatus()+"'");
+            sql = sql.replace("#2", "" + "'" + order.getStatus() + "'");
             sql = sql.replace("#3", "" + UtilityController.convertSQLDateTimeString(order.getExpected_delivery()));
-            sql = sql.replace("#4", "" + "'"+order.getSpecial_request()+"'");
+            sql = sql.replace("#4", "" + "'" + order.getSpecial_request() + "'");
             sql = sql.replace("#5", "" + order.getOrder_id());
             sql = sql.replace("#6", "" + order.getVendor_id());
-            
+
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
             //When I want to modify the order, I don't want to modify the orderlines. 
 //            ArrayList<Orderline> orderLineList = order.getOrderlines();
 //            updateOrderlines(orderLineList);
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             handleSQLException(e, sql);
-        }finally{
+        } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
     }
- 
- public static ArrayList<Integer> retrieveSupplierOrders(int suppID){
-     ConnectionManager connManager = new ConnectionManager();
+
+    public static ArrayList<Integer> retrieveSupplierOrders(int suppID) {
+        ConnectionManager connManager = new ConnectionManager();
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -601,32 +601,70 @@ public class OrderDAO {
             connManager.close(conn, stmt, rs);
         }
         return suppOrdList;
- }
- 
- public static void updateOrderStatus(int order_id, String status){
+    }
+
+    public static void updateOrderStatus(int order_id, String status) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "";
-        try{
+        try {
             conn = ConnectionManager.getConnection();
-            sql = "UPDATE `order`"+ " SET status = #1"+ " WHERE order_id=#2";
-            sql = sql.replace("#1", "" + "'"+status+"'");
+            sql = "UPDATE `order`" + " SET status = #1" + " WHERE order_id=#2";
+            sql = sql.replace("#1", "" + "'" + status + "'");
             sql = sql.replace("#2", "" + order_id);
-            
+
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
             //When I want to modify the order, I don't want to modify the orderlines. 
 //            ArrayList<Orderline> orderLineList = order.getOrderlines();
 //            updateOrderlines(orderLineList);
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             handleSQLException(e, sql);
-        }finally{
+        } finally {
             ConnectionManager.close(conn, stmt, rs);
         }
     }
 
+    public static boolean checkOrderline(String supplierId, String ingredientName) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "";
+        //Ingredient ingredient = null;
+        boolean check = true;
+        try {
+            conn = ConnectionManager.getConnection();
+            query = "select * from orderline where supplier_id=? AND ingredient_name=?";
+            statement = conn.prepareStatement(query);
+            statement.setString(1, supplierId);
+            statement.setString(2, ingredientName);
+            rs = statement.executeQuery();
+            if (!rs.next()) {
+                check = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
 //    public static void updateOrderlines(ArrayList<Orderline> orderlines) {
 //        Connection conn = null;
 //        PreparedStatement stmt = null;

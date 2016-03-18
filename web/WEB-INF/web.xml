@@ -23,6 +23,10 @@
         <servlet-name>RegisterBServlet</servlet-name>
         <servlet-class>Servlet.RegisterBServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditIngredientServlet</servlet-name>
+        <servlet-class>Servlet.EditIngredientServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AutoCompleteServlet</servlet-name>
         <url-pattern>/autocomplete</url-pattern>
@@ -42,6 +46,10 @@
     <servlet-mapping>
         <servlet-name>RegisterBServlet</servlet-name>
         <url-pattern>/RegisterBServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditIngredientServlet</servlet-name>
+        <url-pattern>/EditIngredientServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
