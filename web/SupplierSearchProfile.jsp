@@ -149,11 +149,12 @@
                                 <div class="item test ingredients" data-content="Click to view ingredient details"  data-variation="inverted">
                                     <h3>    
                                         <a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>"><%=ingredient.getName()%></a>
+                                        <a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>">(S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(ingredient.getOfferedPrice()))%> per <%=ingredient.getSupplyUnit()%>)</a>
                                     </h3>
                                 </div>
                                     <div>
                                 <form action="OrderByIngredientServlet" method="get">
-                                    Quantity<input type="text" value="0" name="quantity">
+                                    Quantity<input type="number" value="0" name="quantity">
                                     <input type="hidden" name="ingredientname" value="<%=ingredient.getName()%>">
                                     <input type="hidden" name="supplierId" value="<%=ingredient.getSupplier_id()%>">
                                     <input type="hidden" name="CartId" value="<%=(Integer)session.getAttribute("CartId")%>">

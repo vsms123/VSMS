@@ -27,6 +27,10 @@
         <servlet-name>EditIngredientServlet</servlet-name>
         <servlet-class>Servlet.EditIngredientServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteIngredientServlet</servlet-name>
+        <servlet-class>Servlet.DeleteIngredientServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AutoCompleteServlet</servlet-name>
         <url-pattern>/autocomplete</url-pattern>
@@ -50,6 +54,10 @@
     <servlet-mapping>
         <servlet-name>EditIngredientServlet</servlet-name>
         <url-pattern>/EditIngredientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteIngredientServlet</servlet-name>
+        <url-pattern>/DeleteIngredientServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

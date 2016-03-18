@@ -141,11 +141,12 @@
                     <input type="hidden" value="<%=currentSupplier.getSupplier_id()%>" name="supplier_id" />
                     <h2 class="ui header">Ingredient Information</h2>
                     <div class="field">
-                        <label>Name</label>
+                        
                         <div class="two fields">
                             <div class="field">
                                 <%String name = i.getName().replace(" ", " ");%>
-                                <input type="text" name="ingredient_name" placeholder="Ingredient Name" value="<%=name%>">
+                                Ingredient: <h3><%=name%></h3>
+                                <input type="hidden" name="ingredient_name" placeholder="Ingredient Name" value="<%=name%>">
                             </div>
 
                         </div>
