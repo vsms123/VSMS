@@ -30,16 +30,16 @@
             }
             String vendor_idStr = request.getParameter("vendor_id");
             String action = request.getParameter("action");
-            String cart=request.getParameter("cart");
+            String cart = request.getParameter("cart");
             System.out.println(cart);
             ArrayList<Dish> dishList;
-            if(cart!=null&&cart.equals("yes")){
+            if (cart != null && cart.equals("yes")) {
                 System.out.println("I came here");
-                dishList=IngredientDAO.getIngredientTemplates(vendor_idStr);
+                dishList = IngredientDAO.getIngredientTemplates(vendor_idStr);
                 System.out.println(dishList.size());
-            }else{
+            } else {
                 dishList = IngredientController.getDish(vendor_idStr);
-                cart="no";
+                cart = "no";
             }
             //System.out.println(dishList.size());
             //    Empty String to contain POST AJAX String of Dish Quantity List
@@ -59,38 +59,38 @@
             }
         %>
         <script>
-                    $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
             //Hide AJAX Loading Message
             $(".loading").hide();
-                    //Generate the order breakdown
-                    $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm',cart:<%="'"+cart+"'"%> <%=valueStr%> }, function(responseText) {
-                    $(".content-model-table").html(responseText);
-                    });
-                    //Regenerate the order breakdown when bufferQtyTextbox is changed
-                    $("#bufferqtyperc").change(function() {
+            //Generate the order breakdown
+            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm', cart:<%="'" + cart + "'"%> <%=valueStr%> }, function(responseText) {
+            $(".content-model-table").html(responseText);
+            });
+            //Regenerate the order breakdown when bufferQtyTextbox is changed
+            $("#bufferqtyperc").change(function() {
             //Make the value string
             $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm', bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {
             $(".content-model-table").html(responseText);
             });
             });
-                    //Confirm the order breakdown
-                    $("#confirm-order-breakdown").click(function() {
+            //Confirm the order breakdown
+            $("#confirm-order-breakdown").click(function() {
             $(".loading").show();
-                    console.log("Sending order breakdown");
-                    //Timeout is used to make sure that the loading text is shown first before the synchronous ajax kicks
+            console.log("Sending order breakdown");
+            //Timeout is used to make sure that the loading text is shown first before the synchronous ajax kicks
 //                    Synchronous ajax is used to make sure that the order processing could be done with a fixed buffer quantity
-                    setTimeout(function() {$.ajaxSetup({async:false});
-                            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'create',special_request:$('#special_request').val(), bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {                    });
-                            alert("Order has been sent to suppliers");
-                            window.location.replace('OrderHistory.jsp');
-                    }, 1000);
+            setTimeout(function() {$.ajaxSetup({async:false});
+            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'create', special_request:$('#special_request').val(), bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {                    });
+            alert("Order has been sent to suppliers");
+            window.location.replace('OrderHistory.jsp');
+            }, 1000);
             });
             });
-                    //T
-                    $(document).ajaxStart(function() {
+            //T
+            $(document).ajaxStart(function() {
             $(".loading").show();
             });
-                    $(document).ajaxStop(function() {
+            $(document).ajaxStop(function() {
             $(".loading").hide();
             });</script>
 
