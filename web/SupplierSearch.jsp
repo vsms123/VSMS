@@ -170,7 +170,7 @@
                                     <div style="color:black">
                                         <div class="ui right labeled input">
                                             <div class="ui label">Quantity:</div>
-                                            <input type="text" name="quantity">
+                                            <input type="number" name="quantity">
                                             <div class="ui basic label"><%=ingredient.getSupplyUnit()%></div>
                                         </div> 
                                         <input type="hidden"  name="ingredientname" value="<%=ingredient.getName()%>">

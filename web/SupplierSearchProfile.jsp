@@ -154,7 +154,7 @@
                                 </div>
                                     <div>
                                 <form action="OrderByIngredientServlet" method="get">
-                                    Quantity<input type="text" value="0" name="quantity">
+                                    Quantity<input type="number" value="0" name="quantity">
                                     <input type="hidden" name="ingredientname" value="<%=ingredient.getName()%>">
                                     <input type="hidden" name="supplierId" value="<%=ingredient.getSupplier_id()%>">
                                     <input type="hidden" name="CartId" value="<%=(Integer)session.getAttribute("CartId")%>">
