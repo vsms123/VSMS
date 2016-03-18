@@ -37,10 +37,11 @@
         %>
 
         <script>
-            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
                 //SEARCHING AND FILTERING
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyname
                 $('.menu .item').tab();
+//                $(".loading").hide();
 //Put in the active class at Ingredient Name Search if ingredient name is not empty
             <% if (!ingredientName.isEmpty()) {%>
                 $("#supplier_name_div").removeClass("active");
@@ -49,7 +50,34 @@
                 $("#ingredient_name_tab").addClass("active");
             <%}%>
 
+                $('.search.ingredient').popup({
+                    position: 'top left'
+                });
+
+                $('.search.supplier').popup({
+                    position: 'top left'
+                });
             });
+
+            $(function () {
+
+                $('form').on('submit', function (e) {
+
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: 'get',
+                        url: 'OrderByIngredientServlet',
+                        data: $(this).serialize(),
+                        success: function () {
+                            alert('Item added to cart');
+                        }
+                    });
+
+                });
+
+            });
+
         </script>
         <!--CSS-->
 
@@ -61,26 +89,7 @@
         <div class="transparency">
             <div class="ui segment" style="left:5%;width:90%">
                 <%@include file="Navbar.jsp" %>
-                <script>
-      $(function () {
 
-        $('form').on('submit', function (e) {
-
-          e.preventDefault();
-
-          $.ajax({
-            type: 'get',
-            url: 'OrderByIngredientServlet',
-            data: $(this).serialize(),
-            success: function () {
-              alert('Item added to cart');
-            }
-          });
-
-        });
-
-      });
-    </script>
                 <h1 class="ui header">
                     <i class="search icon"></i>
                     <div class="content" >
@@ -100,6 +109,7 @@
 
                 <!--Handle Supplier Search using search.js as the filtering process-->
                 <div class="ui bottom attached tab segment active" id="supplier_name_div" data-tab="first">
+
                     <div class="ui icon large input">
                         <input type="text" placeholder="Search..." name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
                         <i class="circular search link icon"></i>
@@ -110,7 +120,7 @@
                             for (Supplier supplier : supplierList) {%>
 
 
-                        <div class='item test supplier'>
+                        <div class='item search supplier' data-content="Click to view supplier"  data-variation="inverted">
                             <a href="SupplierSearchProfile.jsp?supplier_id=<%=supplier.getSupplier_id()%>">
                                 <div class='content-'>
                                     <h2><%=supplier.getSupplier_name()%></h2>
@@ -141,26 +151,39 @@
                             for (Ingredient ingredient : ingredientList) {
                                 String ingredientStr = ingredient.getName().replaceAll(" ", "%20");
                         %>
-                        <div class='item test ingredient'>
+                        <div class='item search ingredient'  data-content="Click to view ingredient"  data-variation="inverted">
 
                             <div class='content-itemname'>
                                 <a href="IngredientProfile.jsp?ingredient_name=<%=ingredientStr%>&supplier_id=<%=ingredient.getSupplier_id()%>">
                                     <h2><%=ingredient.getName()%></h2>
                             </div>
                             <div>
-                                <div style="color:black">Supplier: <h3><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></h3></div>
+                                <div style="color:black">Supplier: <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></div>
                             </div>
+                            </a>
+                            <br/>
                             <div>
+
                                 <form action="OrderByIngredientServlet" method="get">
-                                    Quantity<input type="text" value="0" name="quantity">
-                                    <input type="hidden" name="ingredientname" value="<%=ingredient.getName()%>">
-                                    <input type="hidden" name="supplierId" value="<%=ingredient.getSupplier_id()%>">
-                                    <input type="hidden" name="CartId" value="<%=(Integer)session.getAttribute("CartId")%>">
-                                    <input type="hidden" name="action" value="add">
-                                    <input type="submit">
+                                    <div style="color:black">
+                                        <div class="ui right labeled input">
+                                            <div class="ui label">Quantity:</div>
+                                            <input type="text" name="quantity">
+                                            <div class="ui basic label"><%=ingredient.getSupplyUnit()%></div>
+                                        </div> 
+                                        <input type="hidden"  name="ingredientname" value="<%=ingredient.getName()%>">
+                                        <input type="hidden"  name="supplierId" value="<%=ingredient.getSupplier_id()%>">
+                                        <input type="hidden" name="CartId" value="<%=(Integer) session.getAttribute("CartId")%>">
+                                        <input type="hidden" name="action" value="add">
+
+                                        <button class="ui green button ">Add to Cart</button>
+
+
+
+                                    </div>
                                 </form>
                             </div>
-                            
+
                         </div>
 
                         <%}%>

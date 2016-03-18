@@ -92,8 +92,12 @@
 
                 <div class="ui fluid action input" style="margin-right: 10%">
                     <input type="text" id="ingredient-name-input" placeholder="Search Ingredient Name ... ">
-                    <div class="ui button" id="ingredient-name-input-button"> <i class="search icon"></i></div>
+                    <div class="ui basic button" id="ingredient-name-input-button"> <i class="search icon"></i></div>
+                    &nbsp;
+                    <div class="pulse"><a href="ShoppingCartDisplay.jsp" class="ui inverted orange button"><i class="large shop icon" ></i>View Cart</a></div>
                 </div>
+                
+                
             </div>
 
         </div>
@@ -126,10 +130,10 @@
                 </div>
             </div>
             <div class="ui simple dropdown item" style=" font-size: 16px">
-                <i class="large user icon"></i>  Supplier
+                <i class="large shipping icon"></i>  Supplier
 
                 <div class="menu">
-                    <a href="FavouriteSuppliers.jsp" class="item pulse" style=" font-size: 16px"><i class="large shipping icon"></i> Favourite Suppliers</a>
+                    <a href="FavouriteSuppliers.jsp" class="item pulse" style=" font-size: 16px"><i class="large star icon"></i> Favourite Suppliers</a>
                     <a href="SupplierSearch.jsp" class="item pulse" style=" font-size: 16px"><i class="large search icon"></i> Supplier Search</a>
                 </div>
             </div>
