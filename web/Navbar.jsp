@@ -80,7 +80,7 @@
 
 
 
-        <div id="PCview" class="ui computer only grid">
+        <div id="PCview" class="ui computer \o\n\l\y grid">
             <div class="six wide column">
                 <a href="Home.jsp">
                     <img class="logo" src="./resource/pictures/logofinal.png">
@@ -98,7 +98,7 @@
 
         </div>
 
-        <div id="navbarPC" class="ui menu computer only grid">
+        <div id="navbarPC" class="ui menu computer \o\n\l\y grid">
             <a href="Home.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large home icon"></i> Home
             </a>
@@ -143,7 +143,7 @@
         </div>
 
 
-        <div class="ui container mobile only grid" id="navbarMobile">
+        <div class="ui container mobile \o\n\l\y grid" id="navbarMobile">
             <div class="ui top fixed inverted menu"> 
                 <a href="Home.jsp">
                     <div class="item" style=" font-size: 16px">

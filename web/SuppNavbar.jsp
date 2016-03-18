@@ -49,7 +49,7 @@
 
                 $(".button").click(function () {
                     $(this).transition('pulse');
-                    $('#removePicture').css('display','none');
+                    $('#removePicture').css('display', 'none');
                 });
                 $(".pulse").click(function () {
                     $(this).transition('pulse');
@@ -92,9 +92,19 @@
                     <a class="item profile" style=" font-size: 16px"><i class="large settings icon"></i> Account Settings</a>
                 </div>
             </div>
-            <a href="SupplierAddIngredient.jsp" class="item pulse" style=" font-size: 16px">
-                <i class="large home icon"></i> Add Ingredients
-            </a>
+            <div class="ui simple dropdown item pulse" style=" font-size: 16px">
+                <i class="large home icon"></i>  Products Management
+
+                <div class="menu">
+                    <a href="SupplierAddIngredient.jsp" class="item pulse" style=" font-size: 16px">
+                        <i class="add circle icon"></i> Add Ingredients
+                    </a>
+                    <a href="SupplierManageIngredients.jsp" class="item pulse" style=" font-size: 16px">
+                        <i class="large edit icon"></i> Manage Ingredients
+                    </a>
+                </div>
+            </div>
+
             <a href="LogoutServlet" class="item pulse" style=" font-size: 16px">
                 <img src="resource/pictures/logout.png" alt="HTML5 Icon" style="width:25px;height:25px;">&nbsp Log Out
             </a>
