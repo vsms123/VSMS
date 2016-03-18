@@ -35,11 +35,11 @@
             DecimalFormat df = new DecimalFormat("0.00");
             int vendor_id = currentVendor.getVendor_id();
 //Creates a shopping cart whenever a user logs in to be used by that user
-        if(session.getAttribute("CartId")==null){    
-            Dish cart = new Dish(IngredientDAO.getIngredientTemplateID("1"), "Shopping Cart", vendor_id, "A cart to place your ingredients in");
-            IngredientDAO.addIngredientTemplate(cart);
-            session.setAttribute("CartId",cart.getDish_id());
-        }
+            if (session.getAttribute("CartId") == null) {
+                Dish cart = new Dish(IngredientDAO.getIngredientTemplateID("1"), "Shopping Cart", vendor_id, "A cart to place your ingredients in");
+                IngredientDAO.addIngredientTemplate(cart);
+                session.setAttribute("CartId", cart.getDish_id());
+            }
 //End of shopping cart creation
 
             ArrayList<Order> orderList = OrderController.retrieveOrderList(currentVendor.getVendor_id());
@@ -159,10 +159,10 @@
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
-                                    <th>Name</th>
-                                    <th>Unit</th>
-                                    <th>Price</th>
-                                    </tr>
+                                            <th>Name</th>
+                                            <th>Unit</th>
+                                            <th>Price</th>
+                                        </tr>
                                     </thead>
                                     <%
                                         int count = 0;
@@ -254,15 +254,15 @@
                                                 <div class="header"><h3>Order No. <%=pendingOrder.getOrder_id()%></h3></div>
                                                 <div class="meta" style="color:black">
                                                     <span ><%=pendingOrder.getDtOrder()%> </span><br/>
-<%=UserController.retrieveSupplierByID(pendingOrder.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%>
+                                                    <%=UserController.retrieveSupplierByID(pendingOrder.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%>
                                                 </div>
-                                                    
-                                                    
+
+
                                             </div>
                                             <div class="extra content">
                                                 <div class="right floated author" style="color:black">
-                                                    
-                                                <%=pendingOrder.getOrderlines().size()%> items in this order
+
+                                                    <%=pendingOrder.getOrderlines().size()%> items in this order
                                                 </div>
                                             </div>
                                         </a>

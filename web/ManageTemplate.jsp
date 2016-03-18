@@ -18,7 +18,15 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+         <div id="pc pusher" class="background">
+
+
+            <div class="transparency">
+
+
+                <div  class="ui segment" style="left:5%;width:90%">
+
+                    <%@ include file="Navbar.jsp" %>
         <%
                         Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
             if (currentVendor == null) {
@@ -61,5 +69,10 @@
                         <%      }
                         }%>
                     </table>
+                    
+                </div>
+            </div>
+         </div>
+                    
     </body>
 </html>

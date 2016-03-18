@@ -168,7 +168,7 @@
                             </div>
                             <div class="actions">
                                 <input type="hidden" name="action" value="edit"/>
-                                <button class="ui green inverted button">Save CHanges</button>
+                                <button class="ui green inverted button">Save Changes</button>
 
 
                         </form>

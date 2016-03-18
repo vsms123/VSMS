@@ -35,7 +35,7 @@
 
 
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('.secondary.menu .item').tab();
 
                 $('.test.order').popup({
@@ -48,7 +48,7 @@
                 for (Order orderModal : orderList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
-                $(".test.order.<%=orderModal.getOrder_id()%>").click(function() {
+                $(".test.order.<%=orderModal.getOrder_id()%>").click(function () {
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>').modal('show');
                 });
@@ -106,10 +106,10 @@
                                 <thead>
                                     <tr>
                                         <th><div class="ui ribbon label">No. </div></th>
-                                <th>Name</th>
-                                <th>Unit</th>
-                                <th>Price</th>
-                                </tr>
+                                        <th>Name</th>
+                                        <th>Unit</th>
+                                        <th>Price</th>
+                                    </tr>
                                 </thead>
                                 <%
                                     int count = 0;

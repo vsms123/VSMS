@@ -22,18 +22,18 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script>
-            $(document).ready(function() {
-                $('.cart.triggerModal').click(function() {
+            $(document).ready(function () {
+                $('.cart.triggerModal').click(function () {
                     //show modal button
                     $("description").html(results);
                     $('#modalCart').modal('show');
                 });
-                $('.profile').click(function() {
+                $('.profile').click(function () {
                     //show modal button
                     $('#modalAccount').modal('show');
                 });
 
-                $(window).on('load resize', function() {
+                $(window).on('load resize', function () {
                     var width = $(window).width();
                     var height = $(window).height();
 
@@ -50,21 +50,21 @@
                         $("#navbarMobile").css("display", "none");
                     }
                 });
-                $('#ingredient-name-input').keypress(function(e) {
+                $('#ingredient-name-input').keypress(function (e) {
                     console.log("Keypress  is pressed");
                     if (e.which == 13) {
                         document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                     }
                 });
-                $('#ingredient-name-input-button').click(function() {
+                $('#ingredient-name-input-button').click(function () {
                     document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
                 });
 
-                $(".button").click(function() {
+                $(".button").click(function () {
                     $(this).transition('pulse');
 
                 });
-                $(".pulse").click(function() {
+                $(".pulse").click(function () {
                     $(this).transition('pulse');
 
                 });
@@ -96,8 +96,8 @@
                     &nbsp;
                     <div class="pulse"><a href="ShoppingCartDisplay.jsp" class="ui inverted orange button"><i class="large shop icon" ></i>View Cart</a></div>
                 </div>
-                
-                
+
+
             </div>
 
         </div>
@@ -111,16 +111,25 @@
 
                 <div class="menu">
                     <a href="Order.jsp" class="item pulse" style=" font-size: 16px"><i class="large edit icon"></i> Make new Order</a>
-                    <a href="TemplateMain.jsp" class="item pulse" style=" font-size: 16px"><i class="large file text icon"></i> Order Templates</a>
+                    
+                    <div class="ui left pointing large dropdown link item">
+                        <i class="large dropdown icon"></i>
+                        <i class="large file text icon"></i>Order Templates &nbsp;
+                        
+                        <div class="menu">
+                            <a href="TemplateMain.jsp" class="item pulse" style=" font-size: 16px"><img src="resource/pictures/dishIcon.png" alt="HTML5 Icon" style="width:18px;height:18px;">Template by Dish </a>
+                            <a href="ManageTemplate.jsp" class="item pulse" style=" font-size: 16px"><img src="resource/pictures/carrot.png" alt="HTML5 Icon" style="width:18px;height:18px;">Template by Ingredients </a>
+                        </div>
+                    </div>
                     <a href="OrderHistory.jsp" class="item pulse" style=" font-size: 16px"><i class="large history icon"></i> Order History</a>
                 </div>
             </div>
             <a href="Menu.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large food icon"></i> Menu
             </a>
-<!--            <a class="item message triggerModal pulse" style=" font-size: 16px">
-                <i class="large  mail icon"></i> Messages
-            </a>-->
+            <!--            <a class="item message triggerModal pulse" style=" font-size: 16px">
+                            <i class="large  mail icon"></i> Messages
+                        </a>-->
             <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
 
@@ -188,7 +197,7 @@
                     <img src="./resource/pictures/underconstruction.PNG">
                 </div>
                 <div class="description">
-                        
+
                 </div>
             </div>
             <div class="actions">

@@ -20,8 +20,17 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
-        
 
+        <script>
+            $(document).ready(function () {
+                $('.ui.accordion').accordion();
+
+                $('.title.template.prompt').popup({
+                    position: 'bottom left'
+                });
+
+            });
+        </script>
         <link rel="stylesheet" href="css/main.css">
         <title>My Shopping Cart</title>
 
@@ -34,50 +43,75 @@
 
             <div class="ui segment" style="left:5%;width:90%">
                 <%@ include file="Navbar.jsp" %>
-                Contents of cart
-                <table border="1">
-                    <tr><td>Ingredient</td><td>Quantity</td><td>Units</td></tr>
-                    <%
-                        int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
-                        Dish cart = (Dish) IngredientDAO.getIngredientTemplateByID(cartID);
-                        IngredientDAO.updateIngredientTemplate(cart);
-                        HashMap<Ingredient, ArrayList<String>> map = cart.getIngredientQuantity();
-                        Set<Ingredient> ingredientSet = map.keySet();
-                        Iterator iter = ingredientSet.iterator();
-                        while (iter.hasNext()) {
-                            Ingredient ing = (Ingredient) iter.next();
-                            ArrayList<String> list = map.get(ing);
-                    %>
-                    <tr><td><%=ing.getName()%></td><td><%=list.get(0)%></td><td><%=list.get(1)%></td></tr>
+                <h1 class="ui header">
+                    <i class="cart icon"></i>
+                    <div class="content" >
+                        Shopping Cart
+                        <div  style="color:black"  class="sub header">Viewing My Shopping Cart</div>
+                    </div>
+                </h1>
+
+                <h2 style="color:black">Contents of My Cart</h2>
+                <table class="ui selectable collapsing celled padded unstackable table" >
+                    <thread><tr><th><div class="ui ribbon label">No. </div></th><th>Ingredient</th><th>Quantity</th><th>Units</th></tr></thread>
+                                <%
+                                    int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
+                                    int count = 0;
+
+                                    Dish cart = (Dish) IngredientDAO.getIngredientTemplateByID(cartID);
+                                    IngredientDAO.updateIngredientTemplate(cart);
+                                    HashMap<Ingredient, ArrayList<String>> map = cart.getIngredientQuantity();
+                                    Set<Ingredient> ingredientSet = map.keySet();
+                                    Iterator iter = ingredientSet.iterator();
+                                    while (iter.hasNext()) {
+                                        count++;
+                                        Ingredient ing = (Ingredient) iter.next();
+                                        ArrayList<String> list = map.get(ing);
+                                %>
+                    <tr><td><div class="ui ribbon label"><%=count%> </div>&nbsp;</td><td><%=ing.getName()%></td><td><%=list.get(0)%></td><td><%=list.get(1)%></td></tr>
                     <%
                         }
                     %>
 
                 </table>
-
-                <br>
-                <br>
-                Send cart to orderbreakdown
+                <br/>
                 <form action="OrderBreakdown.jsp" method="POST">
                     <input type="hidden" value="1" name="dish<%=cart.getDish_id()%>">
                     <input type="hidden" name="vendor_id" value="1">
                     <input type="hidden" name="cart" value="yes">
-                    <input type="submit" value="Submit"> 
+                    <input class="ui large green button" type="submit" value="Submit Order"> 
                 </form>
 
                 <br>
                 <br>
-                Save current shopping cart to template
-                <table border="1"><tr>
-                    <form action="OrderByIngredientServlet" method="get">
-                        <td>Template name<input type="text" value="" name="name" required></td>
-                        <td>Template description<input type="text" value="" name="description" required></td>
-                        <input type="hidden" name="action" value="save">
-                        <input type="hidden" name="CartId" value="<%=cartID%>">
-                        <td><input type="submit" value="save"></td>
-                    </form>
-                    </tr>
-                </table>
+
+
+                <div class="ui accordion field">
+                    <div class="title template prompt" data-content="Click to Save Template"  data-variation="inverted">
+                        <h3 style="color:black"><i class="icon dropdown"></i>Save your current Shopping Cart as an Order Template</h3>
+                    </div>
+                    <div class="content field">
+                        <form class="ui form" action="OrderByIngredientServlet" method="get">
+                            <h4>Template Name:</h4>
+                            <div class="ui input">
+                                <input type="text" placeholder="Template Name...">
+                            </div>
+                            <br/>
+                            <h4>Template Description:</h4>
+                            <textarea id="template_description" rows="3" name="description" required></textarea>
+
+                            <input type="hidden" name="action" value="save"/>
+                            <input type="hidden" name="CartId" value="<%=cartID%>"/>
+                            <br/><br/>
+                            <input class="ui large green button" type="submit" value="Save Template"/>
+                        </form>
+                    </div>
+                </div>
+
+
+
+
+
             </div>
         </div>
 
