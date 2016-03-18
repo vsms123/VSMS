@@ -154,14 +154,15 @@ public class IngredientDAO {
             statement.setString(2, ingredient.getSubcategory());
             statement.setString(3, ingredient.getDescription());
             statement.setString(4, ingredient.getOfferedPrice());
-            statement.setString(5, ingredient.getSupplier_id() + "");
-            statement.setString(6, ingredient.getName());
+            //statement.setString(5, ingredient.getSupplier_id() + "");
+            statement.setInt(6, ingredient.getSupplier_id());
+            statement.setString(7, ingredient.getName());
             //Insert picture if exists
             if (ingredient.getPicture() != null) {
-                statement.setBinaryStream(7, ingredient.getPicture());
+                statement.setBinaryStream(5, ingredient.getPicture());
             }
             int row = statement.executeUpdate();
-
+            //System.out.println("@@@@@@@@@@@@@@@" +row + " rows changed!");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -1381,6 +1382,89 @@ public class IngredientDAO {
         }
         return dish;
     }
+
+    public static boolean checkIngredientQuantity(String supplierId, String ingredientName) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "";
+        //Ingredient ingredient = null;
+        boolean check = true;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            query = "select * from ingredient_quantity where supplier_id=? AND ingredient_name=?";
+            statement = conn.prepareStatement(query);
+            statement.setString(1, supplierId);
+            statement.setString(2, ingredientName);
+            rs = statement.executeQuery();
+            if (!rs.next()) {
+                check = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    public static boolean checkIngredientTemplateQuantity(String supplierId, String ingredientName) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "";
+        //Ingredient ingredient = null;
+        boolean check = true;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            query = "select * from ingredient_template_quantity where supplier_id=? AND ingredient_name=?";
+            statement = conn.prepareStatement(query);
+            statement.setString(1, supplierId);
+            statement.setString(2, ingredientName);
+            rs = statement.executeQuery();
+
+            if (!rs.next()) {
+                check = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+
+    
 }
 //End of template retrieval
 

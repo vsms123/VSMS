@@ -1,22 +1,18 @@
-<%-- 
-    Document   : SupplierAddIngredient
-    Created on : Feb 20, 2016, 4:45:12 PM
-    Author     : TC
---%>
-
+<%@page import="Controller.UtilityController"%>
 <%@page import="Controller.UserController"%>
 <%@page import="Model.Vendor"%>
 <%@page import="Model.Supplier"%>
 <%@page import="Controller.IngredientController"%>
-<%@page import="Model.Dish"%>
+<%@page import="Model.Ingredient"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
     <head>
 
-        <title>Add Ingredient</title>
+        <title>Edit Ingredient</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
@@ -85,6 +81,30 @@
 
             });
         </script>
+
+        <%
+            ArrayList<String> categList = new ArrayList<String>();
+            categList.add("Bakery");
+            categList.add("Fruit");
+            categList.add("Meat");
+            categList.add("Misc");
+            categList.add("Spice");
+            categList.add("Vegetable");
+
+            ArrayList<String> unitList = new ArrayList<String>();
+            unitList.add("g");
+            unitList.add("whole");
+            unitList.add("cup");
+            unitList.add("piece");
+
+            HashMap<String, String> unitMap = new HashMap<String, String>();
+
+            unitMap.put("g", "Grams(g)");
+            unitMap.put("whole", "Whole");
+            unitMap.put("cup", "Cup");
+            unitMap.put("piece", "piece");
+
+        %>
     </head>
     <body class="background">
 
@@ -95,14 +115,17 @@
                 <%@ include file="SuppNavbar.jsp" %>
 
 
-                <%
-                    Supplier supp = (Supplier) session.getAttribute("currentSupplier");
+                <%                    Supplier supp = (Supplier) session.getAttribute("currentSupplier");
                     //Supplier currentSupplier = UserController.retrieveSupplierByID(supp.getSupplier_id());
                     //session.setAttribute("currentSupplier", currentSupplier);
-                    
+
                     //get updated version of supplier
                     Supplier currentSupplier = UserController.retrieveSupplierByID(supp.getSupplier_id());
                     String msg = "";
+                    Ingredient i = null;
+                    if (request.getParameter("ing_name") != null) {
+                        i = IngredientController.getIngredient("" + currentSupplier.getSupplier_id(), request.getParameter("ing_name"));
+                    }
 
                     if (request.getParameter("msg") != null) {
                         msg = request.getParameter("msg");
@@ -113,7 +136,7 @@
                     //}
 %>
                 <%=msg%>
-                <form class="ui form" action="AddIngredientServlet" method="post">
+                <form class="ui form" action="EditIngredientServlet" method="post">
                     <input type="hidden" value="" id="image_upload" name="image_upload"/>
                     <input type="hidden" value="<%=currentSupplier.getSupplier_id()%>" name="supplier_id" />
                     <h2 class="ui header">Ingredient Information</h2>
@@ -121,7 +144,8 @@
                         <label>Name</label>
                         <div class="two fields">
                             <div class="field">
-                                <input type="text" name="ingredient_name" placeholder="Ingredient Name">
+                                <%String name = i.getName().replace(" ", " ");%>
+                                <input type="text" name="ingredient_name" placeholder="Ingredient Name" value="<%=name%>">
                             </div>
 
                         </div>
@@ -130,33 +154,48 @@
                     <div class="one fields">
                         <div class="field">
                             <label>Category</label>
-                            <select class="ui fluid dropdown" name="category">
-                                <option value="Bakery">Bakery</option>
-                                <option value="Fruit">Fruit</option>
-                                <option value="Meat">Meat</option>
-                                <option value="Misc">Misc</option>
-                                <option value="Spice">Spice</option>
-                                <option value="Vegetable">Vegetable</option>
+                            <select id="category" class="ui fluid dropdown" name="category">
+                                <% for (String s : categList) {
+
+                                        if (s.equals(i.getSubcategory())) {
+                                %>       
+                                <option value=<%=s%> selected><%=s%></option>
+                                <%
+                                } else {
+
+                                %>
+                                <option value=<%=s%>><%=s%></option>
+                                <% }
+                                    }%>>
                             </select>
                         </div>
                         <div class="field">
                             <label>Unit</label>
                             <select class="ui fluid dropdown" name="unit">
-                                <option value="g">Grams(g)</option>
-                                <option value="whole">Whole</option>
-                                <option value="cup">Cup</option>
+                                <% for (String s : unitList) {
+
+                                        if (s.equals(i.getSupplyUnit())) {
+                                %>       
+                                <option value=<%=s%> selected><%=unitMap.get(s)%></option>
+                                <%
+                                } else {
+
+                                %>
+                                <option value=<%=s%>><%=unitMap.get(s)%></option>
+                                <% }
+                                    }%>>
 
                             </select>
                         </div>
                         <div class="field">
                             <label>Offered Price (S$)</label>
-                            <input min=0.00 type="number" name="offered_price" step="0.01" placeholder="0.00">
+                            <input min=0 type="number" step="0.01" name="offered_price" placeholder="0.00" value="<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(i.getOfferedPrice()))%>">
                         </div>
                     </div>
                     <div class="two fields">
                         <div class="field">
                             <label>Ingredient Description</label>
-                            <textarea placeholder="Description of Ingredient goes here" name="ingredient_desc"></textarea>
+                            <textarea placeholder="Description of Ingredient goes here" name="ingredient_desc"><%=i.getDescription()%></textarea>
                         </div>
                     </div>
 
@@ -180,7 +219,7 @@
                     <button id="removePicture" style="display:none" class="ui red button">Remove Image</button>
                     <br/>
                     <br/>
-                    <input class="ui button" type="submit" value="Create Ingredient" />
+                    <input class="ui button" type="submit" value="Edit Ingredient" />
                 </form>
 
             </div>

@@ -47,15 +47,15 @@ public class OrderController extends HttpServlet {
         //An  order int order_id,int vendor_id; double total_final_price;Date dt_order;ArrayList<Orderline> orderlines;
         String vendor_idStr = request.getParameter("vendor_id");
         ArrayList<Dish> dishList;
-        String cart=request.getParameter("cart");
-            System.out.println(cart);
-            if(cart!=null&&cart.equals("yes")){
-                System.out.println("I am at ordercontroller");
-                dishList=IngredientDAO.getIngredientTemplates(vendor_idStr);
-                System.out.println(dishList.toString());
-            }else{
-                dishList = IngredientController.getDish(vendor_idStr);
-            }
+        String cart = request.getParameter("cart");
+        System.out.println(cart);
+        if (cart != null && cart.equals("yes")) {
+            System.out.println("I am at ordercontroller");
+            dishList = IngredientDAO.getIngredientTemplates(vendor_idStr);
+            System.out.println(dishList.toString());
+        } else {
+            dishList = IngredientController.getDish(vendor_idStr);
+        }
         String action = request.getParameter("action");
         String special_request = request.getParameter("special_request");
         String bufferqtypercStr = request.getParameter("bufferqtyperc");
@@ -71,9 +71,9 @@ public class OrderController extends HttpServlet {
                 int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
                 //Create an hashmap with <Ingredient, aggregated quantity> (TESTED)
                 HashMap<Ingredient, Integer> ingredientAggQuantityMap;
-                if(cart.equals("yes")){
-                    ingredientAggQuantityMap=createIngredientTemplateAggQuantityMap(dishQuantityMap);
-                }else{
+                if (cart.equals("yes")) {
+                    ingredientAggQuantityMap = createIngredientTemplateAggQuantityMap(dishQuantityMap);
+                } else {
                     ingredientAggQuantityMap = createIngredientAggQuantityMap(dishQuantityMap);
                 }
                 ArrayList<Orderline> orderlineList = new ArrayList<Orderline>();
@@ -88,7 +88,7 @@ public class OrderController extends HttpServlet {
                 //Create a hashmap of orderlines based on suppliers
                 HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap = createSupplierOrderlineMap(orderlineList);
                 //Create a hashmap of Order based on suppliers
-                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id,special_request);
+                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id, special_request);
                 //Change this into an html to be shown at the modal
                 htmlConfirmation = retrieveConfirmationHTML(supplierOrderMap);
             } else {//create
@@ -101,7 +101,7 @@ public class OrderController extends HttpServlet {
                 //Create a hashmap of orderlines based on suppliers
                 HashMap<Supplier, ArrayList<Orderline>> supplierOrderlineMap = createSupplierOrderlineMap(orderlineList);
                 //Create a hashmap of Order based on suppliers
-                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id,special_request);
+                HashMap<Supplier, Order> supplierOrderMap = createSupplierOrderMap(supplierOrderlineMap, getLatestOrderID() + 1, vendor_id, special_request);
                 //iterate the output
                 Iterator iter = supplierOrderMap.keySet().iterator();
                 while (iter.hasNext()) {
@@ -139,12 +139,12 @@ public class OrderController extends HttpServlet {
             Order order = retrieveOrderByID(order_id);
             //Take the expected delivery string and special request during confirmations.
             String expected_deliveryStr = request.getParameter("expected_delivery");
-            
+
             //Do 3 things: 1. Update this orders inside the database 2. send these update orders to the suppliers and vendors with email 3. Redirect suppliers to a thank you page
             if (action.equals("approve")) {
-                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "incoming",UtilityController.convertStringToDate(expected_deliveryStr),order.getSpecial_request()));
+                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "incoming", UtilityController.convertStringToDate(expected_deliveryStr), order.getSpecial_request()));
             } else if (action.equals("reject")) {
-                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "rejected",UtilityController.convertStringToDate(expected_deliveryStr),order.getSpecial_request()));
+                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "rejected", UtilityController.convertStringToDate(expected_deliveryStr), order.getSpecial_request()));
             }
 
             //MailController Method
@@ -290,7 +290,7 @@ public class OrderController extends HttpServlet {
 //           
         return ingredientAggQuantityMap;
     }
-    
+
     public HashMap<Ingredient, Integer> createIngredientTemplateAggQuantityMap(HashMap<Integer, Integer> dishQuantityMap) {
         HashMap<Ingredient, Integer> ingredientAggQuantityMap = new HashMap<Ingredient, Integer>();
 
@@ -347,7 +347,7 @@ public class OrderController extends HttpServlet {
 //           
         return ingredientAggQuantityMap;
     }
-    
+
     public ArrayList<Orderline> createOrderlineList(HashMap<Ingredient, Integer> ingredientAggQuantityMap, int vendor_id, int order_id) {
         ArrayList<Orderline> orderlineList = new ArrayList<Orderline>();
 
@@ -423,7 +423,7 @@ public class OrderController extends HttpServlet {
             String status = "pending";
             //  order has int order_id, int vendor_id, double total_final_price, Date dt_order, ArrayList<Orderline> orderlines) {
             //The expected orderdate will have a month from today first
-            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList), new Date(), orderlineList, status, UtilityController.addDays(new Date(),30), specialRequest);
+            Order order = new Order(order_id, vendor_id, createAggFinalPrice(orderlineList), new Date(), orderlineList, status, UtilityController.addDays(new Date(), 30), specialRequest);
             supplierOrderMap.put(supplier, order);
             //to compensate for subsequent orders, so that there would be no duplication
             order_id += 1;
@@ -655,5 +655,21 @@ public class OrderController extends HttpServlet {
 
     public static void updateOrdStatus(int order_id, String status) {
         OrderDAO.updateOrderStatus(order_id, status);
+    }
+
+    //returns true if the ingredient exists in any of the tables,
+    //meaning if the ingredient has already been used
+    public static boolean checkIngredientEditable(String supplierId, String ingredientName) {
+
+        //ingredient_quantity
+        boolean iq_check = IngredientDAO.checkIngredientQuantity(supplierId, ingredientName);
+
+        //ingredient_template_quantity
+        boolean itq_check = IngredientDAO.checkIngredientTemplateQuantity(supplierId, ingredientName);
+
+        //orderline
+        boolean ol_check = OrderDAO.checkOrderline(supplierId, ingredientName);
+
+        return (iq_check||itq_check||ol_check);
     }
 }
