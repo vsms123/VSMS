@@ -1,9 +1,3 @@
-<%-- 
-    Document   : SupplierAddIngredient
-    Created on : Feb 20, 2016, 4:45:12 PM
-    Author     : TC
---%>
-
 <%@page import="Controller.UserController"%>
 <%@page import="Model.Vendor"%>
 <%@page import="Model.Supplier"%>
@@ -97,6 +91,10 @@
             Supplier supp = (Supplier) session.getAttribute("currentSupplier");
             //Supplier currentSupplier = UserController.retrieveSupplierByID(supp.getSupplier_id());
             ArrayList<Ingredient> ingreList = IngredientController.getIngredientBySupplier(supp.getSupplier_id());
+            String msg = "";
+            if (request.getParameter("msg") != null) {
+                msg = request.getParameter("msg");
+            }
 
             //<div class="title active">
             //              <i class="dropdown icon"></i>
@@ -117,6 +115,10 @@
                 <%@ include file="SuppNavbar.jsp" %>
                 <div>
                     <h2>Manage Ingredients</h2>
+                   
+                    <h3><%=msg%></h3>
+                   
+
                     <font color="red"><h4>*Ingredients with existing templates or orders cannot be edit or deleted</h4></font>
                     <div class="ui styled fluid accordion">
 
@@ -142,10 +144,11 @@
                             <div class="ui buttons">
                                 <%
                                     String editLink = "SupplierEditIngredient.jsp?ing_name=" + i.getName().replace(" ", "%20");
-                                    %>
+                                %>
                                 <a href=<%=editLink%>><button class="ui button">Edit</button></a>
                                 <div class="\o\r"></div>
-                                <button class="ui negative button">Delete</button>
+                                <% String link = "DeleteIngredientServlet?ing_name=" + i.getName().replaceAll(" ", "%20") + "&supplier_id=" + supp.getSupplier_id();%>
+                                <a href="<%=link%>" ><button class="ui negative button">Delete</button></a>
                             </div>
                             <%
                                 }

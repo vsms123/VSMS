@@ -93,11 +93,11 @@
                 </div>
             </div>
             <div class="ui simple dropdown item pulse" style=" font-size: 16px">
-                <i class="large home icon"></i>  Products Management
+                <i class="large home icon"></i>  Product Management
 
                 <div class="menu">
                     <a href="SupplierAddIngredient.jsp" class="item pulse" style=" font-size: 16px">
-                        <i class="add circle icon"></i> Add Ingredients
+                        <i class="add circle icon"></i> Add Ingredient
                     </a>
                     <a href="SupplierManageIngredients.jsp" class="item pulse" style=" font-size: 16px">
                         <i class="large edit icon"></i> Manage Ingredients
