@@ -13,9 +13,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <link rel="stylesheet" href="css/main.css">
+        
+<!--        <link rel="stylesheet" href="css/demo.css">
+        <link rel="stylesheet" href="css/component.css">
+        <link rel="stylesheet" href="css/normalize.css">-->
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>Recipe Builder</title>
+        <title>Testing</title>
 
 
         <script>
@@ -26,44 +31,39 @@
 
                     $("body").removeClass("pushable");
                 });
+                
+                 function readURL(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            $('#image').attr('src', e.target.result);
+                        }
+
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+
+                $("#imgInp").change(function () {
+                    readURL(this);
+                });
 
 
             });
 
-            document.getElementById("files").onchange = function () {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    // get loaded data and render thumbnail.
-                    document.getElementById("image").src = e.target.result;
-                };
-
-                // read the image file as a data URL.
-                reader.readAsDataURL(this.files[0]);
-            };
-//            function readURL(input) {
-//                if (input.files && input.files[0]) {
-//                    var reader = new FileReader();
-//
-//                    reader.onload = function (e) {
-//                        $('#blah').attr('src', e.target.result);
-//                    }
-//
-//                    reader.readAsDataURL(input.files[0]);
-//                }
-//            }
 
 
 
 
+           
         </script>
     </head>
     <body>
 
             <form id="form1" runat="server">
-                <input type='file' id="imgInp" />
-                <img id="blah" src="#" alt="your image" />
-            </form>
+        <input type='file' id="imgInp" />
+        <img id="blah" src="#" alt="your image" />
+    </form>
 
         <!--        <%           ArrayList<Dish> dishList = IngredientController.getDish("1");
 

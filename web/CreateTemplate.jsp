@@ -111,7 +111,7 @@
                     <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>"/>
                     <br/>
 
-                    <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Check Order Breakdown </button>
+                    <button type="submit" class="ui green large button" name="submit" id="submit"/><i class="checkmark icon"></i>Save Template </button>
                 </form>
             </div>
         </div>

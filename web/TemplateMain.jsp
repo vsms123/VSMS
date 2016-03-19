@@ -33,6 +33,7 @@
                 });
             });
         </script>
+        <title>Template by Dish</title>
     </head>
     <body>
         <div id="pc" class="background">
@@ -47,11 +48,12 @@
                     <h1 class="ui header">
                         <i class="file text outline icon"></i>
                         <div class="content" >
-                            Order Templates
-                            <div  style="color:black"  class="sub header">Managing/Ordering With Order Templates</div>
+                            Order Templates by Dish
+                            <div  style="color:black"  class="sub header">Managing/Ordering With Dish Order Templates</div>
                         </div>
                     </h1>
                     <br/>
+                    <h2 style="color:black"> Dish Order Templates</h2>
 
                     <%
                         //in case current vendor does not exist
@@ -67,32 +69,19 @@
                         %>
                         <div class="item test template" data-content="Click to view/edit order template"  data-variation="inverted">
                             <div class="right floated content">
-
-                               
-                                
                                 <form action="DeleteTemplateServlet">
                                     <input type="hidden" value="1" name="vendor_id"> 
                                     <input type="hidden" value="<%=template.getOrder_id()%>" name="orderId">
                                     <button class="ui large inverted red button"><i class="delete icon"></i>Delete Template</button>
                                 </form>
-                            
-                            
-                            
                             </div>
-
                             <div class="content">
-                                <h2>
-
+                                <h3>
                                     <a href="OrderTemplate.jsp?orderId=<%=template.getOrder_id()%>"><%=template.getName()%></a>
-
-                                </h2>
-                                    <br/>
-
+                                </h3>
+                                <br/>
                             </div>
                         </div>
-                                    
-                                    
-                                    
                         <%
                             }
                         %>
