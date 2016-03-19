@@ -42,6 +42,7 @@
                 //SEARCHING AND FILTERING
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyname
                 $('.menu .item').tab();
+                $('.supplier').css('display','none');
 //                $(".loading").hide();
 //Put in the active class at Ingredient Name Search if ingredient name is not empty
             <% if (!ingredientName.isEmpty()) {%>
@@ -96,9 +97,6 @@
                     <div class="content" >
                         Supplier Search
                         <div  style="color:black"  class="sub header">Find Suppliers/Ingredients</div>
-                    </div>
-                    <div>
-                        <a href="ShoppingCartDisplay.jsp">Shopping Cart</a>
                     </div>
                 </h1>
                 <br/>
@@ -178,7 +176,7 @@
                                         <input type="hidden" name="CartId" value="<%=(Integer) session.getAttribute("CartId")%>">
                                         <input type="hidden" name="action" value="add">
 
-                                        <button class="ui green button ">Add to Cart</button>
+                                        <button type="submit" class="ui green button ">Add to Cart</button>
 
 
 
