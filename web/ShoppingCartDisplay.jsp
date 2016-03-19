@@ -4,6 +4,8 @@
     Author     : David
 --%>
 
+<%@page import="Controller.UserController"%>
+<%@page import="Model.Vendor"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.Set"%>
 <%@page import="Model.Ingredient"%>
@@ -55,6 +57,10 @@
                 <table class="ui selectable collapsing celled padded unstackable table" >
                     <thread><tr><th><div class="ui ribbon label">No. </div></th><th>Ingredient</th><th>Quantity</th><th>Units</th></tr></thread>
                                 <%
+                                    Vendor currentVendor = (Vendor) session.getAttribute("currentVendor");
+                                    if (currentVendor == null) {
+                                        currentVendor = UserController.retrieveVendorByID(1);
+                                    }
                                     int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
                                     int count = 0;
 
@@ -77,7 +83,7 @@
                 <br/>
                 <form action="OrderBreakdown.jsp" method="POST">
                     <input type="hidden" value="1" name="dish<%=cart.getDish_id()%>">
-                    <input type="hidden" name="vendor_id" value="1">
+                    <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                     <input type="hidden" name="cart" value="yes">
                     <input class="ui large green button" type="submit" value="Submit Order"> 
                 </form>
