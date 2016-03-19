@@ -163,7 +163,7 @@
                 
                     <form action="OrderBreakdown.jsp" method="POST">
                         <input type="hidden" value="1" name="dish<%=oneClickOrder.getDish_id()%>">
-                        <input type="hidden" name="vendor_id" value="1">
+                        <input type="hidden" name="vendor_id" value="<%=currentVendor.getVendor_id()%>">
                         <input type="hidden" name="cart" value="yes">
                         <input type="submit" value="One Click Order"> 
                     </form>
