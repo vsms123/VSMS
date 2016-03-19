@@ -154,12 +154,18 @@
                                 </div>
                                     <div>
                                 <form action="OrderByIngredientServlet" method="get">
-                                    Quantity<input type="number" value="0" name="quantity">
+                                    <div class="ui right labeled input">
+                                            <div class="ui label">Quantity:</div>
+                                            <input type="number" name="quantity">
+                                            <div class="ui basic label"><%=ingredient.getSupplyUnit()%></div>
+                                        </div> 
+                                    
                                     <input type="hidden" name="ingredientname" value="<%=ingredient.getName()%>">
                                     <input type="hidden" name="supplierId" value="<%=ingredient.getSupplier_id()%>">
                                     <input type="hidden" name="CartId" value="<%=(Integer)session.getAttribute("CartId")%>">
                                     <input type="hidden" name="action" value="add">
-                                    <input type="submit">
+                                    <button type="submit" class="ui green button ">Add to Cart</button>
+                                   
                                 </form>
                             </div>
                             </td>

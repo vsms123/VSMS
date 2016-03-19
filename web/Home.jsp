@@ -159,10 +159,10 @@
                                     <thead>
                                         <tr>
                                             <th><div class="ui ribbon label">No. </div></th>
-                                            <th>Name</th>
-                                            <th>Unit</th>
-                                            <th>Price</th>
-                                        </tr>
+                                    <th>Name</th>
+                                    <th>Unit</th>
+                                    <th>Price</th>
+                                    </tr>
                                     </thead>
                                     <%
                                         int count = 0;
@@ -222,7 +222,20 @@
                                     Quick Order</h3>
                             </div>
                             <div class="active content">
-                                <p>Quick Order Templates goes here</p>
+                                <p>
+
+                                    <%
+
+                                        Dish oneClickOrder = IngredientDAO.getOneClickIngredientTemplate(currentVendor.getVendor_id());
+                                    %>
+
+                                <form action="OrderBreakdown.jsp" method="POST">
+                                    <input type="hidden" value="1" name="dish<%=oneClickOrder.getDish_id()%>">
+                                    <input type="hidden" name="vendor_id" value="1">
+                                    <input type="hidden" name="cart" value="yes">
+                                    <input class="ui button" type="submit" value="One Click Order"> 
+                                </form>
+                                </p>
                             </div>
                             <div class="title">
                                 <h3><i class="dropdown icon"></i>

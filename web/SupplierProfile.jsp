@@ -96,7 +96,6 @@
                 <!--Create a modal for editing the profile-->
                 <div id="editprofilemodal" class="ui small modal">
 
-Benjamin Ang, [13.03.16 11:07]
 <div class="header">
                         Edit Profile
                     </div>
@@ -168,7 +167,6 @@ Benjamin Ang, [13.03.16 11:07]
 
                         <button class="ui inverted deny orange button">Cancel</button>
 
-Benjamin Ang, [13.03.16 11:07]
 </div>
                 </div>
             </div>
