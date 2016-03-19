@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,6 +39,7 @@ public class OrderByIngredientServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //This code block initializes variables paased in from form
+        HttpSession session = request.getSession(true);
         String action=request.getParameter("action");
         System.out.println(action);
         String cartId=request.getParameter("CartId");
@@ -73,9 +75,12 @@ public class OrderByIngredientServlet extends HttpServlet {
             response.sendRedirect("Login.jsp");
         }else if(action.equals("save")){
             ShoppingCart.setDish_name(request.getParameter("name"));
+            System.out.println(request.getParameter("name"));
             ShoppingCart.setDish_description(request.getParameter("description"));
+            System.out.println(request.getParameter("description"));
             IngredientDAO.updateIngredientTemplate(ShoppingCart);
             Dish cart = new Dish(IngredientDAO.getIngredientTemplateID("1"), "Shopping Cart", 1, "A cart to place your ingredients in");
+            session.setAttribute("CartId", cart.getDish_id());
             IngredientDAO.addIngredientTemplate(cart);
             response.sendRedirect("ShoppingCartDisplay.jsp");
             

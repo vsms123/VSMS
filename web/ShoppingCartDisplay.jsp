@@ -61,7 +61,7 @@
                                     if (currentVendor == null) {
                                         currentVendor = UserController.retrieveVendorByID(1);
                                     }
-                                    int cartID = (Integer) IngredientDAO.getIngredientTemplateID("1") - 1;
+                                    int cartID = (Integer)session.getAttribute("CartId");
                                     int count = 0;
 
                                     Dish cart = (Dish) IngredientDAO.getIngredientTemplateByID(cartID);
@@ -100,7 +100,7 @@
                         <form class="ui form" action="OrderByIngredientServlet" method="get">
                             <h4>Template Name:</h4>
                             <div class="ui input">
-                                <input type="text" placeholder="Template Name...">
+                                <input type="text" placeholder="Template Name..." name="name">
                             </div>
                             <br/>
                             <h4>Template Description:</h4>
