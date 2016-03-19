@@ -52,16 +52,16 @@
                     <h2 style="color:black"> Ingredient Order Template</h2>
 
 
-
-                    <% ArrayList<Dish> dishList = IngredientDAO.getIngredientTemplates(currentVendor.getVendor_id()+"");
-                        for (Dish dish : dishList) {
-                            if (dish.getDish_id() != cartID) {
-                                out.print(dish.getDish_name());
-                                out.print(dish.getDish_description());
-                    %>
-
-
                     <div class="ui middle aligned animated selection divided list">
+                        <% ArrayList<Dish> dishList = IngredientDAO.getIngredientTemplates(currentVendor.getVendor_id() + "");
+                            for (Dish dish : dishList) {
+                                if (dish.getDish_id() != cartID) {
+//                                    out.print(dish.getDish_name());
+//                                    out.print(dish.getDish_description());
+                        %>
+
+
+
 
                         <div class="item test template" data-content="Click to view/edit order template"  data-variation="inverted">
                             <div class="right floated content">
@@ -81,15 +81,15 @@
                             <div class="content">
                                 <h3 style="color:black">
                                     <%=dish.getDish_name()%>
-                                   
+
                                 </h3>
-                                    <text><%=dish.getDish_description()%>
-                                        </text>
+                                <text><%=dish.getDish_description()%>
+                                </text>
                                 <br/>
                             </div>
                         </div>
                         <%      }
-                           }%>
+                            }%>
                     </div>
 
 
