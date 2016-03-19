@@ -54,11 +54,10 @@
 
 
                     <% ArrayList<Dish> dishList = IngredientDAO.getIngredientTemplates(currentVendor.getVendor_id()+"");
-                        out.println(currentVendor.getVendor_id()+"");
-                        out.println(dishList.size());
                         for (Dish dish : dishList) {
                             if (dish.getDish_id() != cartID) {
-                                
+                                out.print(dish.getDish_name());
+                                out.print(dish.getDish_description());
                     %>
 
 
