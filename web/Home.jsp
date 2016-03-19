@@ -227,6 +227,7 @@
                                     <%
 
                                         Dish oneClickOrder = IngredientDAO.getOneClickIngredientTemplate(currentVendor.getVendor_id());
+                                        if(oneClickOrder!=null){
                                     %>
 
                                 <form action="OrderBreakdown.jsp" method="POST">
@@ -235,6 +236,12 @@
                                     <input type="hidden" name="cart" value="yes">
                                     <input class="ui button" type="submit" value="One Click Order"> 
                                 </form>
+                                <%}else{
+                                %>
+                                You have not selected a one-click order template
+                                <%
+                                }
+                                %>
                                 </p>
                             </div>
                             <div class="title">
