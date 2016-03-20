@@ -146,11 +146,15 @@ public class UserController extends HttpServlet {
                 String area_code = request.getParameter("area_code");
                 String telephone_number = request.getParameter("telephone_number");
                 String supplier_description = request.getParameter("supplier_description");
+                String min_leadtimeStr = request.getParameter("min_leadtime");
+                String max_leadtimeStr = request.getParameter("max_leadtime");
                 supplier.setEmail(email);
                 supplier.setAddress(address);
                 supplier.setArea_code(UtilityController.convertStringtoInt(area_code));
                 supplier.setTelephone_number(UtilityController.convertStringtoInt(telephone_number));
                 supplier.setSupplier_description(supplier_description);
+                supplier.setMin_leadtime(UtilityController.convertStringtoInt(min_leadtimeStr));
+                supplier.setMax_leadtime(UtilityController.convertStringtoInt(max_leadtimeStr));
 
                 updateSupplier(supplier);
                 response.sendRedirect("SupplierProfile.jsp");

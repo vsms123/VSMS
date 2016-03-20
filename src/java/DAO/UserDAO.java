@@ -150,8 +150,8 @@ public class UserDAO {
             //creates connections to database
             conn = ConnectionManager.getConnection();
             sql = "UPDATE supplier"
-                    + " SET password = #1, supplier_description = #2, supplier_type = #3 , email = #4, area_code = #5 , telephone_number = #6, address = #7"
-                    + " WHERE supplier_id = #8";
+                    + " SET password = #1, supplier_description = #2, supplier_type = #3 , email = #4, area_code = #5 , telephone_number = #6, address = #7, min_leadtime = #8, max_leadtime = #9 "
+                    + " WHERE supplier_id = "+supplier.getSupplier_id();
 
             sql = sql.replace("#1", "'" + supplier.getPassword() + "'");
             sql = sql.replace("#2", "'" + supplier.getSupplier_description() + "'");
@@ -160,7 +160,8 @@ public class UserDAO {
             sql = sql.replace("#5", "'" + supplier.getArea_code() + "'");
             sql = sql.replace("#6", "'" + supplier.getTelephone_number() + "'");
             sql = sql.replace("#7", "'" + supplier.getAddress() + "'");
-            sql = sql.replace("#8", "'" + supplier.getSupplier_id() + "'");
+            sql = sql.replace("#8", "'" + supplier.getMin_leadtime() + "'");
+            sql = sql.replace("#9", "'" + supplier.getMax_leadtime() + "'");
             stmt = conn.prepareStatement(sql);
             stmt.executeUpdate();
         } catch (SQLException e) {

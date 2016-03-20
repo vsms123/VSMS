@@ -78,6 +78,7 @@
                 <%
                     ArrayList<Order> pendingOrders = new ArrayList<Order>();
                     ArrayList<Order> incomingOrders = new ArrayList<Order>();
+                    ArrayList<Order> deliveredOrders = new ArrayList<Order>();
                     ArrayList<Order> rejectedOrders = new ArrayList<Order>();
 
 //                    creation of order modals and sorting of orders done here
@@ -148,6 +149,8 @@
                             pendingOrders.add(order);
                         } else if (order.getStatus().equals("incoming")) {
                             incomingOrders.add(order);
+                        } else if (order.getStatus().equals("delivered")){
+                            deliveredOrders.add(order);
                         } else if (order.getStatus().equals("rejected")) {
                             rejectedOrders.add(order);
                         }
@@ -158,7 +161,8 @@
                 <div class="ui pointing secondary menu">
                     <a class="item active" style="font-size:18px" data-tab="first">Pending Orders</a>
                     <a class="item"  style="font-size:18px" data-tab="second">Incoming Orders</a>
-                    <a class="item" style="font-size:18px" data-tab="third">Rejected Orders</a>
+                    <a class="item" style="font-size:18px" data-tab ="third">Delivered Orders</a>
+                    <a class="item" style="font-size:18px" data-tab="fourth">Rejected Orders</a>
                 </div>
 
                 <!--Pending orders section-->
@@ -369,7 +373,6 @@
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
                                     Price: $<%=df.format(order.getTotal_final_price())%> 
 
-
                                 </div>
                             </a>
                         </div>
@@ -422,6 +425,140 @@
 
 
 
+                <!--Start of Delivered Orders section-->
+
+                <div class="ui tab segment" data-tab="third">
+
+
+
+
+
+                    <%
+                        int deliveredList = deliveredOrders.size();
+                        int deliveredPageNo = deliveredList / 10;
+                        if (deliveredPageNo > 0) {
+                            if (deliveredList % 10 != 0) {
+                                deliveredPageNo++;
+                            }
+                        }
+
+                    %>
+
+
+
+
+
+                    <!--printing first 10 completed orders-->  
+
+                    <div class="ui active tab middle aligned animated selection divided list" data-tab="301">
+
+
+                        <%for (int count = 0; count < 10; count++) {
+                                if (deliveredOrders.size() > count) {
+
+                                    Order order = deliveredOrders.get(count);
+                        %>
+
+
+
+                        <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+
+                            <a>
+                                <div class="content">
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                </div>
+                                <div>
+                                    Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
+                                    Price: $<%=df.format(order.getTotal_final_price())%> 
+
+
+                                </div>
+                            </a>
+                        </div>
+
+                        <%}
+                            }%>
+
+                    </div>
+                    <!--end of printing first 10 completed orders-->  
+
+
+
+
+
+                    <!--Printing the beyond the 10th completed order-->
+                    <%
+                        for (int j = 2; j <= deliveredPageNo; j++) {
+                    %>
+
+                    <div class="ui tab middle aligned animated selection divided list" data-tab="<%=j + 300%>">
+
+                        <%for (int count = (j - 1) * 10; count < j * 10; count++) {
+                                if (deliveredOrders.size() > count) {
+
+                                    Order order = deliveredOrders.get(count);
+                        %>
+
+
+                        <div class="item test order <%=order.getOrder_id()%>" id="<%=order.getOrder_id()%>" data-content="Click to view order details"  data-variation="inverted">
+
+                            <a>
+                                <div class="content">
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                </div>
+                                <div>
+                                    Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
+                                    Price: $<%=df.format(order.getTotal_final_price())%> 
+
+
+                                </div>
+                            </a>
+                        </div>
+
+
+
+                        <%}
+                            }%>
+                    </div>
+
+                    <%}%>
+
+                    <!--end of Printing the beyond the 10th completed order-->
+
+
+
+
+                    <!--Start of pagination-->
+                    <div>
+                        <%
+                            if (deliveredPageNo > 1) {
+                        %>
+                        <div class="ui pagination secondary menu">
+                            <a class="active item" data-tab="301">
+                                1
+                            </a>
+                            <%
+                                for (int j = 1; j < deliveredPageNo; j++) {
+                            %>
+                            <a class="item" data-tab="<%=j + 301%>">
+                                <%=j + 1%>
+                            </a>
+                            <%}%>
+                        </div>
+                        <% }
+                        %>
+
+                    </div>
+
+                    <!--End of pagination-->  
+                </div>
+
+
+
+
+
+
+
 
 
 
@@ -443,7 +580,7 @@
 
                 <!--Start of Rejected Orders section-->
 
-                <div class="ui tab segment" data-tab="third">
+                <div class="ui tab segment" data-tab="fourth">
 
 
 

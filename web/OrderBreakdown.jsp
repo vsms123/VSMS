@@ -69,7 +69,7 @@
             //Regenerate the order breakdown when bufferQtyTextbox is changed
             $("#bufferqtyperc").change(function() {
             //Make the value string
-            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm', bufferqtyperc : $('#bufferqtyperc').val() <%=valueStr%>}, function(responseText) {
+            $.post("orderservlet", {vendor_id:<%=vendor_idStr%>, action: 'confirm', bufferqtyperc : $('#bufferqtyperc').val(),cart:<%="'" + cart + "'"%> <%=valueStr%>}, function(responseText) {
             $(".content-model-table").html(responseText);
             });
             });
@@ -141,10 +141,9 @@
                 <!--This table will send all the dishid info (textbox) with the dish_count as hidden parameter-->
 
 
-                <br>
                 <% if (total > 0) { %>
                 <h3><label for= "special_request"> Special Request</h3>
-                <textarea name="special_request" id="special_request"></textarea>
+                <textarea  rows="4" cols="50" name="special_request" id="special_request"></textarea><br>
                 <button class="ui green inverted large button" id="confirm-order-breakdown"> <i class="check icon"></i>Confirm Order Breakdown</button>
 
                 <% }%>

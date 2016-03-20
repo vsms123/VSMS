@@ -85,6 +85,10 @@
                         <th><h2>Description</h2></th>
                     <td><h3><%=currentSupplier.getSupplier_description()%></h3></td>
                     </tr>
+                    <tr>
+                        <th><h2>Expected Delivery</h2></th>
+                    <td><h3><%=currentSupplier.getMin_leadtime()%> - <%=currentSupplier.getMax_leadtime()%></h3></td>
+                    </tr>
                 </table>
 
 
@@ -122,7 +126,16 @@
                             <br/><br/>
                             <label for ="supplier_description"><h3>Description:</h3></label> 
                             <textarea id="supplier_description" name="supplier_description"><%=currentSupplier.getSupplier_description()%></textarea>
-                            <br/>
+                            <br/><br>
+                             <label for ="min_leadtime"><h3>Leadtime</h3></label> 
+                          <div class="ui grid">
+                                <div class="three wide column">
+                                    <input id="min_leadtime" value="<%=currentSupplier.getMin_leadtime()%>" type="text" name="min_leadtime">
+                                </div>
+                                <div class="thirteen wide column">
+                                    <input id="max_leadtime" value="<%=currentSupplier.getMax_leadtime()%>" type="text" name="max_leadtime">
+                                </div>
+                            </div><br/>
 
                             <!--Input hidden attributes-->
                             <input type="hidden" name="supplier_id" value="<%=currentSupplier.getSupplier_id()%>">

@@ -59,7 +59,7 @@ public class OrderController extends HttpServlet {
         String action = request.getParameter("action");
         String special_request = request.getParameter("special_request");
         String bufferqtypercStr = request.getParameter("bufferqtyperc");
-
+        System.out.println("bufferqtyPercStr is "+bufferqtypercStr);
         String htmlConfirmation = "";
         //supplier id and order id is auto generated
         //final price is aggregated, ingredient name is there
@@ -71,13 +71,14 @@ public class OrderController extends HttpServlet {
                 int vendor_id = UtilityController.convertStringtoInt(vendor_idStr);
                 //Create an hashmap with <Ingredient, aggregated quantity> (TESTED)
                 HashMap<Ingredient, Integer> ingredientAggQuantityMap;
-                if (cart.equals("yes")) {
+                if (cart!=null && cart.equals("yes")) {
                     ingredientAggQuantityMap = createIngredientTemplateAggQuantityMap(dishQuantityMap);
                 } else {
                     ingredientAggQuantityMap = createIngredientAggQuantityMap(dishQuantityMap);
                 }
                 ArrayList<Orderline> orderlineList = new ArrayList<Orderline>();
                 if (bufferqtypercStr != null) {//This means it comes from order breakdown
+                     System.out.println("bufferqtyPercStr is coming here "+bufferqtypercStr);
                     int bufferqtyperc = UtilityController.convertStringtoInt(bufferqtypercStr);
                     //Make an arraylist of all orderline (non aggregated) with buffer quantity
                     orderlineList = createOrderlineList(ingredientAggQuantityMap, vendor_id, getLatestOrderID() + 1, bufferqtyperc);

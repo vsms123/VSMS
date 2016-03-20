@@ -77,6 +77,9 @@
                             <!--Inserting approve confirmation message. -->
                             Are you sure you would like to approve the order?
 
+                            <label for ="expected_delivery"><h5>Expected Delivery</h5></label>
+                            <input type="date" name="expected_delivery" id="expected_delivery">
+                            
                             <!--Input hidden attributes-->
                             <input type="hidden" name="action" value="approve">
                             <input type="hidden" name="order_id" value="<%=order_id%>">
@@ -106,8 +109,6 @@
                             Are you sure you would like to reject the order?
 
                             <!--Input hidden attributes-->
-                            <label for ="expected_delivery"><h5>Expected Delivery</h5></label>
-                            <input type="date" name="expected_delivery" id="expected_delivery">
                             
                             <input type="hidden" name="action" value="reject">
                             <input type="hidden" name="order_id" value="<%=order_id%>">
