@@ -79,13 +79,14 @@ public class UtilityController {
     }
 
     public static Date convertStringToDate(String date) {
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date returnDate = null;
         try {
             returnDate = format.parse(date);
         } catch (ParseException ex) {
             Logger.getLogger(UtilityController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return returnDate;
     }
 

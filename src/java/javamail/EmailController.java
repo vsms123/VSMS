@@ -59,13 +59,14 @@ public class EmailController {
         HashMap<Integer, String> suppOrderMap = supplierMessageList(order);
 
         //Getting confirmation for vendors and suppliers
-        String confirmation = "<h3>Your order has been ";
+        String confirmation = "";
         if(action.equals("approve")){
-            confirmation += "<font color='green'>"+action +"d</font>";
+            confirmation += "<h3>Your order has been <font color='green'>"+action +"d</font></h3>";
+            confirmation += "<h4><font color='green'>Expected Delivery Arrival:"+order.getExpected_delivery()+" </font></h4>";
         } else{
-            confirmation += "<font color='red'>"+action +"ed</font>";
+            confirmation += "<h3>Your order has been <font color='red'>"+action +"ed</font></h3>";
         }
-        confirmation += "</h3>";
+        
         EmailController.sendMessageToSuppliers(vendor, order, suppOrderMap, confirmation);
         EmailController.sendMessageToVendor(vendor, order, suppOrderMap, confirmation);
     }
@@ -83,8 +84,10 @@ public class EmailController {
         HashMap<Integer, String> suppOrderMap = EmailController.supplierMessageList(order);
 
         //Getting link for supplier to confirm
-        String link = "<h3><a href='http://localhost:8080/VSMS/OrderConfirmation.jsp?order_id=" + order.getOrder_id() + "'>Confirm here!</a></h3>";
-
+        String link = "<h3><a href='http://ec2-54-254-209-18.ap-southeast-1.compute.amazonaws.com:8080/VSMS/OrderConfirmation.jsp?order_id=" + order.getOrder_id() + "'>Confirm here!</a></h3>";
+        //Having additional mail for the localhost (assuming that it develops on local host
+        link += "<h6><a href='http://localhost:8080/VSMS/OrderConfirmation.jsp?order_id=" + order.getOrder_id() + "'>Local Deployment (to be deleted once finalized)</a></h6>";
+        
         EmailController.sendMessageToSuppliers(vendor, order, suppOrderMap, link);
         EmailController.sendMessageToVendor(vendor, order, suppOrderMap, "");
     }

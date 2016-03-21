@@ -1,7 +1,44 @@
 console.log("Form validation js is here");
 // When the browser is ready...
 $(function() {
-
+    //Add on date rule
+    $.validator.addMethod("dateFuture",
+            function(value, element) {
+                // Assuming value is the date string.
+                var date = new Date(value);
+                // Create a new date, stripping the time away.
+                var today = new Date(new Date().toDateString());
+                // Subtracting one date from another gives you the number
+                if (date - today > 0 && value.match(/^(0?[1-9]|[12][0-9]|3[0-2])[.,/ -](0?[1-9]|1[0-2])[.,/ -](19|20)?\d{2}$/)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            "* Please enter a valid date (dd/mm/yyyy)"
+            );
+    // Setup form validation for adding the dish
+    $("#approveOrder").validate({
+//        Specify the error and valid styling (red color if error, green color if valid)
+        errorClass: "my-error-class",
+        validClass: "my-valid-class",
+        // Specify the validation rules
+        rules: {
+            expected_delivery: {
+                required: true,
+                date: true,
+                dateFuture: true
+            }
+        },
+        // Specify the validation error messages
+        messages: {
+            expected_delivery: "Please enter a proper date",
+            lastname: "Please enter your dish description",
+        },
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
     // Setup form validation for adding the dish
     $("#addDish").validate({
 //        Specify the error and valid styling (red color if error, green color if valid)
@@ -14,8 +51,8 @@ $(function() {
         },
         // Specify the validation error messages
         messages: {
-            firstname: "Please enter your dish name",
-            lastname: "Please enter your dish description",
+            dish_name: "Please enter your dish name",
+            dish_description: "Please enter your dish description",
         },
         submitHandler: function(form) {
             form.submit();

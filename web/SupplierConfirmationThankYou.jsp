@@ -24,7 +24,7 @@
             <div class="ui segment" style="left:5%;width:90%">
 
                 <h1>Thank you for your confirmation!</h1>
-                <h2>Please find out more about VSMS from this <a href="#">Link</a></h2>
+                <h2>Please sign in/register with Foodingo Marketplace Homepage <font color="blue"><a href="Login.jsp">Link</a></font></h2>
             </div>
         </div>
     </body>

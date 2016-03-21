@@ -1,3 +1,4 @@
+<%@page import="Model.Orderline"%>
 <!-- ****************************************************************** -->
 <!--THIS IS ACCESSED BY THE SUPPLIER/ NO SESSION and PROTECT IS NECESSARY-->
 <!-- ****************************************************************** -->
@@ -20,6 +21,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+        
+        <!--Form VALIDATION-->
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+        <script src="js/formvalidation.js"></script>
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <script>
@@ -56,13 +61,46 @@
                     String order_idStr = request.getParameter("order_id");
                     int order_id = UtilityController.convertStringtoInt(order_idStr);
                     Order order = OrderController.retrieveOrderByID(order_id);
-                %>
 
-                <h4><%=order%></h4>
+                %>
+                <table class="ui very padded large striped  table">
+
+                    <tr>
+                        <th><h2>Status</h2></th>
+                    <td><h3><%=order.getStatus()%></h3></td>
+                    </tr>
+                    <tr>
+                        <th><h2>Date of Order</h2></th>
+                    <td><h3><%=order.getDt_order()%></h3></td>
+                    </tr>
+                    <tr>
+                        <th><h2>Expected Delivery</h2></th>
+                    <td><h3><%=order.getExpected_delivery()%></h3></td>
+                    </tr>
+                    <tr> 
+                        <th><h2>Total Price</h2></th>
+                    <td><h3><%=order.getTotal_final_price()%></h3></td>
+                    </tr>
+
+                    <tr>
+                        <th><h2>Special Request</h2></th>
+                    <td><h3><%=order.getSpecial_request()%></h3></td>
+                    </tr>
+                    <tr>
+                        <th><h2>Orderlines</h2></th>
+                    <td>
+                        <ul>
+                            <%for (Orderline orderline : order.getOrderlines()) {%>
+                            <li><%=orderline%></li>
+                                <%}%>
+                        </ul>
+                    </td>
+                    </tr>
+                </table>
 
                 <h2>Would you like to approve?</h2>
 
-                <button class="ui red basic button approve-order-button">Approve</button>
+                <button class="ui green basic button approve-order-button">Approve</button>
                 <button class="ui red basic button reject-order-button">Reject</button>                        
 
                 <!--Modal for approving-->
@@ -79,11 +117,11 @@
 
                             <label for ="expected_delivery"><h5>Expected Delivery</h5></label>
                             <input type="date" name="expected_delivery" id="expected_delivery">
-                            
+
                             <!--Input hidden attributes-->
                             <input type="hidden" name="action" value="approve">
                             <input type="hidden" name="order_id" value="<%=order_id%>">
-
+                            <br>
                             <input type="submit" value="Approve" class="ui teal button" /> 
                         </form>
                     </div>
@@ -109,11 +147,11 @@
                             Are you sure you would like to reject the order?
 
                             <!--Input hidden attributes-->
-                            
+
                             <input type="hidden" name="action" value="reject">
                             <input type="hidden" name="order_id" value="<%=order_id%>">
 
-                            <input type="submit" value="Reject" class="ui teal button" /> 
+                            <input type="submit" value="Reject" class="ui red button" /> 
                         </form>
                     </div>
                     <div class="actions">
@@ -128,6 +166,7 @@
         </div>
 
         <!--JAVASCRIPT-->
+        <script>$("#approveOrder").validate();</script>
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
         <script src="js/formvalidation.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>

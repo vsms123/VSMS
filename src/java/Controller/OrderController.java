@@ -132,6 +132,7 @@ public class OrderController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Will get order_id and action (approve/reject)
         String order_idStr = request.getParameter("order_id");
+        System.out.println("The order id is "+order_idStr);
         String action = request.getParameter("action");
 
         //check if the form is submitted or not, if the form is submitted then the dish_countStr should not be null
@@ -140,12 +141,12 @@ public class OrderController extends HttpServlet {
             Order order = retrieveOrderByID(order_id);
             //Take the expected delivery string and special request during confirmations.
             String expected_deliveryStr = request.getParameter("expected_delivery");
-
+            System.out.println("expected_delivery is "+expected_deliveryStr);
             //Do 3 things: 1. Update this orders inside the database 2. send these update orders to the suppliers and vendors with email 3. Redirect suppliers to a thank you page
             if (action.equals("approve")) {
                 updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "incoming", UtilityController.convertStringToDate(expected_deliveryStr), order.getSpecial_request()));
             } else if (action.equals("reject")) {
-                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "rejected", UtilityController.convertStringToDate(expected_deliveryStr), order.getSpecial_request()));
+                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "rejected", order.getExpected_delivery(), order.getSpecial_request()));
             }
 
             //MailController Method
