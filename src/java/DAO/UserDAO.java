@@ -735,4 +735,65 @@ public class UserDAO {
         //true if email exists, false if not
         return check;
     }
+    
+    public static int updateVendorPassword(String email, String newPW) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        int updateNum = 0;
+
+        try {
+            //creates connections to database
+            conn = ConnectionManager.getConnection();
+            sql = "UPDATE vendor"
+                    + " SET password = #1"
+                    + " WHERE email = '"+ email + "'";
+
+            sql = sql.replace("#1", "'" + newPW + "'");
+            
+            stmt = conn.prepareStatement(sql);
+            updateNum = stmt.executeUpdate();
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } catch (Exception e) {
+            //Supplier is not found
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        
+        return updateNum;
+    }
+    
+    public static int updateSupplierPassword(String email, String newPW) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        
+        int updateNum = 0;
+
+        try {
+            //creates connections to database
+            conn = ConnectionManager.getConnection();
+            sql = "UPDATE supplier"
+                    + " SET password = #1"
+                    + " WHERE email = '"+ email + "'";
+
+            sql = sql.replace("#1", "'" + newPW + "'");
+            
+            stmt = conn.prepareStatement(sql);
+            updateNum = stmt.executeUpdate();
+        } catch (SQLException e) {
+            handleSQLException(e, sql);
+        } catch (Exception e) {
+            //Supplier is not found
+
+        } finally {
+            ConnectionManager.close(conn, stmt, rs);
+        }
+        
+        return updateNum;
+    }
 }

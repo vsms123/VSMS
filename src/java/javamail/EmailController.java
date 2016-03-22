@@ -8,24 +8,21 @@ package javamail;
 import Controller.OrderController;
 import Controller.UserController;
 import Controller.UtilityController;
-import DAO.OrderDAO;
 import DAO.UserDAO;
 import Model.Order;
 import Model.Orderline;
 import Model.Supplier;
 import Model.Vendor;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -37,9 +34,10 @@ public class EmailController {
     private static String user = "ognidoof";
     private static String password = "AbC12321CbA";
 
-    public EmailController(){
-    
+    public EmailController() {
+
     }
+
     public EmailController(String host, String user, String password) {
         this.host = host;
         this.user = user;
@@ -60,13 +58,13 @@ public class EmailController {
 
         //Getting confirmation for vendors and suppliers
         String confirmation = "";
-        if(action.equals("approve")){
-            confirmation += "<h3>Your order has been <font color='green'>"+action +"d</font></h3>";
-            confirmation += "<h4><font color='green'>Expected Delivery Arrival:"+order.getExpected_delivery()+" </font></h4>";
-        } else{
-            confirmation += "<h3>Your order has been <font color='red'>"+action +"ed</font></h3>";
+        if (action.equals("approve")) {
+            confirmation += "<h3>Your order has been <font color='green'>" + action + "d</font></h3>";
+            confirmation += "<h4><font color='green'>Expected Delivery Arrival:" + order.getExpected_delivery() + " </font></h4>";
+        } else {
+            confirmation += "<h3>Your order has been <font color='red'>" + action + "ed</font></h3>";
         }
-        
+
         EmailController.sendMessageToSuppliers(vendor, order, suppOrderMap, confirmation);
         EmailController.sendMessageToVendor(vendor, order, suppOrderMap, confirmation);
     }
@@ -87,7 +85,7 @@ public class EmailController {
         String link = "<h3><a href='http://ec2-54-254-209-18.ap-southeast-1.compute.amazonaws.com:8080/VSMS/OrderConfirmation.jsp?order_id=" + order.getOrder_id() + "'>Confirm here!</a></h3>";
         //Having additional mail for the localhost (assuming that it develops on local host
         link += "<h6><a href='http://localhost:8080/VSMS/OrderConfirmation.jsp?order_id=" + order.getOrder_id() + "'>Local Deployment (to be deleted once finalized)</a></h6>";
-        
+
         EmailController.sendMessageToSuppliers(vendor, order, suppOrderMap, link);
         EmailController.sendMessageToVendor(vendor, order, suppOrderMap, "");
     }
@@ -118,11 +116,11 @@ public class EmailController {
             Supplier supplier = UserDAO.getSupplierById(supplier_id);
             messageText.append("<h1>" + supplier.getSupplier_name() + "</h1>");
             //messageText.append("<h3>email : " + supplier.getEmail() + "|| phone number: " + supplier.getTelephone_number() + "</h3>");
-            messageText.append("<h3>You have submitted the following order to " + supplier.getSupplier_name() +  ".</h3>");
+            messageText.append("<h3>You have submitted the following order to " + supplier.getSupplier_name() + ".</h3>");
             messageText.append("<hr>");
             messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
             messageText.append("<font color=\"red\">Total price is : $" + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
-            messageText.append("<br><br><b>Special Request:</b> "+order.getSpecial_request());
+            messageText.append("<br><br><b>Special Request:</b> " + order.getSpecial_request());
         }
 
         sendMessage(vendor.getEmail(), "Your orders to suppliers", messageText + additional);
@@ -137,13 +135,39 @@ public class EmailController {
             Supplier supplier = UserDAO.getSupplierById(supplier_id);
             messageText.append("<h1>" + vendor.getVendor_name() + "</h1>");
             //messageText.append("<h3>email : " + vendor.getEmail() + "|| phone number: " + vendor.getTelephone_number() + "</h3>");
-            messageText.append("<h3>You have received an order from " + vendor.getVendor_name() +  ".</h3>");
+            messageText.append("<h3>You have received an order from " + vendor.getVendor_name() + ".</h3>");
             messageText.append("<hr>");
             messageText.append("<h5>" + suppOrderMap.get(supplier_id) + "</h5>");
             messageText.append("<font color=\"red\">Total price is : $" + UtilityController.convertDoubleToCurrString(OrderController.createAggFinalPrice(order.getOrderlines())) + "</font>");
-            messageText.append("<br><br><b>Special Request:</b> "+order.getSpecial_request());
+            messageText.append("<br><br><b>Special Request:</b> " + order.getSpecial_request());
             sendMessage(supplier.getEmail(), "Order from Vendor " + vendor.getVendor_name(), messageText + additional);
         }
+    }
+
+    public static int resetPassword(String email) {
+        String randomPW = UtilityController.generateRandomPassword();
+        String encryptPW = DigestUtils.sha1Hex(randomPW);
+
+        int vendorUpdate = 0;
+        int suppUpdate = 0;
+
+        suppUpdate = UserDAO.updateSupplierPassword(email, encryptPW);
+        vendorUpdate = UserDAO.updateVendorPassword(email, encryptPW);
+        int result = vendorUpdate + suppUpdate;
+        if (result == 1) {
+            StringBuilder messageText = new StringBuilder("");
+            messageText.append("<h1>Foodingo Marketplace</h1>");
+            //messageText.append("<h3>email : " + vendor.getEmail() + "|| phone number: " + vendor.getTelephone_number() + "</h3>");
+            messageText.append("<h3>Password reset</h3>");
+            messageText.append("<hr>");
+            messageText.append("<h5>We have requested a password request for this account.</h5>");
+            messageText.append("<h5>Your new password: " + randomPW + "</h5>");
+            messageText.append("<hr>");
+            messageText.append("<h5>We look forward to being of service again!</h5>");
+            sendMessage(email, "Foodingo Marketplace Password Reset", messageText.toString());
+        }
+
+        return vendorUpdate + suppUpdate;
     }
 
 //    This method is to send a general message to an email with subject and message string

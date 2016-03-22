@@ -31,6 +31,10 @@
         <servlet-name>DeleteIngredientServlet</servlet-name>
         <servlet-class>Servlet.DeleteIngredientServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPWServlet</servlet-name>
+        <servlet-class>Servlet.ResetPWServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AutoCompleteServlet</servlet-name>
         <url-pattern>/autocomplete</url-pattern>
@@ -58,6 +62,10 @@
     <servlet-mapping>
         <servlet-name>DeleteIngredientServlet</servlet-name>
         <url-pattern>/DeleteIngredientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPWServlet</servlet-name>
+        <url-pattern>/ResetPWServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -58,7 +58,7 @@
                     <input id="password" type="password" name="password" onblur="checkInput(this)" />
                     <label for="password">Password</label>
                 </div>
-
+                <font color = "blue"><a href="ResetPassword.jsp">Forgot your password?</a></font>
                 <input style="font-size:16px" type="submit" value="Enter" />
             </form>
             <p><%=errorMsg%></p>
