@@ -77,7 +77,13 @@
                         <div class="sub header">View Supplier Profile</div>
                     </div>
                 </h2>
-
+                <div class="ui warning message disclaimer">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Disclaimer:
+                    </div>
+                    By viewing this page, you promise not to abuse this information. Any suspicious activities/spam will cause in direct actions from administration.
+                </div>
 
 
 
@@ -96,16 +102,16 @@
                         <td><h3><%=supplier.getSupplier_description()%></h3></td>
                         </tr>
                         <!--<tr>-->
-                            <!--                            <th><h2>Email</h2></th>
-                                                    <td><h3></h3></td>-->
-                            <!--supplier.getEmail()-->
-                            <!--</tr>-->
+                        <!--                            <th><h2>Email</h2></th>
+                                                <td><h3></h3></td>-->
+                        <!--supplier.getEmail()-->
+                        <!--</tr>-->
 
-                            <!--                        <tr>
-                                                        <th><h2>Telephone Number</h2></th>
-                                                    <td><h3></h3></td>
-                            "(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()
-                                                    </tr>-->
+                        <!--                        <tr>
+                                                    <th><h2>Telephone Number</h2></th>
+                                                <td><h3></h3></td>
+                        "(" + supplier.getArea_code() + ")" + supplier.getTelephone_number()
+                                                </tr>-->
                         <tr>
                             <th><h2>Expected Delivery Range</h2></th>
                         <td><h3><%= supplier.getMin_leadtime() + " - " + supplier.getMax_leadtime()%> Days</h3></td>
@@ -152,22 +158,22 @@
                                         <a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>">(S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(ingredient.getOfferedPrice()))%> per <%=ingredient.getSupplyUnit()%>)</a>
                                     </h3>
                                 </div>
-                                    <div>
-                                <form action="OrderByIngredientServlet" method="get">
-                                    <div class="ui right labeled input">
+                                <div>
+                                    <form action="OrderByIngredientServlet" method="get">
+                                        <div class="ui right labeled input">
                                             <div class="ui label">Quantity:</div>
                                             <input type="number" name="quantity">
                                             <div class="ui basic label"><%=ingredient.getSupplyUnit()%></div>
                                         </div> 
-                                    
-                                    <input type="hidden" name="ingredientname" value="<%=ingredient.getName()%>">
-                                    <input type="hidden" name="supplierId" value="<%=ingredient.getSupplier_id()%>">
-                                    <input type="hidden" name="CartId" value="<%=(Integer)session.getAttribute("CartId")%>">
-                                    <input type="hidden" name="action" value="add">
-                                    <button type="submit" class="ui green button ">Add to Cart</button>
-                                   
-                                </form>
-                            </div>
+
+                                        <input type="hidden" name="ingredientname" value="<%=ingredient.getName()%>">
+                                        <input type="hidden" name="supplierId" value="<%=ingredient.getSupplier_id()%>">
+                                        <input type="hidden" name="CartId" value="<%=(Integer) session.getAttribute("CartId")%>">
+                                        <input type="hidden" name="action" value="add">
+                                        <button type="submit" class="ui green button ">Add to Cart</button>
+
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         <%}%>

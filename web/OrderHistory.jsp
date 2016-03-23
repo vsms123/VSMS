@@ -1,3 +1,4 @@
+<%@page import="org.ocpsoft.prettytime.PrettyTime"%>
 <%@page import="Model.Vendor"%>
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Orderline"%>
@@ -99,7 +100,8 @@
                             <div class="ui header" style="color: black"  >
                                 Order ID : <%=order.getOrder_id()%> <br/>
                                 Supplier : <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> <br/>
-                                Date : <%=order.getDtOrder()%> <br/><br/>
+                                <%PrettyTime p = new PrettyTime();%>
+                                Date : <%=order.getDtOrder()%> ( <%=p.format(order.getDtOrder())%> )<br/><br/>
                                 Items:
 
                             </div>
@@ -195,7 +197,9 @@
 
                             <a>
                                 <div class="content">
-                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> 
+                                    <%PrettyTime p = new PrettyTime();%>
+                                    <%=order.getDtOrder()%>( <%=p.format(order.getDtOrder())%> ) 
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
@@ -232,7 +236,8 @@
 
                             <a>
                                 <div class="content">
-                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%PrettyTime p = new PrettyTime();%>
+                                    <%=order.getDtOrder()%>( <%=p.format(order.getDtOrder())%> )  
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
@@ -328,7 +333,8 @@
 
                             <a>
                                 <div class="content">
-                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%PrettyTime p = new PrettyTime();%>
+                                    <%=order.getDtOrder()%>( <%=p.format(order.getDtOrder())%> ) 
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
@@ -367,7 +373,8 @@
 
                             <a>
                                 <div class="content">
-                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%PrettyTime p = new PrettyTime();%>
+                                    <%=order.getDtOrder()%>( <%=p.format(order.getDtOrder())%> ) 
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
@@ -465,7 +472,8 @@
 
                             <a>
                                 <div class="content">
-                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%PrettyTime p = new PrettyTime();%>
+                                    <%=order.getDtOrder()%>( <%=p.format(order.getDtOrder())%> ) 
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
@@ -504,7 +512,8 @@
 
                             <a>
                                 <div class="content">
-                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%PrettyTime p = new PrettyTime();%>
+                                    <%=order.getDtOrder()%>( <%=p.format(order.getDtOrder())%> ) 
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
@@ -618,7 +627,8 @@
 
                             <a>
                                 <div class="content">
-                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%PrettyTime p = new PrettyTime();%>
+                                    <%=order.getDtOrder()%>( <%=p.format(order.getDtOrder())%> ) 
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;
@@ -657,7 +667,8 @@
 
                             <a>
                                 <div class="content">
-                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%=order.getDtOrder()%> 
+                                    <h2>Order No. <%=order.getOrder_id()%></h2> <%PrettyTime p = new PrettyTime();%>
+                                    <%=order.getDtOrder()%>( <%=p.format(order.getDtOrder())%> ) 
                                 </div>
                                 <div>
                                     Supplier: <%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%> &nbsp;

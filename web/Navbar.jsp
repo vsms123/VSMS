@@ -22,18 +22,18 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script>
-            $(document).ready(function () {
-                $('.cart.triggerModal').click(function () {
+            $(document).ready(function() {
+                $('.cart.triggerModal').click(function() {
                     //show modal button
                     $("description").html(results);
                     $('#modalCart').modal('show');
                 });
-                $('.profile').click(function () {
+                $('.profile').click(function() {
                     //show modal button
                     $('#modalAccount').modal('show');
                 });
 
-                $(window).on('load resize', function () {
+                $(window).on('load resize', function() {
                     var width = $(window).width();
                     var height = $(window).height();
 
@@ -50,21 +50,22 @@
                         $("#navbarMobile").css("display", "none");
                     }
                 });
-                $('#ingredient-name-input').keypress(function (e) {
+                //This is for the navbar ingredient search input
+                $('.ingredient-name-input').keypress(function(e) {
                     console.log("Keypress  is pressed");
                     if (e.which == 13) {
-                        document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
+                        document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('.ingredient-name-input').val();
                     }
                 });
-                $('#ingredient-name-input-button').click(function () {
-                    document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('#ingredient-name-input').val();
+                $('.ingredient-name-input-button').click(function() {
+                    document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('.ingredient-name-input').val();
                 });
 
-                $(".button").click(function () {
+                $(".button").click(function() {
                     $(this).transition('pulse');
 
                 });
-                $(".pulse").click(function () {
+                $(".pulse").click(function() {
                     $(this).transition('pulse');
 
                 });
@@ -91,8 +92,8 @@
                 <h3>Find ingredients that you need</h3>
 
                 <div class="ui fluid action input" style="margin-right: 10%">
-                    <input type="text" id="ingredient-name-input" placeholder="Search Ingredient Name ... ">
-                    <div class="ui basic button" id="ingredient-name-input-button"> <i class="search icon"></i></div>
+                    <input type="text" class="ingredient-name-input" placeholder="Search Ingredient Name ... ">
+                    <div class="ui basic button" class="ingredient-name-input-button"> <i class="search icon"></i></div>
                     &nbsp;
                     <div class="pulse"><a href="ShoppingCartDisplay.jsp" class="ui inverted orange button"><i class="large shop icon" ></i>View Cart</a></div>
                 </div>
@@ -111,11 +112,11 @@
 
                 <div class="menu">
                     <a href="Order.jsp" class="item pulse" style=" font-size: 16px"><i class="large edit icon"></i> Make new Order</a>
-                    
+
                     <div class="ui left pointing large dropdown link item">
                         <i class="large dropdown icon"></i>
                         <i class="large file text icon"></i>Order Templates &nbsp;
-                        
+
                         <div class="menu">
                             <a href="TemplateMain.jsp" class="item pulse" style=" font-size: 16px"><img src="resource/pictures/dishIcon.png" alt="HTML5 Icon" style="width:18px;height:18px;">Template by Dish </a>
                             <a href="ManageTemplate.jsp" class="item pulse" style=" font-size: 16px"><img src="resource/pictures/carrot.png" alt="HTML5 Icon" style="width:18px;height:18px;">Template by Ingredients </a>

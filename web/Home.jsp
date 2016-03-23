@@ -50,14 +50,24 @@
 
         %>
         <script>
-            $(document).ready(function () {
-                $('.message').click(function () {
+            $(document).ready(function() {
+                $('.message').click(function() {
                     //show modal button
                     $('#modalMessage').modal('show');
                 });
-                $('.profile').click(function () {
+                $('.profile').click(function() {
                     //show modal button
                     $('#modalAccount').modal('show');
+                });
+                //This is for the navbar ingredient search input
+                $('.ingredient-name-input-home').keypress(function(e) {
+                    console.log("Keypress  is pressed");
+                    if (e.which == 13) {
+                        document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('.ingredient-name-input-home').val();
+                    }
+                });
+                $('.ingredient-name-input-button-home').click(function() {
+                    document.location.href = "SupplierSearch.jsp?ingredient_name=" + $('.ingredient-name-input-home').val();
                 });
 
 //              //For mobile view, will implement later
@@ -81,8 +91,8 @@
 
 
         <script>
-            $(document).ready(function () {
-                $("#testing").click(function () {
+            $(document).ready(function() {
+                $("#testing").click(function() {
                     $('.vertical.menu').sidebar('setting', {closable: false})
                             .sidebar('setting', {dimPage: false})
                             .sidebar('setting', 'transition', 'overlay')
@@ -92,7 +102,7 @@
                 });
 //                $('#testaccordion').css("display", "none");
                 $('#testaccordion').accordion();
-                $("#accordion").click(function () {
+                $("#accordion").click(function() {
                     $('#testaccordion').transition('vertical flip');
                     $('.ui.accordion').accordion();
 
@@ -104,7 +114,7 @@
             <%                for (Order orderModal : orderList) {
             %>
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
-                $(".test.order.<%=orderModal.getOrder_id()%>").click(function () {
+                $(".test.order.<%=orderModal.getOrder_id()%>").click(function() {
 
                     $('#modalOrder<%=orderModal.getOrder_id()%>').modal('show');
                 });
@@ -225,9 +235,8 @@
                                 <p>
 
                                     <%
-
                                         Dish oneClickOrder = IngredientDAO.getOneClickIngredientTemplate(currentVendor.getVendor_id());
-                                        if(oneClickOrder!=null){
+                                        if (oneClickOrder != null) {
                                     %>
 
                                 <form action="OrderBreakdown.jsp" method="POST">
@@ -236,13 +245,18 @@
                                     <input type="hidden" name="cart" value="yes">
                                     <input class="ui button" type="submit" value="One Click Order"> 
                                 </form>
-                                <%}else{
+                                <%} else {
                                 %>
                                 You have not selected a one-click order template
                                 <%
-                                }
+                                    }
                                 %>
                                 </p>
+                                <div class="ui fluid action input" style="margin-right: 10%">
+                                    <input type="text" class="ingredient-name-input-home" placeholder="Search Ingredient Name ... ">
+                                    <div class="ui basic button" class="ingredient-name-input-button-home"> <i class="search icon"></i></div>
+                                    &nbsp;
+                                </div>
                             </div>
                             <div class="title">
                                 <h3><i class="dropdown icon"></i>

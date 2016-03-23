@@ -73,6 +73,14 @@
                         <div  style="color:black"  class="sub header">Managing Your Profile</div>
                     </div>
                 </h1>
+                <div class="ui warning message disclaimer">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Disclaimer:
+                    </div>
+                    By viewing this page, you promise not to abuse this information. Any suspicious activities/spam will cause in direct actions from administration.
+                </div>
+               
                 <%
                     String errMess = request.getParameter("errMess");
                     if (errMess != null) {
@@ -115,6 +123,9 @@
 
                 <button class="ui green large button edit-profile-button">Edit Profile</button>
                 <button class="ui green large button edit-password-button">Change Password</button>
+                <br>
+                <br>
+                <h3>Map</h3>
                 <div id="map"></div>
 
                 <!--Create a modal for editing the profile-->

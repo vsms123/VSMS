@@ -56,7 +56,7 @@
                     //if (currentSupplier == null) {
                     //    currentSupplier = UserController.retrieveSupplierByID(currentSupplier.getSupplier_id());
                     //}
-                %>
+%>
                 <h2 class="ui header">
                     <i class="user icon"></i>
                     <div class="content">
@@ -64,6 +64,13 @@
                         <div class="sub header">Manage Your Profile</div>
                     </div>
                 </h2>
+                <div class="ui warning message disclaimer">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Disclaimer:
+                    </div>
+                    By viewing this page, you promise not to abuse this information. Any suspicious activities/spam will cause in direct actions from administration.
+                </div>
                 <h1 style="color:black"><%=currentSupplier.getSupplier_name()%></h1>
 
 
@@ -100,7 +107,7 @@
                 <!--Create a modal for editing the profile-->
                 <div id="editprofilemodal" class="ui small modal">
 
-<div class="header">
+                    <div class="header">
                         Edit Profile
                     </div>
                     <div class="content">
@@ -127,8 +134,8 @@
                             <label for ="supplier_description"><h3>Description:</h3></label> 
                             <textarea id="supplier_description" name="supplier_description"><%=currentSupplier.getSupplier_description()%></textarea>
                             <br/><br>
-                             <label for ="min_leadtime"><h3>Leadtime</h3></label> 
-                          <div class="ui grid">
+                            <label for ="min_leadtime"><h3>Leadtime</h3></label> 
+                            <div class="ui grid">
                                 <div class="three wide column">
                                     <input id="min_leadtime" value="<%=currentSupplier.getMin_leadtime()%>" type="text" name="min_leadtime">
                                 </div>
@@ -180,7 +187,7 @@
 
                         <button class="ui inverted deny orange button">Cancel</button>
 
-</div>
+                    </div>
                 </div>
             </div>
         </div>
