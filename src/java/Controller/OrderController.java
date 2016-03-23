@@ -128,13 +128,13 @@ public class OrderController extends HttpServlet {
     }
 
     @Override
-    //doPost will be given to OrderConfirmation.jsp
+    //do will be given to OrderConfirmation.jsp
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Will get order_id and action (approve/reject)
         String order_idStr = request.getParameter("order_id");
         System.out.println("The order id is "+order_idStr);
         String action = request.getParameter("action");
-
+        
         //check if the form is submitted or not, if the form is submitted then the dish_countStr should not be null
         if (!UtilityController.checkNullStringArray(new String[]{order_idStr, action})) {
             int order_id = UtilityController.convertStringtoInt(order_idStr);

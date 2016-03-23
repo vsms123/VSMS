@@ -162,7 +162,6 @@ public class IngredientDAO {
                 statement.setBinaryStream(5, ingredient.getPicture());
             }
             int row = statement.executeUpdate();
-            //System.out.println("@@@@@@@@@@@@@@@" +row + " rows changed!");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

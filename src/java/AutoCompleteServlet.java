@@ -89,8 +89,6 @@ public class AutoCompleteServlet extends HttpServlet {
         }
 
         boolean namesAdded = false;
-        System.out.println(isSupplier==null);
-        System.out.println("this is my output");
         if(isSupplier!=null && isSupplier.equals("true")){
             if (action.equals("complete")) {
 

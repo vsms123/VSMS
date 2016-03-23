@@ -49,7 +49,6 @@ public class ConnectionManager {
             // unable to load properties file
             String message = "Unable to load '" + PROPS_FILENAME + "'.";
 
-            System.out.println(message);
             Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
             throw new RuntimeException(message, ex);
         }
@@ -60,7 +59,6 @@ public class ConnectionManager {
             // unable to load properties file
             String message = "Unable to find JDBC driver for MySQL.";
 
-            System.out.println(message);
             Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, message, ex);
             throw new RuntimeException(message, ex);
         }
@@ -85,7 +83,6 @@ public class ConnectionManager {
         if (awsDbURL != null) {
             return DriverManager.getConnection(awsDbURL);
         } else {
-            System.out.println(dbURL+ dbUser+ dbPassword);
             return DriverManager.getConnection(dbURL, dbUser, dbPassword);
         }
     }

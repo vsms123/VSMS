@@ -641,7 +641,8 @@
                                         <div class="six float centered wide column">
                                             <form action="SupplierProcessOrder.jsp" method="POST">
                                                 <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
-                                                <button class="ui deny inverted green button" name="action" type="submit" value="delivered">Yes</button>
+                                                <input type="hidden" name="action" value="delivered"/>
+                                                <button class="ui deny inverted green button"  type="submit" >Yes</button>
                                             </form>
                                         </div>
                                         <div class="six float centered wide column">

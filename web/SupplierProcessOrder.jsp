@@ -23,14 +23,14 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
         <!-- JSP Controller/ Variables Initiation -->
-        <%
-            String action = request.getParameter("action");
+        <%            String action = request.getParameter("action");
             String ord_id = request.getParameter("order_id");
-
             if (action.equals("accept")) {
                 OrderController.updateOrdStatus(Integer.parseInt(ord_id), "incoming");
             } else if (action.equals("reject")) {
                 OrderController.updateOrdStatus(Integer.parseInt(ord_id), "rejected");
+            } else if (action.equals("delivered")) {
+                OrderController.updateOrdStatus(Integer.parseInt(ord_id), "delivered");
             }
         %>
 
@@ -48,14 +48,17 @@
                 <h1 style="color: black">Order History List</h1>
                 <%
                     if (action.equals("accept")) {
-                        %> <h2>You have <font color="green">ACCEPTED</font> Order #<%=ord_id%></h2>
-                        <%
+                %> <h2>You have <font color="green">ACCEPTED</font> Order #<%=ord_id%></h2>
+                    <%
                     } else if (action.equals("reject")) {
-                        %> <h2>You have <font color="red">REJECTED</font> Order #<%=ord_id%></h2>
-                        <%
-                    }
-                %>
-                
+                    %> <h2>You have <font color="red">REJECTED</font> Order #<%=ord_id%></h2>
+                    <%
+                    } else if (action.equals("delivered")) {
+                    %> <h2>You have <font color="green">delivered</font> Order #<%=ord_id%></h2>
+                    <%
+                        }
+                    %>
+
                 <div class="actions">
                     <form action="SupplierHome.jsp">
                         <button class="ui deny inverted orange button" type="submit">Take me Back</button>
