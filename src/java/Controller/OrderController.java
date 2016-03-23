@@ -147,6 +147,8 @@ public class OrderController extends HttpServlet {
                 updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "incoming", UtilityController.convertStringToDate(expected_deliveryStr), order.getSpecial_request()));
             } else if (action.equals("reject")) {
                 updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "rejected", order.getExpected_delivery(), order.getSpecial_request()));
+            } else if (action.equals("delivered")) {
+                updateOrder(new Order(order_id, order.getVendor_id(), order.getTotal_final_price(), order.getDtOrder(), order.getOrderlines(), "delivered", order.getExpected_delivery(), order.getSpecial_request()));
             }
 
             //MailController Method

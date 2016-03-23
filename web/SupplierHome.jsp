@@ -55,6 +55,11 @@
             <%
                 for (Order orderModal : orderList) {
             %>
+//              This is for the delivered order
+                $("#triggerModal<%=orderModal.getOrder_id()%>delivered").click(function() {
+
+                    $('#modalOrder<%=orderModal.getOrder_id()%>delivered').modal('show');
+                });
 //              Will go through edit-dish-button1 or edit-dish-button2 (regarding the dish id)
                 $(".test.order.pc.<%=orderModal.getOrder_id()%>").click(function() {
 
@@ -379,9 +384,9 @@
                                 pendingOrders.add(order);
                             } else if (order.getStatus().equals("incoming")) {
                                 incomingOrders.add(order);
-                            } else if (order.getStatus().equals("delivered")){
+                            } else if (order.getStatus().equals("delivered")) {
                                 deliveredOrders.add(order);
-                            }else if (order.getStatus().equals("rejected")) {
+                            } else if (order.getStatus().equals("rejected")) {
                                 rejectedOrders.add(order);
                             }
                         }
@@ -613,7 +618,42 @@
                                     </div>
                                 </a>
                             </div>
+                            <button   class="ui inverted green button" id="triggerModal<%=order.getOrder_id()%>delivered">Delivered</button>
+                            <!--modal for main accept-->
 
+                            <div id="modalOrder<%=order.getOrder_id()%>delivered" class="ui small modal">
+
+                                <div class="header">
+                                    <h1>Order No. <%=order.getOrder_id()%></h1>
+                                </div>
+                                <div class="image content">
+
+                                    <div class="description">
+                                        <div class="ui header" style="color: black">
+                                            Is this order <b>delivered</b>?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <div class="ui grid">
+                                        <div class="two wide column">
+                                        </div>
+                                        <div class="six float centered wide column">
+                                            <form action="SupplierProcessOrder.jsp" method="POST">
+                                                <input type="hidden" value="<%=order.getOrder_id()%>" name="order_id" />
+                                                <button class="ui deny inverted green button" name="action" type="submit" value="delivered">Yes</button>
+                                            </form>
+                                        </div>
+                                        <div class="six float centered wide column">
+
+                                            <button class="ui large red deny inverted button">No</button>
+                                        </div> 
+                                        <div class="two wide column">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                             <%}
                                 }%>
 
@@ -694,7 +734,7 @@
                     </div>
 
 
-  <!--Start of Delivered Orders section-->
+                    <!--Start of Delivered Orders section-->
 
                     <div class="ui tab segment" data-tab="third">
 
@@ -746,7 +786,7 @@
                             </div>
 
                             <%}
-                            }%>
+                                }%>
 
                         </div>
                         <!--end of printing first 10 completed orders-->  
@@ -787,7 +827,7 @@
 
 
                             <%}
-                            }%>
+                                }%>
                         </div>
 
                         <%}%>
