@@ -23,8 +23,10 @@ public class Ingredient {
     private String offeredPrice;
     private String compo_id;
     private InputStream picture;
+    private int minimum_order_quantity;
+    private String status;
 
-    public Ingredient(int supplier_id, String name, String supplyUnit, String subcategory, String description, String offeredPrice, InputStream picture) {
+    public Ingredient(int supplier_id, String name, String supplyUnit, String subcategory, String description, String offeredPrice, InputStream picture,int minimum_order_quantity,String status) {
         this.supplier_id = supplier_id;
         this.name = name;
         this.supplyUnit = supplyUnit;
@@ -33,9 +35,11 @@ public class Ingredient {
         this.offeredPrice = offeredPrice;
         this.compo_id = name + "|@|" + supplier_id;
         this.picture = picture;
+        this.minimum_order_quantity = minimum_order_quantity;
+        this.status = status;
     }
 
-    public Ingredient(int supplier_id, String name, String supplyUnit, String subcategory, String description, String offeredPrice) {
+    public Ingredient(int supplier_id, String name, String supplyUnit, String subcategory, String description, String offeredPrice,int minimum_order_quantity,String status) {
         this.supplier_id = supplier_id;
         this.name = name;
         this.supplyUnit = supplyUnit;
@@ -44,6 +48,8 @@ public class Ingredient {
         this.offeredPrice = offeredPrice;
         this.compo_id = name + "|@|" + supplier_id;
         this.picture = null;
+        this.minimum_order_quantity = minimum_order_quantity;
+        this.status = status;
     }
 
     public int getSupplier_id() {
@@ -102,11 +108,27 @@ public class Ingredient {
         this.picture = picture;
     }
 
+    public int getMinimum_order_quantity() {
+        return minimum_order_quantity;
+    }
+
+    public void setMinimum_order_quantity(int minimum_order_quantity) {
+        this.minimum_order_quantity = minimum_order_quantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String toString() {
         if (picture!=null) {
-            return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}' + " picture: " +picture.toString() ;
+            return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}' + " moq: " +minimum_order_quantity+" status "+status+ " picture: " +picture.toString() ;
         } else {
-            return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}' + " picture: null" ;
+            return "Ingredient{" + "supplier_id=" + supplier_id + ", name=" + name + ", supplyUnit=" + supplyUnit + ", subcategory=" + subcategory + ", description=" + description + ", offeredPrice=" + UtilityController.convertDoubleToCurrString(UtilityController.convertStringtoDouble(offeredPrice)) + '}' + " moq: " +minimum_order_quantity+" status "+status+ " picture: null" ;
         }
     }
 

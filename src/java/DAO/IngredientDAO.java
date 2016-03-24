@@ -44,7 +44,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
+                ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")),rs.getInt("minimum_order_quantity"),rs.getString("status"));
             }
 
         } catch (Exception e) {
@@ -75,7 +75,7 @@ public class IngredientDAO {
         String query = "";
         try {
             conn = ConnectionManager.getConnection();
-            query = "insert into ingredient (supplier_id, ingredient_name, supply_unit, category, ingredient_description, offered_price,picture) values (?,?,?,?,?,?,?)";
+            query = "insert into ingredient (supplier_id, ingredient_name, supply_unit, category, ingredient_description, offered_price,minimum_order_quantity,status,picture) values (?,?,?,?,?,?,?,?,?)";
             statement = conn.prepareStatement(query);
             statement.setString(1, ingredient.getSupplier_id() + "");
             statement.setString(2, ingredient.getName());
@@ -83,9 +83,11 @@ public class IngredientDAO {
             statement.setString(4, ingredient.getSubcategory());
             statement.setString(5, ingredient.getDescription());
             statement.setString(6, ingredient.getOfferedPrice());
+            statement.setInt(7, ingredient.getMinimum_order_quantity());
+            statement.setString(8, ingredient.getStatus());
             //Insert picture if exists
             if (ingredient.getPicture() != null) {
-                statement.setBinaryStream(7, ingredient.getPicture());
+                statement.setBinaryStream(9, ingredient.getPicture());
             }
             statement.executeUpdate();
         } catch (Exception e) {
@@ -148,15 +150,17 @@ public class IngredientDAO {
         String query = "";
         try {
             conn = ConnectionManager.getConnection();
-            query = "update ingredient set supply_unit=?, category=?, ingredient_description=?, offered_price=? ,picture=? where supplier_id=? AND ingredient_name=?";
+            query = "update ingredient set supply_unit=?, category=?, ingredient_description=?, offered_price=? ,picture=?, minimum_order_quantity=?, status =? where supplier_id=? AND ingredient_name=?";
             statement = conn.prepareStatement(query);
             statement.setString(1, ingredient.getSupplyUnit());
             statement.setString(2, ingredient.getSubcategory());
             statement.setString(3, ingredient.getDescription());
             statement.setString(4, ingredient.getOfferedPrice());
-            //statement.setString(5, ingredient.getSupplier_id() + "");
-            statement.setInt(6, ingredient.getSupplier_id());
-            statement.setString(7, ingredient.getName());
+            statement.setInt(6, ingredient.getMinimum_order_quantity());
+            statement.setString(7, ingredient.getStatus());
+            statement.setInt(8, ingredient.getSupplier_id());
+            statement.setString(9, ingredient.getName());
+            
             //Insert picture if exists
             if (ingredient.getPicture() != null) {
                 statement.setBinaryStream(5, ingredient.getPicture());
@@ -196,7 +200,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")),rs.getInt("minimum_order_quantity"),rs.getString("status"));
                 System.out.println(ingredient);
                 ingredientList.add(ingredient);
             }
@@ -237,8 +241,9 @@ public class IngredientDAO {
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
                 String name = rs.getString("ingredient_name");
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")),rs.getInt("minimum_order_quantity"),rs.getString("status"));
                 ingredientMap.put(name + "|@|" + supId, ingredient);
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -276,7 +281,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")),rs.getInt("minimum_order_quantity"),rs.getString("status"));
                 ingredientList.add(ingredient);
             }
 
@@ -316,7 +321,7 @@ public class IngredientDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 int supId = Integer.parseInt(rs.getString("supplier_id"));
-                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")));
+                Ingredient ingredient = new Ingredient(supId, rs.getString("ingredient_name"), rs.getString("supply_unit"), rs.getString("category"), rs.getString("ingredient_description"), rs.getString("offered_price"), UtilityController.convertBlobToInputStream(rs.getBlob("picture")),rs.getInt("minimum_order_quantity"),rs.getString("status"));                
                 ingredientList.add(ingredient);
             }
 

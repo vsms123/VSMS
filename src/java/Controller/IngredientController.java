@@ -87,6 +87,8 @@ public class IngredientController extends HttpServlet {
         String subcategory = request.getParameter("subcategory");
         String description = request.getParameter("description");
         String offeredPrice = request.getParameter("offeredPrice");
+        String minimum_order_quantityStr = request.getParameter("minimum_order_quantity");
+        String status = request.getParameter("status");
 
         //The ingredientQuantity needs quantity, unit, vendorid
         String quantityStr = request.getParameter("quantity");
@@ -108,10 +110,10 @@ public class IngredientController extends HttpServlet {
 
             int supplier_id = UtilityController.convertStringtoInt(supplier_idStr);
             int dish_id = UtilityController.convertStringtoInt(dish_idStr);
-
+            int minumum_order_quantity = UtilityController.convertStringtoInt(minimum_order_quantityStr);
             //Creating a new ingredient and add ingredient quantity
             Dish dish = getDishByID(dish_id);
-            Ingredient ingredient = new Ingredient(supplier_id, name, supplyUnit, subcategory, description, offeredPrice);
+            Ingredient ingredient = new Ingredient(supplier_id, name, supplyUnit, subcategory, description, offeredPrice,minumum_order_quantity,status);
             System.out.println(ingredient);
             // ----- This is to populate parent table (Ingredient) -------//
             addIngredient(ingredient);
