@@ -38,11 +38,11 @@
         %>
 
         <script>
-            $(document).ready(function () { // Prepare the document to ready all the dom functions before running this code
+            $(document).ready(function() { // Prepare the document to ready all the dom functions before running this code
                 //SEARCHING AND FILTERING
                 //invoke get method in UserController with blank parameter given and blank response with searchsupplierbyname
                 $('.menu .item').tab();
-                $('.supplier').css('display','none');
+                $('.supplier').css('display', 'none');
 //                $(".loading").hide();
 //Put in the active class at Ingredient Name Search if ingredient name is not empty
             <% if (!ingredientName.isEmpty()) {%>
@@ -61,9 +61,9 @@
                 });
             });
 
-            $(function () {
+            $(function() {
 
-                $('form').on('submit', function (e) {
+                $('form').on('submit', function(e) {
 
                     e.preventDefault();
 
@@ -71,7 +71,7 @@
                         type: 'get',
                         url: 'OrderByIngredientServlet',
                         data: $(this).serialize(),
-                        success: function () {
+                        success: function() {
                             alert('Item added to cart');
                         }
                     });
@@ -102,12 +102,12 @@
                 <br/>
                 <h2 style="color: black">Search by:</h2>
                 <div class="ui top attached tabular menu">
-                    <a class="item active" style="font-size:18px" data-tab="first" id="supplier_name_tab">Supplier</a>
-                    <a class="item" style="font-size:18px" data-tab="second" id="ingredient_name_tab">Ingredients</a>
+                    <a class="item" style="font-size:18px" data-tab="first" id="supplier_name_tab">Supplier</a>
+                    <a class="item active" style="font-size:18px" data-tab="second" id="ingredient_name_tab">Ingredients</a>
                 </div>
 
                 <!--Handle Supplier Search using search.js as the filtering process-->
-                <div class="ui bottom attached tab segment active" id="supplier_name_div" data-tab="first">
+                <div class="ui bottom attached tab segment" id="supplier_name_div" data-tab="first">
 
                     <div class="ui icon large input">
                         <input type="text" placeholder="Search..." name="searchsupplierbyname" id="searchsupplierbyname" value=""/>
@@ -138,7 +138,7 @@
 
 
                 <!--Handle Ingredient Search using search.js as the filtering process-->
-                <div class="ui bottom attached tab segment" id="ingredient_name_div" data-tab="second">              
+                <div class="ui bottom attached tab segment active" id="ingredient_name_div" data-tab="second">              
                     <div class="ui large icon input">
                         <input type="text" placeholder="Search..." name="searchingredient" id="searchingredient" value="<%=ingredientName%>"/>
                         <i class="circular search link icon"></i>
@@ -154,14 +154,21 @@
 
                             <div class='content-itemname'>
                                 <a href="IngredientProfile.jsp?ingredient_name=<%=ingredientStr%>&supplier_id=<%=ingredient.getSupplier_id()%>">
+                                    <%if (ingredient.getStatus().equals("available")) {%>
                                     <h2><%=ingredient.getName()%></h2>
+                                    <%} else {%>
+                                    <h2><font color="red"><%=ingredient.getName()%> (Unavailable)</font></h2>
+                                        <%}%>
                             </div>
                             <div>
                                 <div style="color:black">Supplier: <font color="blue"><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></font></div>
                                 <div style="color:black">Price: <font color="green">S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(ingredient.getOfferedPrice()))%> per <%=ingredient.getSupplyUnit()%></font></div>
                                 <div style="color:black">Expected delivery duration: <font color="green"><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getMin_leadtime()%> - <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getMax_leadtime()%></font></div>
+                                <div style="color:black">Minimum Order Quantity: <font color="green"><%=ingredient.getMinimum_order_quantity()%></font></div>
                             </div>
                             </a>
+                            <%if (ingredient.getStatus().equals("available")) {%>
+
                             <div>
 
                                 <form action="OrderByIngredientServlet" method="get">
@@ -185,8 +192,8 @@
                             </div>
 
                         </div>
-
-                        <%}%>
+                        <%}
+                            }%>
                     </div>
                 </div>
 

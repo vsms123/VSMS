@@ -135,6 +135,8 @@
                             <p><b>Supply Unit:</b> <%=i.getSupplyUnit()%></p>
                             <p><b>Category:</b> <%=i.getSubcategory()%></p>
                             <p><b>Offered Price:</b> S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(i.getOfferedPrice()))%></p>
+                            <p><b>Minimum Order Quantity:</b> <%=i.getMinimum_order_quantity()%></p>
+                            <p><b>Status:</b> <%=i.getStatus()%></p>
 
                             <%
                                 boolean b = OrderController.checkIngredientEditable("" + supp.getSupplier_id(), i.getName());

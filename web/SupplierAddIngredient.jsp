@@ -131,26 +131,45 @@
                         <div class="field">
                             <label>Category</label>
                             <select class="ui fluid dropdown" name="category">
-                                <option value="Bakery">Bakery</option>
-                                <option value="Fruit">Fruit</option>
-                                <option value="Meat">Meat</option>
-                                <option value="Misc">Misc</option>
-                                <option value="Spice">Spice</option>
-                                <option value="Vegetable">Vegetable</option>
+                                <option value="bakery">Bakery</option>
+                                <option value="fruit">Fruit</option>
+                                <option value="meat">Meat</option>
+                                <option value="spice">Spice</option>
+                                <option value="vegetable">Vegetable</option>
+                                <option value="asian">Asian</option>
+                                <option value="western">Western</option>
+                                <option value="fusion">Fusion</option>
+                                <option value="beverage">Beverage</option>
+                                <option value="misc">Other</option>
                             </select>
                         </div>
                         <div class="field">
                             <label>Unit</label>
                             <select class="ui fluid dropdown" name="unit">
+                                <option value="package">Package</option>
+                                <option value="kg">Kilograms(kg)</option>
                                 <option value="g">Grams(g)</option>
-                                <option value="whole">Whole</option>
+                                <option value="piece">Piece</option>
+                                <option value="bottle">Bottle</option>
                                 <option value="cup">Cup</option>
-
                             </select>
                         </div>
                         <div class="field">
                             <label>Offered Price (S$)</label>
                             <input min=0.00 type="number" name="offered_price" step="0.01" placeholder="0.00">
+                        </div>
+                    </div>
+                     <div class="one fields">
+                        <div class="field">
+                            <label>Status</label>
+                            <select class="ui fluid dropdown" name="status">
+                                <option value="available">Available</option>
+                                <option value="unavailable">Unavailable</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Minimum Ordered Quantity</label>
+                            <input type="number" name="minimum_ordered_quantity" placeholder="0">
                         </div>
                     </div>
                     <div class="two fields">

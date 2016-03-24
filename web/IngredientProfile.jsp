@@ -81,13 +81,26 @@
                     <td><h3>S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(ingredient.getOfferedPrice()))%></h3></td>
                     </tr>
                     <tr>
+                        <th><h2>Minimum Order Quantity</h2></th>
+                    <td><h3><%=ingredient.getMinimum_order_quantity()%></h3></td>
+                    </tr>
+                    <tr>
+                        <th><h2>Status</h2></th>
+                        <%String status = ingredient.getStatus();
+                    if (status.equals("available")) {%>
+                    <td><h3><font color="green"><%=status%></font></h3></td>
+                            <% } else {%>
+                    <td><h3><font color="red"><%=status%></font></h3></td>
+                            <%}%>    
+                    </tr>
+                    <tr>
                         <th><h2>Picture</h2></th>
                         <%
                             InputStream picture = ingredient.getPicture();
-                            System.out.println("the picture is "+picture);
-                            String image="resource\\pictures\\default-placeholder.png";
-                            if(picture!=null){
-                                image=UtilityController.convertInputStreamToString(picture);
+                            System.out.println("the picture is " + picture);
+                            String image = "resource\\pictures\\default-placeholder.png";
+                            if (picture != null) {
+                                image = UtilityController.convertInputStreamToString(picture);
                             }
                         %>
                     <td><img id="image" src="<%=image%>" class='ingredientImage' alt="your image" /></td>
