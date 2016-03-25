@@ -16,24 +16,28 @@
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <!--<link rel="stylesheet" type="text/css" href="css/chatstylesheet.css">-->
-        <link rel="stylesheet" type="text/css" href="css/chatlayout.css"
+        <link rel="stylesheet" type="text/css" href="css/chatlayout.css">
     </head>
-    <body>
-        <!-- CHAT MARKUP -->
-        <div class="chat">
-            <header class="chat-header">Vendor Chat (https://vsms.firebaseio.com/)</header>
+    <body class="background">
+        <div class="transparency">
 
-            <div class='chat-toolbar'>
-                Sending to: <h3>FreshFoodz</h3>
+            <div class="ui segment" style="left:5%;width:90%">
+                <!-- CHAT MARKUP -->
+                <div class="chat">
+                    <header class="chat-header">Vendor Chat (https://vsms.firebaseio.com/)</header>
+
+                    <div class='chat-toolbar'>
+                        Sending to: <h3>FreshFoodz</h3>
+                    </div>
+
+                    <ul id='messages' class="chat-messages"></ul>
+
+                    <footer class="chat-footer">
+                        <input type='text' id='messageInput'  placeholder='Type a message...'>
+                    </footer>
+                </div>
             </div>
-
-            <ul id='messages' class="chat-messages"></ul>
-
-            <footer class="chat-footer">
-                <input type='text' id='messageInput'  placeholder='Type a message...'>
-            </footer>
         </div>
-
         <!--CHAT JAVASCRIPT-->
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
         <script src="js/chatjavascript.js"></script>

@@ -38,17 +38,13 @@ function initializeVendorChat($sender, $receiver) {
         var key = data.key;
         var ordercondition = data.ordercondition;
         var orderid = data.orderid;
-        var senderElement = $("<strong class='chat-name'></strong>");
-        senderElement.text(sender);
         //ADD MESSAGE only if sender and receiver are relevant
-        if (sender === $sender && receiver === $receiver || sender === $receiver && receiver === $sender) {
-            
-            messageList.append("<li>"+senderElement+message+"</li>")
-            if (key != null) {
-                messageList.append("Order key: " + key)
-            }
-            
+        if (sender === $sender && receiver === $receiver) {
+            messageList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>: " + message + "</li>")
+        } else if (sender === $receiver && receiver === $sender) {
+            messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>: " + message + "</li>")
         }
+        
 
         //SCROLL TO BOTTOM OF MESSAGE LIST
         messageList[0].scrollTop = messageList[0].scrollHeight;
@@ -76,8 +72,8 @@ function initializeSupplierChat($sender, $receiver) {
 
                     //Type"Clear" to remove the message
                     if (messageSplit[0] == "-clear") {
-                        messagesRef.remove();
-                        window.location.reload();
+//                        messagesRef.remove();
+//                        window.location.reload();
                     } else if (messageSplit[0] == "-reply") {
                         //e.g: ("-reply S3452321H yes") to respond yes to order S3462321H
                         //get key to get a certain order command in firebase
@@ -140,16 +136,13 @@ function initializeSupplierChat($sender, $receiver) {
         //messageElement.text(message).prepend(senderElement);      
         //var receiverElement = $("<i class='chat-name'></i>");
 
-        var senderElement = $("<strong class='chat-name'></strong>");
-        senderElement.text(sender);
         //ADD MESSAGE only if sender and receiver are relevant
-        if (sender === $sender && receiver === $receiver|| sender === $receiver && receiver === $sender) {
-             messageList.append("<li>"+senderElement+message+"</li>")
-//            if (key != null) {
-//                messageList.append("Order key: " + key)
-//            }
-//            messageList.append("<li>")
+        if (sender === $sender && receiver === $receiver) {
+            messageList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>: " + message + "</li>")
+        } else if (sender === $receiver && receiver === $sender) {
+            messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>: " + message + "</li>")
         }
+        
 
         //SCROLL TO BOTTOM OF MESSAGE LIST
         messageList[0].scrollTop = messageList[0].scrollHeight;
