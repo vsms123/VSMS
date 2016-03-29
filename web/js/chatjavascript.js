@@ -2,6 +2,31 @@ function submitFunction(supplierName) {
     document.getElementById("hiddenvalue").setAttribute("value", supplierName);
     document.getElementById("chat").submit();
 }
+//NOT DONE
+//subject is the supplier,vendor name whereas role is "vendor" or "supplier"
+function initializeChatList($sender, $role) {
+    // CREATE A REFERENCE TO FIREBASE
+    var messagesRef = new Firebase('https://vsms.firebaseio.com/');
+
+// REGISTER DOM ELEMENTS
+    var chatList = $('#chatlist');
+
+    // Add a callback that is triggered for each chat message created.
+    messagesRef.on('child_added', function(snapshot) {
+        //GET DATA
+        var data = snapshot.val();
+        var sender = data.sender;
+        //ADD MESSAGE only if sender and receiver are relevant
+        if (sender === $sender) {
+            if (role === "vendor") {
+
+            } else if (role === "supplier") {
+                chatList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>: " + message + "</li>");
+            }
+        }
+    });
+}
+
 
 function initializeVendorChat($sender, $receiver) {
 // CREATE A REFERENCE TO FIREBASE
@@ -44,7 +69,7 @@ function initializeVendorChat($sender, $receiver) {
         } else if (sender === $receiver && receiver === $sender) {
             messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>: " + message + "</li>")
         }
-        
+
 
         //SCROLL TO BOTTOM OF MESSAGE LIST
         messageList[0].scrollTop = messageList[0].scrollHeight;
@@ -142,7 +167,7 @@ function initializeSupplierChat($sender, $receiver) {
         } else if (sender === $receiver && receiver === $sender) {
             messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>: " + message + "</li>")
         }
-        
+
 
         //SCROLL TO BOTTOM OF MESSAGE LIST
         messageList[0].scrollTop = messageList[0].scrollHeight;

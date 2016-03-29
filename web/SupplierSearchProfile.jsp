@@ -137,6 +137,8 @@
                     <%
                         }
                     %>
+                    <a href="ChatVendor.jsp?hiddenvalue=<%=supplier.getSupplier_name()%>"><button class="ui deny inverted green button">Chat with Supplier</button></a>
+
                 </div>
 
                 <div class="ui bottom attached tab segment" id="supplier_name_div" data-tab="ingredients">

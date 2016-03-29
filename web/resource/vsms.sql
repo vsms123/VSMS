@@ -1179,7 +1179,7 @@ CREATE TABLE `vendor` (
 --
 
 INSERT INTO `vendor` (`vendor_id`, `vendor_name`, `vendor_description`, `password`, `email`, `area_code`, `telephone_number`, `address`, `zipcode`) VALUES
-(1, 'Bob''s Bakery And Bistro', 'Bob bakery and bistro is a renowned Bistro that was established in 1976', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'vincentt.2013@sis.smu.edu.sg', 65, 87221272, '1B Braddel Road #05-02', 579701),
+(1, 'Bobs Bakery And Bistro', 'Bob bakery and bistro is a renowned Bistro that was established in 1976', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'vincentt.2013@sis.smu.edu.sg', 65, 87221272, '1B Braddel Road #05-02', 579701),
 (2, 'Cozumel Mexican Grille', 'Cozumel Mexican Grille is a very famous asian supplier with the famous dish Punucapa', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'cw.cheung.2013@sis.smu.edu.sg', 65, 87221272, '39 Defu Lane 7', 539353),
 (3, 'Foodingo (Vendor)', 'Foodingos Vendor Test Account', '4be30d9814c6d4e9800e0d2ea9ec9fb00efa887b', 'rehanarien@gmail.com', 65, 91234567, 'No. 29 Woodlands Industrial Park E1 #04-17 Northtech', 757716),
 (4, 'Le Peep Restaurant', 'Le Peep Restaurant is a very famous fusion supplier with the famous dish Iltapata', '4be30d9814c6d4e9800e0d2ea9ec9fb00efa887b', 'ongzhikan@gmail.com', 65, 87221272, '11 Tanjong Rhu Road #18-01 The Waterside', 308215),

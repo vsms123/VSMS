@@ -1,4 +1,5 @@
 
+<%@page import="Controller.UserController"%>
 <html>
     <head>
         <%@ include file="protect.jsp" %>
@@ -19,6 +20,14 @@
         <!--<link rel="stylesheet" type="text/css" href="css/chatstylesheet.css">-->
         <link rel="stylesheet" type="text/css" href="css/chatlayout.css">
     </head>
+     <%            //ArrayList<Order> orderList = OrderController.retrieveOrderList(1);
+            Supplier s = (Supplier) session.getAttribute("currentSupplier");
+            if (s == null) {
+                s = UserController.retrieveSupplierByID(1);
+            }
+            String supplierName = s.getSupplier_name();
+            String vendorName = request.getParameter("vendor_name");
+    %>
     <bodyclass="background">
         <div class="transparency">
 
@@ -28,10 +37,10 @@
 
                 <H1>Welcome FreshFoodz</h1>
                 <div class="chat">
-                    <header class="chat-header">Supplier Chat (https://vsms.firebaseio.com/)</header>
-
+                    <header class="chat-header">Supplier Chat (https://vsms.firebaseio.com/) <button class="ui deny inverted green button"><a href="SupplierHome.jsp">Go to Home</a></button><button class="ui deny inverted green button"><a href="ChatList.jsp">Go to ChatList</a></button></header>
+ 
                     <div class='chat-toolbar'>
-                        Sending to: <h3>Christina</h3>
+                        Sending to: <h3><%=vendorName%></h3>
                     </div>
 
                     <ul id='messages' class="chat-messages"></ul>
@@ -46,7 +55,7 @@
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
         <script src="js/chatjavascript.js"></script>
         <script>
-            initializeSupplierChat("FreshFoodz", "Christina");
+            initializeSupplierChat("<%supplierName%>", "<%=vendorName%>");
         </script>
     </body>
 </html>

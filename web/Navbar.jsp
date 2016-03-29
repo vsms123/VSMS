@@ -128,9 +128,9 @@
             <a href="Menu.jsp" class="item pulse" style=" font-size: 16px">
                 <i class="large food icon"></i> Menu
             </a>
-            <!--            <a class="item message triggerModal pulse" style=" font-size: 16px">
-                            <i class="large  mail icon"></i> Messages
-                        </a>-->
+            <a href="ChatList.jsp" class="item pulse" style=" font-size: 16px">
+                <i class="large mail icon"></i> Chat
+            </a>
             <div class="ui simple dropdown item" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
 

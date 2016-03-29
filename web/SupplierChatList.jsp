@@ -53,8 +53,7 @@
                 <!--JAVASCRIPT-->
                 <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
                 <script src="js/chatjavascript.js"></script>
-                <script>
-                </script>
+
             </div>
         </div>
     </body>

@@ -131,6 +131,7 @@
                                     <div class="right floated content"><button class="ui button"><a href="userservlet?vendor_id=<%=currentVendor.getVendor_id()%>&supplier_id=<%=supplier.getSupplier_id()%>&action=add"><i class="empty star icon"></i>Add to Favorites</a></button></div>
                                     <%}%>
                                 </div>
+
                         </div>
                         <%}%>  
                     </div>
