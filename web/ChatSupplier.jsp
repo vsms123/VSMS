@@ -37,7 +37,7 @@
 
                 <H1>Welcome FreshFoodz</h1>
                 <div class="chat">
-                    <header class="chat-header">Supplier Chat (https://vsms.firebaseio.com/) <button class="ui deny inverted green button"><a href="SupplierHome.jsp">Go to Home</a></button><button class="ui deny inverted green button"><a href="ChatList.jsp">Go to ChatList</a></button></header>
+                    <header class="chat-header">Supplier Chat (https://foodingomarketplace.firebaseio.com) <button class="ui deny inverted green button"><a href="SupplierHome.jsp">Go to Home</a></button><button class="ui deny inverted green button"><a href="ChatList.jsp">Go to ChatList</a></button></header>
  
                     <div class='chat-toolbar'>
                         Sending to: <h3><%=vendorName%></h3>
@@ -55,7 +55,7 @@
         <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
         <script src="js/chatjavascript.js"></script>
         <script>
-            initializeSupplierChat("<%supplierName%>", "<%=vendorName%>");
+            initializeSupplierChat("<%=supplierName%>", "<%=vendorName%>");
         </script>
     </body>
 </html>

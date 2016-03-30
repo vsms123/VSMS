@@ -6,23 +6,34 @@ function submitFunction(supplierName) {
 //subject is the supplier,vendor name whereas role is "vendor" or "supplier"
 function initializeChatList($sender, $role) {
     // CREATE A REFERENCE TO FIREBASE
-    var messagesRef = new Firebase('https://vsms.firebaseio.com/');
+    var messagesRef = new Firebase('https://foodingomarketplace.firebaseio.com');
 
 // REGISTER DOM ELEMENTS
     var chatList = $('#chatlist');
+    //To keep track of duplicates
+    var receivers = [];
 
     // Add a callback that is triggered for each chat message created.
     messagesRef.on('child_added', function(snapshot) {
         //GET DATA
         var data = snapshot.val();
         var sender = data.sender;
+        var receiver = data.receiver;
+        var timestamp = data.timestamp;
         //ADD MESSAGE only if sender and receiver are relevant
-        if (sender === $sender) {
-            if (role === "vendor") {
+        if ((sender === $sender || receiver === $sender) && receivers.indexOf(receiver) === -1) {
+            if ($role === "vendor") {
+                console.log("comes here vendor");
+//                Put here for Vendor chatlist
+                chatList.append("<li class =\"list-group-item\" name= \"" + receiver + "\" onclick=\"submitFunction('" + receiver + "')\"><h3>" + receiver + "</h3></li>");
 
-            } else if (role === "supplier") {
-                chatList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>: " + message + "</li>");
+            } else if ($role === "supplier") {
+//                Put here for supplier chat list
+                chatList.append("<li class =\"list-group-item\" name= \"" + receiver + "\" onclick=\"submitFunction('" + receiver + "')\"><h3>" + receiver + "</h3></li>");
             }
+
+            receivers.push(receiver);
+            console.log("array is " + receivers);
         }
     });
 }
@@ -30,7 +41,7 @@ function initializeChatList($sender, $role) {
 
 function initializeVendorChat($sender, $receiver) {
 // CREATE A REFERENCE TO FIREBASE
-    var messagesRef = new Firebase('https://vsms.firebaseio.com/');
+    var messagesRef = new Firebase('https://foodingomarketplace.firebaseio.com');
 
 // REGISTER DOM ELEMENTS
     var messageField = $('#messageInput');
@@ -43,7 +54,7 @@ function initializeVendorChat($sender, $receiver) {
             var message = messageField.val();
 
             //SAVE DATA TO FIREBASE AND EMPTY FIELD
-            messagesRef.push({sender: $sender, receiver: $receiver, text: message});
+            messagesRef.push({sender: $sender, receiver: $receiver, text: message, timestamp: timeConverter(Math.round(new Date().getTime() / 1000))});
             messageField.val('');
 
             //Type"Clear" to remove the message
@@ -60,14 +71,15 @@ function initializeVendorChat($sender, $receiver) {
         var sender = data.sender || "anonymous";
         var receiver = data.receiver;
         var message = data.text;
+        var timestamp = data.timestamp;
         var key = data.key;
         var ordercondition = data.ordercondition;
         var orderid = data.orderid;
         //ADD MESSAGE only if sender and receiver are relevant
         if (sender === $sender && receiver === $receiver) {
-            messageList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>: " + message + "</li>")
+            messageList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>(" + timestamp + "): " + message + "</li>")
         } else if (sender === $receiver && receiver === $sender) {
-            messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>: " + message + "</li>")
+            messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>(" + timestamp + "): " + message + "</li>")
         }
 
 
@@ -78,7 +90,7 @@ function initializeVendorChat($sender, $receiver) {
 
 function initializeSupplierChat($sender, $receiver) {
     // CREATE A REFERENCE TO FIREBASE
-    var messagesRef = new Firebase('https://vsms.firebaseio.com/');
+    var messagesRef = new Firebase('https://foodingomarketplace.firebaseio.com');
     // REGISTER DOM ELEMENTS
     var messageField = $('#messageInput');
     var messageList = $('#messages');
@@ -123,7 +135,7 @@ function initializeSupplierChat($sender, $receiver) {
                             throw new Exception("command is invalid");
                         }
                         //SAVE DATA TO FIREBASE AND EMPTY FIELD
-                        messagesRef.push({sender: $sender, receiver: $receiver, text: message});
+                        messagesRef.push({sender: $sender, receiver: $receiver, text: message, timestamp: timeConverter(Math.round(new Date().getTime() / 1000))});
                         messageField.val('');
                     }
                     else {
@@ -133,12 +145,12 @@ function initializeSupplierChat($sender, $receiver) {
                 }
                 else {
                     //SAVE DATA TO FIREBASE AND EMPTY FIELD
-                    messagesRef.push({sender: $sender, receiver: $receiver, text: message});
+                    messagesRef.push({sender: $sender, receiver: $receiver, text: message, timestamp: timeConverter(Math.round(new Date().getTime() / 1000))});
                     messageField.val('');
                 }
             } catch (err) {
                 //SAVE DATA TO FIREBASE AND EMPTY FIELD
-                messagesRef.push({sender: $sender, receiver: $receiver, text: "Sorry your command is invalid"});
+                messagesRef.push({sender: $sender, receiver: $receiver, text: "Sorry your command is invalid", timestamp: timeConverter(Math.round(new Date().getTime() / 1000))});
                 messageField.val('');
             }
         }
@@ -163,13 +175,32 @@ function initializeSupplierChat($sender, $receiver) {
 
         //ADD MESSAGE only if sender and receiver are relevant
         if (sender === $sender && receiver === $receiver) {
-            messageList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>: " + message + "</li>")
+            messageList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>(" + timestamp + "): " + message + "</li>")
         } else if (sender === $receiver && receiver === $sender) {
-            messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>: " + message + "</li>")
+            messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>(" + timestamp + "): " + message + "</li>")
         }
 
 
         //SCROLL TO BOTTOM OF MESSAGE LIST
         messageList[0].scrollTop = messageList[0].scrollHeight;
     });
+}
+
+function timeConverter(UNIX_timestamp) {
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+    return time;
+}
+function pushMessage($sender, $receiver,message) {
+    // CREATE A REFERENCE TO FIREBASE
+    var messagesRef = new Firebase('https://foodingomarketplace.firebaseio.com');
+    messagesRef.push({sender: $sender, receiver: $receiver, text: message, timestamp: timeConverter(Math.round(new Date().getTime() / 1000))});
+    
 }

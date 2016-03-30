@@ -41,11 +41,11 @@
                 <!--This is for vendor-->
                 <%if (currentVendor != null) {%>
                 <form action="ChatVendor.jsp" method="GET" id="chat">
-                    <input type="hidden" value="FreshFoodz" name="hiddenvalue" id="hiddenvalue"/>
+                    <input type="hidden" name="hiddenvalue" id="hiddenvalue"/>
                     <h1>Contact Lists</h1>
-                    <ul class ="list-group">
+                    <ul class ="list-group" id="chatlist">
                         <%for (Supplier supplier : supplierList) {%>
-                        <li class ="list-group-item" name= "<%=supplier.getSupplier_name()%>" onclick="submitFunction('<%=supplier.getSupplier_name()%>')"><h3><%=supplier.getSupplier_name()%></h3></li>
+                        <!--<li class ="list-group-item" name= "<%=supplier.getSupplier_name()%>" onclick="submitFunction('<%=supplier.getSupplier_name()%>')"><h3><%=supplier.getSupplier_name()%></h3></li>-->
                                 <%}%>           
                     </ul>
                 </form>
@@ -54,6 +54,7 @@
                 <!--for general Javascript please refer to the main js. For others, please just append the script line below-->
                 <script src="js/chatjavascript.js"></script>
                 <script>
+                              initializeChatList("<%=currentVendor.getVendor_name()%>", "vendor");  
                 </script>
             </div>
         </div>

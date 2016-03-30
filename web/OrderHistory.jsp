@@ -140,7 +140,7 @@
 
                     <div class="actions">
                         <a href="Invoice.jsp?order_id=<%=order.getOrder_id()%>"><button class="ui deny inverted red button">View Invoice</button></a>
-                        <a href="ChatVendor.jsp?hiddenvalue=<%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%>"><button class="ui deny inverted green button">Chat with Supplier</button></a>
+                        <a href="ChatVendor.jsp?order_id=<%=order.getOrder_id()%>&hiddenvalue=<%=UserController.retrieveSupplierByID(order.getOrderlines().get(0).getSupplier_id()).getSupplier_name()%>"><button class="ui deny inverted green button">Chat with Supplier</button></a>
                         <button class="ui deny inverted orange button">Take me Back</button>
                     </div>
                 </div>

@@ -81,8 +81,8 @@
                 <i class="large home icon"></i> Home
             </a>
 
-            <a class="item message pulse" style=" font-size: 16px">
-                <i class="large  mail icon"></i> Messages
+            <a href="SupplierChatList.jsp" class="item pulse" style=" font-size: 16px">
+                <i class="large mail icon"></i> Chat
             </a>
             <div class="ui simple dropdown item pulse" style=" font-size: 16px">
                 <i class="large user icon"></i>  My Account
