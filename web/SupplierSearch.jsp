@@ -162,6 +162,7 @@
                                         <%}%>
                             </div>
                             <div>
+                                <div style="color:black">Image: <font color="blue"><%=ingredient.getPicture()%></font></div>
                                 <div style="color:black">Supplier: <font color="blue"><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></font></div>
                                 <div style="color:black">Price: <font color="green">S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(ingredient.getOfferedPrice()))%> per <%=ingredient.getSupplyUnit()%></font></div>
                                 <div style="color:black">Expected delivery duration: <font color="green"><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getMin_leadtime()%> - <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getMax_leadtime()%></font></div>

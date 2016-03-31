@@ -155,7 +155,8 @@
 
                             <td>
                                 <div class="item test ingredients" data-content="Click to view ingredient details"  data-variation="inverted">
-                                    <h3>    
+                                    <h3>
+                                        <a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>"><%=ingredient.getPicture()%></a>
                                         <a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>"><%=ingredient.getName()%></a>
                                         <a href="IngredientProfile.jsp?ingredient_name=<%=ingredient.getName()%>&supplier_id=<%=supplier_id%>">(S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(ingredient.getOfferedPrice()))%> per <%=ingredient.getSupplyUnit()%>)</a>
                                     </h3>
