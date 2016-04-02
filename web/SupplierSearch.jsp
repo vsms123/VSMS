@@ -1,4 +1,5 @@
 
+<%@page import="Model.SupplierTimeComparator"%>
 <%@page import="java.util.Collections"%>
 <%@page import="Model.IngredientPriceComparator"%>
 <%@page import="Model.Ingredient"%>
@@ -30,6 +31,7 @@
             }
             //ID=session.getAttribute(vendor_id);
             ArrayList<Supplier> supplierList = UserController.retrieveSupplierList();
+            Collections.sort(supplierList, new SupplierTimeComparator());
             //ID=session.getAttribute(vendor_id);
             ArrayList<Supplier> favSupplierList = UserController.retrieveSupplierListByVendor(currentVendor.getVendor_id());
 
