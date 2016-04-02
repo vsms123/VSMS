@@ -1,4 +1,6 @@
 
+<%@page import="java.util.Collections"%>
+<%@page import="Model.IngredientPriceComparator"%>
 <%@page import="Model.Ingredient"%>
 <%@page import="Controller.IngredientController"%>
 <%@page import="Model.Vendor"%>
@@ -148,6 +150,7 @@
                     <div id="ingredientlist" class="ui middle aligned animated selection divided list">   
                         <%
                             ArrayList<Ingredient> ingredientList = IngredientController.getIngredientList();
+                            Collections.sort(ingredientList,new IngredientPriceComparator());
                             for (Ingredient ingredient : ingredientList) {
                                 String ingredientStr = ingredient.getName().replaceAll(" ", "%20");
                         %>
