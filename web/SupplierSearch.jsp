@@ -1,4 +1,5 @@
 
+<%@page import="java.io.InputStream"%>
 <%@page import="Model.SupplierTimeComparator"%>
 <%@page import="java.util.Collections"%>
 <%@page import="Model.IngredientPriceComparator"%>
@@ -152,12 +153,22 @@
                     <div id="ingredientlist" class="ui middle aligned animated selection divided list">   
                         <%
                             ArrayList<Ingredient> ingredientList = IngredientController.getIngredientList();
-                            Collections.sort(ingredientList,new IngredientPriceComparator());
+                            Collections.sort(ingredientList, new IngredientPriceComparator());
                             for (Ingredient ingredient : ingredientList) {
                                 String ingredientStr = ingredient.getName().replaceAll(" ", "%20");
                         %>
                         <div class='item search ingredient'  data-content="Click to view ingredient"  data-variation="inverted">
+                            <div class="image-placeholder" style="float:left">
+                                <%
+                                    InputStream picture = ingredient.getPicture();
+                                    String image = "resource\\pictures\\default-placeholder.png";
+                                    if (picture != null) {
+                                        image = UtilityController.convertInputStreamToString(picture);
+                                    }
+                                %>
 
+                                <img id="image" src="<%=image%>" style="height:120px;width:120px;margin-right:20px;margin-top:20px" class='ingredientImage' alt="your image" />
+                            </div>
                             <div class='content-itemname'>
                                 <a href="IngredientProfile.jsp?ingredient_name=<%=ingredientStr%>&supplier_id=<%=ingredient.getSupplier_id()%>">
                                     <%if (ingredient.getStatus().equals("available")) {%>
@@ -167,7 +178,6 @@
                                         <%}%>
                             </div>
                             <div>
-                                <div style="color:black">Image: <font color="blue"><%=ingredient.getPicture()%></font></div>
                                 <div style="color:black">Supplier: <font color="blue"><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getSupplier_name()%></font></div>
                                 <div style="color:black">Price: <font color="green">S$<%=UtilityController.convertDoubleToCurrString(Double.parseDouble(ingredient.getOfferedPrice()))%> per <%=ingredient.getSupplyUnit()%></font></div>
                                 <div style="color:black">Expected delivery duration: <font color="green"><%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getMin_leadtime()%> - <%=UserController.retrieveSupplierByID(ingredient.getSupplier_id()).getMax_leadtime()%></font></div>
