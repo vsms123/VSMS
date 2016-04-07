@@ -17,7 +17,6 @@
 
         <!--for general CSS please refer to the main css. For others, please just append the link line below-->
         <link rel="stylesheet" type="text/css" href="css/main.css">
-        <!--<link rel="stylesheet" type="text/css" href="css/chatstylesheet.css">-->
         <link rel="stylesheet" type="text/css" href="css/chatlayout.css">
     </head>
      <%            //ArrayList<Order> orderList = OrderController.retrieveOrderList(1);

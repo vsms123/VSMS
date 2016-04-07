@@ -77,9 +77,9 @@ function initializeVendorChat($sender, $receiver) {
         var orderid = data.orderid;
         //ADD MESSAGE only if sender and receiver are relevant
         if (sender === $sender && receiver === $receiver) {
-            messageList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>(" + timestamp + "): " + message + "</li>")
+            messageList.append("<li style=\"font-size:17px\">" + "<strong>" + sender + "</strong>(" + timestamp + "): <br>" + message + "</li>")
         } else if (sender === $receiver && receiver === $sender) {
-            messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>(" + timestamp + "): " + message + "</li>")
+            messageList.append("<li style=\"margin-left:auto;font-size:17px\">" + "<i>" + sender + "</i>(" + timestamp + "): <br>" + message + "</li>")
         }
 
 
@@ -175,9 +175,9 @@ function initializeSupplierChat($sender, $receiver) {
 
         //ADD MESSAGE only if sender and receiver are relevant
         if (sender === $sender && receiver === $receiver) {
-            messageList.append("<li style=\"background:#cce5ff;\">" + "<strong>" + sender + "</strong>(" + timestamp + "): " + message + "</li>")
+            messageList.append("<li style=\"font-size:17px\">" + "<strong>" + sender + "</strong>(" + timestamp + "): <br>" + message + "</li>")
         } else if (sender === $receiver && receiver === $sender) {
-            messageList.append("<li style=\"margin-left:auto;background:#cce5ff;\">" + "<i>" + sender + "</i>(" + timestamp + "): " + message + "</li>")
+            messageList.append("<li style=\"margin-left:auto;font-size:17px\">" + "<i>" + sender + "</i>(" + timestamp + "): <br>" + message + "</li>")
         }
 
 
