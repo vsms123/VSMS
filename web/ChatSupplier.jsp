@@ -2,7 +2,7 @@
 <%@page import="Controller.UserController"%>
 <html>
     <head>
-        <%@ include file="protect.jsp" %>
+        <%@ include file="protect_supplier.jsp" %>
         <!--CSS-->
         <!-- Import CDN for semantic UI -->    
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
